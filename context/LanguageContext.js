@@ -1,25 +1,37 @@
 "use client";
-import { createContext, useState, useContext, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import i18n from "@/i18n";
 
 const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState(i18n.language || "en");
 
+  // restore saved language
   useEffect(() => {
     const savedLang = localStorage.getItem("lang");
-    if (savedLang) {
+    if (savedLang && savedLang !== lang) {
       i18n.changeLanguage(savedLang);
       setLang(savedLang);
     }
   }, []);
 
-  const switchLang = (lng) => {
-    i18n.changeLanguage(lng);
-    setLang(lng);
-    localStorage.setItem("lang", lng);
-  };
+  const switchLang = useCallback(
+    (lng) => {
+      if (lng !== lang) {
+        i18n.changeLanguage(lng);
+        setLang(lng);
+        localStorage.setItem("lang", lng);
+      }
+    },
+    [lang]
+  );
 
   return (
     <LanguageContext.Provider value={{ lang, switchLang }}>

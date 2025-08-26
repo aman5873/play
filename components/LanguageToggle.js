@@ -13,7 +13,6 @@ export default function LanguageToggle() {
   return (
     <motion.div
       whileTap={{ scale: 0.9 }}
-      animate={{ x: lang === "en" ? 0 : 20 }}
       transition={{ type: "spring", stiffness: 200 }}
     >
       <IconButton

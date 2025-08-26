@@ -6,7 +6,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, colors } = useTheme();
 
   return (
     <motion.div
@@ -16,11 +16,16 @@ export default function ThemeToggle() {
     >
       <IconButton
         onClick={toggleTheme}
+        disableRipple
+        disableFocusRipple
         sx={{
-          color: "var(--accent)",
-          border: "2px solid var(--border)",
-          backgroundColor: "var(--bg)",
-          "&:hover": { backgroundColor: "var(--subtitle)" },
+          color: colors?.accent,
+          border: `2px solid ${colors?.border}`,
+          backgroundColor: colors?.bg,
+          transition: "background-color 0.3s ease",
+          "&:hover": {
+            backgroundColor: colors?.hoverBg,
+          },
         }}
       >
         {theme === "dark" ? <DarkModeIcon /> : <LightModeIcon />}

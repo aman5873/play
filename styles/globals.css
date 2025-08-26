@@ -6,8 +6,8 @@
   --border: #007700;
   --accent: #44cc44;
 
-  --hover: #007700; /* ✅ darker green for visibility */
-  --hoverBg: #f0f0f0; /* ✅ light grey hover background */
+  --hover: #007700; /* ✅ darker green */
+  --hoverBg: #e6ffe6; /* pale green */
 }
 
 .dark {
@@ -19,7 +19,7 @@
   --accent: #00ff88;
 
   --hover: #00ff88; /* ✅ accent shade for dark mode */
-  --hoverBg: #222222; /* ✅ dark grey background */
+  --hoverBg: #003300; /* deep green */
 }
 
 body {

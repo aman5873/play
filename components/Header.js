@@ -1,56 +1,176 @@
 "use client";
-import { AppBar, Toolbar, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Avatar,
+  Box,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import LoginModal from "@/components/LoginModal";
-import RegisterModal from "@/components/RegisterModal";
+import dynamic from "next/dynamic";
+import { useTheme, useMediaQuery } from "@mui/material";
+
 import ThemeToggle from "@/components/ThemeToggle";
-import LanguageToggle from "@/components/LanguageToggle";
+import LanguageToggle from "./LanguageToggle";
+import { useAuth } from "@/hooks/useAuth";
+
+// ✅ Dynamic imports
+const LoginModal = dynamic(() => import("@/components/auth/LoginModal"), {
+  ssr: false,
+});
+const RegisterModal = dynamic(() => import("@/components/auth/RegisterModal"), {
+  ssr: false,
+});
+const ForgotPasswordModal = dynamic(
+  () => import("@/components/auth/ForgotPasswordModal"),
+  { ssr: false }
+);
+const ProfileDrawer = dynamic(() => import("@/components/auth/ProfileDrawer"), {
+  ssr: false,
+});
+const NavigationDrawer = dynamic(
+  () => import("@/components/auth/NavigationDrawer"),
+  { ssr: false }
+);
 
 export default function Header() {
-  const { t } = useTranslation();
+  const { t: tCommon } = useTranslation("common");
+  const { t: tAuth } = useTranslation("auth");
+
+  // 🔹 State
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
+  const [forgotOpen, setForgotOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+
+  const { isLoggedIn, user } = useAuth();
+
+  // 🔹 Navigation items
   const navItems = [
-    { key: "games", label: t("games"), href: "/games" },
-    { key: "teams", label: t("teams"), href: "/teams" },
-    { key: "tournaments", label: t("tournaments"), href: "/tournaments" },
-    { key: "rankings", label: t("rankings"), href: "/rankings" },
-    { key: "social", label: t("social"), href: "/social" },
+    { key: "games", label: tCommon("games"), href: "/games" },
+    { key: "teams", label: tCommon("teams"), href: "/teams" },
+    { key: "tournaments", label: tCommon("tournaments"), href: "/tournaments" },
+    { key: "rankings", label: tCommon("rankings"), href: "/rankings" },
+    { key: "social", label: tCommon("social"), href: "/social" },
   ];
+
+  // 🔹 Guest actions
+  const guestActions = [
+    { key: "login", label: tAuth("login"), onClick: () => setLoginOpen(true) },
+  ];
+
+  // 🔹 Toggles
+  const toggles = (
+    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      <ThemeToggle />
+      <LanguageToggle />
+    </Box>
+  );
 
   return (
     <>
       <AppBar
-        position="static"
+        position="fixed"
         sx={{
-          backgroundColor: "var(--background)",
+          backgroundColor: "var(--surface)",
           borderBottom: "2px solid var(--border)",
           boxShadow: "none",
         }}
       >
-        <Toolbar className="flex justify-between items-center">
-          {/* Brand */}
-          <Link href="/" passHref>
-            <h1
-              style={{
-                color: "var(--title)",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                cursor: "pointer",
-              }}
-            >
-              {t("brand")}
-            </h1>
-          </Link>
+        <Toolbar
+          style={{
+            padding: 0,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {!isDesktop && (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                {/* Menu Icon */}
+                <IconButton
+                  onClick={() => setDrawerOpen(true)}
+                  sx={{ color: "var(--text)" }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Box>
+            )}
 
-          {/* Navigation */}
-          <div className="flex space-x-4">
-            {navItems.map((item) => (
-              <Link key={item.key} href={item.href} passHref>
+            {/* Brand */}
+            <Link href="/">
+              <h1
+                style={{
+                  color: "var(--title)",
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  cursor: "pointer",
+                }}
+              >
+                {tCommon("brand")}
+              </h1>
+            </Link>
+          </Box>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {/* Desktop vs Mobile */}
+            {isDesktop && (
+              <Box style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                {/* Nav Links */}
+                {navItems.map((item) => (
+                  <Link key={item.key} href={item.href}>
+                    <Button
+                      sx={{
+                        color: "var(--text)",
+                        "&:hover": { color: "var(--accent)" },
+                      }}
+                    >
+                      {item.label}
+                    </Button>
+                  </Link>
+                ))}
+                {toggles}
+              </Box>
+            )}
+
+            {/* Auth / Profile */}
+            {isLoggedIn ? (
+              <IconButton onClick={() => setProfileOpen(true)}>
+                <Avatar
+                  sx={{
+                    backgroundColor: "var(--accent)",
+                    color: "var(--background)",
+                  }}
+                  src={user?.avatarUrl || ""}
+                >
+                  {user?.name?.[0]?.toUpperCase()}
+                </Avatar>
+              </IconButton>
+            ) : (
+              guestActions.map((item) => (
                 <Button
+                  key={item.key}
+                  onClick={item.onClick}
                   sx={{
                     color: "var(--text)",
                     "&:hover": { color: "var(--accent)" },
@@ -58,43 +178,31 @@ export default function Header() {
                 >
                   {item.label}
                 </Button>
-              </Link>
-            ))}
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center space-x-2">
-            <Button
-              onClick={() => setLoginOpen(true)}
-              sx={{
-                color: "var(--accent)",
-                "&:hover": { color: "var(--title)" },
-              }}
-            >
-              {t("login")}
-            </Button>
-            <Button
-              onClick={() => setRegisterOpen(true)}
-              sx={{
-                color: "var(--accent)",
-                "&:hover": { color: "var(--title)" },
-              }}
-            >
-              {t("register")}
-            </Button>
-            <ThemeToggle />
-            <LanguageToggle />
+              ))
+            )}
           </div>
         </Toolbar>
       </AppBar>
 
-      {/* Popups */}
+      {/* Mobile Navigation Drawer */}
+      <NavigationDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        navItems={navItems}
+        guestActions={guestActions}
+      />
+
+      {/* Modals */}
       <LoginModal
         open={loginOpen}
         onClose={() => setLoginOpen(false)}
         onSwitchToRegister={() => {
           setLoginOpen(false);
           setRegisterOpen(true);
+        }}
+        onSwitchToForgotPassword={() => {
+          setLoginOpen(false);
+          setForgotOpen(true);
         }}
       />
       <RegisterModal
@@ -105,6 +213,14 @@ export default function Header() {
           setLoginOpen(true);
         }}
       />
+      <ForgotPasswordModal
+        open={forgotOpen}
+        onClose={() => setForgotOpen(false)}
+        onSwitchToReset={() => setForgotOpen(false)}
+      />
+
+      {/* Profile Drawer */}
+      <ProfileDrawer open={profileOpen} onClose={() => setProfileOpen(false)} />
     </>
   );
 }
