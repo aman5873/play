@@ -6,7 +6,7 @@ export const colors = {
     subtitle: "#cccccc",
     border: "#00ff00",
     accent: "#00ff88",
-    hover: "#00ff88",
+    hover: "#04e37c",
     hoverBg: "#003300",
     overlay: "rgba(0,0,0,0.6)", // behind drawer
     surface: "rgba(30,30,30,0.95)", // drawer / modal panel

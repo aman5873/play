@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TextField, Button, Container, Typography, Paper } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/context/ThemeContext";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ResetPasswordPage() {
   const { colors } = useTheme();

@@ -12,13 +12,15 @@ export function useAuth() {
   //   email: "aman@email.com",
   // });
 
-  // ------------------
-  // Auth Actions
-  // ------------------
-  const login = (email) => {
+  // ---------Auth Actions ---------
+  const login = ({ email }) => {
     setIsLoggedIn(true);
     setUser({ email, name: email.split("@")[0] });
     console.log("Logged in:", email);
+  };
+  const loginWithGoogle = () => {
+    setIsLoggedIn(true);
+    console.log("LogIn with google");
   };
 
   const register = (email, username) => {
@@ -28,14 +30,13 @@ export function useAuth() {
   };
 
   const logout = () => {
+    console.log("--logout");
     setIsLoggedIn(false);
     setUser(null);
     console.log("Logged out");
   };
 
-  // ------------------
-  // Password Actions
-  // ------------------
+  // -------- Password Actions ----------
   const forgotPassword = (email) => {
     // dummy — normally sends reset email
     console.log("Password reset link sent to:", email);
@@ -53,15 +54,22 @@ export function useAuth() {
     console.log("Password changed:", currentPassword, "→", newPassword);
     return true;
   };
+  const verifyOtp = (email, otp) => {
+    // dummy — Otp validated
+    console.log("Otp validated:", email, "→", otp);
+    return true;
+  };
 
   return {
     isLoggedIn,
     user,
     login,
+    loginWithGoogle,
     register,
     logout,
     forgotPassword,
     resetPassword,
     changePassword,
+    verifyOtp,
   };
 }

@@ -3,9 +3,10 @@ import { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import ButtonComp from "@components/ButtonComp";
 import AppModal from "@components/AppModal";
 import { useTheme } from "@/context/ThemeContext";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ChangePasswordModal({ open, onClose }) {
   const { colors } = useTheme();
@@ -86,7 +87,7 @@ export default function ChangePasswordModal({ open, onClose }) {
             label: { color: colors.subtitle },
           }}
         />
-        <Button
+        {/* <Button
           type="submit"
           variant="contained"
           fullWidth
@@ -98,7 +99,9 @@ export default function ChangePasswordModal({ open, onClose }) {
           }}
         >
           {tAuth("updatePassword")}
-        </Button>
+        </Button> */}
+
+        <ButtonComp type="submit" label={tAuth("updatePassword")} />
       </form>
     </AppModal>
   );

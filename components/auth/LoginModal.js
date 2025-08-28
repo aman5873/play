@@ -4,10 +4,15 @@ import { TextField, Button, Divider, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import GoogleIcon from "@mui/icons-material/Google";
 
+import ButtonComp from "@components/ButtonComp";
 import { useTheme } from "@/context/ThemeContext";
 import AppModal from "@components/AppModal";
-import { useAuth } from "@/hooks/useAuth"; // 👈 your auth hook
+import { useAuth } from "@/context/AuthContext"; // 👈 your auth hook
 
+const initFormData = {
+  email: "",
+  password: "",
+};
 export default function LoginModal({
   open,
   onClose,
@@ -16,17 +21,21 @@ export default function LoginModal({
 }) {
   const { colors } = useTheme();
   const { t: tAuth } = useTranslation("auth");
-  const { login } = useAuth(); // 👈 call login here
+  const { login, loginWithGoogle } = useAuth(); // 👈 call login here
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState(initFormData);
+
+  function handleClose() {
+    setFormData(initFormData);
+    onClose();
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await login(email, password);
-      onClose(); // close modal if success
+      await login(formData);
+      handleClose(); // close modal if success
     } catch (err) {
       console.error("Login failed", err);
       // TODO: show error toast/snackbar
@@ -34,15 +43,15 @@ export default function LoginModal({
   };
 
   return (
-    <AppModal open={open} onClose={onClose} title={tAuth("loginTitle")}>
+    <AppModal open={open} onClose={handleClose} title={tAuth("loginTitle")}>
       <form onSubmit={handleSubmit}>
         <TextField
           label={tAuth("email")}
           type="email"
           fullWidth
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData?.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           variant="outlined"
           sx={{
             mb: 2,
@@ -60,8 +69,10 @@ export default function LoginModal({
           type="password"
           fullWidth
           required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData?.password}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
           variant="outlined"
           sx={{
             mb: 2,
@@ -73,25 +84,11 @@ export default function LoginModal({
             label: { color: colors.subtitle },
           }}
         />
-
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{
-            background: colors.accent,
-            color: colors.background,
-            fontWeight: "bold",
-            mt: 1,
-            "&:hover": { background: colors.hover, color: colors.text },
-          }}
-        >
-          {tAuth("submit")}
-        </Button>
+        <ButtonComp type="submit" label={tAuth("loginTitle")} />
       </form>
 
       {/* Forgot password link 👇 */}
-      <Box sx={{ textAlign: "right", mt: 1 }}>
+      <Box sx={{ textAlign: "right" }}>
         <span
           style={{
             fontSize: "0.85rem",
@@ -107,7 +104,7 @@ export default function LoginModal({
 
       <Divider
         sx={{
-          my: 2,
+          mb: 1,
           "&::before, &::after": { borderColor: colors.border },
           color: colors.subtitle,
         }}
@@ -124,11 +121,11 @@ export default function LoginModal({
           color: colors.text,
           py: 1.2,
           "&:hover": {
-            borderColor: colors.accent,
-            backgroundColor: colors.hoverBg,
+            color: colors.background,
+            backgroundColor: colors.hover,
           },
         }}
-        onClick={() => login("google")}
+        onClick={() => loginWithGoogle()}
       >
         {tAuth("googleLogin")}
       </Button>

@@ -10,8 +10,9 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import ButtonComp from "@components/ButtonComp";
 import { useTheme } from "@/context/ThemeContext";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import ChangePasswordModal from "@components/auth/ChangePasswordModal";
 import AppDrawer from "../AppDrawer";
 
@@ -60,7 +61,11 @@ export default function ProfileDrawer({ open, onClose }) {
 
           {/* Actions */}
           <Box sx={{ p: 3, mt: "auto" }}>
-            <Button
+            <ButtonComp
+              label={tAuth("changePassword")}
+              onClick={() => setShowChangePassword(true)}
+            />
+            {/* <Button
               variant="outlined"
               fullWidth
               sx={{
@@ -76,9 +81,11 @@ export default function ProfileDrawer({ open, onClose }) {
               onClick={() => setShowChangePassword(true)}
             >
               {tAuth("changePassword")}
-            </Button>
+            </Button> */}
 
-            <Button
+            <ButtonComp label={tAuth("logout")} onClick={logout} />
+
+            {/* <Button
               variant="contained"
               fullWidth
               sx={{
@@ -91,7 +98,7 @@ export default function ProfileDrawer({ open, onClose }) {
               onClick={logout}
             >
               {tAuth("logout")}
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       </AppDrawer>

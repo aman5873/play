@@ -16,7 +16,7 @@ import { useTheme, useMediaQuery } from "@mui/material";
 
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "./LanguageToggle";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 
 // ✅ Dynamic imports
 const LoginModal = dynamic(() => import("@/components/auth/LoginModal"), {
@@ -53,6 +53,9 @@ export default function Header() {
 
   const { isLoggedIn, user } = useAuth();
 
+  console.log("--Header-isLoggedIn-", isLoggedIn);
+  console.log("-Header-user--", user);
+
   // 🔹 Navigation items
   const navItems = [
     { key: "games", label: tCommon("games"), href: "/games" },
@@ -64,7 +67,11 @@ export default function Header() {
 
   // 🔹 Guest actions
   const guestActions = [
-    { key: "login", label: tAuth("login"), onClick: () => setLoginOpen(true) },
+    {
+      key: "login",
+      label: tAuth("loginTitle"),
+      onClick: () => setLoginOpen(true),
+    },
   ];
 
   // 🔹 Toggles

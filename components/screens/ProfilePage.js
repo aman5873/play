@@ -1,8 +1,7 @@
 "use client";
 import { Button, Box, Typography } from "@mui/material";
 
-import AppModal from "@components/AppModal";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ProfilePage() {
   const { isLoggedIn, logout } = useAuth();

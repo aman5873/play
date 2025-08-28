@@ -43,7 +43,7 @@ export default function AppModal({
             fontWeight: "bold",
             textAlign: "center",
             fontSize: "1.5rem",
-            mb: 2,
+            mb: 1,
           }}
         >
           {title}

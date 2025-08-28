@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import Header from "@/components/Header";
 import { AlertProvider } from "@/context/AlertContext";
 import { usePathname } from "next/navigation";
+import { AuthProvider } from "@/context/AuthContext";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -20,8 +21,10 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <LanguageProvider>
             <AlertProvider>
-              {shouldShowHeader && <Header />}
-              <main style={{ padding: 6, paddingTop: 70 }}>{children}</main>
+              <AuthProvider>
+                {shouldShowHeader && <Header />}
+                <main style={{ padding: 6, paddingTop: 70 }}>{children}</main>
+              </AuthProvider>
             </AlertProvider>
           </LanguageProvider>
         </ThemeProvider>

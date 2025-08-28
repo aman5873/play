@@ -7,11 +7,10 @@ import {
   Box,
 } from "@mui/material";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
 
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageToggle from "@/components/LanguageToggle";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 import { useTheme } from "@/context/ThemeContext";
 import AppDrawer from "@/components/AppDrawer";
 
@@ -20,9 +19,7 @@ export default function NavigationDrawer({
   onClose,
   navItems,
   guestActions,
-  onProfileClick,
 }) {
-  const { t: tCommon } = useTranslation("common");
   const { isLoggedIn } = useAuth();
   const { colors } = useTheme();
 

@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
+import ButtonComp from "@components/ButtonComp";
 import AppModal from "@components/AppModal";
 import { useTheme } from "@/context/ThemeContext";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ResetPasswordModal({ open, onClose }) {
   const { colors } = useTheme();
@@ -60,7 +61,7 @@ export default function ResetPasswordModal({ open, onClose }) {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           sx={{
-            mb: 2,
+            mb: 1,
             "& .MuiOutlinedInput-root": {
               "& fieldset": { borderColor: colors.border },
               "&:hover fieldset": { borderColor: colors.accent },
@@ -69,19 +70,8 @@ export default function ResetPasswordModal({ open, onClose }) {
             label: { color: colors.subtitle },
           }}
         />
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          sx={{
-            background: colors.accent,
-            color: colors.background,
-            fontWeight: "bold",
-            "&:hover": { background: colors.hover, color: colors.text },
-          }}
-        >
-          {tAuth("updatePassword")}
-        </Button>
+
+        <ButtonComp type="submit" label={tAuth("updatePassword")} />
       </form>
     </AppModal>
   );
