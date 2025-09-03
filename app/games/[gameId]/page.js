@@ -7,6 +7,7 @@ import { gamesData } from "@/constants/gameData";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import Image from "next/image";
 
+// change
 export default function GamePage() {
   const { gameId } = useParams();
   const [gameInfo, setGameInfo] = useState(null);
