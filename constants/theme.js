@@ -1,6 +1,6 @@
 export const colors = {
   dark: {
-    background: "#2a2a2a",
+    background: "#000",
     text: "#ffffff",
     title: "#00ff00",
     subtitle: "#cccccc",

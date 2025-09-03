@@ -53,9 +53,6 @@ export default function Header() {
 
   const { isLoggedIn, user } = useAuth();
 
-  console.log("--Header-isLoggedIn-", isLoggedIn);
-  console.log("-Header-user--", user);
-
   // 🔹 Navigation items
   const navItems = [
     { key: "games", label: tCommon("games"), href: "/games" },
@@ -85,10 +82,10 @@ export default function Header() {
   return (
     <>
       <AppBar
+        className="px-10"
         position="fixed"
         sx={{
-          backgroundColor: "var(--surface)",
-          borderBottom: "2px solid var(--border)",
+          backgroundColor: "var(--background)",
           boxShadow: "none",
         }}
       >
@@ -125,7 +122,6 @@ export default function Header() {
                   color: "var(--title)",
                   fontSize: "1.5rem",
                   fontWeight: "bold",
-                  marginLeft: 10,
                   cursor: "pointer",
                 }}
               >
