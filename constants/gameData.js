@@ -6,6 +6,7 @@ export const categoriesData = [
 ];
 
 export const gamesData = [
+  
   {
     id: 1,
     title: "VR Basketball",
