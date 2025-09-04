@@ -12,7 +12,7 @@ export default function Footer() {
           marginBottom: 16,
         }}
       />
-      © {currentYear} IMM Play. All rights reserved.
+      © {currentYear} Play Hub. All rights reserved.
     </footer>
   );
 }

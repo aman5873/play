@@ -13,9 +13,7 @@ export default function TopComp({ content, contClass = "" }) {
 
   if (content)
     return (
-      <div
-        className={`relative w-full h-full xsm:h-[70vh] sm:h-[70vh] md:h-[50vh] lg:h-[55vh] ${contClass}`}
-      >
+      <div className={`relative w-full h-[50vh]  lg:h-[52vh] ${contClass}`}>
         {content?.backgroundImage && (
           <Image
             src={content?.backgroundImage}
@@ -58,7 +56,12 @@ export default function TopComp({ content, contClass = "" }) {
             zIndex: 10,
           }}
         >
-          <Chip label={content?.chip} />
+          <div className="flex gap-2">
+            {content?.chip?.map((label, index) => {
+              return <Chip key={`chip-${index}`} label={label} />;
+            })}
+          </div>
+
           <h1 className="font-sans text-3xl md:text-4xl lg:text-5xl font-semibold m-0">
             {content?.title}
           </h1>
@@ -72,32 +75,35 @@ export default function TopComp({ content, contClass = "" }) {
           )}
           {content?.description && (
             <p
-              className="font-sans text-[1rem] md:text-[1.3rem] m-0 mt-3"
-              style={{ color: "#ccc" }}
+              className="font-sans text-[1rem] md:text-[1.1rem] m-0 mt-3"
+              style={{
+                color: "#ccc",
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
               {content?.description}
             </p>
           )}
-
           {content.button?.length > 0 && (
-            <div className="flex gap-3 mt-5">
+            <div className="flex flex-wrap gap-3 mt-5">
               {content.button.map((btn, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleRedirect(btn.redirect)}
-                  className={btn.type === "primary" ? "" : "dark-sec-btn"}
-                  style={
-                    btn.type === "primary"
-                      ? {
-                          background: "var(--title)",
-                          color: "black",
-                          width: "fit-content",
-                          padding: "10px 20px",
-                          borderRadius: 8,
-                          cursor: "pointer",
-                        }
-                      : {}
-                  }
+                  className={`px-4 py-2 rounded-lg cursor-pointer text-sm sm:text-base transition-colors hover:scale-[1.02] hover:opacity-95 transition-all duration-300 shadow-md
+                    ${
+                      btn.type === "primary"
+                        ? "bg-[var(--title)] text-[var(--background)]"
+                        : "dark-sec-btn"
+                    }`}
+                  style={{
+                    minWidth: "120px", // ensures touch-friendly size on mobile
+                    width: "fit-content",
+                  }}
                 >
                   {btn.label}
                 </button>

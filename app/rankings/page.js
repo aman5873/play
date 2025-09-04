@@ -2,7 +2,7 @@ import TopComp from "@/components/TopComp";
 import React from "react";
 
 const content = {
-  chip: "Rankings",
+  chip: ["Rankings"],
   title: "Global rankings",
   description: "Discover the world's best players and teams in VR sports.",
   backgroundImage:

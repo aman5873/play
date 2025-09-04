@@ -8,7 +8,7 @@ import ReactSelectInput from "@/components/common/ReactSelectInput";
 
 // Top banner content
 const content = {
-  chip: "Games",
+  chip: ["Games"],
   title: "Discover our VR sports",
   description:
     "Explore our collection of virtual reality sports games and take your skills to the next level.",
@@ -67,7 +67,7 @@ function GamePageFeed() {
         {/* Search box */}
         <input
           type="text"
-          placeholder="Search games..."
+          placeholder="Search Game..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full  px-4 py-2 rounded-lg border"

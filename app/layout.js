@@ -17,13 +17,13 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col min-h-screen ">
         <ThemeProvider>
           <LanguageProvider>
             <AlertProvider>
               <AuthProvider>
                 {shouldShowHeader && <Header />}
-                <main className="flex-grow">{children}</main>
+                <main className="flex-grow pt-10">{children}</main>
                 <Footer />
               </AuthProvider>
             </AlertProvider>

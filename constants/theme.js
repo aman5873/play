@@ -21,6 +21,6 @@ export const colors = {
     hover: "#007700",
     hoverBg: "#e6ffe6",
     overlay: "rgba(0,0,0,0.2)", // behind drawer
-    surface: "rgba(255,255,255,0.95)", // drawer / modal panel
+    surface: "rgba(241, 241, 241, 0.95)", // drawer / modal panel
   },
 };

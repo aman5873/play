@@ -5,9 +5,9 @@ import TopComp from "@/components/TopComp";
 const content = {
   backgroundImage:
     "https://images.unsplash.com/photo-1622979135240-caa6648190b6?q=80&w=2070&auto=format&fit=crop",
-  chip: "The new generation of sports",
+  chip: ["The new generation of sports"],
   title: " Dominate the world of",
-  highlightTitle: "IMM Play",
+  highlightTitle: "Play Hub",
   description:
     "Compete in virtual reality sports, earn points, and win exclusive prizes. Join the sports community of the future.",
   button: [
@@ -24,13 +24,8 @@ export default function Home() {
   return (
     <div
       style={{
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        // alignItems: "center",
-        // justifyContent: "center",
-        // background: "var(--background)",
-        // color: "var(--text)",
       }}
     >
       <TopComp content={content} contClass={"md:h-[55vh] lg:h-[70vh]"} />

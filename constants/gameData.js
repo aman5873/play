@@ -6,7 +6,6 @@ export const categoriesData = [
 ];
 
 export const gamesData = [
-  
   {
     id: 1,
     title: "VR Basketball",
@@ -35,6 +34,17 @@ export const gamesData = [
         title: "Feature 4",
         description: "Career and exhibition modes",
       },
+      {
+        id: "5",
+        title: "Feature 4",
+        description: "Career and exhibition modes",
+      },
+      {
+        id: "6",
+        title: "Feature 6",
+        description:
+          "Career and exhibition modes,Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores accusamus nihil voluptatem nesciunt similique, voluptatum ex eveniet iste ipsa at.",
+      },
     ],
     images: [
       { id: "img1", image_path: "/images/games/game1-1.jpg", is_primary: 1 },
@@ -46,9 +56,12 @@ export const gamesData = [
     developer: "Unity Labs",
     platform: {
       list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
-      requirements: [
+      requirements:
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
-      ],
+    },
+    ratings: {
+      count: 186,
+      avg_rating: 4.7,
     },
   },
 
@@ -94,6 +107,10 @@ export const gamesData = [
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
       ],
     },
+    ratings: {
+      count: 102,
+      avg_rating: 4.5,
+    },
   },
   {
     id: 3,
@@ -137,6 +154,10 @@ export const gamesData = [
       requirements: [
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
       ],
+    },
+    ratings: {
+      count: 126,
+      avg_rating: 4.2,
     },
   },
 
@@ -227,6 +248,10 @@ export const gamesData = [
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
       ],
     },
+    ratings: {
+      count: 126,
+      avg_rating: 4.2,
+    },
   },
 ];
 
@@ -235,6 +260,7 @@ export const tournamentCategoriesData = [
   { id: 1, name: "VR Soccer League" },
   { id: 2, name: "VR Climbing Challenge" },
   { id: 3, name: "VR Basketball" },
+  { id: 4, name: "VR Snowboarding" },
 ];
 
 export const statusesData = [
@@ -246,18 +272,23 @@ export const statusesData = [
 
 export const tournamentsData = [
   {
-    id: 1,
-    title: "VR World Cup 2023",
+    id: "tour-4",
+    title: "VR Winter Games",
     description:
       "The 2023 VR World Cup is the biggest virtual reality football event. 32 teams from around the world will compete to win the world title and a €50,000 prize pool. The tournament will be played over three weeks, with group stages followed by knockout rounds. Matches will be streamed live on our official platform.",
     start_date: "2025-07-15",
     teams_participated_count: 16,
     max_teams: 32,
     prize: "50,000",
-    category: "VR Soccer League",
+    category: "VR Snowboarding",
     status: "Registration open",
     images: [
-      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 1 },
+      {
+        id: "img3",
+        image_path:
+          "https://images.unsplash.com/photo-1605540436563-5bca919ae766?q=80&w=2069&auto=format&fit=crop",
+        is_primary: 1,
+      },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
@@ -322,16 +353,17 @@ export const tournamentsData = [
       },
     ],
   },
+
   {
     id: "tour-2",
-    title: "VR World Cup 2023",
+    title: "VR Basketball Masters",
     description:
       "The 2023 VR World Cup is the biggest virtual reality football event. 32 teams from around the world will compete to win the world title and a €50,000 prize pool. The tournament will be played over three weeks, with group stages followed by knockout rounds. Matches will be streamed live on our official platform.",
     start_date: "2025-07-15",
     teams_participated_count: 16,
-    max_teams: 32,
-    prize: "50,000",
-    category: "VR Soccer League",
+    max_teams: 16,
+    prize: "25,000",
+    category: "VR Basketball",
     status: "Registration open",
     images: [
       {
@@ -341,7 +373,12 @@ export const tournamentsData = [
         is_primary: 1,
       },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
-      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+      {
+        id: "img3",
+        image_path:
+          "https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=2069&auto=format&fit=crop",
+        is_primary: 0,
+      },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
     ],
 
@@ -416,7 +453,12 @@ export const tournamentsData = [
     category: "VR Soccer League",
     status: "Registration open",
     images: [
-      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 1 },
+      {
+        id: "img3",
+        image_path:
+          "https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=2069&auto=format&fit=crop",
+        is_primary: 1,
+      },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
@@ -482,7 +524,7 @@ export const tournamentsData = [
     ],
   },
   {
-    id: "tour-4",
+    id: 1,
     title: "VR World Cup 2023",
     description:
       "The 2023 VR World Cup is the biggest virtual reality football event. 32 teams from around the world will compete to win the world title and a €50,000 prize pool. The tournament will be played over three weeks, with group stages followed by knockout rounds. Matches will be streamed live on our official platform.",
@@ -493,12 +535,7 @@ export const tournamentsData = [
     category: "VR Soccer League",
     status: "Registration open",
     images: [
-      {
-        id: "img3",
-        image_path:
-          "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=2070&auto=format&fit=crop",
-        is_primary: 1,
-      },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 1 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },

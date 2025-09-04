@@ -45,7 +45,7 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
       {showLeft && (
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-[var(--surface)] shadow-md rounded-full"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-[var(--surface)] shadow-md rounded-full"
         >
           <ChevronLeftIcon style={{ fontSize: 28, color: "var(--text)" }} />
         </button>
@@ -63,7 +63,7 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
       {showRight && (
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-[var(--surface)] shadow-md rounded-full"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1 bg-[var(--surface)] shadow-md rounded-full"
         >
           <ChevronRightIcon style={{ fontSize: 28, color: "var(--text)" }} />
         </button>

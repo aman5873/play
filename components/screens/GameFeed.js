@@ -107,14 +107,18 @@ export default function GameFeed() {
   return (
     <div className="relative px-10 py-10 pb-20">
       <Chip label="Games" />
-      <div className="flex justify-between items-center">
+
+      <div className="flex flex-wrap justify-between items-center mb-5">
         <h1
-          className="font-sans text-2xl md:text-3xl lg:text-4xl font-semibold m-0 mb-5"
+          className="font-sans text-2xl md:text-3xl lg:text-4xl font-semibold m-0 mb-2 lg:mb-0"
           style={{ color: "var(--text)" }}
         >
           Featured Games
         </h1>
-        <Link href="/games" className="text-[var(--subtitle)] cursor-pointer">
+        <Link
+          href="/games"
+          className="text-[var(--subtitle)] cursor-pointer text-sm md:text-base transition-colors duration-300 hover:text-[var(--title)] ml-auto "
+        >
           See all games
         </Link>
       </div>

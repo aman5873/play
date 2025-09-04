@@ -4,26 +4,33 @@ import Link from "next/link";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import InsertInvitationIcon from "@mui/icons-material/InsertInvitation";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import { useRouter } from "next/navigation";
 
 import Chip from "@components/common/Chip";
 import { tournamentsData } from "@/constants/gameData";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 
-export function TournamentCard({ tournamentInfo, showDesc = false }) {
+export function TournamentCard({
+  tournamentInfo,
+  showDesc = false,
+  style = {},
+  contClass = "",
+}) {
+  const router = useRouter();
   const [hovered, setHovered] = useState(false);
   const primaryImage = tournamentInfo?.images.find((img) => img?.is_primary);
 
-  const iconStyle = { fontSize: 16, color: "var(--subtitle)" };
+  const iconStyle = { fontSize: 20, color: "var(--subtitle)" };
   return (
     <div
-      className="group relative w-500 min-w-[18rem] max-w-md flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col"
+      className={`group relative w-[18rem] sm:w-[20rem] lg:w-[24rem]  flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col ${contClass}`}
       style={{
         background: "var(--bg)",
         border: "1px solid var(--subtitle)",
         backgroundColor: "var(--surface)",
         height: showDesc ? "33rem" : "28rem", // fixed card height
-        cursor: "pointer",
+        ...style,
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -106,7 +113,8 @@ export function TournamentCard({ tournamentInfo, showDesc = false }) {
 
       {/* Button row (always reserved height, button animates) */}
       <button
-        className={`absolute font-semibold bottom-4 left-1/2 -translate-x-1/2 w-[90%] px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transform transition-all duration-500 ease-in-out ${
+        onClick={() => router.push(`/tournaments/${tournamentInfo?.id}`)}
+        className={`absolute cursor-pointer font-semibold bottom-4 left-1/2 -translate-x-1/2 w-[90%] px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transform transition-all duration-500 ease-in-out ${
           hovered
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-6 pointer-events-none"
@@ -129,16 +137,16 @@ export default function TournamentFeed() {
   return (
     <div className="relative px-10 py-10 pb-20">
       <Chip label="Tournaments" />
-      <div className="flex justify-between items-center">
+      <div className="flex flex-wrap justify-between items-center mb-5">
         <h1
-          className="font-sans text-2xl md:text-3xl lg:text-4xl font-semibold m-0 mb-5"
+          className="font-sans text-2xl md:text-3xl lg:text-4xl font-semibold m-0 mb-2 lg:mb-0"
           style={{ color: "var(--text)" }}
         >
           Upcoming tournaments
         </h1>
         <Link
           href="/tournaments"
-          className="text-[var(--subtitle)] cursor-pointer"
+          className="text-[var(--subtitle)] cursor-pointer text-sm md:text-base transition-colors duration-300 hover:text-[var(--title)] ml-auto"
         >
           See all tournaments
         </Link>
