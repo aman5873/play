@@ -298,17 +298,29 @@ export const tournamentsData = [
       {
         id: "1",
         phase: "Group Stage",
+        dates: ["2025-08-15", "2025-08-20"],
         start_date: "2025-08-15",
         end_date: "2025-08-20",
       },
       {
         id: "2",
         phase: "Quarter finals",
+        dates: ["2025-08-15", "2025-08-20", "2025-08-25"],
         start_date: "2025-08-23",
         end_date: "2025-08-25",
       },
-      { id: "3", phase: "Semifinals", start_date: "2025-08-28" },
-      { id: "4", phase: "Final", start_date: "2025-08-30" },
+      {
+        id: "3",
+        phase: "Semifinals",
+        dates: ["2025-08-28"],
+        start_date: "2025-08-28",
+      },
+      {
+        id: "4",
+        phase: "Final",
+        start_date: "2025-08-30",
+        dates: ["2025-08-30"],
+      },
     ],
     format: "6v6 competition system. Group stage followed by knockout rounds.",
     prizeList: [
@@ -386,17 +398,29 @@ export const tournamentsData = [
       {
         id: "1",
         phase: "Group Stage",
+        dates: ["2025-08-15", "2025-08-20"],
         start_date: "2025-08-15",
         end_date: "2025-08-20",
       },
       {
         id: "2",
         phase: "Quarter finals",
+        dates: ["2025-08-15", "2025-08-20", "2025-08-25"],
         start_date: "2025-08-23",
         end_date: "2025-08-25",
       },
-      { id: "3", phase: "Semifinals", start_date: "2025-08-28" },
-      { id: "4", phase: "Final", start_date: "2025-08-30" },
+      {
+        id: "3",
+        phase: "Semifinals",
+        dates: ["2025-08-28"],
+        start_date: "2025-08-28",
+      },
+      {
+        id: "4",
+        phase: "Final",
+        start_date: "2025-08-30",
+        dates: ["2025-08-30"],
+      },
     ],
     format: "6v6 competition system. Group stage followed by knockout rounds.",
     prizeList: [
@@ -468,17 +492,29 @@ export const tournamentsData = [
       {
         id: "1",
         phase: "Group Stage",
+        dates: ["2025-08-15", "2025-08-20"],
         start_date: "2025-08-15",
         end_date: "2025-08-20",
       },
       {
         id: "2",
         phase: "Quarter finals",
+        dates: ["2025-08-15", "2025-08-20", "2025-08-25"],
         start_date: "2025-08-23",
         end_date: "2025-08-25",
       },
-      { id: "3", phase: "Semifinals", start_date: "2025-08-28" },
-      { id: "4", phase: "Final", start_date: "2025-08-30" },
+      {
+        id: "3",
+        phase: "Semifinals",
+        dates: ["2025-08-28"],
+        start_date: "2025-08-28",
+      },
+      {
+        id: "4",
+        phase: "Final",
+        start_date: "2025-08-30",
+        dates: ["2025-08-30"],
+      },
     ],
     format: "6v6 competition system. Group stage followed by knockout rounds.",
     prizeList: [
@@ -545,17 +581,29 @@ export const tournamentsData = [
       {
         id: "1",
         phase: "Group Stage",
+        dates: ["2025-08-15", "2025-08-20"],
         start_date: "2025-08-15",
         end_date: "2025-08-20",
       },
       {
         id: "2",
         phase: "Quarter finals",
+        dates: ["2025-08-15", "2025-08-20", "2025-08-25"],
         start_date: "2025-08-23",
         end_date: "2025-08-25",
       },
-      { id: "3", phase: "Semifinals", start_date: "2025-08-28" },
-      { id: "4", phase: "Final", start_date: "2025-08-30" },
+      {
+        id: "3",
+        phase: "Semifinals",
+        dates: ["2025-08-28"],
+        start_date: "2025-08-28",
+      },
+      {
+        id: "4",
+        phase: "Final",
+        start_date: "2025-08-30",
+        dates: ["2025-08-30"],
+      },
     ],
     format: "6v6 competition system. Group stage followed by knockout rounds.",
     prizeList: [
@@ -599,5 +647,37 @@ export const tournamentsData = [
         primary_image: "/images/games/game1-1.jpg",
       },
     ],
+  },
+];
+
+// ******** Teams
+export const teams = [
+  {
+    id: 1,
+    logo: "https://i.pravatar.cc/150?img=61",
+    title: "Phoenix VR",
+    country: "Spain",
+    member_count: 8,
+  },
+  {
+    id: 2,
+    logo: "https://i.pravatar.cc/150?img=62",
+    title: "Quantum Force",
+    country: "Germany",
+    member_count: 7,
+  },
+  {
+    id: 3,
+    logo: "https://i.pravatar.cc/150?img=63",
+    title: "Digital Tigers",
+    country: "France",
+    member_count: 5,
+  },
+  {
+    id: 4,
+    logo: "https://i.pravatar.cc/150?img=64",
+    title: "Virtual Vipers",
+    country: "Italy",
+    member_count: 6,
   },
 ];

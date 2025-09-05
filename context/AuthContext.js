@@ -6,6 +6,7 @@ import {
   useCallback,
   useMemo,
 } from "react";
+import api from "@/lib/apiConfig";
 
 const AuthContext = createContext(null);
 
@@ -31,12 +32,6 @@ export function AuthProvider({ children }) {
     console.log("LogIn with google");
   }, []);
 
-  const register = useCallback((email, username) => {
-    setIsLoggedIn(true);
-    setUser({ email, name: username });
-    console.log("Registered:", email, username);
-  }, []);
-
   const logout = useCallback(() => {
     console.log("--logout");
     setIsLoggedIn(false);
@@ -60,9 +55,20 @@ export function AuthProvider({ children }) {
     return true;
   }, []);
 
-  const verifyOtp = useCallback((email, otp) => {
-    console.log("Otp validated:", email, "→", otp);
-    return true;
+  const verifyOtp = useCallback(async (email, token) => {
+    try {
+      const response = await api.post("/api/v1/app/verify-email", {
+        email,
+        token,
+      });
+      return response?.data;
+    } catch (error) {
+      console.error(
+        "OTP verification failed:",
+        error.response?.data || error.message
+      );
+      throw error;
+    }
   }, []);
 
   // ✅ Memoize the context value so components don’t re-render unnecessarily
@@ -72,7 +78,6 @@ export function AuthProvider({ children }) {
       user,
       login,
       loginWithGoogle,
-      register,
       logout,
       forgotPassword,
       resetPassword,
@@ -84,7 +89,7 @@ export function AuthProvider({ children }) {
       user,
       login,
       loginWithGoogle,
-      register,
+
       logout,
       forgotPassword,
       resetPassword,

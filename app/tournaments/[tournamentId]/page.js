@@ -1,11 +1,104 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
+import moment from "moment";
 
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import TopComp from "@/components/TopComp";
 import { tournamentsData } from "@/constants/gameData";
 import { ListInfoComp } from "@/components/common/PageComp";
+
+import TableComp from "@/components/common/TableComp";
+
+export function TournamentSchedule({ schedule }) {
+  // ✅ Memoize formatted data
+  const formattedSchedule = useMemo(
+    () =>
+      schedule?.map((item) => ({
+        phase: item.phase,
+        date: item.start_date
+          ? `${moment(item.start_date).format("Do MMM YYYY")}${
+              item.end_date
+                ? " - " + moment(item.end_date).format("Do MMM YYYY")
+                : ""
+            }`
+          : "-",
+      })) ?? [],
+    [schedule]
+  );
+
+  // ✅ Memoize columns (static, no deps)
+  const columns = useMemo(
+    () => [
+      { header: "Phase", accessor: "phase" },
+      { header: "Date", accessor: "date" },
+    ],
+    []
+  );
+
+  return (
+    <TableComp
+      title="Tournament Schedule"
+      columns={columns}
+      data={formattedSchedule}
+    />
+  );
+}
+
+// export function TournamentSchedule({ schedule }) {
+//   return (
+//     <div>
+//       <h3 className="text-xl md:text-2xl font-semibold mb-4 text-[var(--text)]">
+//         Tournament Schedule
+//       </h3>
+
+//       <div className="w-full rounded-lg bg-[var(--surface)] shadow-md">
+//         <div className="overflow-x-auto">
+//           <table className="w-full border border-[var(--text)] rounded-lg overflow-hidden">
+//             {/* Header */}
+//             <thead className=" text-[var(--text)]">
+//               <tr>
+//                 <th className="px-4 py-2 text-left text-sm md:text-base font-semibold border-b border-[var(--text)] uppercase tracking-wide">
+//                   Phase
+//                 </th>
+//                 <th className="px-4 py-2 text-left text-sm md:text-base font-semibold border-b border-[var(--text)] uppercase tracking-wide">
+//                   Date
+//                 </th>
+//               </tr>
+//             </thead>
+
+//             {/* Rows */}
+//             <tbody>
+//               {schedule?.map((item) => {
+//                 const startDate = item?.start_date
+//                   ? moment(item.start_date).format("Do MMM YYYY")
+//                   : null;
+//                 const endDate = item?.end_date
+//                   ? moment(item.end_date).format("Do MMM YYYY")
+//                   : null;
+
+//                 return (
+//                   <tr
+//                     key={item.id}
+//                     className="transition-colors duration-200  text-[var(--subtitle)]"
+//                   >
+//                     <td className="px-4 py-2 border-b border-[var(--subtitle)] text-sm md:text-base font-medium">
+//                       {item.phase}
+//                     </td>
+//                     <td className="px-4 py-2 border-b border-[var(--subtitle)] text-sm md:text-base ">
+//                       {startDate}
+//                       {endDate ? ` - ${endDate}` : ""}
+//                     </td>
+//                   </tr>
+//                 );
+//               })}
+//             </tbody>
+//           </table>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function InformationComp({ tournamentInfo }) {
   return (
@@ -41,9 +134,7 @@ function RulesComp({ tournamentInfo }) {
     </div>
   );
 }
-function CalendarComp() {
-  return <div>CalendarComp</div>;
-}
+
 function ParticipantsComp() {
   return <div>ParticipantsComp</div>;
 }
@@ -54,7 +145,7 @@ export function TwoColumnLayout({ tournamentInfo, primaryImage }) {
   const tabContent = [
     <InformationComp tournamentInfo={tournamentInfo} />,
     <RulesComp tournamentInfo={tournamentInfo} />,
-    <CalendarComp tournamentInfo={tournamentInfo} />,
+    <TournamentSchedule schedule={tournamentInfo?.schedule} />,
     <ParticipantsComp tournamentInfo={tournamentInfo} />,
   ];
 
