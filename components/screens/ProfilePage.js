@@ -4,9 +4,9 @@ import { Button, Box, Typography } from "@mui/material";
 import { useAuth } from "@/context/AuthContext";
 
 export default function ProfilePage() {
-  const { isLoggedIn, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
-  if (!isLoggedIn) {
+  if (!isAuthenticated) {
     return <Typography variant="h6">Please login to view profile</Typography>;
   }
 

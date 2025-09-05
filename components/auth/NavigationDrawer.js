@@ -20,7 +20,7 @@ export default function NavigationDrawer({
   navItems,
   guestActions,
 }) {
-  const { isLoggedIn } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { colors } = useTheme();
 
   const renderNavLinks = () =>
@@ -68,7 +68,7 @@ export default function NavigationDrawer({
         <List>{renderNavLinks()}</List>
 
         {/* Guest Actions (if not logged in) */}
-        {!isLoggedIn && <List>{renderGuestActions()}</List>}
+        {!isAuthenticated && <List>{renderGuestActions()}</List>}
 
         {/* Footer */}
         <Divider sx={{ borderColor: colors.border, mt: 1, mb: 1 }} />

@@ -65,40 +65,8 @@ export default function ProfileDrawer({ open, onClose }) {
               label={tAuth("changePassword")}
               onClick={() => setShowChangePassword(true)}
             />
-            {/* <Button
-              variant="outlined"
-              fullWidth
-              sx={{
-                borderColor: colors.accent,
-                color: colors.accent,
-                mb: 2,
-                borderRadius: 2,
-                "&:hover": {
-                  borderColor: colors.hover,
-                  backgroundColor: colors.hoverBg,
-                },
-              }}
-              onClick={() => setShowChangePassword(true)}
-            >
-              {tAuth("changePassword")}
-            </Button> */}
 
             <ButtonComp label={tAuth("logout")} onClick={logout} />
-
-            {/* <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                background: colors.accent,
-                color: colors.background,
-                fontWeight: "bold",
-                borderRadius: 2,
-                "&:hover": { background: colors.hover, color: colors.text },
-              }}
-              onClick={logout}
-            >
-              {tAuth("logout")}
-            </Button> */}
           </Box>
         </Box>
       </AppDrawer>

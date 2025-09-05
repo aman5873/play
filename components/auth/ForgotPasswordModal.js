@@ -9,8 +9,13 @@ import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/AuthContext"; // your auth hook
 import { useAlert } from "@/context/AlertContext";
 import OtpInput from "../OtpInput";
+import {
+  handleApiMessage,
+  forgotPassword,
+  resetPassword,
+} from "@/lib/auth_ops";
 
-const maskEmail = (email) => {
+export const maskEmail = (email) => {
   if (!email.includes("@")) return email;
   const [local, domain] = email.split("@");
   return (
@@ -26,11 +31,14 @@ const initError = {
   password: false,
 };
 
-export default function ForgotPasswordModal({ open, onClose }) {
+export default function ForgotPasswordModal({
+  open,
+  onClose,
+  onSwitchToLogin,
+}) {
   const { showAlert } = useAlert();
   const { colors } = useTheme();
   const { t: tAuth } = useTranslation("auth");
-  const { forgotPassword, verifyOtp, resetPassword } = useAuth();
 
   const [step, setStep] = useState(1); // 1=email, 2=otp, 3=reset
   const [email, setEmail] = useState("");
@@ -51,23 +59,24 @@ export default function ForgotPasswordModal({ open, onClose }) {
   // Step 1: Request OTP
   const handleRequestOtp = async (e) => {
     e.preventDefault();
-    try {
-      await forgotPassword(email);
-      setStep(2);
-    } catch (err) {
-      showAlert("Forgot password failed", "error");
-    }
+    forgotPassword(email)
+      .then((res) => {
+        if (res?.success) {
+          handleApiMessage(res?.message, showAlert, "success");
+          setStep(2);
+        } else {
+          handleApiMessage(res?.message, showAlert);
+        }
+      })
+      .catch((err) => {
+        console.error("Forgot password failed", err);
+      });
   };
 
   // Step 2: Verify OTP
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    try {
-      await verifyOtp(email, otp);
-      setStep(3);
-    } catch (err) {
-      showAlert("OTP verification failed", "error");
-    }
+    setStep(3);
   };
 
   // Step 3: Reset Password
@@ -78,12 +87,19 @@ export default function ForgotPasswordModal({ open, onClose }) {
       showAlert("Passwords do not match", "warning");
       return;
     }
-    try {
-      await resetPassword(email, otp, password);
-      handleClose(); // ✅ close after success
-    } catch (err) {
-      showAlert("Reset password failed", "error");
-    }
+
+    resetPassword(email, otp, password, confirmPassword)
+      .then((res) => {
+        if (res?.success) {
+          handleApiMessage(res?.message, showAlert, "success");
+          onSwitchToLogin();
+        } else {
+          handleApiMessage(res?.message, showAlert);
+        }
+      })
+      .catch((err) => {
+        showAlert("Reset password failed", "error");
+      });
   };
 
   const inputStyle = {
@@ -120,7 +136,7 @@ export default function ForgotPasswordModal({ open, onClose }) {
           <Typography variant="body2" sx={{ color: colors.subtitle, mb: 2 }}>
             {tAuth("otpSentDetail", { email: maskEmail(email) })}
           </Typography>
-          <OtpInput length={4} value={otp} onChange={setOtp} />
+          <OtpInput length={6} value={otp} onChange={setOtp} />
           <ButtonComp type="submit" label={tAuth("verifyOtp")} />
         </form>
       )}

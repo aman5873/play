@@ -6,12 +6,13 @@ import { useTranslation } from "react-i18next";
 import ButtonComp from "@components/ButtonComp";
 import AppModal from "@components/AppModal";
 import { useTheme } from "@/context/ThemeContext";
-import { useAuth } from "@/context/AuthContext";
+import { handleApiMessage, changePassword } from "@/lib/auth_ops";
+import { useAlert } from "@/context/AlertContext";
 
 export default function ChangePasswordModal({ open, onClose }) {
   const { colors } = useTheme();
   const { t: tAuth } = useTranslation("auth");
-  const { changePassword } = useAuth();
+  const { showAlert } = useAlert();
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -25,12 +26,19 @@ export default function ChangePasswordModal({ open, onClose }) {
       return;
     }
 
-    try {
-      await changePassword(oldPassword, newPassword);
-      onClose();
-    } catch (err) {
-      console.error("Change password failed", err);
-    }
+    changePassword(oldPassword, newPassword, confirmPassword)
+      .then((res) => {
+        if (res?.success) {
+          handleApiMessage(res?.message, showAlert);
+          onClose();
+        } else {
+          handleApiMessage(res?.message, showAlert);
+        }
+      })
+      .catch((err) => {
+        console.error("Change password failed", err);
+        showAlert(tAuth("changePasswordFailed"), "error");
+      });
   };
 
   return (

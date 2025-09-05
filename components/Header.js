@@ -51,7 +51,7 @@ export default function Header() {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
 
-  const { isLoggedIn, user } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   // 🔹 Navigation items
   const navItems = [
@@ -157,7 +157,7 @@ export default function Header() {
             )}
 
             {/* Auth / Profile */}
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <IconButton onClick={() => setProfileOpen(true)}>
                 <Avatar
                   sx={{
@@ -220,6 +220,10 @@ export default function Header() {
         open={forgotOpen}
         onClose={() => setForgotOpen(false)}
         onSwitchToReset={() => setForgotOpen(false)}
+        onSwitchToLogin={() => {
+          setForgotOpen(false);
+          setLoginOpen(true);
+        }}
       />
 
       {/* Profile Drawer */}

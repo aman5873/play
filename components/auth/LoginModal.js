@@ -4,10 +4,13 @@ import { TextField, Button, Divider, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import GoogleIcon from "@mui/icons-material/Google";
 
+import { handleApiMessage, loginUser } from "@/lib/auth_ops";
+
 import ButtonComp from "@components/ButtonComp";
 import { useTheme } from "@/context/ThemeContext";
 import AppModal from "@components/AppModal";
 import { useAuth } from "@/context/AuthContext"; // 👈 your auth hook
+import { useAlert } from "@/context/AlertContext";
 
 const initFormData = {
   email: "",
@@ -19,9 +22,11 @@ export default function LoginModal({
   onSwitchToRegister,
   onSwitchToForgotPassword,
 }) {
+  const { showAlert } = useAlert();
+
   const { colors } = useTheme();
   const { t: tAuth } = useTranslation("auth");
-  const { login, loginWithGoogle } = useAuth(); // 👈 call login here
+  const { loginWithGoogle, setUser } = useAuth(); // 👈 call login here
 
   const [formData, setFormData] = useState(initFormData);
 
@@ -33,13 +38,20 @@ export default function LoginModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      await login(formData);
-      handleClose(); // close modal if success
-    } catch (err) {
-      console.error("Login failed", err);
-      // TODO: show error toast/snackbar
-    }
+    loginUser(formData)
+      .then((res) => {
+        if (res?.success) {
+          setUser(res?.data?.user);
+          handleApiMessage(res?.message, showAlert, "success");
+          handleClose();
+        } else {
+          handleApiMessage(res?.message, showAlert);
+        }
+      })
+      .catch((err) => {
+        console.error("Login failed", err);
+        showAlert(tAuth("loginFailed"), "error");
+      });
   };
 
   return (
@@ -139,7 +151,10 @@ export default function LoginModal({
               fontWeight: "bold",
               cursor: "pointer",
             }}
-            onClick={onSwitchToRegister}
+            onClick={() => {
+              handleClose();
+              onSwitchToRegister();
+            }}
           >
             {tAuth("register")}
           </span>
