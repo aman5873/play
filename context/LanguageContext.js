@@ -12,6 +12,7 @@ const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState(i18n.language || "en");
+  const [headerSearchValue, setHeaderSearchValue] = useState("");
 
   // restore saved language
   useEffect(() => {
@@ -34,7 +35,9 @@ export function LanguageProvider({ children }) {
   );
 
   return (
-    <LanguageContext.Provider value={{ lang, switchLang }}>
+    <LanguageContext.Provider
+      value={{ lang, switchLang, headerSearchValue, setHeaderSearchValue }}
+    >
       {children}
     </LanguageContext.Provider>
   );

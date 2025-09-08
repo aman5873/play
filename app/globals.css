@@ -4,6 +4,13 @@
   :root {
     --background: #000;
     --foreground: #ededed;
+    --font-rajdhani: "Rajdhani", sans-serif;
+    --font-nyxerin: "NYXERIN", sans-serif;
+  }
+}
+@layer utilities {
+  .gradient-two {
+    background: linear-gradient(134.63deg, #131610 2.07%, #121510 98.53%);
   }
 }
 
@@ -19,8 +26,9 @@ body::-webkit-scrollbar {
 }
 
 body {
-  background: var(--background);
-  color: var(--text);
+  /* background: var(--secondary); */
+  background: #000;
+  color: var(--textOne);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -37,6 +45,30 @@ body {
 
   --overlay: rgba(0, 0, 0, 0.2); /* behind drawer */
   --surface: rgba(241, 241, 241, 0.95); /* drawer / modal panel */
+
+  /* New UI theme */
+  --primary: #c1ff00;
+  --secondary: #0d1914;
+
+  --textOne: #fbffe6;
+  --textTwo: #a8a59b;
+  --textThree: #006956;
+  --textFour: #ff5a27;
+  --textFive: #6146f9;
+  --textCommon: #49998c;
+  --textRare: #5a8899;
+  --textLegendary: #d4a574;
+
+  --bg: #0d1914;
+  --bgOne: #1d332b;
+  --bgTwo: #2a3025;
+  --bgThree: #1a1f15;
+  --bgFour: #e23939;
+
+  --borderOne: #115740;
+  --borderTwo: #40453b;
+  --borderThree: #2a2d27;
+  --borderFour: #5c0000;
 }
 
 .dark {
@@ -52,15 +84,58 @@ body {
 
   --overlay: rgba(0, 0, 0, 0.6);
   --surface: rgba(30, 30, 30, 0.95);
+
+  /* New UI theme */
+  --primary: #c1ff00;
+  --secondary: #0d1914;
+
+  --textOne: #fbffe6;
+  --textTwo: #a8a59b;
+  --textThree: #006956;
+  --textFour: #ff5a27;
+  --textFive: #6146f9;
+  --textCommon: #49998c;
+  --textRare: #5a8899;
+  --textLegendary: #d4a574;
+
+  --bg: #0d1914;
+  --bgOne: #1d332b;
+  --bgTwo: #2a3025;
+  --bgThree: #1a1f15;
+  --bgFour: #e23939;
+
+  --borderOne: #115740;
+  --borderTwo: #40453b;
+  --borderThree: #2a2d27;
+  --borderFour: #5c0000;
 }
 
-body {
-  background: var(--background);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+.gradient-primary {
+  background: linear-gradient(90deg, #30470f 0%, #213528 100%);
+}
+.garadient-one {
+  background: (134.63deg, #223012 2.07%, #1c291b 98.53%);
 }
 
-.dark-sec-btn {
+.garadient-three {
+  background: linear-gradient(90deg, #3f3a28 0%, #24261a 100%);
+}
+.garadient-four {
+  background: linear-gradient(134.63deg, #363125 2.07%, #181d17 98.53%);
+}
+.garadient-five {
+  background: linear-gradient(90deg, #ff8a27 100%, #ff5a27 0%);
+}
+
+.font-rajdhani {
+  font-family: var(--font-rajdhani);
+}
+
+.font-nyxerin {
+  font-family: var(--font-nyxerin);
+}
+
+*/ .dark-sec-btn {
   background-color: black;
   color: white;
   padding: 10px 20px;

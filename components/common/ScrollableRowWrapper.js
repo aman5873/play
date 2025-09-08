@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useRef, useLayoutEffect } from "react";
-
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
@@ -31,8 +30,13 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
   const scroll = (direction) => {
     const el = scrollRef.current;
     if (!el) return;
-    const card = el.querySelector("div"); // pick first card
-    const cardWidth = card ? card.offsetWidth + 16 : 200; // card width + margin
+
+    // pick first visible child and include its margin-right
+    const card = el.children[0];
+    const style = card ? window.getComputedStyle(card) : null;
+    const marginRight = style ? parseFloat(style.marginRight) || 0 : 0;
+    const cardWidth = card ? card.offsetWidth + marginRight : 200;
+
     el.scrollBy({
       left: direction === "left" ? -cardWidth : cardWidth,
       behavior: "smooth",
@@ -40,8 +44,7 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
   };
 
   return (
-    <div className="relative">
-      {/* Left arrow */}
+    <div className="relative w-full">
       {showLeft && (
         <button
           onClick={() => scroll("left")}
@@ -51,15 +54,14 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
         </button>
       )}
 
-      {/* Scrollable row */}
+      {/* nowrap + overflow-x-auto + min-w-0 so it doesn't force parent width */}
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto scrollbar-hide scroll-smooth scrollbar-hide"
+        className="flex flex-nowrap overflow-x-auto scrollbar-hide scroll-smooth space-x-4 py-2 w-full min-w-0"
       >
         {children}
       </div>
 
-      {/* Right arrow */}
       {showRight && (
         <button
           onClick={() => scroll("right")}

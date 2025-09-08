@@ -10,6 +10,31 @@ export const colors = {
     hoverBg: "#003300",
     overlay: "rgba(0,0,0,0.6)", // behind drawer
     surface: "rgba(30,30,30,0.95)", // drawer / modal panel
+
+    // New UI theme
+    primary: "#C1FF00",
+    secondary: "#0D1914",
+
+    textOne: "#FBFFE6",
+    textTwo: "#A8A59B",
+    textThree: "#006956",
+    textFour: "#FF5A27",
+    textFive: "#6146F9",
+
+    textCommon: "#49998C",
+    textRare: "#5A8899",
+    textLegendary: "#D4A574",
+
+    bg: "#0D1914",
+    bgOne: "#1D332B",
+    bgTwo: "#2A3025",
+    bgThree: "#1A1F15",
+    bgFour: "#E23939",
+
+    borderOne: "#115740",
+    borderTwo: "#40453B",
+    borderThree: "#2A2D27",
+    borderFour: "#5C0000",
   },
   light: {
     background: "#ffffff",

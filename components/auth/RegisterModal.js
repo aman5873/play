@@ -1,21 +1,18 @@
 // components/auth/RegisterModal
 "use client";
 import { useState } from "react";
-import { TextField, Divider, Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { useTheme } from "@/context/ThemeContext";
 import AppModal from "@components/AppModal";
-import ButtonComp from "@components/ButtonComp";
 import { useAlert } from "@/context/AlertContext";
 import { handleApiMessage, registerUser, verifyOtpApi } from "@/lib/auth_ops";
 import { maskEmail } from "./ForgotPasswordModal";
-import OtpInput from "../OtpInput";
+
+import InputComp from "../Form/InputComp";
+import OtpInputComp from "../OtpInput";
 
 export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
-  const { colors } = useTheme();
   const { t: tAuth } = useTranslation("auth");
-  // const {  verifyOtp } = useAuth();
   const { showAlert } = useAlert();
 
   const [name, setName] = useState("");
@@ -32,6 +29,7 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
     setConfirmPassword("");
     setOtp("");
     onClose();
+    setShowVerifyOtp(false);
   }
 
   const handleSubmit = async (e) => {
@@ -50,10 +48,10 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
     })
       .then(({ success, message }) => {
         if (success) {
-          handleApiMessage(message, showAlert); // will show success
+          handleApiMessage(message, showAlert, "success"); // will show success
           setShowVerifyOtp(true);
         } else {
-          handleApiMessage(message, showAlert); // will show field errors
+          handleApiMessage(message, showAlert, "success"); // will show field errors
         }
       })
       .catch((err) => {
@@ -90,111 +88,60 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
     >
       {!showVerifyOtp ? (
         <>
-          <form onSubmit={handleSubmit}>
-            {/* Username */}
-            <TextField
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-3">
+            <InputComp
               label={tAuth("username")}
+              placeholder={tAuth("namePlaceholder")}
+              type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={{
-                mb: 2,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: colors.border },
-                  "&:hover fieldset": { borderColor: colors.accent },
-                },
-                input: { color: colors.text },
-                label: { color: colors.subtitle },
-              }}
             />
 
-            {/* Email */}
-            <TextField
+            <InputComp
               label={tAuth("email")}
+              placeholder={tAuth("emailPlaceholder")}
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={{
-                mb: 2,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: colors.border },
-                  "&:hover fieldset": { borderColor: colors.accent },
-                },
-                input: { color: colors.text },
-                label: { color: colors.subtitle },
-              }}
             />
-
-            {/* Password */}
-            <TextField
+            <InputComp
               label={tAuth("password")}
+              placeholder={tAuth("passwordPlaceholder")}
               type="password"
               required
+              showPasswordToggle
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={{
-                mb: 2,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: colors.border },
-                  "&:hover fieldset": { borderColor: colors.accent },
-                },
-                input: { color: colors.text },
-                label: { color: colors.subtitle },
-              }}
             />
 
-            {/* Confirm Password */}
-            <TextField
+            <InputComp
               label={tAuth("confirmPassword")}
+              placeholder={tAuth("passwordPlaceholder")}
               type="password"
               required
+              showPasswordToggle
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              fullWidth
-              variant="outlined"
-              sx={{
-                mb: 2,
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": { borderColor: colors.border },
-                  "&:hover fieldset": { borderColor: colors.accent },
-                },
-                input: { color: colors.text },
-                label: { color: colors.subtitle },
-              }}
             />
 
-            {/* Submit */}
-            <ButtonComp type="submit" label={tAuth("signUp")} />
+            <button
+              type="submit"
+              className="cursor-pointer px-6 py-2 mt-3 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+            >
+              {tAuth("register")}
+            </button>
           </form>
 
-          {/* OR divider */}
-          <Divider
-            sx={{
-              mt: 1,
-              "&::before, &::after": { borderColor: colors.border },
-              color: colors.subtitle,
-            }}
-          >
-            {tAuth("or")}
-          </Divider>
+          <div className="text-center">{tAuth("or")}</div>
 
           {/* Already have account? */}
-          <Box sx={{ textAlign: "center" }}>
-            <span style={{ color: colors.subtitle, fontSize: "0.9rem" }}>
+          <div className="mt-2 text-center">
+            <span className="text-[var(--textTwo)] font-md">
               {tAuth("haveAccount")}{" "}
               <span
-                style={{
-                  color: colors.accent,
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
+                className="text-[var(--primary)] cursor-pointer hover:text-[var(--textOne)]"
                 onClick={() => {
                   clearCloseForm();
                   onSwitchToLogin?.();
@@ -203,15 +150,23 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
                 {tAuth("loginTitle")}
               </span>
             </span>
-          </Box>
+          </div>
         </>
       ) : (
-        <form onSubmit={handleVerifyOtp}>
-          <Typography variant="body2" sx={{ color: colors.subtitle, mb: 2 }}>
-            {tAuth("otpSentDetail", { email: maskEmail(email) })}
-          </Typography>
-          <OtpInput length={6} value={otp} onChange={setOtp} />
-          <ButtonComp type="submit" label={tAuth("verifyOtp")} />
+        <form onSubmit={handleVerifyOtp} className="mt-3">
+          <OtpInputComp
+            length={6}
+            value={otp}
+            onChange={setOtp}
+            label={tAuth("otpSentDetail", { email: maskEmail(email) })}
+          />
+
+          <button
+            type="submit"
+            className="cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-bold font-rajdhani transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+          >
+            {tAuth("verifyOtp")}
+          </button>
         </form>
       )}
     </AppModal>
