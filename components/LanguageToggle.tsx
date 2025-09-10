@@ -86,13 +86,13 @@ export default function LanguageToggle() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="absolute right-0 mt-2 w-36 bg-[var(--bgThree)] border border-[var(--borderThree)] rounded-md shadow-lg overflow-hidden z-50"
+            className="absolute right-0 mt-2 w-36 bg-[var(--bgTwo)] hover:bg-[var(--bgThree)] border border-[var(--borderTwo)] rounded-md shadow-lg overflow-hidden z-50"
           >
             {languages.map((l) => (
               <button
                 key={l.key}
                 onClick={() => handleSelect(l.key)}
-                className={`cursor-pointer w-full flex items-center gap-2 px-4 py-2 text-[var(--textOne)] hover:bg-[var(--bgOne)] transition-colors ${
+                className={`cursor-pointer w-full flex items-center gap-2 px-4 py-2 text-[var(--textOne)] hover:text-[var(--primary)]  hover:bg-[var(--bgOne)] transition-colors ${
                   l.key === lang ? "font-bold text-[var(--primary)]" : ""
                 }`}
               >

@@ -6,7 +6,7 @@ import { tournamentsData } from "@/constants/gameData";
 import React, { useEffect, useMemo, useState } from "react";
 
 const content = {
-  chip: ["Tournaments"],
+  chip: [{ labe: "Tournaments" }],
   title: "Compete in our tournaments",
   description:
     "Participate in VR sports tournaments, show off your skills, and win exclusive prizes.",
@@ -21,13 +21,9 @@ function TournamentFeed() {
 
   const [tournamentList, setTournamentList] = useState([]);
 
-  useEffect(() => {
-    setTournamentList(tournamentsData);
-  }, []);
-
   // Load data
   useEffect(() => {
-    setTournamentList(tournamentsData);
+    setTournamentList(tournamentsData?.tournaments);
   }, []);
 
   // Debounce search (delay updates)
@@ -41,7 +37,9 @@ function TournamentFeed() {
   // Extract unique categories for dropdown
   const categoryOptions = useMemo(() => {
     const uniqueCategories = [
-      ...new Set(tournamentsData.map((g) => g.category).filter(Boolean)),
+      ...new Set(
+        tournamentsData?.tournaments?.map((g) => g.category).filter(Boolean)
+      ),
     ];
     return uniqueCategories.map((c) => ({ value: c, label: c }));
   }, []);

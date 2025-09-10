@@ -57,7 +57,7 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
       {/* nowrap + overflow-x-auto + min-w-0 so it doesn't force parent width */}
       <div
         ref={scrollRef}
-        className="flex flex-nowrap overflow-x-auto scrollbar-hide scroll-smooth space-x-4 py-2 w-full min-w-0"
+        className="flex flex-nowrap overflow-x-auto scrollbar-hide scroll-smooth space-x-2 w-full min-w-0"
       >
         {children}
       </div>

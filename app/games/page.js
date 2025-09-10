@@ -8,7 +8,7 @@ import ReactSelectInput from "@/components/common/ReactSelectInput";
 
 // Top banner content
 const content = {
-  chip: ["Games"],
+  chip: [{ label: "Games" }],
   title: "Discover our VR sports",
   description:
     "Explore our collection of virtual reality sports games and take your skills to the next level.",

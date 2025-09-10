@@ -10,7 +10,7 @@ import { ListInfoComp } from "@/components/common/PageComp";
 
 import TableComp from "@/components/common/TableComp";
 
-export function TournamentSchedule({ schedule }) {
+function TournamentSchedule({ schedule }) {
   // ✅ Memoize formatted data
   const formattedSchedule = useMemo(
     () =>
@@ -138,15 +138,18 @@ function RulesComp({ tournamentInfo }) {
 function ParticipantsComp() {
   return <div>ParticipantsComp</div>;
 }
-export function TwoColumnLayout({ tournamentInfo, primaryImage }) {
+function TwoColumnLayout({ tournamentInfo, primaryImage }) {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = ["Information", "Rules", "Calendar", "Participants"];
   const tabContent = [
-    <InformationComp tournamentInfo={tournamentInfo} />,
-    <RulesComp tournamentInfo={tournamentInfo} />,
-    <TournamentSchedule schedule={tournamentInfo?.schedule} />,
-    <ParticipantsComp tournamentInfo={tournamentInfo} />,
+    <InformationComp key="InformationComp" tournamentInfo={tournamentInfo} />,
+    <RulesComp key="RulesComp" tournamentInfo={tournamentInfo} />,
+    <TournamentSchedule
+      key="TournamentSchedule"
+      schedule={tournamentInfo?.schedule}
+    />,
+    <ParticipantsComp key="ParticipantsComp" tournamentInfo={tournamentInfo} />,
   ];
 
   return (
@@ -194,7 +197,9 @@ export default function TournamentPage() {
   // Fetch from local data
   useEffect(() => {
     if (tournamentId) {
-      const tournament = tournamentsData.find((t) => t.id == tournamentId);
+      const tournament = tournamentsData?.tournaments?.find(
+        (t) => t.id == tournamentId
+      );
       setTournamentInfo(tournament || null);
     }
   }, [tournamentId]);
@@ -213,7 +218,10 @@ export default function TournamentPage() {
     >
       <TopComp
         content={{
-          chip: [tournamentInfo?.category, tournamentInfo?.status],
+          chip: [
+            { label: tournamentInfo?.category },
+            { label: tournamentInfo?.status },
+          ],
           title: tournamentInfo?.title,
           description: tournamentInfo?.description,
           backgroundImage: primaryImage,

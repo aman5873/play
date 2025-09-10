@@ -138,7 +138,7 @@ function SidebarNav({
             className={`flex items-center gap-3 py-2 px-3 rounded-md transition-colors border-[1px]
               ${
                 isActiveRoute
-                  ? "gradient-primary text-[var(--primary)] border-[var(--primary)]"
+                  ? "gradient-selected text-[var(--primary)] border-[var(--primary)]"
                   : "text-[var(--textOne)] hover:text-[var(--primary)] border-transparent"
               }
             `}

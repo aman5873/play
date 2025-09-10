@@ -44,7 +44,7 @@ export default function AppModal({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative rounded-[16px] p-6 gradient-two border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col
+            className="relative rounded-[16px] p-6 gradient-one border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col
              w-auto sm:w-[95%] max-w-md"
             onClick={(e) => e.stopPropagation()}
             initial={{ y: -50, opacity: 0, scale: 0.95 }}

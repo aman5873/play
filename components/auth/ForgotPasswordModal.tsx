@@ -1,32 +1,33 @@
 "use client";
-import { useState } from "react";
+
+import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { Mail } from "lucide-react";
 
 import AppModal from "@components/AppModal";
-import { useTheme } from "@/context/ThemeContext";
-
+import InputComp from "../Form/InputComp";
+import OtpInputComp from "../OtpInput";
+import ResendOtp from "../Form/ResendOtp";
 import { useAlert } from "@/context/AlertContext";
-
 import {
   handleApiMessage,
   forgotPassword,
   resetPassword,
 } from "@/lib/auth_ops";
-import OtpInputComp from "../OtpInput";
-import InputComp from "../Form/InputComp";
-import ResendOtp from "../Form/ResendOtp";
 
-export const maskEmail = (email) => {
+interface ForgotPasswordModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSwitchToLogin: () => void;
+}
+
+// Utility to mask email
+export const maskEmail = (email: string) => {
   if (!email.includes("@")) return email;
   const [local, domain] = email.split("@");
-  return (
-    local[0] +
-    "*".repeat(Math.max(local.length - 2, 1)) +
-    local.slice(-1) +
-    "@" +
-    domain
-  );
+  return `${local[0]}${"*".repeat(Math.max(local.length - 2, 1))}${local.slice(
+    -1
+  )}@${domain}`;
 };
 
 const initError = {
@@ -37,10 +38,9 @@ export default function ForgotPasswordModal({
   open,
   onClose,
   onSwitchToLogin,
-}) {
-  const { showAlert } = useAlert();
-  const { colors } = useTheme();
+}: ForgotPasswordModalProps) {
   const { t: tAuth } = useTranslation("auth");
+  const { showAlert } = useAlert();
 
   const [step, setStep] = useState(1); // 1=email, 2=otp, 3=reset
   const [email, setEmail] = useState("");
@@ -49,42 +49,41 @@ export default function ForgotPasswordModal({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(initError);
 
-  console.log("step", step);
-
-  function handleClose() {
+  const handleClose = () => {
     setStep(1);
     setEmail("");
-    onClose();
     setOtp("");
     setPassword("");
     setConfirmPassword("");
-  }
+    setError(initError);
+    onClose();
+  };
 
   // Step 1: Request OTP
-  const handleRequestOtp = async (e) => {
+  const handleRequestOtp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    forgotPassword(email)
-      .then((res) => {
-        if (res?.success) {
-          handleApiMessage(res?.message, showAlert, "success");
-          setStep(2);
-        } else {
-          handleApiMessage(res?.message, showAlert);
-        }
-      })
-      .catch((err) => {
-        console.error("Forgot password failed", err);
-      });
+    try {
+      const res = await forgotPassword(email);
+      if (res?.success) {
+        handleApiMessage(res.message, showAlert, "success");
+        setStep(2);
+      } else {
+        handleApiMessage(res?.message, showAlert, "error");
+      }
+    } catch (err) {
+      console.error("Forgot password failed", err);
+      handleApiMessage("Forgot password failed", showAlert, "error");
+    }
   };
 
   // Step 2: Verify OTP
-  const handleVerifyOtp = async (e) => {
+  const handleVerifyOtp = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStep(3);
   };
 
   // Step 3: Reset Password
-  const handleResetPassword = async (e) => {
+  const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError({ ...error, password: true });
@@ -92,33 +91,34 @@ export default function ForgotPasswordModal({
       return;
     }
 
-    resetPassword(email, otp, password, confirmPassword)
-      .then((res) => {
-        if (res?.success) {
-          handleApiMessage(res?.message, showAlert, "success");
-          handleClose();
-          onSwitchToLogin();
-        } else {
-          handleApiMessage(res?.message, showAlert);
-        }
-      })
-      .catch((err) => {
-        showAlert("Reset password failed", "error");
-      });
+    try {
+      const res = await resetPassword(email, otp, password, confirmPassword);
+      if (res?.success) {
+        handleApiMessage(res.message, showAlert, "success");
+        handleClose();
+        onSwitchToLogin();
+      } else {
+        handleApiMessage(res?.message, showAlert, "error");
+      }
+    } catch (err) {
+      console.error("Reset password failed", err);
+      handleApiMessage("Reset password failed", showAlert, "error");
+    }
   };
 
   return (
     <AppModal
       open={open}
       onClose={handleClose}
+      closeOnBackdropClick={false}
       title={
         step === 1
           ? tAuth("forgotPassword")
           : step === 2
-          ? "Verify Email"
-          : "Reset Password"
+          ? tAuth("verifyEmail")
+          : tAuth("resetPassword")
       }
-      headerIcon={step === 2 ? <Mail /> : null}
+      headerIcon={step === 2 ? <Mail /> : undefined}
       description={
         step === 2 ? tAuth("otpSentDetail", { email: maskEmail(email) }) : ""
       }
@@ -153,7 +153,8 @@ export default function ForgotPasswordModal({
           >
             {tAuth("verifyOtp")}
           </button>
-          <ResendOtp duration={50} onResend={handleRequestOtp} />
+
+          <ResendOtp duration={50} onResend={() => forgotPassword(email)} />
         </form>
       )}
 
@@ -170,20 +171,20 @@ export default function ForgotPasswordModal({
             showPasswordToggle
             value={password}
             onChange={(e) => {
-              error?.password && setError({ ...error, password: false });
+              error.password && setError({ ...error, password: false });
               setPassword(e.target.value);
             }}
           />
 
           <InputComp
             label={tAuth("confirmPassword")}
-            placeholder={tAuth("passwordPlaceholder")}
+            placeholder={tAuth("confirmPasswordPlaceholder")}
             type="password"
             required
             showPasswordToggle
             value={confirmPassword}
             onChange={(e) => {
-              error?.password && setError({ ...error, password: false });
+              error.password && setError({ ...error, password: false });
               setConfirmPassword(e.target.value);
             }}
           />

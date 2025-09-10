@@ -1,7 +1,8 @@
-// components/auth/RegisterModal
 "use client";
-import { useState } from "react";
+
+import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { Mail } from "lucide-react";
 
 import AppModal from "@components/AppModal";
 import { useAlert } from "@/context/AlertContext";
@@ -11,7 +12,17 @@ import { maskEmail } from "./ForgotPasswordModal";
 import InputComp from "../Form/InputComp";
 import OtpInputComp from "../OtpInput";
 
-export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
+interface RegisterModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSwitchToLogin: () => void;
+}
+
+export default function RegisterModal({
+  open,
+  onClose,
+  onSwitchToLogin,
+}: RegisterModalProps) {
   const { t: tAuth } = useTranslation("auth");
   const { showAlert } = useAlert();
 
@@ -22,7 +33,7 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
   const [showVerifyOtp, setShowVerifyOtp] = useState(false);
   const [otp, setOtp] = useState("");
 
-  function clearCloseForm() {
+  const clearCloseForm = () => {
     setName("");
     setEmail("");
     setPassword("");
@@ -30,9 +41,9 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
     setOtp("");
     onClose();
     setShowVerifyOtp(false);
-  }
+  };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -40,42 +51,41 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
       return;
     }
 
-    registerUser({
-      name,
-      email,
-      password,
-      password_confirmation: confirmPassword,
-    })
-      .then(({ success, message }) => {
-        if (success) {
-          handleApiMessage(message, showAlert, "success"); // will show success
-          setShowVerifyOtp(true);
-        } else {
-          handleApiMessage(message, showAlert, "success"); // will show field errors
-        }
-      })
-      .catch((err) => {
-        console.error("Register failed", err);
-        showAlert(tAuth("registerFailed"), "error");
+    try {
+      const { success, message } = await registerUser({
+        name,
+        email,
+        password,
+        password_confirmation: confirmPassword,
       });
+
+      if (success) {
+        handleApiMessage(message, showAlert, "success"); // show success
+        setShowVerifyOtp(true);
+      } else {
+        handleApiMessage(message, showAlert, "error"); // show error
+      }
+    } catch (err) {
+      console.error("Register failed", err);
+      handleApiMessage(tAuth("registerFailed"), showAlert, "error");
+    }
   };
 
-  const handleVerifyOtp = (e) => {
+  const handleVerifyOtp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    verifyOtpApi(email, otp)
-      .then(({ success, message }) => {
-        if (success) {
-          showAlert(message, "success");
-          clearCloseForm();
-          onSwitchToLogin();
-          setShowVerifyOtp(false);
-        }
-      })
-      .catch((err) => {
-        console.error("OTP verification failed", err);
-        showAlert(tAuth("otpFailed"), "error");
-      });
+    try {
+      const { success, message } = await verifyOtpApi(email, otp);
+
+      if (success) {
+        showAlert(message, "success");
+        clearCloseForm();
+        onSwitchToLogin();
+      }
+    } catch (err) {
+      console.error("OTP verification failed", err);
+      showAlert(tAuth("otpFailed"), "error");
+    }
   };
 
   return (
@@ -83,8 +93,13 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
       open={open}
       onClose={clearCloseForm}
       title={tAuth("register")}
-      showCloseIcon={true}
+      showCloseIcon
       closeOnBackdropClick={false}
+      headerIcon={showVerifyOtp ? <Mail /> : null}
+      description={
+        showVerifyOtp ? tAuth("otpSentDetail", { email: maskEmail(email) }) : ""
+      }
+      titleClass="font-rajdhani"
     >
       {!showVerifyOtp ? (
         <>
@@ -106,6 +121,7 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+
             <InputComp
               label={tAuth("password")}
               placeholder={tAuth("passwordPlaceholder")}
@@ -136,7 +152,6 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
 
           <div className="text-center">{tAuth("or")}</div>
 
-          {/* Already have account? */}
           <div className="mt-2 text-center">
             <span className="text-[var(--textTwo)] font-md">
               {tAuth("haveAccount")}{" "}
@@ -144,23 +159,17 @@ export default function RegisterModal({ open, onClose, onSwitchToLogin }) {
                 className="text-[var(--primary)] cursor-pointer hover:text-[var(--textOne)]"
                 onClick={() => {
                   clearCloseForm();
-                  onSwitchToLogin?.();
+                  onSwitchToLogin();
                 }}
               >
-                {tAuth("loginTitle")}
+                {tAuth("login")}
               </span>
             </span>
           </div>
         </>
       ) : (
         <form onSubmit={handleVerifyOtp} className="mt-3">
-          <OtpInputComp
-            length={6}
-            value={otp}
-            onChange={setOtp}
-            label={tAuth("otpSentDetail", { email: maskEmail(email) })}
-          />
-
+          <OtpInputComp length={6} value={otp} onChange={setOtp} />
           <button
             type="submit"
             className="cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-bold font-rajdhani transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"

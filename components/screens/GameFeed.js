@@ -3,10 +3,25 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import Chip from "@components/common/Chip";
 import { gamesData } from "@/constants/gameData";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
+import { CategoryCardComp } from "../common/CardComp";
+import { ScreenDetailsComp } from "@/components/TopComp";
+
+const gameSection = {
+  chip: [
+    {
+      label: "Game Library",
+      icon: "game",
+      type: "secondary",
+    },
+  ],
+  title: "Discover",
+  highlightTitle: "AMAZING GAMES",
+  description:
+    "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+};
 
 export function GameCard({
   gameInfo,
@@ -15,58 +30,41 @@ export function GameCard({
   style = {},
 }) {
   const router = useRouter();
-  const [hovered, setHovered] = useState(false);
   const primaryImage = gameInfo?.images.find((img) => img?.is_primary);
 
   return (
     <div
-      className={`group relative w-80 min-w-[18rem] max-w-xs flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col ${contClass}`}
+      className={`gradient-one border border-[var(--borderThree)] p-4 group relative w-68 min-w-[12rem] max-w-xs flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col ${contClass}`}
       style={{
-        background: "var(--bg)",
-        border: "1px solid var(--subtitle)",
-        backgroundColor: "var(--surface)",
-        height: showDesc ? "22.8rem" : "18.2rem", // fixed card height
-
         ...style,
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
       {/* Image wrapper */}
-      <div
-        className="relative w-full overflow-hidden transition-all duration-500 ease-in-out"
-        style={{
-          height: hovered ? "10.4rem" : "13rem", // small change
-        }}
-      >
+      <div className="relative w-full  h-[170px]  sm:h-[150px]  lg:h-[197px]  overflow-hidden rounded-lg group">
         <Image
           src={primaryImage?.image_path}
           alt={gameInfo?.title}
           fill
-          className={`object-cover transition-transform duration-500 ease-in-out ${
-            hovered ? "scale-105" : "scale-100"
-          }`}
+          className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
         />
-        <Chip label={gameInfo?.category} contClass="absolute top-2 right-2" />
       </div>
+
       {/* Info section */}
-      <div className="flex-grow p-3.5 overflow-hidden">
-        <h1
-          className="font-sans text-lg font-semibold truncate"
-          style={{ color: "var(--text)" }}
-        >
+      <div className=" gap-2 flex flex-col overflow-hidden mt-3">
+        <h2 className="sm:text-lg md:text-xl lg:text2xl font-bold truncate text-[var(--textOne)]">
           {gameInfo?.title}
-        </h1>
-        <h1
-          className="font-sans text-base font-regular truncate"
-          style={{ color: "var(--subtitle)" }}
-        >
+        </h2>
+        <h2 className=" text-base font-regular truncate text-[var(--textTwo)] ">
           {gameInfo?.active_players_count} active players
-        </h1>
+        </h2>
+
+        {/* genres */}
+        <CategoryCardComp categories={gameInfo?.genres} />
+
         {/* insert here  */}
         {showDesc && gameInfo?.description && (
           <p
-            className="font-sans text-[14px] mt-2"
+            className=" text-[14px] mt-2"
             style={{
               color: "var(--subtitle)",
               display: "-webkit-box",
@@ -81,15 +79,10 @@ export function GameCard({
         )}
       </div>
 
-      {/* Button row (always reserved height, button animates) */}
       <button
         onClick={() => router.push(`/games/${gameInfo?.id}`)}
-        className={`absolute   cursor-pointer font-semibold bottom-4 left-1/2 -translate-x-1/2 w-[90%] px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transform transition-all duration-500 ease-in-out ${
-          hovered
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-6 pointer-events-none"
-        }`}
-        style={{ backgroundColor: "var(--title)", color: "var(--background)" }}
+        className={`px-4 py-2 mt-4  flex items-center justify-center rounded-[100px] border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
+                 bg-[var(--primary)] text-[var(--secondary)]`}
       >
         View Game
       </button>
@@ -105,30 +98,32 @@ export default function GameFeed() {
   }, []);
 
   return (
-    <div className="relative px-10 py-10 pb-20">
-      <Chip label="Games" />
-
-      <div className="flex flex-wrap justify-between items-center mb-5">
-        <h1
-          className="font-sans text-2xl md:text-3xl lg:text-4xl font-semibold m-0 mb-2 lg:mb-0"
-          style={{ color: "var(--text)" }}
-        >
-          Featured Games
-        </h1>
-        <Link
-          href="/games"
-          className="text-[var(--subtitle)] cursor-pointer text-sm md:text-base transition-colors duration-300 hover:text-[var(--title)] ml-auto "
-        >
-          See all games
-        </Link>
-      </div>
-
+    <div className="relative px-1 py-1 pb-20">
       {/* Scroll container */}
       <ScrollableRowWrapper isReady={gameList}>
         {gameList.map((obj) => (
           <GameCard key={obj?.id} gameInfo={obj} />
         ))}
       </ScrollableRowWrapper>
+      <div className="flex justify-center items-center mb-5 mt-5 w-full">
+        <Link
+          href="/games"
+          className="px-5 py-2 border rounded-[50px] border-[var(--textOne)] text-[var(--textOne)]  hover:text-[var(--textTwo)] hover:border-[var(--textTwo)]  cursor-pointer "
+        >
+          View All
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export function GameFeedComp() {
+  return (
+    <div>
+      <div className="w-full rounded-lg  p-4 sm:p-8 lg:p-8 flex flex-col items-center gap-4">
+        <ScreenDetailsComp content={gameSection} isCentered={true} />
+      </div>
+      <GameFeed />
     </div>
   );
 }

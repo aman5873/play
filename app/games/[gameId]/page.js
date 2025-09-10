@@ -16,7 +16,7 @@ import {
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import Image from "next/image";
 
-export function DetailsCard({ data }) {
+function DetailsCard({ data }) {
   if (!data?.list?.length) return null;
 
   return (
@@ -41,7 +41,7 @@ export function DetailsCard({ data }) {
   );
 }
 
-export function PlatformDetailComp({ gameInfo }) {
+function PlatformDetailComp({ gameInfo }) {
   return (
     <div className="flex-1 min-w-[250px] sm:max-w-full max-w-[500px] p-5 rounded-lg bg-[var(--surface)]">
       <h3 className="text-xl md:text-2xl font-semibold">Platforms</h3>
@@ -68,7 +68,7 @@ export function PlatformDetailComp({ gameInfo }) {
   );
 }
 
-export function RatingComp({ gameInfo }) {
+function RatingComp({ gameInfo }) {
   const avg = gameInfo?.ratings?.avg_rating || 0;
   const count = gameInfo?.ratings?.count || 0;
 
@@ -123,7 +123,7 @@ function OverviewComp({ gameInfo }) {
   );
 }
 
-export function ListInfoComp({ list, heading }) {
+function ListInfoComp({ list, heading }) {
   return (
     <div>
       <h3 className="text-xl md:text-2xl font-semibold">{heading}</h3>
@@ -210,14 +210,21 @@ function UpcomingTournamentsComp({ tournaments }) {
   );
 }
 
-export function TwoColumnLayout({ gameInfo, primaryImage }) {
+function TwoColumnLayout({ gameInfo, primaryImage }) {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = ["Overview", "Characteristics", "Tournaments"];
   const tabContent = [
-    <OverviewComp gameInfo={gameInfo} />,
-    <ListInfoComp list={gameInfo?.features} heading="Main features" />,
-    <UpcomingTournamentsComp tournaments={upcomingTournaments} />,
+    <OverviewComp key={"OverviewComp"} gameInfo={gameInfo} />,
+    <ListInfoComp
+      key="ListInfoComp"
+      list={gameInfo?.features}
+      heading="Main features"
+    />,
+    <UpcomingTournamentsComp
+      key="UpcomingTournamentsComp"
+      tournaments={upcomingTournaments?.tournaments}
+    />,
   ];
 
   return (
@@ -351,7 +358,7 @@ export default function GamePage() {
     >
       <TopComp
         content={{
-          chip: ["Game"],
+          chip: [{ label: "Game" }],
           title: gameInfo?.title,
           description: gameInfo?.description,
           backgroundImage: primaryImage,

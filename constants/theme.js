@@ -21,6 +21,11 @@ export const colors = {
     textFour: "#FF5A27",
     textFive: "#6146F9",
 
+    textThree: "#11cc84",
+    textFour: "#ff5a17",
+    textFive: "#6146f9",
+    textSix: "#4abed7",
+
     textCommon: "#49998C",
     textRare: "#5A8899",
     textLegendary: "#D4A574",

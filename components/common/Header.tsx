@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 
 import { useLanguage } from "@/context/LanguageContext";
 import SearchInput from "./Searchinput";
+import Image from "next/image";
+import Avatar from "../auth/Avatar";
 
 const LoginModal = dynamic(() => import("@/components/auth/LoginModal"), {
   ssr: false,
@@ -43,7 +45,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
   const guestActions = [
     {
       key: "login",
-      label: tAuth("loginTitle"),
+      label: tAuth("login"),
       onClick: () => setLoginOpen(true),
     },
   ];
@@ -76,18 +78,14 @@ export default function Header({ onMenuClick }: HeaderProps) {
         {isAuthenticated ? (
           <div
             ref={avatarRef}
-            className="cursor-pointer w-8 h-8 rounded-full overflow-hidden"
-            onClick={() => setProfileOpen(true)}
+            className="cursor-pointer "
+            onClick={() => setProfileOpen(!profileOpen)}
           >
-            {user?.avatarUrl ? (
-              <img
-                src={user.avatarUrl}
-                alt="avatar"
-                className="w-full h-full object-cover"
-              />
+            {user ? (
+              <Avatar user={user} size={40} isHeader={true} />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-[var(--primary)] text-[var(--secondary)] font-bold">
-                {user?.name?.[0]?.toUpperCase()}
+                {user?.name?.[0] || user?.email?.[0]?.toUpperCase()}
               </div>
             )}
           </div>

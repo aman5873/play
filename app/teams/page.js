@@ -2,7 +2,7 @@ import TopComp from "@/components/TopComp";
 import React from "react";
 
 const content = {
-  chip: ["Teams"],
+  chip: [{ label: "Teams" }],
   title: "Discover the best teams",
   description:
     "Explore the most competitive VR esports teams, along with their stats and achievements.",

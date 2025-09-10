@@ -1,63 +1,82 @@
 "use client";
-import { useState } from "react";
+
+import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import GoogleIcon from "@mui/icons-material/Google";
 
-import { handleApiMessage, loginUser } from "@/lib/auth_ops";
+import { handleApiMessage, loginUser, fetchProfile } from "@/lib/auth_ops";
 
 import AppModal from "@components/AppModal";
-import { useAuth } from "@/context/AuthContext"; // 👈 your auth hook
+import { useAuth } from "@/context/AuthContext";
 import { useAlert } from "@/context/AlertContext";
 import InputComp from "../Form/InputComp";
 
-const initFormData = {
+interface LoginModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSwitchToRegister: () => void;
+  onSwitchToForgotPassword: () => void;
+}
+
+interface FormData {
+  email: string;
+  password: string;
+}
+
+const initFormData: FormData = {
   email: "",
   password: "",
 };
+
 export default function LoginModal({
   open,
   onClose,
   onSwitchToRegister,
   onSwitchToForgotPassword,
-}) {
+}: LoginModalProps) {
   const { showAlert } = useAlert();
-
   const { t: tAuth } = useTranslation("auth");
-  const { loginWithGoogle, setUser } = useAuth(); // 👈 call login here
+  const { loginWithGoogle, setUser } = useAuth();
+
   const [formData, setFormData] = useState(initFormData);
 
-  function handleClose() {
+  const handleClose = () => {
     setFormData(initFormData);
     onClose();
-  }
+  };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    loginUser(formData)
-      .then((res) => {
-        if (res?.success) {
-          setUser(res?.data?.user);
-          handleApiMessage(res?.message, showAlert, "success");
-          handleClose();
-        } else {
-          handleApiMessage(res?.message, showAlert);
+    try {
+      const res = await loginUser(formData);
+
+      if (res?.success) {
+        // 👉 immediately fetch user profile
+        const profileRes = await fetchProfile();
+        if (profileRes?.data?.user) {
+          setUser(profileRes.data.user); // update context
         }
-      })
-      .catch((err) => {
-        console.error("Login failed", err);
-        showAlert(tAuth("loginFailed"), "error");
-      });
+
+        handleApiMessage(res?.message, showAlert, "success");
+        handleClose();
+      } else {
+        handleApiMessage(res?.message, showAlert, "error");
+      }
+    } catch (err) {
+      console.error("Login failed", err);
+      handleApiMessage(tAuth("loginFailed"), showAlert, "error");
+    }
   };
 
   return (
     <AppModal
       open={open}
       onClose={handleClose}
-      // title={tAuth("loginTitle")}
-      title="Welcome"
-      subtitle="To Arena"
-      description="Access your gaming profile and join the competition"
+      closeOnBackdropClick={false}
+      title={tAuth("loginTitle")}
+      subtitle={tAuth("loginSubtitle")}
+      description={tAuth("loginDesc")}
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <InputComp
@@ -84,11 +103,11 @@ export default function LoginModal({
           type="submit"
           className="cursor-pointer px-6 py-2 mt-3 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
         >
-          {tAuth("loginTitle")}
+          {tAuth("login")}
         </button>
       </form>
 
-      {/* Forgot password link 👇 */}
+      {/* Forgot password link */}
       <div
         className="cursor-pointer font-md text-right hover:text-[var(--textOne)] text-[var(--primary)]"
         onClick={() => {
@@ -98,12 +117,13 @@ export default function LoginModal({
       >
         {tAuth("forgotPassword")}
       </div>
+
       <div className="text-center">{tAuth("or")}</div>
 
       <button
         type="button"
         onClick={() => loginWithGoogle()}
-        className="cursor-pointer border border-[var(--primary)]  flex gap-3 justify-center align-center px-6 py-2 rounded-[100px] bg-[var(--secondary)]  text-[var(--primary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+        className="cursor-pointer border border-[var(--primary)] flex gap-3 justify-center items-center px-6 py-2 rounded-[100px] bg-[var(--secondary)] text-[var(--primary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
       >
         <GoogleIcon />
         <span>{tAuth("googleLogin")}</span>

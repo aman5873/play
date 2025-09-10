@@ -12,6 +12,11 @@
   .gradient-two {
     background: linear-gradient(134.63deg, #131610 2.07%, #121510 98.53%);
   }
+  @media (min-width: 1090px) {
+    .flex-xlg-row {
+      flex-direction: row !important;
+    }
+  }
 }
 
 html,
@@ -52,9 +57,10 @@ body {
 
   --textOne: #fbffe6;
   --textTwo: #a8a59b;
-  --textThree: #006956;
-  --textFour: #ff5a27;
+  --textThree: #11cc84;
+  --textFour: #ff5a17;
   --textFive: #6146f9;
+  --textSix: #4abed7;
   --textCommon: #49998c;
   --textRare: #5a8899;
   --textLegendary: #d4a574;
@@ -91,9 +97,10 @@ body {
 
   --textOne: #fbffe6;
   --textTwo: #a8a59b;
-  --textThree: #006956;
-  --textFour: #ff5a27;
+  --textThree: #11cc84;
+  --textFour: #ff5a17;
   --textFive: #6146f9;
+  --textSix: #4abed7;
   --textCommon: #49998c;
   --textRare: #5a8899;
   --textLegendary: #d4a574;
@@ -111,19 +118,32 @@ body {
 }
 
 .gradient-primary {
+  background: linear-gradient(
+    108.19deg,
+    rgb(193 255 0 / 31%) 0%,
+    rgb(13 25 20 / 74%) 47.88%
+  );
+}
+.gradient-selected {
   background: linear-gradient(90deg, #30470f 0%, #213528 100%);
 }
-.garadient-one {
-  background: (134.63deg, #223012 2.07%, #1c291b 98.53%);
+.gradient-one {
+  background: linear-gradient(134.63deg, #131610 2.07%, #121510 98.53%);
 }
 
-.garadient-three {
+.gradient-fill {
   background: linear-gradient(90deg, #3f3a28 0%, #24261a 100%);
 }
-.garadient-four {
+.gradient-secondary {
+  background: linear-gradient(134.63deg, #223012 2.07%, #1c291b 98.53%);
+}
+.gradient-three {
+  background: linear-gradient(90deg, #3f3a28 0%, #24261a 100%);
+}
+.gradient-four {
   background: linear-gradient(134.63deg, #363125 2.07%, #181d17 98.53%);
 }
-.garadient-five {
+.gradient-five {
   background: linear-gradient(90deg, #ff8a27 100%, #ff5a27 0%);
 }
 
