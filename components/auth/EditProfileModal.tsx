@@ -20,16 +20,31 @@ export default function EditProfileModal({ open, onClose }) {
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
 
+  // Set preview to user avatar when modal opens
   useEffect(() => {
-    if (user?.avatar_url) setPreview(user.avatar_url);
+    setPreview(user?.avatar_url || "");
   }, [user, open]);
 
+  // 🧹 Cleanup blob URL on unmount or when preview changes
+  useEffect(() => {
+    return () => {
+      if (preview?.startsWith("blob:")) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview]);
+
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setAvatarFile(file);
-      setPreview(URL.createObjectURL(file));
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Revoke previous preview if it was a blob URL
+    if (preview?.startsWith("blob:")) {
+      URL.revokeObjectURL(preview);
     }
+
+    setAvatarFile(file);
+    setPreview(URL.createObjectURL(file));
   };
 
   const getFallbackAvatar = () =>
@@ -68,10 +83,11 @@ export default function EditProfileModal({ open, onClose }) {
         {/* Avatar */}
         <div className="flex flex-col items-center">
           <label className="relative cursor-pointer w-20 h-20">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             {preview ? (
               <img
                 src={preview}
-                alt={getFallbackAvatar()}
+                alt="User Avatar"
                 className="w-20 h-20 rounded-full object-cover border border-[var(--borderTwo)]"
               />
             ) : (
@@ -79,12 +95,10 @@ export default function EditProfileModal({ open, onClose }) {
                 {getFallbackAvatar()}
               </div>
             )}
-
             {/* Camera overlay on hover */}
             <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-40 opacity-0 hover:opacity-60 transition">
               <CameraAltIcon className="text-white" />
             </div>
-
             <input
               type="file"
               accept="image/*"

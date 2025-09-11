@@ -24,6 +24,8 @@ interface AuthContextType {
   isAuthenticated: boolean;
   user: User | null;
   setUser: (user: User | null) => void;
+  loginOpen: boolean;
+  setLoginOpen: (open: boolean) => void;
   loginWithGoogle: () => void;
   forgotPassword: (email: string) => Promise<boolean>;
   resetPassword: (newPassword: string) => Promise<boolean>;
@@ -40,6 +42,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   // Google login simulation
   const loginWithGoogle = useCallback(() => {
@@ -132,13 +135,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       isAuthenticated: !!user,
       user,
       setUser,
+      loginOpen,
+      setLoginOpen,
       loginWithGoogle,
       forgotPassword,
       resetPassword,
       verifyOtp,
       logout,
     }),
-    [user, loginWithGoogle, forgotPassword, resetPassword, verifyOtp, logout]
+    [
+      user,
+      loginOpen,
+      loginWithGoogle,
+      forgotPassword,
+      resetPassword,
+      verifyOtp,
+      logout,
+    ]
   );
 
   return (

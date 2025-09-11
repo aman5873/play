@@ -12,6 +12,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { Sidebar, MobileSidebar } from "@/components/common/SideNavbar";
 import Header from "@/components/common/Header";
 import localFont from "next/font/local";
+import Footer from "@/components/Footer";
 
 const nyxerin = localFont({
   src: "./fonts/NYXERIN.woff2",
@@ -47,10 +48,10 @@ export default function Layout({ children }) {
                   {/* Right Section */}
                   <div className="flex flex-col flex-1 h-full min-w-0">
                     <Header onMenuClick={() => setIsOpen(true)} />
-
                     {/* Content */}
                     <main className="flex-1 w-full  overflow-y-auto scrollbar-hide">
                       {children}
+                      <Footer />
                     </main>
                   </div>
                 </div>

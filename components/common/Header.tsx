@@ -31,13 +31,12 @@ interface HeaderProps {
 }
 
 export default function Header({ onMenuClick }: HeaderProps) {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, loginOpen, setLoginOpen } = useAuth();
   const { headerSearchValue, setHeaderSearchValue } = useLanguage();
   const { t: tCommon } = useTranslation("common");
   const { t: tAuth } = useTranslation("auth");
   const avatarRef = useRef<HTMLDivElement>(null);
 
-  const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [forgotOpen, setForgotOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);

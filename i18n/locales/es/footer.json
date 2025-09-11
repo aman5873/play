@@ -1,0 +1,23 @@
+{
+  "links": {
+    "title": "Enlaces",
+    "home": "Inicio",
+    "tournaments": "Torneos",
+    "games": "Juegos",
+    "levels": "Niveles",
+    "communities": "Comunidades"
+  },
+  "resources": {
+    "title": "Recursos",
+    "support": "Soporte",
+    "faqs": "Preguntas Frecuentes",
+    "rules": "Reglas",
+    "community": "Comunidad"
+  },
+  "contact": {
+    "title": "Contacto",
+    "email": "Correo",
+    "phone": "Teléfono"
+  },
+  "tagline": "La plataforma definitiva para deportes de realidad virtual. Compite, gana puntos y obtén premios en IMM Play."
+}

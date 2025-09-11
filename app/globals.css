@@ -61,6 +61,8 @@ body {
   --textFour: #ff5a17;
   --textFive: #6146f9;
   --textSix: #4abed7;
+  --textSeven: #006956;
+
   --textCommon: #49998c;
   --textRare: #5a8899;
   --textLegendary: #d4a574;
@@ -101,6 +103,8 @@ body {
   --textFour: #ff5a17;
   --textFive: #6146f9;
   --textSix: #4abed7;
+  --textSeven: #006956;
+
   --textCommon: #49998c;
   --textRare: #5a8899;
   --textLegendary: #d4a574;
@@ -138,11 +142,9 @@ body {
   background: linear-gradient(134.63deg, #223012 2.07%, #1c291b 98.53%);
 }
 .gradient-three {
-  background: linear-gradient(90deg, #3f3a28 0%, #24261a 100%);
-}
-.gradient-four {
   background: linear-gradient(134.63deg, #363125 2.07%, #181d17 98.53%);
 }
+
 .gradient-five {
   background: linear-gradient(90deg, #ff8a27 100%, #ff5a27 0%);
 }
