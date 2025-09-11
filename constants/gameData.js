@@ -13,7 +13,74 @@ export const gamesData = [
     description:
       "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
     release_date: "2024-05-12",
-    download_count: 0,
+    size: "200mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Unity Labs",
+    genres: ["Multiplayer", "Free-to-Play", "Fantasy", "Mobile"],
+    review_list: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+
     active_players_count: 20,
     status: "active",
     category: "sports",
@@ -58,20 +125,12 @@ export const gamesData = [
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
     ],
 
-    developer: "Unity Labs",
     platform: {
       list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
       requirements:
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
     },
-    genres: [
-      "Strategy",
-      "Tower Defense",
-      "Multiplayer",
-      "Free-to-Play",
-      "Fantasy",
-      "Mobile",
-    ],
+
     ratings: {
       count: 186,
       avg_rating: 4.7,
@@ -84,7 +143,74 @@ export const gamesData = [
     description:
       "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
     release_date: "2024-06-20",
-    download_count: 0,
+    size: "200mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Supercell",
+    genres: ["Multiplayer", "Free-to-Play", "Fantasy", "Mobile"],
+    review_list: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+
     active_players_count: 30,
     status: "active",
     category: "extreme",
@@ -113,14 +239,13 @@ export const gamesData = [
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
     ],
 
-    developer: "Epic Games",
     platform: {
       list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
       requirements: [
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
       ],
     },
-    genres: ["Multiplayer", "Free-to-Play", "Fantasy", "Mobile"],
+
     ratings: {
       count: 102,
       avg_rating: 4.5,
@@ -132,7 +257,74 @@ export const gamesData = [
     description:
       "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
     release_date: "2024-05-12",
-    download_count: 0,
+    size: "200mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    genres: ["Free-to-Play", "Fantasy", "Mobile"],
+    review_list: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+    developer: "Unity Labs",
+
     active_players_count: 100,
     status: "active",
     category: "sports",
@@ -161,15 +353,12 @@ export const gamesData = [
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
     ],
-
-    developer: "Unity Labs",
     platform: {
       list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
       requirements: [
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
       ],
     },
-    genres: ["Free-to-Play", "Fantasy", "Mobile"],
     ratings: {
       count: 126,
       avg_rating: 4.2,
@@ -182,7 +371,73 @@ export const gamesData = [
     description:
       "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
     release_date: "2024-06-20",
-    download_count: 0,
+    size: "200mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Epic Games",
+    genres: ["Free-to-Play", "Fantasy", "Mobile"],
+    review_list: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
     active_players_count: 0,
     status: "active",
     category: "extreme",
@@ -211,64 +466,12 @@ export const gamesData = [
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
     ],
 
-    developer: "Epic Games",
     platform: {
       list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
       requirements: [
         "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
       ],
     },
-    genres: ["Free-to-Play", "Fantasy", "Mobile"],
-  },
-
-  {
-    id: 5,
-    title: "VR Basketball",
-    description:
-      "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
-    release_date: "2024-05-12",
-    download_count: 0,
-    active_players_count: 20,
-    status: "active",
-    category: "sports",
-
-    features: [
-      {
-        id: "1",
-        title: "Feature 1",
-        description: "Advanced Ball Physics",
-      },
-      { id: "2", title: "Feature 2", description: "Online tournaments" },
-      {
-        id: "3",
-        title: "Feature 3",
-        description: "Different playing surfaces",
-      },
-      {
-        id: "4",
-        title: "Feature 4",
-        description: "Career and exhibition modes",
-      },
-    ],
-    images: [
-      { id: "img1", image_path: "/images/games/game1-1.jpg", is_primary: 1 },
-      { id: "img2", image_path: "/images/games/game1-2.jpg", is_primary: 0 },
-      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
-      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
-    ],
-
-    developer: "Unity Labs",
-    platform: {
-      list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
-      requirements: [
-        "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
-      ],
-    },
-    ratings: {
-      count: 126,
-      avg_rating: 4.2,
-    },
-    genres: ["Free-to-Play", "Fantasy", "Mobile"],
   },
 ];
 
