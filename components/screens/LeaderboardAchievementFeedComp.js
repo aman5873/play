@@ -35,14 +35,16 @@ function LeaderboardCard({ leaderboardInfo }) {
         #{leaderboardInfo?.rank}
       </h2>
 
-      <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-15 lg:h-15 rounded-full overflow-hidden border-2 border-[var(--borderTwo)]">
-        <Image
-          src={leaderboardInfo?.avatar_url}
-          alt="avatar"
-          fill
-          className="object-cover transition-transform duration-500 ease-in-out hover:scale-110"
-        />
-      </div>
+      {leaderboardInfo?.avatar_url && (
+        <div className="relative w-8 h-8 md:w-10 md:h-10 lg:w-15 lg:h-15 rounded-full overflow-hidden border-2 border-[var(--borderTwo)]">
+          <Image
+            src={leaderboardInfo?.avatar_url}
+            alt="avatar"
+            fill
+            className="object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+          />
+        </div>
+      )}
 
       <div className="flex flex-col flex-1">
         <h2 className="sm:text-lg md:text-xl lg:text-2xl font-bold truncate text-[var(--textOne)]">
@@ -81,14 +83,16 @@ function TopLeaderboardCard({ leaderboardInfo }) {
       )}
 
       {/* Avatar Image */}
-      <div className="relative w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full overflow-hidden border-2 border-[var(--borderTwo)]">
-        <Image
-          src={leaderboardInfo?.avatar_url}
-          alt="avatar"
-          fill
-          className="object-cover transition-transform duration-500 ease-in-out hover:scale-110"
-        />
-      </div>
+      {leaderboardInfo?.avatar_url && (
+        <div className="relative w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full overflow-hidden border-2 border-[var(--borderTwo)]">
+          <Image
+            src={leaderboardInfo?.avatar_url}
+            alt="avatar"
+            fill
+            className="object-cover transition-transform duration-500 ease-in-out hover:scale-110"
+          />
+        </div>
+      )}
 
       {/* Player Info */}
       <h2 className="sm:text-lg md:text-xl lg:text-2xl font-bold truncate text-[var(--textOne)]">

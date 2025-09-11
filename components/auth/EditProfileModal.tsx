@@ -16,6 +16,7 @@ export default function EditProfileModal({ open, onClose }) {
   const { user, setUser } = useAuth();
 
   const [name, setName] = useState(user?.name || "");
+  const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState(user?.phone || "");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
@@ -52,6 +53,9 @@ export default function EditProfileModal({ open, onClose }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return; // prevent duplicate submissions
+    setLoading(true);
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("phone", phone);
@@ -69,6 +73,8 @@ export default function EditProfileModal({ open, onClose }) {
     } catch (err) {
       console.error("Profile update failed", err);
       handleApiMessage("Profile update failed", showAlert, "error");
+    } finally {
+      setLoading(false); // always reset
     }
   };
 
@@ -142,11 +148,15 @@ export default function EditProfileModal({ open, onClose }) {
         {/* Submit */}
         <button
           type="submit"
-          className="cursor-pointer w-full px-6 py-2 mt-3 rounded-[100px] 
-                     bg-[var(--primary)] text-[var(--secondary)] font-rajdhani 
-                     font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+          disabled={loading} // disable when processing
+          className={`cursor-pointer w-full px-6 py-2 mt-3 rounded-[100px] 
+              bg-[var(--primary)] text-[var(--secondary)] font-rajdhani 
+              font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]
+              ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-          {tAuth("updateProfile") || "Save Changes"}
+          {loading
+            ? tAuth("processing") || "Processing..."
+            : tAuth("updateProfile") || "Save Changes"}
         </button>
       </form>
     </AppModal>

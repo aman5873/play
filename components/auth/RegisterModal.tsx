@@ -11,6 +11,7 @@ import { maskEmail } from "./ForgotPasswordModal";
 
 import InputComp from "../Form/InputComp";
 import OtpInputComp from "../OtpInput";
+import ResendOtp from "../Form/ResendOtp";
 
 interface RegisterModalProps {
   open: boolean;
@@ -176,6 +177,15 @@ export default function RegisterModal({
           >
             {tAuth("verifyOtp")}
           </button>
+          <ResendOtp
+            duration={50}
+            onResend={() => {
+              // Manually call handleSubmit without event
+              handleSubmit(
+                new Event("submit") as unknown as FormEvent<HTMLFormElement>
+              );
+            }}
+          />
         </form>
       )}
     </AppModal>
