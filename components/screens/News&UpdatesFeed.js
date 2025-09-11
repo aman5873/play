@@ -88,6 +88,7 @@ export function NewsCard(props) {
 export default function NewsFeed() {
   const [newsList, setNewsList] = useState([]);
 
+  //
   useEffect(() => {
     setNewsList(newsData);
   }, []);
