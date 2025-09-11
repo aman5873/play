@@ -2,16 +2,25 @@
 import React, { useEffect, useState, useMemo } from "react";
 
 import { GameCard } from "@/components/screens/GameFeed";
-import TopComp from "@/components/TopComp";
+import { TopBgComp } from "@/components/TopComp";
 import { gamesData } from "@/constants/gameData";
 import ReactSelectInput from "@/components/common/ReactSelectInput";
+import InputComp from "@/components/Form/InputComp";
 
 // Top banner content
 const content = {
-  chip: [{ label: "Games" }],
-  title: "Discover our VR sports",
+  chip: [
+    {
+      label: "Game Library",
+      icon: "game",
+      type: "secondary",
+    },
+  ],
+  title: "Discover",
+  highlightTitle: "AMAZING GAMES",
   description:
-    "Explore our collection of virtual reality sports games and take your skills to the next level.",
+    "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+
   backgroundImage:
     "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=2078&auto=format&fit=crop",
 };
@@ -61,7 +70,7 @@ function GamePageFeed() {
   }, [gameList, debouncedTerm, selectedCategory]);
 
   return (
-    <div className="px-10 mx-auto py-10 pb-20 w-full">
+    <div className=" mx-auto py-10 pb-20 w-full">
       {/* Search + Filter controls */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
         {/* Search box */}
@@ -110,8 +119,8 @@ function GamePageFeed() {
 
 export default function Page() {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <TopComp content={content} />
+    <div className="flex flex-col gap-2 p-4">
+      <TopBgComp content={content} />
       <GamePageFeed />
     </div>
   );

@@ -126,6 +126,41 @@ export function ButtonComp({ buttons }) {
   );
 }
 
+export function TopBgComp({ content, children }) {
+  const backgroundImage = content?.backgroundImage;
+
+  return (
+    <div
+      className="relative w-full rounded-lg overflow-hidden flex items-center justify-center p-6 sm:p-8 lg:p-12"
+      style={
+        backgroundImage
+          ? {
+              backgroundImage: `url(${backgroundImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }
+          : {}
+      }
+    >
+      {/* Full Black Backdrop */}
+      <div className="absolute inset-0 bg-black/70 z-0" />
+
+      {/* Content */}
+      <div className="relative w-full max-w-5xl flex flex-col items-center text-center gap-3 z-10">
+        {/* Screen Details */}
+        <ScreenDetailsComp content={content} />
+
+        {/* Children content (details grid, image, etc.) */}
+        {children}
+
+        {/* Buttons */}
+        {content?.button?.length > 0 && <ButtonComp buttons={content.button} />}
+      </div>
+    </div>
+  );
+}
+
 export default function TopComp({ content, contClass = "" }) {
   if (!content) return null;
 
