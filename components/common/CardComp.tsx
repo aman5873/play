@@ -12,6 +12,7 @@ import {
 
 interface CardChipProps {
   label: string;
+  style?: React.CSSProperties;
 }
 
 interface CardCompProps {
@@ -36,6 +37,8 @@ interface ProgressBarProps {
   label: string;
   count: number;
   maxCount: number;
+  fillStyle?: React.CSSProperties;
+  showPercent?: boolean;
 }
 
 const iconMap = {
@@ -48,9 +51,12 @@ const iconMap = {
   clock: Clock,
 } satisfies Record<string, LucideIcon>;
 
-export function CardChip({ label }: CardChipProps) {
+export function CardChip({ label, style }: CardChipProps) {
   return (
-    <span className="bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center text-sm text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit">
+    <span
+      className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center text-sm text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit`}
+      style={style}
+    >
       {label}
     </span>
   );
@@ -122,7 +128,13 @@ export function SectionDetails({ list }: { list?: any[] }) {
   );
 }
 
-export function ProgressBar({ label, count, maxCount }: ProgressBarProps) {
+export function ProgressBar({
+  label,
+  count,
+  maxCount,
+  fillStyle = {},
+  showPercent = false,
+}: ProgressBarProps) {
   const safeCount = Math.max(0, Math.min(count, maxCount)); // ensure count is within 0-maxCount
   const percentage = maxCount > 0 ? (safeCount / maxCount) * 100 : 0;
 
@@ -132,15 +144,17 @@ export function ProgressBar({ label, count, maxCount }: ProgressBarProps) {
       <div className="flex justify-between text-md font-semibold text-[var(--textTwo)]">
         <span>{label}</span>
         <span className="text-sm">
-          {safeCount}/{maxCount}
+          {showPercent ? `${count}%` : `${safeCount}/${maxCount}`}
         </span>
       </div>
 
       {/* Progress bar container */}
-      <div className="w-full h-4 rounded-lg bg-[var(--bgThree)] overflow-hidden">
+      <div
+        className={`w-full h-4 rounded-lg  bg-[var(--bgThree)] overflow-hidden`}
+      >
         <div
-          className="h-full gradient-fill transition-all duration-500"
-          style={{ width: `${percentage}%` }}
+          className={`h-full gradient-fill transition-all duration-500`}
+          style={{ width: `${percentage}%`, ...fillStyle }}
         />
       </div>
     </div>

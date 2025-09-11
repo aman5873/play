@@ -1,0 +1,23 @@
+{
+  "links": {
+    "title": "Links",
+    "home": "Home",
+    "tournaments": "Tournaments",
+    "games": "Games",
+    "levels": "Levels",
+    "communities": "Communities"
+  },
+  "resources": {
+    "title": "Resources",
+    "support": "Support",
+    "faqs": "FAQs",
+    "rules": "Rules",
+    "community": "Community"
+  },
+  "contact": {
+    "title": "Contact",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "tagline": "The ultimate platform for VR sports. Compete, earn points, and win prizes on Play Hub."
+}

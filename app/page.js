@@ -1,6 +1,7 @@
 import TopComp from "@/components/TopComp";
 import { EpicChallengeFeedComp } from "@/components/screens/EpicChallengeFeed";
 import { GameFeedComp } from "@/components/screens/GameFeed";
+import { LeaderboardAchievementFeedComp } from "@/components/screens/LeaderboardAchievementFeedComp";
 import { NewsFeedComp } from "@/components/screens/News&UpdatesFeed";
 import { SocialFeedComp } from "@/components/screens/SocialHubFeed";
 import { TournamentFeedComp } from "@/components/screens/TournamentFeed";
@@ -43,6 +44,7 @@ export default function Home() {
       <EpicChallengeFeedComp />
       <TournamentFeedComp />
       <GameFeedComp />
+      <LeaderboardAchievementFeedComp />
       <NewsFeedComp />
       <SocialFeedComp />
     </div>

@@ -709,7 +709,7 @@ export const socialData = [
     id: 1,
     category: "VR Sports",
     channel: {
-      logo: "/images/home/postChannelLogo.png",
+      logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
       description: "VRProGamer",
     },
@@ -727,7 +727,7 @@ export const socialData = [
     id: 2,
     category: "Tutorials",
     channel: {
-      logo: "/images/home/postChannelLogo.png",
+      logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
       description: "VRProGamer",
     },
@@ -745,7 +745,7 @@ export const socialData = [
     id: 3,
     category: "Live Streams",
     channel: {
-      logo: "/images/home/postChannelLogo.png",
+      logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
       description: "VRProGamer",
     },
@@ -763,7 +763,7 @@ export const socialData = [
     id: 4,
     category: "VR Sports",
     channel: {
-      logo: "/images/home/postChannelLogo.png",
+      logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
       description: "VRProGamer",
     },
@@ -778,6 +778,98 @@ export const socialData = [
     views_count: 350,
   },
 ];
+
+// **** Leaderboard
+export const leaderboardData = {
+  leaderboard: [
+    {
+      id: 1,
+      rank: 1,
+      avatar_url: "/images/home/user1Avatar.png",
+      name: "Neonblade",
+      country: "UK",
+      score: "12000",
+      points: "+89",
+    },
+    {
+      id: 2,
+      rank: 2,
+      avatar_url: "/images/home/user2Avatar.png",
+      name: "Shadowstrike",
+      country: "US",
+      score: "12450",
+      points: "+125",
+    },
+    {
+      id: 3,
+      rank: 3,
+      avatar_url: "/images/home/user2Avatar.png",
+      name: "cyberphoenix",
+      country: "GE",
+      score: "10800",
+      points: "+67",
+    },
+    {
+      id: 4,
+      rank: 4,
+      avatar_url: "/images/home/user1Avatar.png",
+      name: "Quantumrage",
+      country: "GE",
+      score: "9950",
+      points: "+67",
+    },
+    {
+      id: 5,
+      rank: 5,
+      avatar_url: "/images/home/user2Avatar.png",
+      name: "Vortexhunter",
+      country: "EU",
+      score: "9720",
+      points: "+67",
+    },
+  ],
+  selfRanking: {
+    rank: 20,
+    country: "IND",
+    score: "12450",
+    points: "+125",
+  },
+  achievements: [
+    {
+      id: 1,
+      title: "First Victory",
+      description: "Win your first match",
+      category: "Common",
+      progress: 0,
+      total_progress: 100,
+    },
+    {
+      id: 2,
+      title: "Winning Streak",
+      description: "Win 10 matches in a row",
+      category: "Rare",
+      progress: 40,
+      total_progress: 100,
+    },
+    {
+      id: 3,
+      title: "Champion",
+      description: "Win a tournament",
+      category: "Epic",
+      progress: 0,
+      total_progress: 100,
+    },
+    {
+      id: 4,
+      title: "Legend",
+      description: "Reach Grandmaster rank",
+      category: "Legendry",
+      progress: 40,
+      total_progress: 100,
+    },
+  ],
+};
+
 // ******** Teams
 export const teams = [
   {
