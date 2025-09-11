@@ -1,9 +1,10 @@
 // icons/index.tsx
-import Google from "./google.svg";
-import Coin from "./coin.svg";
-import RankSecondary from "./rankSecondary.svg";
-import Crown from "./crown.svg";
-import Discord from "./discord.svg";
+
+import Coin from "@/app/icons/coin.svg";
+import RankSecondary from "@/app/icons/rankSecondary.svg";
+import Crown from "@/app/icons/crown.svg";
+import Discord from "@/app/icons/discord.svg";
+//
 
 type IconProps = {
   size?: number;
@@ -30,7 +31,6 @@ const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
   return WrappedIcon;
 };
 
-export const GoogleIcon = wrapIcon(Google);
 export const CoinIcon = wrapIcon(Coin);
 export const RankSecondaryIcon = wrapIcon(RankSecondary);
 export const CrownIcon = wrapIcon(Crown);
