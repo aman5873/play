@@ -830,7 +830,7 @@ export const gamesData = [
   },
 ];
 
-// ******* tournament
+// ******** tournament
 export const tournamentCategoriesData = [
   { id: 1, name: "VR Soccer League" },
   { id: 2, name: "VR Climbing Challenge" },
