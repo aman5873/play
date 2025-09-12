@@ -1,17 +1,21 @@
 import { Star, StarHalf } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface RatingCompProps {
   avg_rating: number; // e.g. 3.5
   count?: number; // number of reviews
   maxStars?: number; // optional, default 5
+  isBold?: boolean;
 }
 
 export function RatingComp({
   avg_rating,
   count,
   maxStars = 5,
+  isBold = false,
 }: RatingCompProps) {
   const stars = [];
+  const { t: tCommon } = useTranslation("common");
 
   for (let i = 1; i <= maxStars; i++) {
     if (avg_rating >= i) {
@@ -27,18 +31,20 @@ export function RatingComp({
   }
 
   return (
-    <div className="flex-1">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div className="flex">{stars}</div>
-          <span className="text-sm text-[var(--subtitle)]">
-            {avg_rating.toFixed(1)}/5
-          </span>
-        </div>
-      </div>
+    <div className="flex flex-1 items-center gap-2">
+      <div className="flex">{stars}</div>
+      <span
+        className={
+          isBold
+            ? "text-sm text-[var(--textOne)] font-semibold"
+            : "text-sm text-[var(--textTwo)]"
+        }
+      >
+        {avg_rating?.toFixed(1)}/5
+      </span>
       {count && (
-        <p className="text-base mt-1 text-[var(--subtitle)]">
-          {count} user review{count !== 1 ? "s" : ""}
+        <p className="text-base m-0 text-[var(--textTwo)]">
+          ({count} {count !== 1 ? tCommon("review") : tCommon("reviews")})
         </p>
       )}
     </div>

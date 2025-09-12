@@ -97,7 +97,7 @@ export default function NewsFeed() {
     <div className="relative px-1 py-5 pb-20">
       {/* Scroll container */}
 
-      <ScrollableRowWrapper isReady={newsList}>
+      <ScrollableRowWrapper isReady={Boolean(newsList)}>
         {newsList?.map((obj, index) => {
           return <NewsCard key={`news-${obj?.id}-${index}`} newsInfo={obj} />;
         })}

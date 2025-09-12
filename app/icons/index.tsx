@@ -4,6 +4,9 @@ import Coin from "@/app/icons/coin.svg";
 import RankSecondary from "@/app/icons/rankSecondary.svg";
 import Crown from "@/app/icons/crown.svg";
 import Discord from "@/app/icons/discord.svg";
+import Ios from "@/app/icons/ios.svg";
+import Android from "@/app/icons/android.svg";
+
 //
 
 type IconProps = {
@@ -35,3 +38,5 @@ export const CoinIcon = wrapIcon(Coin);
 export const RankSecondaryIcon = wrapIcon(RankSecondary);
 export const CrownIcon = wrapIcon(Crown);
 export const DiscordIcon = wrapIcon(Discord);
+export const AndroidIcon = wrapIcon(Android);
+export const IosIcon = wrapIcon(Ios);

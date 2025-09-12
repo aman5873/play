@@ -40,7 +40,7 @@ const socialSection = {
   ],
 };
 
-export function SocialCard(props) {
+export function SocialCard(props: any) {
   const { socialInfo, contClass = "" } = props;
   const router = useRouter();
 
@@ -48,7 +48,8 @@ export function SocialCard(props) {
     return (
       <div
         onClick={() => router.push(`/social/${socialInfo?.id}`)}
-        className={`gradient-one w-70 min-w-[12rem] max-w-xs border p-4 flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col gap-3 ${contClass} border-[var(--borderThree)]`}
+        className={`gradient-one  border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col gap-3 border-[var(--borderThree)]
+          ${contClass ?? "w-75 min-w-[12rem] max-w-xs"} `}
       >
         {socialInfo?.media?.thumbnail && (
           <div
@@ -72,7 +73,7 @@ export function SocialCard(props) {
             className="object-contain transition-transform duration-500 ease-in-out group-hover:scale-110 h-full"
           />
           <div className="flex flex-col gap-1 w-full text-[var(--textOne)]">
-            <h1 className="sm:text-md lg:text-lg truncate font-bold">
+            <h1 className="text-md truncate font-bold">
               {socialInfo?.channel?.title}
             </h1>
             <p className="text-[14px] text-[var(--textTwo)]">
@@ -126,7 +127,7 @@ export default function SocialFeed() {
     <div className="relative px-1 py-5 pb-20">
       {/* Scroll container */}
 
-      <ScrollableRowWrapper isReady={socialList}>
+      <ScrollableRowWrapper isReady={Boolean(socialList)}>
         {socialList?.map((obj, index) => {
           return (
             <SocialCard key={`social-${obj?.id}-${index}`} socialInfo={obj} />

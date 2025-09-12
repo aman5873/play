@@ -1,133 +1,48 @@
 "use client";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import moment from "moment";
+import { Circle } from "lucide-react";
 
-import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
-import TopComp from "@/components/TopComp";
+import { TopBgComp } from "@/components/TopComp";
 import { tournamentsData } from "@/constants/gameData";
-import { ListInfoComp } from "@/components/common/PageComp";
+// import { ListInfoComp } from "@/components/common/PageComp";
 
-import TableComp from "@/components/common/TableComp";
+import { CardChip, iconMap } from "@/components/common/CardComp";
+import Image from "next/image";
+import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
+import { TournamentCard } from "@/components/tournaments/TournamentFeed";
 
-function TournamentSchedule({ schedule }) {
-  // ✅ Memoize formatted data
-  const formattedSchedule = useMemo(
-    () =>
-      schedule?.map((item) => ({
-        phase: item.phase,
-        date: item.start_date
-          ? `${moment(item.start_date).format("Do MMM YYYY")}${
-              item.end_date
-                ? " - " + moment(item.end_date).format("Do MMM YYYY")
-                : ""
-            }`
-          : "-",
-      })) ?? [],
-    [schedule]
-  );
-
-  // ✅ Memoize columns (static, no deps)
-  const columns = useMemo(
-    () => [
-      { header: "Phase", accessor: "phase" },
-      { header: "Date", accessor: "date" },
-    ],
-    []
-  );
-
-  return (
-    <TableComp
-      title="Tournament Schedule"
-      columns={columns}
-      data={formattedSchedule}
-    />
-  );
-}
-
-// export function TournamentSchedule({ schedule }) {
-//   return (
-//     <div>
-//       <h3 className="text-xl md:text-2xl font-semibold mb-4 text-[var(--text)]">
-//         Tournament Schedule
-//       </h3>
-
-//       <div className="w-full rounded-lg bg-[var(--surface)] shadow-md">
-//         <div className="overflow-x-auto">
-//           <table className="w-full border border-[var(--text)] rounded-lg overflow-hidden">
-//             {/* Header */}
-//             <thead className=" text-[var(--text)]">
-//               <tr>
-//                 <th className="px-4 py-2 text-left text-sm md:text-base font-semibold border-b border-[var(--text)] uppercase tracking-wide">
-//                   Phase
-//                 </th>
-//                 <th className="px-4 py-2 text-left text-sm md:text-base font-semibold border-b border-[var(--text)] uppercase tracking-wide">
-//                   Date
-//                 </th>
-//               </tr>
-//             </thead>
-
-//             {/* Rows */}
-//             <tbody>
-//               {schedule?.map((item) => {
-//                 const startDate = item?.start_date
-//                   ? moment(item.start_date).format("Do MMM YYYY")
-//                   : null;
-//                 const endDate = item?.end_date
-//                   ? moment(item.end_date).format("Do MMM YYYY")
-//                   : null;
-
-//                 return (
-//                   <tr
-//                     key={item.id}
-//                     className="transition-colors duration-200  text-[var(--subtitle)]"
-//                   >
-//                     <td className="px-4 py-2 border-b border-[var(--subtitle)] text-sm md:text-base font-medium">
-//                       {item.phase}
-//                     </td>
-//                     <td className="px-4 py-2 border-b border-[var(--subtitle)] text-sm md:text-base ">
-//                       {startDate}
-//                       {endDate ? ` - ${endDate}` : ""}
-//                     </td>
-//                   </tr>
-//                 );
-//               })}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-function InformationComp({ tournamentInfo }) {
-  return (
-    <div className="flex flex-col  gap-4">
-      <h1 className="font-sans text-2xl md:text-3xl  font-semibold m-0 text-[var(--text)]">
-        About the tournament
-      </h1>
-      <p className="text-[var(--subtitle)]">{tournamentInfo?.description}</p>
-      <div>
-        <h1 className="font-sans text-xl md:text-2xl  font-semibold text-[var(--text)] mb-1">
-          Format
-        </h1>
-        <p className="text-[var(--subtitle)]">{tournamentInfo?.format}</p>
-      </div>
-      <ListInfoComp list={tournamentInfo?.prizeList} heading="Awards" />,
-    </div>
-  );
-}
-function RulesComp({ tournamentInfo }) {
+function ListComp({ title, list, variant = "bullet", start }) {
   return (
     <div className="flex flex-col gap-2">
-      {tournamentInfo?.rules?.map((rule, index) => {
+      {title && (
+        <h1 className="sm:text-md lg:text-lg font-bold my-1 uppercase opacity-95">
+          {title}
+        </h1>
+      )}
+
+      {list?.map((rule, index) => {
+        let prefix = null;
+
+        if (start) {
+          prefix = start;
+        } else if (variant === "number") {
+          prefix = `${index + 1}.`;
+        } else if (variant === "alpha") {
+          prefix = `${String.fromCharCode(97 + index)}.`; // a, b, c...
+        } else {
+          prefix = (
+            <Circle size={10} fill="currentColor" className="shrink-0" />
+          );
+        }
+
         return (
           <div
             key={`rule-${index}`}
-            className="text-sm md:text-base font-medium text-[var(--subtitle)]"
+            className="flex items-start gap-2 text-sm md:text-base font-medium text-[var(--subtitle)]"
           >
-            <ShieldOutlinedIcon className="mr-2" />
-            {rule}
+            <span className="text-[var(--textTwo)] align-top">{prefix}</span>
+            <span>{rule}</span>
           </div>
         );
       })}
@@ -135,57 +50,93 @@ function RulesComp({ tournamentInfo }) {
   );
 }
 
-function ParticipantsComp() {
-  return <div>ParticipantsComp</div>;
+function IconLabelInfo({ icon, label, labelStyle = {}, contStyle = {} }) {
+  const Icon = iconMap[icon];
+  return (
+    <div className="flex gap-2 text-[var(--primary)]" style={contStyle}>
+      <Icon className="w-6 h-6" />
+      <h3 className="text-lg font-bold" style={labelStyle}>
+        {label}
+      </h3>
+    </div>
+  );
 }
-function TwoColumnLayout({ tournamentInfo, primaryImage }) {
-  const [activeTab, setActiveTab] = useState(0);
 
-  const tabs = ["Information", "Rules", "Calendar", "Participants"];
-  const tabContent = [
-    <InformationComp key="InformationComp" tournamentInfo={tournamentInfo} />,
-    <RulesComp key="RulesComp" tournamentInfo={tournamentInfo} />,
-    <TournamentSchedule
-      key="TournamentSchedule"
-      schedule={tournamentInfo?.schedule}
-    />,
-    <ParticipantsComp key="ParticipantsComp" tournamentInfo={tournamentInfo} />,
-  ];
+function TournamentScreenDetailsComp({ tournamentInfo }) {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap gap-2">
+        {tournamentInfo?.categories?.map((label) => {
+          return (
+            <CardChip
+              key={label}
+              label={label}
+              style={{
+                background: "transparent",
+                color: "var(--textOne",
+                borderColor: "var(--textOne",
+                textAlign: "center",
+              }}
+            />
+          );
+        })}
+      </div>
+      <div className="flex flex-wrap gap-2 ">
+        <IconLabelInfo icon="calender" label={tournamentInfo?.start_date} />
+        <IconLabelInfo icon="trophy" label={tournamentInfo?.prize} />
+        <IconLabelInfo
+          icon="users"
+          label={tournamentInfo?.teams_participated_count}
+        />
+      </div>
+      <div className="flex flex-wrap gap-4  items-center">
+        <h1 className="sm:text-md lg:text-lg truncate font-semibold">
+          Hosted by :
+        </h1>
+        {tournamentInfo?.organizer?.avatar_url && (
+          <Image
+            src={tournamentInfo?.organizer?.avatar_url}
+            alt={tournamentInfo?.organizer?.name}
+            width={48}
+            height={48}
+            className="object-contain transition-transform duration-500 ease-in-out group-hover:scale-110 h-full"
+          />
+        )}
+        <h1 className="sm:text-md lg:text-lg truncate font-bold">
+          {tournamentInfo?.organizer?.name}
+        </h1>
+      </div>
+    </div>
+  );
+}
+
+function TournamentFeed() {
+  const [tournamentList, setTournamentList] = useState([]);
+
+  useEffect(() => {
+    setTournamentList(tournamentsData?.tournaments);
+  }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 w-full px-8 mt-10">
-      {/* Left Section (70%) */}
-      <div className="w-full lg:w-[70%] flex flex-col gap-4">
-        {/* Tabs */}
-        <div className="flex gap-4 border-b border-gray-600 overflow-x-auto">
-          {tabs.map((tab, idx) => (
-            <button
-              key={idx}
-              onClick={() => setActiveTab(idx)}
-              className={`pb-2 text-sm md:text-base font-medium whitespace-nowrap cursor-pointer ${
-                activeTab === idx
-                  ? "border-b-2 border-[var(--title)] text-[var(--title)]"
-                  : "text-gray-400 hover:text-[var(--text)]"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+    <div>
+      <div className="flex justify-between items-center my-4 px-2">
+        <IconLabelInfo
+          icon="mission"
+          label="Related Tournaments"
+          labelStyle={{ color: "var(--textOne" }}
+        />
 
-        {/* Tab Content */}
-        <div className="p-4 rounded-lg  min-h-[200px]">
-          {tabContent[activeTab]}
-        </div>
+        <IconLabelInfo
+          icon="right"
+          label="View All"
+          contStyle={{ flexDirection: "row-reverse" }}
+        />
       </div>
-
-      {/* Right Section (30%) */}
-      <div className="w-[95%] lg:w-[30%] h-full min-h-[300px] bg-[var(--surface)] p-4">
-        <h2 className="text-[var(--text)] font-semibold text-lg">
-          Right Section
-        </h2>
-        {/* Add your content here */}
-      </div>
+      <ScrollableRowWrapper isReady={Boolean(tournamentList)}>
+        {tournamentList.map((obj) => (
+          <TournamentCard key={obj?.id} tournamentInfo={obj} />
+        ))}
+      </ScrollableRowWrapper>
     </div>
   );
 }
@@ -209,28 +160,33 @@ export default function TournamentPage() {
   )?.image_path;
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <TopComp
+    <div className="flex flex-col gap-4 p-4 pb-20">
+      <TopBgComp
         content={{
-          chip: [
-            { label: tournamentInfo?.category },
-            { label: tournamentInfo?.status },
-          ],
+          chip: [{ label: tournamentInfo?.status, type: "primary" }],
           title: tournamentInfo?.title,
           description: tournamentInfo?.description,
           backgroundImage: primaryImage,
-          button: [
-            { label: "Register my team", redirect: "", type: "primary" },
-          ],
+          button: [{ label: "Join", redirect: "", type: "primary" }],
         }}
-      />
-      <TwoColumnLayout tournamentInfo={tournamentInfo} />
+      >
+        <TournamentScreenDetailsComp tournamentInfo={tournamentInfo} />
+      </TopBgComp>
+
+      <div className="flex flex-wrap gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
+        <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">Description</h1>
+        <ListComp
+          title="HOW TO REGISTER"
+          list={tournamentInfo?.how_to_register}
+          variant="number"
+        />
+        <ListComp title="FORMAT" list={tournamentInfo?.format} />
+        <ListComp
+          title="FREQUENTLY ASKED QUESTIONS?"
+          list={tournamentInfo?.frequently_asked}
+        />
+      </div>
+      <TournamentFeed />
     </div>
   );
 }

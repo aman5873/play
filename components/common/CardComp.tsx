@@ -8,6 +8,9 @@ import {
   Gamepad2,
   Clock,
   LucideIcon,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 interface CardChipProps {
@@ -41,7 +44,7 @@ interface ProgressBarProps {
   showPercent?: boolean;
 }
 
-const iconMap = {
+export const iconMap = {
   users: Users,
   trophy: Trophy,
   medal: Medal,
@@ -49,16 +52,19 @@ const iconMap = {
   mission: Disc2,
   game: Gamepad2,
   clock: Clock,
+  calender: Calendar,
+  left: ChevronLeft,
+  right: ChevronRight,
 } satisfies Record<string, LucideIcon>;
 
 export function CardChip({ label, style }: CardChipProps) {
   return (
-    <span
-      className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center text-sm text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit`}
+    <div
+      className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit`}
       style={style}
     >
       {label}
-    </span>
+    </div>
   );
 }
 

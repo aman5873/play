@@ -1,4 +1,6 @@
 "use client";
+
+import React, { ReactNode } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Chip from "@/components/common/Chip";
@@ -15,7 +17,8 @@ import {
   Upload,
 } from "lucide-react";
 
-const iconMap = {
+// Map string keys to lucide icons
+const iconMap: Record<string, React.ComponentType<any>> = {
   users: Users,
   trophy: Trophy,
   medal: Medal,
@@ -27,23 +30,77 @@ const iconMap = {
   upload: Upload,
 };
 
-export function ScreenDetailsComp({ content, isCentered }) {
+// ------------------ Types ------------------
+interface ChipItem {
+  label?: string;
+  type?: string;
+  icon?: string;
+}
+
+interface ButtonItem {
+  label?: string;
+  type?: string;
+  icon?: string;
+  redirect?: string;
+}
+
+interface DetailItem {
+  label?: string;
+  description?: string;
+  icon?: string;
+}
+
+interface ContentProps {
+  chip?: ChipItem[];
+  title?: string;
+  highlightTitle?: string;
+  description?: string;
+  button?: ButtonItem[];
+  thumbnail?: any;
+  details?: DetailItem[];
+  backgroundImage?: string;
+}
+
+interface ScreenDetailsCompProps {
+  content?: ContentProps;
+  isCentered?: boolean;
+}
+
+interface ButtonCompProps {
+  buttons?: ButtonItem[];
+}
+
+interface TopBgCompProps {
+  content?: ContentProps;
+  children?: ReactNode;
+}
+
+interface TopCompProps {
+  content?: ContentProps;
+  contClass?: string;
+}
+
+// ------------------ Components ------------------
+export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
+  content,
+  isCentered = false,
+}) => {
   return (
     <>
       {content?.chip?.length > 0 && (
         <div className="flex flex-wrap justify-center lg:justify-start gap-2">
           {content.chip.map(({ label, type = "primary", icon }, index) => {
-            const Icon = iconMap[icon];
+            const Icon = icon ? iconMap[icon] : null;
             const classStyle =
               type === "primary"
                 ? "border-[var(--primary)] text-[var(--primary)]"
                 : "border-[var(--textOne)] text-[var(--textOne)]";
 
             return (
-              <Chip key={`chip-${index}`} label={label} type={type}>
+              <Chip key={`chip-${index}`} label={label || ""} type={type}>
                 {Icon && (
                   <div className={`rounded-xl w-fit p-2 ${classStyle}`}>
-                    <Icon className=" w-5 h-5 " />
+                    <Icon className="w-5 h-5" />
                   </div>
                 )}
               </Chip>
@@ -51,16 +108,17 @@ export function ScreenDetailsComp({ content, isCentered }) {
           })}
         </div>
       )}
-      {/* Titles */}
-      <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold font-nyxerin text-[var(--textOne)]">
-        {content?.title}
-      </h1>
+
+      {content?.title && (
+        <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold font-nyxerin text-[var(--textOne)]">
+          {content.title}
+        </h1>
+      )}
       {content?.highlightTitle && (
         <h2 className="text-2xl sm:text-2xl md:text-3xl lg:text-5xl font-bold font-nyxerin text-[var(--primary)]">
           {content.highlightTitle}
         </h2>
       )}
-      {/* Description */}
       {content?.description && (
         <p
           className="font-rajdhani text-sm sm:text-base lg:text-lg mt-3 leading-relaxed sm:max-w-[40rem] md:max-w-[42rem]"
@@ -79,20 +137,23 @@ export function ScreenDetailsComp({ content, isCentered }) {
       )}
     </>
   );
-}
+};
 
-export function ButtonComp({ buttons }) {
+export const ButtonComp: React.FC<ButtonCompProps> = ({ buttons }) => {
   const router = useRouter();
-  const handleRedirect = (redirect) => {
+
+  const handleRedirect = (redirect?: string) => {
     if (!redirect) return;
     router.push(redirect);
   };
+
   return (
     <>
       {buttons?.length > 0 && (
-        <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-5">
+        <div className="flex flex-wrap justify-center lg:justify-start gap-3 mt-4">
           {buttons.map((btn, idx) => {
-            const Icon = iconMap[btn?.icon];
+            const Icon = btn.icon ? iconMap[btn.icon] : null;
+
             return (
               <button
                 key={idx}
@@ -103,20 +164,18 @@ export function ButtonComp({ buttons }) {
                       ? "bg-[var(--primary)] text-[var(--secondary)]"
                       : "bg-[var(--secondary)] text-[var(--primary)]"
                   }`}
-                style={{
-                  minWidth: "120px",
-                }}
+                style={{ minWidth: "120px" }}
               >
                 {Icon && (
                   <Icon
-                    className={`w-5 h-5  mr-2 ${
+                    className={`w-5 h-5 mr-2 ${
                       btn.type === "primary"
                         ? "text-[var(--secondary)]"
                         : "text-[var(--primary)]"
-                    } `}
+                    }`}
                   />
                 )}
-                <span> {btn.label}</span>
+                <span>{btn.label}</span>
               </button>
             );
           })}
@@ -124,9 +183,9 @@ export function ButtonComp({ buttons }) {
       )}
     </>
   );
-}
+};
 
-export function TopBgComp({ content, children }) {
+export const TopBgComp: React.FC<TopBgCompProps> = ({ content, children }) => {
   const backgroundImage = content?.backgroundImage;
 
   return (
@@ -143,38 +202,34 @@ export function TopBgComp({ content, children }) {
           : {}
       }
     >
-      {/* Full Black Backdrop */}
+      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 z-0" />
 
       {/* Content */}
       <div className="relative w-full max-w-5xl flex flex-col items-center text-center gap-3 z-10">
-        {/* Screen Details */}
-        <ScreenDetailsComp content={content} />
-
-        {/* Children content (details grid, image, etc.) */}
+        <ScreenDetailsComp content={content} isCentered={true} />
         {children}
-
-        {/* Buttons */}
         {content?.button?.length > 0 && <ButtonComp buttons={content.button} />}
       </div>
     </div>
   );
-}
+};
 
-export default function TopComp({ content, contClass = "" }) {
+const TopComp: React.FC<TopCompProps> = ({ content, contClass }) => {
   if (!content) return null;
 
   return (
     <div
-      className={`relative w-full rounded-lg gradient-primary p-6 sm:p-8 lg:p-12 flex flex-col-reverse flex-xlg-row items-center gap-6 lg:gap-12 ${contClass}`}
+      className={`relative w-full rounded-lg gradient-primary p-6 sm:p-8 lg:p-12 flex flex-col-reverse flex-xlg-row items-center gap-6 lg:gap-12 ${
+        contClass || ""
+      }`}
     >
       {/* Text Section */}
       <div className="flex flex-1 flex-col gap-3 text-center lg:text-left max-w-2xl">
-        {/* Chips */}
         <ScreenDetailsComp content={content} />
         <div className="grid grid-cols-3 gap-2 mt-8">
           {content?.details?.map((item, idx) => {
-            const Icon = iconMap[item.icon]; // map string → component
+            const Icon = item.icon ? iconMap[item.icon] : null;
             return (
               <div
                 key={idx}
@@ -182,7 +237,7 @@ export default function TopComp({ content, contClass = "" }) {
               >
                 {Icon && (
                   <div className="rounded-xl bg-[var(--bgTwo)] border border-[var(--borderTwo)] p-4">
-                    <Icon className=" w-5 h-5 text-[var(--primary)] " />
+                    <Icon className="w-5 h-5 text-[var(--primary)]" />
                   </div>
                 )}
                 <h3 className="text-xl font-bold">{item.label}</h3>
@@ -191,20 +246,15 @@ export default function TopComp({ content, contClass = "" }) {
             );
           })}
         </div>
-
-        {/* Buttons */}
         <ButtonComp buttons={content?.button} />
       </div>
 
       {/* Image Section */}
       {content?.thumbnail && (
         <div className="flex-1 justify-center flex">
-          <div
-            className="relative aspect-square overflow-hidden flex-shrink-0 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] xl:w-[400px] 
-             rounded-[30px] border border-[var(--borderTwo)] bg-[var(--bgTwo)] backdrop-blur-md shadow-lg "
-          >
+          <div className="relative aspect-square overflow-hidden flex-shrink-0 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] xl:w-[400px] rounded-[30px] border border-[var(--borderTwo)] bg-[var(--bgTwo)] backdrop-blur-md shadow-lg">
             <Image
-              src={content?.thumbnail}
+              src={content.thumbnail}
               alt="thumbnail"
               fill
               className="object-cover rounded-[30px]"
@@ -214,4 +264,6 @@ export default function TopComp({ content, contClass = "" }) {
       )}
     </div>
   );
-}
+};
+
+export default TopComp;

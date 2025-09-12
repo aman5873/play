@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { gamesData } from "@/constants/gameData";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
-import { CategoryCardComp } from "../common/CardComp";
+import { CategoryCardComp } from "@/components/common/CardComp";
 import { ScreenDetailsComp } from "@/components/TopComp";
 
 const gameSection = {
@@ -23,12 +23,7 @@ const gameSection = {
     "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
 };
 
-export function GameCard({
-  gameInfo,
-  showDesc = false,
-  contClass,
-  style = {},
-}) {
+export function GameCard({ gameInfo, contClass = "", style = {} }) {
   const router = useRouter();
   const primaryImage = gameInfo?.images.find((img) => img?.is_primary);
 
@@ -60,23 +55,6 @@ export function GameCard({
 
         {/* genres */}
         <CategoryCardComp categories={gameInfo?.genres} />
-
-        {/* insert here  */}
-        {showDesc && gameInfo?.description && (
-          <p
-            className=" text-[14px] mt-2"
-            style={{
-              color: "var(--subtitle)",
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {gameInfo?.description}
-          </p>
-        )}
       </div>
 
       <button
@@ -100,7 +78,7 @@ export default function GameFeed() {
   return (
     <div className="relative px-1 py-1 pb-20">
       {/* Scroll container */}
-      <ScrollableRowWrapper isReady={gameList}>
+      <ScrollableRowWrapper isReady={Boolean(gameList)}>
         {gameList.map((obj) => (
           <GameCard key={obj?.id} gameInfo={obj} />
         ))}

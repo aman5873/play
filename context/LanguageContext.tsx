@@ -13,8 +13,6 @@ import i18n from "@/i18n";
 interface LanguageContextType {
   lang: string;
   switchLang: (lng: string) => void;
-  headerSearchValue: string;
-  setHeaderSearchValue: (value: string) => void;
 }
 
 // ⚡ Use type assertion to avoid TS warning about default functions
@@ -28,7 +26,6 @@ interface LanguageProviderProps {
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
   const [lang, setLang] = useState<string>(i18n.language || "en");
-  const [headerSearchValue, setHeaderSearchValue] = useState<string>("");
 
   // Restore saved language from localStorage
   useEffect(() => {
@@ -51,9 +48,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   );
 
   return (
-    <LanguageContext.Provider
-      value={{ lang, switchLang, headerSearchValue, setHeaderSearchValue }}
-    >
+    <LanguageContext.Provider value={{ lang, switchLang }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -7,20 +7,25 @@ import { Twitter, Instagram, Mail, Phone } from "lucide-react";
 import { DiscordIcon } from "@/app/icons";
 import { useTranslation } from "react-i18next";
 
-const iconMap: Record<string, React.ElementType> = {
+import { AndroidIcon, IosIcon } from "@/app/icons";
+
+export const iconMap: Record<string, React.ElementType> = {
   twitter: Twitter,
   instagram: Instagram,
+
   discord: DiscordIcon,
   email: Mail,
   phone: Phone,
+  ios: IosIcon,
+  android: AndroidIcon,
 };
 
 const links = [
   { key: "home", href: "/", active: true },
   { key: "tournaments", href: "/tournaments", active: true },
   { key: "games", href: "/games", active: true },
+  { key: "social", href: "/social", active: true },
   { key: "levels", href: "/levels", active: false },
-  { key: "communities", href: "/communities", active: false },
 ];
 
 const resources = [
@@ -100,66 +105,72 @@ export default function Footer() {
   );
 
   return (
-    <footer className="w-full text-center px-10 py-8 mt-auto gradient-one text-[var(--textTwo)] border-t border-[var(--borderThree)]">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-left">
-        {/* Logo + Tagline */}
-        <div className="flex flex-col items-start max-w-[200px]">
-          <Link href="/" className="flex items-center justify-center mb-4">
-            <Image
-              src="/logo.png"
-              alt="Brand Logo"
-              width={86}
-              height={50}
-              className="rounded-md"
-              priority
-            />
-          </Link>
-          <p className="text-[var(--textTwo)] text-sm md:text-base">
-            {tFooter("tagline")}
-          </p>
+    <div className="pt-4 px-4 mt-auto">
+      <footer className="w-full text-center p-8  gradient-one text-[var(--textTwo)]  rounded-lg border-t border-[var(--borderThree)]">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-left">
+          {/* Logo + Tagline */}
+          <div className="flex flex-col items-start max-w-[200px]">
+            <Link href="/" className="flex items-center justify-center mb-4">
+              <Image
+                src="/logo.png"
+                alt="Brand Logo"
+                width={86}
+                height={50}
+                className="rounded-md"
+                priority
+              />
+            </Link>
+            <p className="text-[var(--textTwo)] text-sm md:text-base">
+              {tFooter("tagline")}
+            </p>
+          </div>
+
+          {/* Links */}
+          <FooterColumn title={tFooter("links.title")}>
+            {links.map((link) => (
+              <li key={link.key} className={link.active ? "" : "opacity-50"}>
+                <a
+                  href={link.href}
+                  className="hover:underline flex items-center gap-1 w-fit"
+                >
+                  {tFooter(`links.${link.key}`)}
+                </a>
+              </li>
+            ))}
+          </FooterColumn>
+
+          {/* Resources */}
+          <FooterColumn title={tFooter("resources.title")}>
+            {resources.map((res) => (
+              <li key={res.key} className={res.active ? "" : "opacity-50"}>
+                <a href={res.href} className="hover:underline">
+                  {tFooter(`resources.${res.key}`)}
+                </a>
+              </li>
+            ))}
+          </FooterColumn>
+
+          {/* Contact */}
+          <FooterColumn title={tFooter("contact.title")}>
+            <ul className="mb-2 space-y-1">
+              {otherContacts.map((item) => (
+                <ContactItem key={item.key} value={item.value} />
+              ))}
+            </ul>
+
+            {/* Social icons row */}
+            <ul className="flex items-center mt-2">
+              {socialLinks.map((item) => (
+                <ContactItem
+                  key={item.key}
+                  icon={item.icon}
+                  value={item.value}
+                />
+              ))}
+            </ul>
+          </FooterColumn>
         </div>
-
-        {/* Links */}
-        <FooterColumn title={tFooter("links.title")}>
-          {links.map((link) => (
-            <li key={link.key} className={link.active ? "" : "opacity-50"}>
-              <a
-                href={link.href}
-                className="hover:underline flex items-center gap-1 w-fit"
-              >
-                {tFooter(`links.${link.key}`)}
-              </a>
-            </li>
-          ))}
-        </FooterColumn>
-
-        {/* Resources */}
-        <FooterColumn title={tFooter("resources.title")}>
-          {resources.map((res) => (
-            <li key={res.key} className={res.active ? "" : "opacity-50"}>
-              <a href={res.href} className="hover:underline">
-                {tFooter(`resources.${res.key}`)}
-              </a>
-            </li>
-          ))}
-        </FooterColumn>
-
-        {/* Contact */}
-        <FooterColumn title={tFooter("contact.title")}>
-          <ul className="mb-2 space-y-1">
-            {otherContacts.map((item) => (
-              <ContactItem key={item.key} value={item.value} />
-            ))}
-          </ul>
-
-          {/* Social icons row */}
-          <ul className="flex items-center mt-2">
-            {socialLinks.map((item) => (
-              <ContactItem key={item.key} icon={item.icon} value={item.value} />
-            ))}
-          </ul>
-        </FooterColumn>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 }

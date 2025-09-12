@@ -7,5 +7,21 @@
   "tournaments": "Tournaments",
   "rankings": "Rankings",
   "social": "Social",
-  "assets": "Assets"
+  "assets": "Assets",
+
+  "review": "Review",
+  "reviews": "Reviews",
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next",
+    "showing": "Showing {{start}}-{{end}} of {{total}} {{label}}"
+  },
+  "filters": {
+    "category": "Filter by category",
+    "genre": "Filter by Genre",
+    "all": "All"
+  },
+  "messages": {
+    "noGames": "No games found."
+  }
 }

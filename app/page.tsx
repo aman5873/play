@@ -1,10 +1,10 @@
 import TopComp from "@/components/TopComp";
 import { EpicChallengeFeedComp } from "@/components/screens/EpicChallengeFeed";
-import { GameFeedComp } from "@/components/screens/GameFeed";
+import { GameFeedComp } from "@/components/games/GameFeed";
 import { LeaderboardAchievementFeedComp } from "@/components/screens/LeaderboardAchievementFeedComp";
 import { NewsFeedComp } from "@/components/screens/News&UpdatesFeed";
-import { SocialFeedComp } from "@/components/screens/SocialHubFeed";
-import { TournamentFeedComp } from "@/components/screens/TournamentFeed";
+import { SocialFeedComp } from "@/components/social/SocialHubFeed";
+import { TournamentFeedComp } from "@/components/tournaments/TournamentFeed";
 
 import homeThumbnail from "@/public/images/home/homePlay.png";
 

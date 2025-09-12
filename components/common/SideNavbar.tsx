@@ -44,6 +44,13 @@ const navItems: NavItem[] = [
     active: true,
   },
   {
+    key: "social",
+    label: "Social Hub",
+    href: "/social",
+    icon: Users,
+    active: true,
+  },
+  {
     key: "missions",
     label: "Missions",
     href: "/missions",
@@ -51,13 +58,7 @@ const navItems: NavItem[] = [
     active: false,
   },
   { key: "news", label: "News", href: "/news", icon: Newspaper, active: false },
-  {
-    key: "social",
-    label: "Social Hub",
-    href: "/social",
-    icon: Users,
-    active: false,
-  },
+
   {
     key: "levels",
     label: "Levels",

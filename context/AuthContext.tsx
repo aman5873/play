@@ -27,6 +27,9 @@ interface AuthContextType {
   loginOpen: boolean;
   setLoginOpen: (open: boolean) => void;
   loginWithGoogle: () => void;
+  headerSearchValue: string;
+  setHeaderSearchValue: (value: string) => void;
+
   forgotPassword: (email: string) => Promise<boolean>;
   resetPassword: (newPassword: string) => Promise<boolean>;
   verifyOtp: (email: string, token: string) => Promise<any>;
@@ -43,6 +46,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [headerSearchValue, setHeaderSearchValue] = useState<string>("");
 
   // Google login simulation
   const loginWithGoogle = useCallback(() => {
@@ -137,6 +141,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser,
       loginOpen,
       setLoginOpen,
+      headerSearchValue,
+      setHeaderSearchValue,
       loginWithGoogle,
       forgotPassword,
       resetPassword,
@@ -146,6 +152,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     [
       user,
       loginOpen,
+      headerSearchValue,
       loginWithGoogle,
       forgotPassword,
       resetPassword,

@@ -7,5 +7,21 @@
   "tournaments": "Torneos",
   "rankings": "Clasificación",
   "social": "Social",
-  "assets": "Recursos"
+  "assets": "Recursos",
+
+  "review": "Revisar",
+  "reviews": "Opiniones",
+  "pagination": {
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "showing": "Mostrando {{start}}-{{end}} de {{total}} juegos"
+  },
+  "filters": {
+    "category": "Filtrar por categoría",
+    "genre": "Filtrar por género",
+    "all": "Todos"
+  },
+  "messages": {
+    "noGames": "No se encontraron juegos."
+  }
 }

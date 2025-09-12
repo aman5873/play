@@ -214,7 +214,7 @@ export default function TournamentFeed() {
     <div className="relative px-1 py-5 pb-20">
       {/* Scroll container */}
       <TournamentCard tournamentInfo={tournamentList?.[0]} isFeatured={true} />
-      <ScrollableRowWrapper isReady={tournamentList}>
+      <ScrollableRowWrapper isReady={Boolean(tournamentList)}>
         {tournamentList.map((obj) => (
           <TournamentCard key={obj?.id} tournamentInfo={obj} />
         ))}

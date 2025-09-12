@@ -121,7 +121,7 @@ export default function EpicChallengeFeed() {
     <div className="relative px-1 py-5 pb-20">
       {/* Scroll container */}
 
-      <ScrollableRowWrapper isReady={challengeList}>
+      <ScrollableRowWrapper isReady={Boolean(challengeList)}>
         {challengeList?.map((obj, index) => {
           return (
             <ChallengeCard

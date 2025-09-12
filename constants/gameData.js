@@ -9,17 +9,26 @@ export const categoriesData = [
 export const gamesData = [
   {
     id: 1,
-    title: "VR Basketball",
+    title: "Clash of clan",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
     description:
-      "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
+      "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars! Clash of Clans is an epic combat strategy game where you build your village, train your troops, and battle with millions of other players online!",
+    download_link: "",
+    website_link: "",
+    networks: "clashofclane.com",
+    category: "Adventure",
+    active_players_count: 20,
+    status: "active",
+
     release_date: "2024-05-12",
     size: "200mb",
     in_app_purchase: "$0.99 - $99.99",
     age_rating: "9+ (Everyone 9+)",
     publisher: "Supercell",
     developer: "Unity Labs",
-    genres: ["Multiplayer", "Free-to-Play", "Fantasy", "Mobile"],
-    review_list: {
+    genres: ["Multiplayer", "Free-to-Play"],
+    review: {
       total_review: 2847,
       average_rating: 4.7,
       reviews: [
@@ -27,7 +36,7 @@ export const gamesData = [
           id: 1,
           user: {
             name: "ChiefWarrior",
-            avatar_url: "/images/home/user2Avatar.png",
+            avatar_url: "/images/home/user3Avatar.png",
           },
           date_time: "1 hour ago",
           rating: 5,
@@ -50,7 +59,7 @@ export const gamesData = [
           id: 3,
           user: {
             name: "ChiefWarrior",
-            avatar_url: "/images/home/user2Avatar.png",
+            avatar_url: "/images/home/user3Avatar.png",
           },
           date_time: "1 hour ago",
           rating: 5,
@@ -81,39 +90,6 @@ export const gamesData = [
       { key: "ios", value: "https://www.apple.com/in/app-store/" },
     ],
 
-    active_players_count: 20,
-    status: "active",
-    category: "sports",
-
-    features: [
-      {
-        id: "1",
-        title: "Feature 1",
-        description: "Advanced Ball Physics",
-      },
-      { id: "2", title: "Feature 2", description: "Online tournaments" },
-      {
-        id: "3",
-        title: "Feature 3",
-        description: "Different playing surfaces",
-      },
-      {
-        id: "4",
-        title: "Feature 4",
-        description: "Career and exhibition modes",
-      },
-      {
-        id: "5",
-        title: "Feature 4",
-        description: "Career and exhibition modes",
-      },
-      {
-        id: "6",
-        title: "Feature 6",
-        description:
-          "Career and exhibition modes,Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores accusamus nihil voluptatem nesciunt similique, voluptatum ex eveniet iste ipsa at.",
-      },
-    ],
     images: [
       {
         id: "img1",
@@ -124,32 +100,30 @@ export const gamesData = [
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
     ],
-
-    platform: {
-      list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
-      requirements:
-        "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
-    },
-
-    ratings: {
-      count: 186,
-      avg_rating: 4.7,
-    },
   },
 
   {
     id: 2,
     title: "Skydiving Extreme",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
     description:
       "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
+
+    download_link: "",
+    website_link: "",
+    category: "extreme",
+    active_players_count: 30,
+    status: "active",
+
     release_date: "2024-06-20",
-    size: "200mb",
+    size: "240mb",
     in_app_purchase: "$0.99 - $99.99",
     age_rating: "9+ (Everyone 9+)",
     publisher: "Supercell",
     developer: "Supercell",
-    genres: ["Multiplayer", "Free-to-Play", "Fantasy", "Mobile"],
-    review_list: {
+    genres: ["Fantasy", "Mobile"],
+    review: {
       total_review: 2847,
       average_rating: 4.7,
       reviews: [
@@ -211,58 +185,34 @@ export const gamesData = [
       { key: "ios", value: "https://www.apple.com/in/app-store/" },
     ],
 
-    active_players_count: 30,
-    status: "active",
-    category: "extreme",
-    features: [
-      {
-        id: "1",
-        title: "Feature 1",
-        description: "Advanced Ball Physics",
-      },
-      { id: "2", title: "Feature 2", description: "Online tournaments" },
-      {
-        id: "3",
-        title: "Feature 3",
-        description: "Different playing surfaces",
-      },
-      {
-        id: "4",
-        title: "Feature 4",
-        description: "Career and exhibition modes",
-      },
-    ],
     images: [
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 1 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
     ],
-
-    platform: {
-      list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
-      requirements: [
-        "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
-      ],
-    },
-
-    ratings: {
-      count: 102,
-      avg_rating: 4.5,
-    },
   },
   {
     id: 3,
     title: "VR Basketball",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
     description:
       "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
+    download_link: "",
+    website_link: "",
+    category: "sports",
+    active_players_count: 100,
+    status: "active",
+
     release_date: "2024-05-12",
     size: "200mb",
     in_app_purchase: "$0.99 - $99.99",
     age_rating: "9+ (Everyone 9+)",
     publisher: "Supercell",
+    developer: "Unity Labs",
     genres: ["Free-to-Play", "Fantasy", "Mobile"],
-    review_list: {
+    review: {
       total_review: 2847,
       average_rating: 4.7,
       reviews: [
@@ -323,61 +273,35 @@ export const gamesData = [
       { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
       { key: "ios", value: "https://www.apple.com/in/app-store/" },
     ],
-    developer: "Unity Labs",
 
-    active_players_count: 100,
-    status: "active",
-    category: "sports",
-
-    features: [
-      {
-        id: "1",
-        title: "Feature 1",
-        description: "Advanced Ball Physics",
-      },
-      { id: "2", title: "Feature 2", description: "Online tournaments" },
-      {
-        id: "3",
-        title: "Feature 3",
-        description: "Different playing surfaces",
-      },
-      {
-        id: "4",
-        title: "Feature 4",
-        description: "Career and exhibition modes",
-      },
-    ],
     images: [
       { id: "img1", image_path: "/images/games/game1-1.jpg", is_primary: 1 },
       { id: "img2", image_path: "/images/games/game1-2.jpg", is_primary: 0 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
     ],
-    platform: {
-      list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
-      requirements: [
-        "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
-      ],
-    },
-    ratings: {
-      count: 126,
-      avg_rating: 4.2,
-    },
   },
-
   {
     id: 4,
-    title: "Skydiving Extreme",
+    title: "Clash of clan",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
     description:
-      "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
-    release_date: "2024-06-20",
+      "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars! Clash of Clans is an epic combat strategy game where you build your village, train your troops, and battle with millions of other players online!",
+    download_link: "",
+    website_link: "",
+    category: "Adventure",
+    active_players_count: 20,
+    status: "active",
+
+    release_date: "2024-05-12",
     size: "200mb",
     in_app_purchase: "$0.99 - $99.99",
     age_rating: "9+ (Everyone 9+)",
     publisher: "Supercell",
-    developer: "Epic Games",
-    genres: ["Free-to-Play", "Fantasy", "Mobile"],
-    review_list: {
+    developer: "Unity Labs",
+    genres: ["Multiplayer", "Free-to-Play"],
+    review: {
       total_review: 2847,
       average_rating: 4.7,
       reviews: [
@@ -438,40 +362,471 @@ export const gamesData = [
       { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
       { key: "ios", value: "https://www.apple.com/in/app-store/" },
     ],
-    active_players_count: 0,
-    status: "active",
-    category: "extreme",
-    features: [
+
+    images: [
       {
-        id: "1",
-        title: "Feature 1",
-        description: "Advanced Ball Physics",
+        id: "img1",
+        image_path: "/images/games/clashOfClan.png",
+        is_primary: 1,
       },
-      { id: "2", title: "Feature 2", description: "Online tournaments" },
-      {
-        id: "3",
-        title: "Feature 3",
-        description: "Different playing surfaces",
-      },
-      {
-        id: "4",
-        title: "Feature 4",
-        description: "Career and exhibition modes",
-      },
+      { id: "img2", image_path: "/images/games/game1-2.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
     ],
+  },
+
+  {
+    id: 5,
+    title: "Skydiving Extreme",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+    description:
+      "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
+
+    download_link: "",
+    website_link: "",
+    category: "extreme",
+    active_players_count: 30,
+    status: "active",
+
+    release_date: "2024-06-20",
+    size: "240mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Supercell",
+    genres: ["Fantasy", "Mobile"],
+    review: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+
     images: [
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 1 },
       { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
       { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
     ],
+  },
+  {
+    id: 6,
+    title: "VR Basketball",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+    description:
+      "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
+    download_link: "",
+    website_link: "",
+    category: "sports",
+    active_players_count: 100,
+    status: "active",
 
-    platform: {
-      list: ["Oculus Quest", "HTC Vive", "PlayStation VR"],
-      requirements: [
-        "Any VR headset compatible with SteamVR, Oculus, or PlayStation VR",
+    release_date: "2024-05-12",
+    size: "200mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Unity Labs",
+    genres: ["Free-to-Play", "Fantasy", "Mobile"],
+    review: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
       ],
     },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+
+    images: [
+      { id: "img1", image_path: "/images/games/game1-1.jpg", is_primary: 1 },
+      { id: "img2", image_path: "/images/games/game1-2.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+    ],
+  },
+
+  {
+    id: 7,
+    title: "Clash of clan",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+    description:
+      "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars! Clash of Clans is an epic combat strategy game where you build your village, train your troops, and battle with millions of other players online!",
+    download_link: "",
+    website_link: "",
+    category: "Adventure",
+    active_players_count: 20,
+    status: "active",
+
+    release_date: "2024-05-12",
+    size: "200mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Unity Labs",
+    genres: ["Multiplayer", "Free-to-Play"],
+    review: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+
+    images: [
+      {
+        id: "img1",
+        image_path: "/images/games/clashOfClan.png",
+        is_primary: 1,
+      },
+      { id: "img2", image_path: "/images/games/game1-2.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+    ],
+  },
+
+  {
+    id: 8,
+    title: "Skydiving Extreme",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+    description:
+      "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
+
+    download_link: "",
+    website_link: "",
+    category: "extreme",
+    active_players_count: 30,
+    status: "active",
+
+    release_date: "2024-06-20",
+    size: "240mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Supercell",
+    genres: ["Fantasy", "Mobile"],
+    review: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+
+    images: [
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+      { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 1 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+      { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
+    ],
+  },
+  {
+    id: 9,
+    title: "VR Basketball",
+    tagline:
+      "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+    description:
+      "Feel the adrenaline rush of professional tennis in virtual reality. With precise gameplay mechanics and detailed environments, VR Tennis Pro offers the most realistic tennis experience ever created.",
+    download_link: "",
+    website_link: "",
+    category: "sports",
+    active_players_count: 100,
+    status: "active",
+
+    release_date: "2024-05-12",
+    size: "200mb",
+    in_app_purchase: "$0.99 - $99.99",
+    age_rating: "9+ (Everyone 9+)",
+    publisher: "Supercell",
+    developer: "Unity Labs",
+    genres: ["Free-to-Play", "Fantasy", "Mobile"],
+    review: {
+      total_review: 2847,
+      average_rating: 4.7,
+      reviews: [
+        {
+          id: 1,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 2,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+        {
+          id: 3,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user2Avatar.png",
+          },
+          date_time: "1 hour ago",
+          rating: 5,
+          description:
+            "Been playing for 8 years and still love it! The clan wars are incredibly strategic and the constant updates keep things fresh. Best mobile strategy game ever!",
+        },
+        {
+          id: 4,
+          user: {
+            name: "ChiefWarrior",
+            avatar_url: "/images/home/user1Avatar.png",
+          },
+
+          date_time: "A moment ago",
+          rating: 4.5,
+          description:
+            "I've been playing this game for over eight years! The strategic depth of the clan wars is exceptional, and the regular updates keep the gameplay fresh and exciting. It's undoubtedly the best mobile strategy game out there!",
+        },
+      ],
+    },
+    socials: [
+      { key: "twitter", value: "https://x.com/" },
+      { key: "instagram", value: "https://www.instagram.com/" },
+      { key: "discord", value: "https://discord.com/" },
+    ],
+    platforms: [
+      { key: "android", value: "https://play.google.com/store/apps?hl=en_IN" },
+      { key: "ios", value: "https://www.apple.com/in/app-store/" },
+    ],
+
+    images: [
+      { id: "img1", image_path: "/images/games/game1-1.jpg", is_primary: 1 },
+      { id: "img2", image_path: "/images/games/game1-2.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+      { id: "img3", image_path: "/images/games/game2-1.jpg", is_primary: 0 },
+    ],
   },
 ];
 
@@ -493,17 +848,33 @@ export const statusesData = [
 export const tournamentsData = {
   tournaments: [
     {
-      id: "tour-4",
-      title: "VR Winter Games",
+      id: "tour-1",
+      title: "Clan Tournament",
       description:
-        "The 2023 VR World Cup is the biggest virtual reality football event. 32 teams from around the world will compete to win the world title and a €50,000 prize pool. The tournament will be played over three weeks, with group stages followed by knockout rounds. Matches will be streamed live on our official platform.",
+        "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+
+      status: "Registration open",
+      how_to_register: [
+        "After creating an account, click Join Tournament above.",
+        "Then [Join our Discord Server](YOUR DISCORD URL). We'll be coordinating matches in the #GAMENAME channel and assisting players. DISCORDNAME#1234 is the main admin to message with any questions.",
+        "Lastly, head to your Account Settings and add your GAME NAME username in the 'Platform Links' tab. This will make it much easier to challenge your opponent the day of the tournament when we check into the Discord.",
+      ],
+      format: [
+        "Capped at 128 Players. Best of 3 Matches.",
+        "The finals Best of 5. Single Elimination Bracket.",
+        "Start Time: January Xth at Xpm EST.",
+      ],
+      frequently_asked: [
+        "The bracket will be viewable on this page after the tournament starts. Tournament payouts will be paid out immediately after the tournament ends. Reach out to CONTACT EMAIL with any questions.",
+      ],
+
       start_date: "2025-09-30",
       teams_participated_count: 16,
       max_teams: 32,
       prize: "$ 50,000",
-      category: "VR Snowboarding",
       categories: ["VR Snowboarding", "Single Elimination", "1v1"],
-      status: "Registration open",
+
+      category: "VR Snowboarding",
       images: [
         { id: "img4", image_path: "/images/home/olderFall.png", is_primary: 1 },
         {
@@ -516,82 +887,9 @@ export const tournamentsData = {
         { id: "img2", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
       ],
 
-      schedule: [
-        {
-          id: "1",
-          phase: "Group Stage",
-          dates: ["2025-08-15", "2025-08-20"],
-          start_date: "2025-08-15",
-          end_date: "2025-08-20",
-        },
-        {
-          id: "2",
-          phase: "Quarter finals",
-          dates: ["2025-08-15", "2025-08-20", "2025-08-25"],
-          start_date: "2025-08-23",
-          end_date: "2025-08-25",
-        },
-        {
-          id: "3",
-          phase: "Semifinals",
-          dates: ["2025-08-28"],
-          start_date: "2025-08-28",
-        },
-        {
-          id: "4",
-          phase: "Final",
-          start_date: "2025-08-30",
-          dates: ["2025-08-30"],
-        },
-      ],
-      format:
-        "6v6 competition system. Group stage followed by knockout rounds.",
-      prizeList: [
-        {
-          id: "1",
-          title: "1st Place",
-          description: "€25,000 + Virtual Trophy + VR Equipment",
-        },
-        {
-          id: "2",
-          title: "2nd Place",
-          description: "€15,000 + Virtual Medals",
-        },
-        {
-          id: "3",
-          title: "3rd Place",
-          description: "€10,000 + Virtual Medals",
-        },
-        {
-          id: "4",
-          title: "MVP of the Tournament",
-          description: "€5,000 + Exclusive Item",
-        },
-      ],
       organizer: {
+        avatar_url: "/images/home/user1Avatar.png",
         name: "IMM Sports",
-        description: "Official organizer",
-        email: "contact@iim.gmail.com",
-      },
-      rules: [
-        "Teams must have between 6 and 10 registered players.",
-        "All players must use equipment compatible with VR Soccer League gameplay.",
-        "The use of any type of modification or hack is prohibited.",
-        "Teams must arrive 15 minutes before each match.",
-        "The organization reserves the right to modify the calendar if necessary.",
-      ],
-      game: {
-        id: 1,
-        title: "Olderfall",
-        category_id: 1,
-        release_date: "2024-05-12",
-        developer: "Unity Labs",
-        is_live: true,
-        images: [
-          { id: "img1", url: "/images/games/game1-1.jpg" },
-          { id: "img2", url: "/images/games/game1-2.jpg" },
-        ],
-        primary_image: "/images/games/game1-1.jpg",
       },
     },
 
@@ -600,13 +898,27 @@ export const tournamentsData = {
       title: "VR Basketball Masters",
       description:
         "The 2023 VR World Cup is the biggest virtual reality football event. 32 teams from around the world will compete to win the world title and a €50,000 prize pool. The tournament will be played over three weeks, with group stages followed by knockout rounds. Matches will be streamed live on our official platform.",
+      status: "Registration open",
+      how_to_register: [
+        "After creating an account, click Join Tournament above.",
+        "Then [Join our Discord Server](YOUR DISCORD URL). We'll be coordinating matches in the #GAMENAME channel and assisting players. DISCORDNAME#1234 is the main admin to message with any questions.",
+        "Lastly, head to your Account Settings and add your GAME NAME username in the 'Platform Links' tab. This will make it much easier to challenge your opponent the day of the tournament when we check into the Discord.",
+      ],
+      format: [
+        "Capped at 128 Players. Best of 3 Matches.",
+        "The finals Best of 5. Single Elimination Bracket.",
+        "Start Time: January Xth at Xpm EST.",
+      ],
+      frequently_asked: [
+        "The bracket will be viewable on this page after the tournament starts. Tournament payouts will be paid out immediately after the tournament ends. Reach out to CONTACT EMAIL with any questions.",
+      ],
+
       start_date: "2025-07-15",
       teams_participated_count: 16,
       max_teams: 16,
       prize: "25,000",
       category: "VR Basketball",
       categories: ["VR Basketball"],
-      status: "Registration open",
       images: [
         {
           id: "img3",
@@ -624,82 +936,9 @@ export const tournamentsData = {
         { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
       ],
 
-      schedule: [
-        {
-          id: "1",
-          phase: "Group Stage",
-          dates: ["2025-08-15", "2025-08-20"],
-          start_date: "2025-08-15",
-          end_date: "2025-08-20",
-        },
-        {
-          id: "2",
-          phase: "Quarter finals",
-          dates: ["2025-08-15", "2025-08-20", "2025-08-25"],
-          start_date: "2025-08-23",
-          end_date: "2025-08-25",
-        },
-        {
-          id: "3",
-          phase: "Semifinals",
-          dates: ["2025-08-28"],
-          start_date: "2025-08-28",
-        },
-        {
-          id: "4",
-          phase: "Final",
-          start_date: "2025-08-30",
-          dates: ["2025-08-30"],
-        },
-      ],
-      format:
-        "6v6 competition system. Group stage followed by knockout rounds.",
-      prizeList: [
-        {
-          id: "1",
-          title: "1st Place",
-          description: "€25,000 + Virtual Trophy + VR Equipment",
-        },
-        {
-          id: "2",
-          title: "2nd Place",
-          description: "€15,000 + Virtual Medals",
-        },
-        {
-          id: "3",
-          title: "3rd Place",
-          description: "€10,000 + Virtual Medals",
-        },
-        {
-          id: "4",
-          title: "MVP of the Tournament",
-          description: "€5,000 + Exclusive Item",
-        },
-      ],
       organizer: {
+        avatar_url: "/images/home/user3Avatar.png",
         name: "IMM Sports",
-        description: "Official organizer",
-        email: "contact@iim.gmail.com",
-      },
-      rules: [
-        "Teams must have between 6 and 10 registered players.",
-        "All players must use equipment compatible with VR Soccer League gameplay.",
-        "The use of any type of modification or hack is prohibited.",
-        "Teams must arrive 15 minutes before each match.",
-        "The organization reserves the right to modify the calendar if necessary.",
-      ],
-      game: {
-        id: 1,
-        title: "VR Basketball",
-        category_id: 1,
-        release_date: "2024-05-12",
-        developer: "Unity Labs",
-        is_live: true,
-        images: [
-          { id: "img1", url: "/images/games/game1-1.jpg" },
-          { id: "img2", url: "/images/games/game1-2.jpg" },
-        ],
-        primary_image: "/images/games/game1-1.jpg",
       },
     },
     {
@@ -707,13 +946,27 @@ export const tournamentsData = {
       title: "VR World Cup 2023",
       description:
         "The 2023 VR World Cup is the biggest virtual reality football event. 32 teams from around the world will compete to win the world title and a €50,000 prize pool. The tournament will be played over three weeks, with group stages followed by knockout rounds. Matches will be streamed live on our official platform.",
+      status: "Registration open",
+      how_to_register: [
+        "After creating an account, click Join Tournament above.",
+        "Then [Join our Discord Server](YOUR DISCORD URL). We'll be coordinating matches in the #GAMENAME channel and assisting players. DISCORDNAME#1234 is the main admin to message with any questions.",
+        "Lastly, head to your Account Settings and add your GAME NAME username in the 'Platform Links' tab. This will make it much easier to challenge your opponent the day of the tournament when we check into the Discord.",
+      ],
+      format: [
+        "Capped at 128 Players. Best of 3 Matches.",
+        "The finals Best of 5. Single Elimination Bracket.",
+        "Start Time: January Xth at Xpm EST.",
+      ],
+      frequently_asked: [
+        "The bracket will be viewable on this page after the tournament starts. Tournament payouts will be paid out immediately after the tournament ends. Reach out to CONTACT EMAIL with any questions.",
+      ],
+
       start_date: "2025-07-15",
       teams_participated_count: 16,
       max_teams: 32,
       prize: "50,000",
       category: "VR Soccer League",
       categories: ["VR Soccer League"],
-      status: "Registration open",
       images: [
         {
           id: "img3",
@@ -726,82 +979,9 @@ export const tournamentsData = {
         { id: "img4", image_path: "/images/games/game2-2.jpg", is_primary: 0 },
       ],
 
-      schedule: [
-        {
-          id: "1",
-          phase: "Group Stage",
-          dates: ["2025-08-15", "2025-08-20"],
-          start_date: "2025-08-15",
-          end_date: "2025-08-20",
-        },
-        {
-          id: "2",
-          phase: "Quarter finals",
-          dates: ["2025-08-15", "2025-08-20", "2025-08-25"],
-          start_date: "2025-08-23",
-          end_date: "2025-08-25",
-        },
-        {
-          id: "3",
-          phase: "Semifinals",
-          dates: ["2025-08-28"],
-          start_date: "2025-08-28",
-        },
-        {
-          id: "4",
-          phase: "Final",
-          start_date: "2025-08-30",
-          dates: ["2025-08-30"],
-        },
-      ],
-      format:
-        "6v6 competition system. Group stage followed by knockout rounds.",
-      prizeList: [
-        {
-          id: "1",
-          title: "1st Place",
-          description: "€25,000 + Virtual Trophy + VR Equipment",
-        },
-        {
-          id: "2",
-          title: "2nd Place",
-          description: "€15,000 + Virtual Medals",
-        },
-        {
-          id: "3",
-          title: "3rd Place",
-          description: "€10,000 + Virtual Medals",
-        },
-        {
-          id: "4",
-          title: "MVP of the Tournament",
-          description: "€5,000 + Exclusive Item",
-        },
-      ],
       organizer: {
+        avatar_url: "/images/home/user1Avatar.png",
         name: "IMM Sports",
-        description: "Official organizer",
-        email: "contact@iim.gmail.com",
-      },
-      rules: [
-        "Teams must have between 6 and 10 registered players.",
-        "All players must use equipment compatible with VR Soccer League gameplay.",
-        "The use of any type of modification or hack is prohibited.",
-        "Teams must arrive 15 minutes before each match.",
-        "The organization reserves the right to modify the calendar if necessary.",
-      ],
-      game: {
-        id: 1,
-        title: "Cricket league",
-        category_id: 1,
-        release_date: "2024-05-12",
-        developer: "Unity Labs",
-        is_live: true,
-        images: [
-          { id: "img1", url: "/images/games/game1-1.jpg" },
-          { id: "img2", url: "/images/games/game1-2.jpg" },
-        ],
-        primary_image: "/images/games/game1-1.jpg",
       },
     },
   ],

@@ -37,7 +37,7 @@ export default function Layout({ children }) {
               <AuthProvider>
                 <div className="flex h-screen w-screen">
                   {/* Sidebar */}
-                  <Sidebar isOpen={isOpen} onClose={() => setIsOpen(false)} />
+                  <Sidebar />
 
                   {/* Mobile Sidebar */}
                   <MobileSidebar
