@@ -58,14 +58,15 @@ export const iconMap = {
 } satisfies Record<string, LucideIcon>;
 
 export function CardChip({ label, style }: CardChipProps) {
-  return (
-    <div
-      className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit`}
-      style={style}
-    >
-      {label}
-    </div>
-  );
+  if (label)
+    return (
+      <div
+        className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit capitalize`}
+        style={style}
+      >
+        {label}
+      </div>
+    );
 }
 
 export function CardIconInfo({ list, minWidth = "55px" }: CardIconInfoProps) {
@@ -112,7 +113,7 @@ export function CardIconInfo({ list, minWidth = "55px" }: CardIconInfoProps) {
 }
 
 export function SectionDetails({ list }: { list?: any[] }) {
-  if (!list || list.length === 0) return null;
+  if (!list || list?.length === 0) return null;
 
   return (
     <div className="flex flex-wrap gap-6 my-2 border-1 border-[var(--borderThree)] gradient-one rounded-xl mx-2 sm:mx-1 mt-2 py-5">
@@ -172,24 +173,25 @@ export function CategoryCardComp({
   maxVisible = 2,
   children,
 }: CardCompProps) {
-  const visibleCategories = categories.slice(0, maxVisible);
-  const remainingCount = categories.length - maxVisible;
+  const visibleCategories = categories?.slice(0, maxVisible);
+  const remainingCount = categories?.length - maxVisible;
 
   const allowWrap = maxVisible > 2;
 
-  return (
-    <div
-      className={`flex gap-2 mt-1 ${
-        allowWrap ? "flex-wrap" : "flex-nowrap overflow-x-auto scrollbar-hide"
-      }`}
-    >
-      {visibleCategories.map((category, index) => (
-        <CardChip label={category} key={index} />
-      ))}
+  if (visibleCategories?.length > 0)
+    return (
+      <div
+        className={`flex gap-2 mt-1 ${
+          allowWrap ? "flex-wrap" : "flex-nowrap overflow-x-auto scrollbar-hide"
+        }`}
+      >
+        {visibleCategories?.map((category, index) => (
+          <CardChip label={category} key={index} />
+        ))}
 
-      {remainingCount > 0 && <CardChip label={`+${remainingCount}`} />}
+        {remainingCount > 0 && <CardChip label={`+${remainingCount}`} />}
 
-      {children}
-    </div>
-  );
+        {children}
+      </div>
+    );
 }

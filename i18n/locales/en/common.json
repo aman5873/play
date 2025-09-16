@@ -19,6 +19,7 @@
   "filters": {
     "category": "Filter by category",
     "genre": "Filter by Genre",
+    "status": "Filter by Status",
     "all": "All"
   },
   "messages": {

@@ -1,16 +1,17 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { RatingComp } from "@/components/common/RatingComp";
 import { TopBgComp } from "@/components/TopComp";
-import { gamesData } from "@/constants/gameData";
 
 import Image from "next/image";
 import Pagination, { ShowingResults } from "@/components/common/Pagination";
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import { CardChip } from "@/components/common/CardComp";
 import { iconMap } from "@/components/Footer";
+import { getGames } from "@/lib/game_ops";
+import { useAuth } from "@/context/AuthContext";
 
 function GalleryComp({ gameInfo }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,12 +44,14 @@ function GalleryComp({ gameInfo }) {
             key={`${obj?.id}-${index}`}
             className="relative aspect-[16/9] w-full rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
           >
-            <Image
-              src={obj?.image_path}
-              alt={`image-${index}`}
-              fill
-              className="object-cover hover:scale-105 transition-transform duration-300 ease-in-out"
-            />
+            {obj?.image_url && (
+              <Image
+                src={obj?.image_url}
+                alt={`image-${index}`}
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300 ease-in-out"
+              />
+            )}
           </div>
         ))}
       </div>
@@ -185,13 +188,13 @@ function InfoComp({ label, value, isPrimary = false }) {
     <div className="flex flex-col w-full sm:w-[48%] md:w-[30%] lg-w-full">
       <p className="text-lg text-[var(--textTwo)] uppercase">{label}</p>
       <div
-        className={`text-lg ${
+        className={`text-lg w-full sm:w-[48%] md:w-[30%] lg-w-full ${
           isPrimary
             ? "text-[var(--primary)]"
             : "text-[var(--textOne)] opacity-[90%]"
         }`}
       >
-        {value}
+        {value ?? "__"}
       </div>
     </div>
   );
@@ -203,22 +206,39 @@ function RightSection({ gameInfo }) {
       <h1 className="sm:text-lg lg:text-xl font-bold my-1 w-full">
         {gameInfo?.title}
       </h1>
-      <InfoComp label="Networks" value={gameInfo?.networks} isPrimary={true} />
+      <InfoComp
+        label="Networks"
+        isPrimary={true}
+        value={
+          <div className="flex flex-wrap  gap-2 mt-1 w-full">
+            {gameInfo?.networks?.map((network) => {
+              return (
+                <CardChip
+                  key={network?.id}
+                  label={network?.name}
+                  style={{ width: "fit-content", minWidth: 90, width: "auto" }}
+                />
+              );
+            })}
+          </div>
+        }
+      />
+
       <InfoComp
         label="Platforms"
         value={
           <div className="flex flex-wrap  gap-3 mt-1">
-            {gameInfo?.platforms?.map((platformObj) => {
-              const Icon = iconMap[platformObj?.key];
+            {gameInfo?.platforms?.map((platformObj, index) => {
+              const Icon = iconMap[platformObj?.name];
               return (
                 <a
-                  key={platformObj?.key}
-                  href={platformObj?.value}
+                  key={`${platformObj?.id}-${index}`}
+                  href={platformObj?.pivot?.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
                 >
-                  <Icon size={30} />
+                  {Icon && <Icon size={30} />}
                 </a>
               );
             })}
@@ -229,17 +249,17 @@ function RightSection({ gameInfo }) {
         label="Socials"
         value={
           <div className="flex flex-wrap  gap-3 mt-1">
-            {gameInfo?.socials?.map((socialObj) => {
-              const Icon = iconMap[socialObj?.key];
+            {gameInfo?.socials?.map((socialObj, index) => {
+              const Icon = iconMap[socialObj?.name];
               return (
                 <a
-                  key={socialObj?.key}
-                  href={socialObj?.value}
+                  key={socialObj?.id}
+                  href={socialObj?.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
                 >
-                  <Icon size={20} />
+                  {Icon && <Icon size={30} />}
                 </a>
               );
             })}
@@ -253,8 +273,8 @@ function RightSection({ gameInfo }) {
             {gameInfo?.genres?.map((genre) => {
               return (
                 <CardChip
-                  key={genre}
-                  label={genre}
+                  key={genre?.id}
+                  label={genre?.name}
                   style={{ width: "fit-content", minWidth: 90, width: "auto" }}
                 />
               );
@@ -267,7 +287,7 @@ function RightSection({ gameInfo }) {
       <InfoComp label="Release Date" value={gameInfo?.release_date} />
       <InfoComp label="Age Rating" value={gameInfo?.age_rating} />
       <InfoComp label="In-App Purchases" value={gameInfo?.in_app_purchase} />
-      <InfoComp label="Size" value={`~ ${gameInfo?.size}`} />
+      <InfoComp label="Size" value={`~ ${gameInfo?.size ?? "-"}`} />
     </div>
   );
 }
@@ -289,18 +309,32 @@ function LeftSection({ gameInfo }) {
 
 export default function GamePage() {
   const { gameId } = useParams();
+  const { isAuthenticated } = useAuth();
   const [gameInfo, setGameInfo] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
+  const fetchGames = useCallback(
+    (id) => {
+      if (!id) return;
+      setLoading(true);
+      getGames(id).then((res) => {
+        setLoading(false);
+        if (res?.success && res?.data) {
+          setGameInfo(res.data);
+        }
+      });
+    },
+    [isAuthenticated]
+  );
+
   useEffect(() => {
-    if (gameId) {
-      const game = gamesData.find((g) => g.id === Number(gameId));
-      setGameInfo(game || null);
-    }
+    fetchGames(gameId);
   }, [gameId]);
 
   const primaryImage = gameInfo?.images?.find(
     (img) => img?.is_primary
-  )?.image_path;
+  )?.image_url;
 
   return (
     <div className="flex flex-col gap-2 p-4">

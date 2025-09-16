@@ -3,11 +3,12 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { gamesData } from "@/constants/gameData";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
-import { CategoryCardComp } from "@/components/common/CardComp";
+
 import { ScreenDetailsComp } from "@/components/TopComp";
+import { getGames } from "@/lib/game_ops";
+import { CategoryCardComp } from "@/components/common/CardComp";
 
 const gameSection = {
   chip: [
@@ -25,7 +26,9 @@ const gameSection = {
 
 export function GameCard({ gameInfo, contClass = "", style = {} }) {
   const router = useRouter();
-  const primaryImage = gameInfo?.images.find((img) => img?.is_primary);
+
+  const primaryImage = gameInfo?.images.find((img: any) => img?.is_primary);
+  const genreList = gameInfo?.genres.map((genre: any) => genre?.name);
 
   return (
     <div
@@ -36,12 +39,14 @@ export function GameCard({ gameInfo, contClass = "", style = {} }) {
     >
       {/* Image wrapper */}
       <div className="relative w-full  h-[170px]  sm:h-[150px]  lg:h-[197px]  overflow-hidden rounded-lg group">
-        <Image
-          src={primaryImage?.image_path}
-          alt={gameInfo?.title}
-          fill
-          className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-        />
+        {primaryImage?.image_url && (
+          <Image
+            src={primaryImage?.image_url}
+            alt={gameInfo?.title}
+            fill
+            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+          />
+        )}
       </div>
 
       {/* Info section */}
@@ -54,7 +59,7 @@ export function GameCard({ gameInfo, contClass = "", style = {} }) {
         </h2>
 
         {/* genres */}
-        <CategoryCardComp categories={gameInfo?.genres} />
+        <CategoryCardComp categories={genreList} />
       </div>
 
       <button
@@ -69,17 +74,26 @@ export function GameCard({ gameInfo, contClass = "", style = {} }) {
 }
 
 export default function GameFeed() {
-  const [gameList, setGameList] = useState([]);
+  const [gameData, setGameData] = useState(null);
+  const [loading, setLoading] = useState(null);
+
+  function fetchGames(param?: any) {
+    setLoading(true);
+    getGames(param).then((res: any) => {
+      setLoading(false);
+      if (res?.success && res?.data) setGameData(res.data);
+    });
+  }
 
   useEffect(() => {
-    setGameList(gamesData);
+    fetchGames();
   }, []);
 
   return (
     <div className="relative px-1 py-1 pb-20">
       {/* Scroll container */}
-      <ScrollableRowWrapper isReady={Boolean(gameList)}>
-        {gameList.map((obj) => (
+      <ScrollableRowWrapper isReady={Boolean(gameData?.data)}>
+        {gameData?.data?.map((obj: any) => (
           <GameCard key={obj?.id} gameInfo={obj} />
         ))}
       </ScrollableRowWrapper>

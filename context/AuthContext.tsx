@@ -22,8 +22,8 @@ interface User {
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: User | null | boolean | undefined;
+  setUser: (user: User | null | boolean | undefined) => void;
   loginOpen: boolean;
   setLoginOpen: (open: boolean) => void;
   loginWithGoogle: () => void;
@@ -43,7 +43,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | false | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
   const [headerSearchValue, setHeaderSearchValue] = useState<string>("");
@@ -91,48 +91,70 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   // Fetch user on page reload
+  // In AuthProvider
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (!token) {
+      setUser(false); // ✅ explicitly set to false
       setLoading(false);
       return;
     }
 
-    // check if user is already cached in localStorage
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
       setLoading(false);
-      // optionally, you can still fetch in the background to refresh data
-      fetchProfile().then((res) => {
-        if (res?.data?.user) {
-          setUser(res.data.user);
-          localStorage.setItem("user", JSON.stringify(res.data.user));
-        }
-      });
-    } else {
-      // no cached user, fetch it
+
       fetchProfile()
         .then((res) => {
           if (res?.data?.user) {
             setUser(res.data.user);
             localStorage.setItem("user", JSON.stringify(res.data.user));
           } else {
+            setUser(false); // ✅ no valid user found
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+          }
+        })
+        .catch(() => {
+          setUser(false); // ✅ error fetching profile → consider as logged out
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+        });
+    } else {
+      fetchProfile()
+        .then((res) => {
+          if (res?.data?.user) {
+            setUser(res.data.user);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+          } else {
+            setUser(false); // ✅ no user
             localStorage.removeItem("token");
           }
         })
-        .catch(console.error)
+        .catch(() => {
+          setUser(false); // ✅ fetch failed → logged out
+          localStorage.removeItem("token");
+        })
         .finally(() => setLoading(false));
     }
 
     const handleLogoutEvent = () => {
-      setUser(null);
+      setUser(false);
       localStorage.removeItem("user");
     };
 
     window.addEventListener("auth-logout", handleLogoutEvent);
     return () => window.removeEventListener("auth-logout", handleLogoutEvent);
   }, []);
+
+  // Auto open login modal when user is explicitly false
+  useEffect(() => {
+    if (user === false) {
+      setLoginOpen(true); // ✅ open login modal
+    }
+  }, [user]);
 
   const value = useMemo<AuthContextType>(
     () => ({

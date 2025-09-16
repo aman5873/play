@@ -16,6 +16,8 @@ export const iconMap: Record<string, React.ElementType> = {
   discord: DiscordIcon,
   email: Mail,
   phone: Phone,
+  iOS: IosIcon,
+  Android: AndroidIcon,
   ios: IosIcon,
   android: AndroidIcon,
 };
