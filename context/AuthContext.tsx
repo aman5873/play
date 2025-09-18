@@ -159,7 +159,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => window.removeEventListener("auth-logout", handleLogoutEvent);
   }, []);
 
-  // Auto open login modal when user is explicitly false
+  // Auto  open login modal when user is explicitly false
   useEffect(() => {
     if (autoLoginOpen) {
       setLoginOpen(true);
