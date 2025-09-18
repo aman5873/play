@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 import { RankSecondaryIcon, CrownIcon } from "@/app/icons";
-import { leaderboardData } from "@/constants/gameData";
+import { leaderboardData } from "@/constants/data";
 import { ScreenDetailsComp } from "@/components/TopComp";
 import AchievementFeed from "./AchievementFeed";
 import Image from "next/image";
@@ -29,7 +29,7 @@ function LeaderboardCard({ leaderboardInfo }) {
 
   return (
     <div
-      className={`gradient-one w-full h-fit border p-4 flex-shrink-0 overflow-hidden rounded-xl flex items-center  gap-3 border-[var(--borderThree)] transition-transform duration-300`}
+      className={`gradient-one w-full  h-fit border p-4 flex-shrink-0 overflow-hidden rounded-xl flex items-center  gap-3 border-[var(--borderThree)] transition-transform duration-300`}
     >
       <h2 className="text-lg lg:text-xl font-bold truncate text-[var(--textOne)]">
         #{leaderboardInfo?.rank}
@@ -73,7 +73,7 @@ function TopLeaderboardCard({ leaderboardInfo }) {
     <div
       className={`${
         isRankOne ? "gradient-three scale-[1.10]" : "gradient-one"
-      } w-[95%] h-fit border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col justify-center items-center gap-3 border-[var(--borderThree)] transition-transform duration-300`}
+      } w-[95%] lg:max-w-[90%]  h-fit min-h-[22vw] border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col justify-center items-center gap-3 border-[var(--borderThree)] transition-transform duration-300`}
     >
       {/* Rank Icon */}
       {isRankOne ? (
@@ -141,7 +141,7 @@ function LeaderboardFeed() {
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-4 justify-items-center">
+      <div className="grid grid-cols-3  gap-4 justify-center items-center">
         {/* Always render three columns: 2nd, 1st, 3rd */}
         <TopLeaderboardCard leaderboardInfo={leaderboardList.topThree[1]} />
         <TopLeaderboardCard leaderboardInfo={leaderboardList.topThree[0]} />
@@ -181,7 +181,7 @@ function LeaderboardFeed() {
 
 export default function LeaderboardAchievementFeed() {
   return (
-    <div className="relative px-1 py-5 pb-20">
+    <div className="relative px-1 py-5 pb-20 w-full max-w-[2000px] mx-auto ">
       {/* Stack on small screens, side-by-side on md and larger */}
       <div className="flex flex-col md:flex-row gap-6 w-full">
         {/* Leaderboard Section */}
@@ -190,7 +190,7 @@ export default function LeaderboardAchievementFeed() {
         </div>
 
         {/* Achievement Section */}
-        <div className="flex-1 md:basis-[30%] flex justify-center">
+        <div className="flex-1 w-full lg:w-fit flex justify-center">
           <AchievementFeed />
         </div>
       </div>

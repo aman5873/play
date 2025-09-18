@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-import { leaderboardData } from "@/constants/gameData";
+import { leaderboardData } from "@/constants/data";
 
 import { Trophy, TrendingUp, Crown, Star } from "lucide-react";
 import { CardChip, ProgressBar } from "@/components/common/CardComp";
@@ -21,9 +21,9 @@ export function AchievementCard({ achievementInfo, contClass = "" }) {
 
   return (
     <div
-      className={`gradient-one w-full max-w-full border p-4 flex-shrink-0 mx-2 overflow-hidden rounded-[16px] flex flex-col ${contClass} border-[var(--borderThree)]`}
+      className={`gradient-one w-full max-w-full border p-4 flex-shrink-0 overflow-hidden rounded-[16px] flex flex-col ${contClass} border-[var(--borderThree)]`}
     >
-      <div className="flex gap-2">
+      <div className="flex gap-3 w-full lg:min-w-[18rem]">
         {Icon && (
           <div className="rounded-[50px] w-fit h-fit bg-[var(--bgThree)] p-3 flex items-center justify-center">
             <Icon
@@ -70,7 +70,7 @@ export default function AchievementFeed() {
   }, []);
 
   return (
-    <div className="gradient-one p-5 w-full max-w-[400px] rounded-[16px] border border-[var(--borderThree)]">
+    <div className="gradient-one p-3 w-full h-fit max-w-[400px] rounded-[16px] border border-[var(--borderThree)]">
       <div className="flex gap-2 items-center mb-5">
         <Star />
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[var(--textOne)]">
@@ -78,7 +78,7 @@ export default function AchievementFeed() {
         </h1>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 justify-center items-center">
         {achievementList?.map((obj, index) => (
           <AchievementCard
             key={`achievement-${obj?.id}-${index}`}

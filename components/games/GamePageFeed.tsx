@@ -10,11 +10,10 @@ import Pagination, { ShowingResults } from "@/components/common/Pagination";
 import { getGameGenres, getGames, getGameStatuses } from "@/lib/game_ops";
 
 export default function GamePageFeed() {
-  const { headerSearchValue, isAuthenticated } = useAuth();
+  const { headerSearchValue, isAuthenticated, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
 
   const [gameData, setGameData] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
 
   const [statusList, setStatusList] = useState([]);
   const [genresList, setGenresList] = useState([]);
@@ -151,10 +150,8 @@ export default function GamePageFeed() {
       </div>
 
       {/* Game Cards */}
-      <div className="flex flex-wrap gap-2">
-        {loading ? (
-          <p className="text-[var(--textTwo)]">{tCommon("messages.loading")}</p>
-        ) : gameData?.data?.length > 0 ? (
+      <div className="flex flex-wrap gap-4 justify-center">
+        {gameData?.data?.length > 0 ? (
           gameData.data.map((game: any) => (
             <GameCard key={game.id} gameInfo={game} />
           ))

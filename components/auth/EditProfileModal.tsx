@@ -15,15 +15,18 @@ export default function EditProfileModal({ open, onClose }) {
   const { showAlert } = useAlert();
   const { user, setUser } = useAuth();
 
-  const [name, setName] = useState(user?.name || "");
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [phone, setPhone] = useState(user?.phone || "");
+  const [phone, setPhone] = useState("");
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
 
-  // Set preview to user avatar when modal opens
   useEffect(() => {
-    setPreview(user?.avatar_url || "");
+    if (user) {
+      setPreview(user.avatar_url || "");
+      setName(user.name || "");
+      setPhone(user.phone || "");
+    }
   }, [user, open]);
 
   // 🧹 Cleanup blob URL on unmount or when preview changes

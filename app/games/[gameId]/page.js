@@ -12,6 +12,7 @@ import { CardChip } from "@/components/common/CardComp";
 import { iconMap } from "@/components/Footer";
 import { getGames } from "@/lib/game_ops";
 import { useAuth } from "@/context/AuthContext";
+import { gameReviewData } from "@/constants/data";
 
 function GalleryComp({ gameInfo }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -96,18 +97,18 @@ function ReviewCard({ reviewInfo }) {
   );
 }
 
-function ReviewsComp({ gameInfo }) {
+function ReviewsComp({ reviewData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 3; // Number of reviews per page
 
-  const totalReviews = gameInfo?.review?.reviews?.length || 0;
+  const totalReviews = reviewData?.reviews?.length || 0;
   const totalPages = Math.max(1, Math.ceil(totalReviews / pageSize));
 
   // Paginated reviews
   const paginatedReviews = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
-    return gameInfo?.review?.reviews?.slice(start, start + pageSize) || [];
-  }, [currentPage, gameInfo?.review?.reviews]);
+    return reviewData?.reviews?.slice(start, start + pageSize) || [];
+  }, [currentPage, reviewData?.reviews]);
 
   return (
     <div className="flex flex-col gap-2 p-4 border border-[var(--borderThree)] gradient-one rounded-xl">
@@ -115,8 +116,8 @@ function ReviewsComp({ gameInfo }) {
         <div>
           <h1 className="sm:text-lg lg:text-xl font-bold my-1">Reviews</h1>
           <RatingComp
-            avg_rating={gameInfo?.review?.average_rating}
-            count={gameInfo?.review?.total_review}
+            avg_rating={reviewData?.average_rating}
+            count={reviewData?.total_review}
             isBold={true}
           />
         </div>
@@ -185,10 +186,10 @@ function ReviewsComp({ gameInfo }) {
 
 function InfoComp({ label, value, isPrimary = false }) {
   return (
-    <div className="flex flex-col w-full sm:w-[48%] md:w-[30%] lg-w-full">
+    <div className="flex flex-col">
       <p className="text-lg text-[var(--textTwo)] uppercase">{label}</p>
       <div
-        className={`text-lg w-full sm:w-[48%] md:w-[30%] lg-w-full ${
+        className={`text-lg  ${
           isPrimary
             ? "text-[var(--primary)]"
             : "text-[var(--textOne)] opacity-[90%]"
@@ -202,97 +203,108 @@ function InfoComp({ label, value, isPrimary = false }) {
 
 function RightSection({ gameInfo }) {
   return (
-    <div className="flex flex-wrap lg:flex-col gap-3 md:gap-4 sm:gap-5 p-4 border border-[var(--borderThree)] gradient-one rounded-xl w-full">
+    <div className="flex flex-col gap-4 p-4 border border-[var(--borderThree)] gradient-one rounded-xl w-fit">
       <h1 className="sm:text-lg lg:text-xl font-bold my-1 w-full">
         {gameInfo?.title}
       </h1>
-      <InfoComp
-        label="Networks"
-        isPrimary={true}
-        value={
-          <div className="flex flex-wrap  gap-2 mt-1 w-full">
-            {gameInfo?.networks?.map((network) => {
-              return (
-                <CardChip
-                  key={network?.id}
-                  label={network?.name}
-                  style={{ width: "fit-content", minWidth: 90, width: "auto" }}
-                />
-              );
-            })}
-          </div>
-        }
-      />
 
-      <InfoComp
-        label="Platforms"
-        value={
-          <div className="flex flex-wrap  gap-3 mt-1">
-            {gameInfo?.platforms?.map((platformObj, index) => {
-              const Icon = iconMap[platformObj?.name];
-              return (
-                <a
-                  key={`${platformObj?.id}-${index}`}
-                  href={platformObj?.pivot?.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
-                >
-                  {Icon && <Icon size={30} />}
-                </a>
-              );
-            })}
-          </div>
-        }
-      />
-      <InfoComp
-        label="Socials"
-        value={
-          <div className="flex flex-wrap  gap-3 mt-1">
-            {gameInfo?.socials?.map((socialObj, index) => {
-              const Icon = iconMap[socialObj?.name];
-              return (
-                <a
-                  key={socialObj?.id}
-                  href={socialObj?.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
-                >
-                  {Icon && <Icon size={30} />}
-                </a>
-              );
-            })}
-          </div>
-        }
-      />
-      <InfoComp
-        label="Genres"
-        value={
-          <div className="flex flex-wrap  gap-2 mt-1 w-full">
-            {gameInfo?.genres?.map((genre) => {
-              return (
-                <CardChip
-                  key={genre?.id}
-                  label={genre?.name}
-                  style={{ width: "fit-content", minWidth: 90, width: "auto" }}
-                />
-              );
-            })}
-          </div>
-        }
-      />
-      <InfoComp label="Developer" value={gameInfo?.developer} />
-      <InfoComp label="Publisher" value={gameInfo?.publisher} />
-      <InfoComp label="Release Date" value={gameInfo?.release_date} />
-      <InfoComp label="Age Rating" value={gameInfo?.age_rating} />
-      <InfoComp label="In-App Purchases" value={gameInfo?.in_app_purchase} />
-      <InfoComp label="Size" value={`~ ${gameInfo?.size ?? "-"}`} />
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4">
+        <InfoComp
+          label="Networks"
+          isPrimary={true}
+          value={
+            <div className="flex flex-wrap  gap-2 mt-1 w-full">
+              {gameInfo?.networks?.map((network) => {
+                return (
+                  <CardChip
+                    key={network?.id}
+                    label={network?.name}
+                    style={{
+                      width: "fit-content",
+                      minWidth: 90,
+                      width: "auto",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          }
+        />
+
+        <InfoComp
+          label="Platforms"
+          value={
+            <div className="flex flex-wrap  gap-3 mt-1">
+              {gameInfo?.platforms?.map((platformObj, index) => {
+                const Icon = iconMap[platformObj?.name];
+                return (
+                  <a
+                    key={`${platformObj?.id}-${index}`}
+                    href={platformObj?.pivot?.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
+                  >
+                    {Icon && <Icon size={30} />}
+                  </a>
+                );
+              })}
+            </div>
+          }
+        />
+        <InfoComp
+          label="Socials"
+          value={
+            <div className="flex flex-wrap  gap-3 mt-1">
+              {gameInfo?.socials?.map((socialObj, index) => {
+                const Icon = iconMap[socialObj?.name];
+                return (
+                  <a
+                    key={socialObj?.id}
+                    href={socialObj?.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
+                  >
+                    {Icon && <Icon size={30} />}
+                  </a>
+                );
+              })}
+            </div>
+          }
+        />
+        <InfoComp
+          label="Genres"
+          value={
+            <div className="flex flex-wrap  gap-2 mt-1 w-full">
+              {gameInfo?.genres?.map((genre) => {
+                return (
+                  <CardChip
+                    key={genre?.id}
+                    label={genre?.name}
+                    style={{
+                      width: "fit-content",
+                      minWidth: 90,
+                      width: "auto",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          }
+        />
+        <InfoComp label="Developer" value={gameInfo?.developer} />
+        <InfoComp label="Publisher" value={gameInfo?.publisher} />
+        <InfoComp label="Release Date" value={gameInfo?.release_date} />
+        <InfoComp label="Age Rating" value={gameInfo?.age_rating} />
+        <InfoComp label="In-App Purchases" value={gameInfo?.in_app_purchases} />
+        <InfoComp label="Size" value={`~ ${gameInfo?.size ?? "-"}`} />
+      </div>
     </div>
   );
 }
 
-function LeftSection({ gameInfo }) {
+function LeftSection({ gameInfo, reviewData }) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
@@ -302,17 +314,16 @@ function LeftSection({ gameInfo }) {
         </p>
       </div>
       <GalleryComp gameInfo={gameInfo} />
-      <ReviewsComp gameInfo={gameInfo} />
+      <ReviewsComp reviewData={reviewData} />
     </div>
   );
 }
 
 export default function GamePage() {
   const { gameId } = useParams();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setLoading } = useAuth();
   const [gameInfo, setGameInfo] = useState(null);
-
-  const [loading, setLoading] = useState(false);
+  const [reviewData] = useState(gameReviewData);
 
   const fetchGames = useCallback(
     (id) => {
@@ -345,31 +356,35 @@ export default function GamePage() {
           description: gameInfo?.tagline ?? gameInfo?.description,
           backgroundImage: primaryImage,
           button: [
-            { label: " Download game", redirect: "", type: "primary" },
+            {
+              label: " Download game",
+              redirect: gameInfo?.download_link,
+              type: "primary",
+            },
             {
               label: "View Website",
-              redirect: "",
+              redirect: gameInfo?.website_link,
               type: "secondary",
             },
           ],
         }}
       >
         <RatingComp
-          avg_rating={gameInfo?.review?.average_rating}
-          count={gameInfo?.review?.total_review}
+          avg_rating={reviewData?.average_rating}
+          count={reviewData?.total_review}
           isBold={true}
         />
       </TopBgComp>
 
       <div className="flex flex-col gap-4 lg:flex-row">
         {/* Left Section - covers remaining space */}
-        <div className="flex-1 lg:w-3/4 flex flex-col gap-4">
-          <LeftSection gameInfo={gameInfo} />
+        <div className="flex-1 flex flex-col gap-4">
+          <LeftSection gameInfo={gameInfo} reviewData={reviewData} />
         </div>
 
         {/* Right Section - fixed max width */}
-        <div className="w-full lg:w-1/4 lg:max-w-[500px] flex flex-col gap-4">
-          <RightSection gameInfo={gameInfo} />
+        <div className="w-fit flex flex-col gap-4">
+          <RightSection gameInfo={gameInfo} reviewData={reviewData} />
         </div>
       </div>
     </div>

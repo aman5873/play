@@ -6,6 +6,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 export default function ScrollableRowWrapper({ children, isReady = false }) {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
+  const [shouldCenter, setShouldCenter] = useState(false);
   const scrollRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -17,13 +18,23 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
       setShowRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
     };
 
-    handleScroll(); // run immediately
+    const checkOverflow = () => {
+      if (!el) return;
+      setShouldCenter(el.scrollWidth <= el.clientWidth);
+    };
+
+    handleScroll();
+    checkOverflow();
+
     el.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener("resize", () => {
+      handleScroll();
+      checkOverflow();
+    });
 
     return () => {
       el.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("resize", checkOverflow);
     };
   }, [isReady]);
 
@@ -31,7 +42,6 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
     const el = scrollRef.current;
     if (!el) return;
 
-    // pick first visible child and include its margin-right
     const card = el.children[0];
     const style = card ? window.getComputedStyle(card) : null;
     const marginRight = style ? parseFloat(style.marginRight) || 0 : 0;
@@ -54,10 +64,11 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
         </button>
       )}
 
-      {/* nowrap + overflow-x-auto + min-w-0 so it doesn't force parent width */}
       <div
         ref={scrollRef}
-        className="flex flex-nowrap overflow-x-auto scrollbar-hide scroll-smooth space-x-2 w-full min-w-0"
+        className={`flex flex-nowrap overflow-x-auto scrollbar-hide scroll-smooth space-x-4 w-full min-w-0 ${
+          shouldCenter ? "justify-center" : "justify-start"
+        }`}
       >
         {children}
       </div>

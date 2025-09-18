@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MessageCircle, Heart, ThumbsUp, Share2 } from "lucide-react";
 
-import { socialData } from "@/constants/gameData";
+import { socialData } from "@/constants/data";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import { ButtonComp, ScreenDetailsComp } from "@/components/TopComp";

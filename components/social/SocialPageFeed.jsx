@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import Pagination, { ShowingResults } from "@/components/common/Pagination";
 import { SocialCard } from "@/components/social/SocialHubFeed";
-import { socialData } from "@/constants/gameData";
+import { socialData } from "@/constants/data";
 
 export default function SocialPageFeed() {
   const { headerSearchValue } = useAuth();
@@ -101,13 +101,13 @@ export default function SocialPageFeed() {
       </div>
 
       {/* Social cards */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 justify-center">
         {paginatedSocial.length > 0 ? (
           paginatedSocial.map((obj, index) => (
             <SocialCard
               key={`social-${obj.id}-${index}`}
               socialInfo={obj}
-              contClass="w-72 min-w-[10rem] max-w-xs bg-[red]"
+              // contClass="w-72 min-w-[10rem] max-w-xs"
             />
           ))
         ) : (

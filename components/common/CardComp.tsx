@@ -61,14 +61,13 @@ export function CardChip({ label, style }: CardChipProps) {
   if (label)
     return (
       <div
-        className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit capitalize`}
+        className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm  text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit capitalize`}
         style={style}
       >
         {label}
       </div>
     );
 }
-
 export function CardIconInfo({ list, minWidth = "55px" }: CardIconInfoProps) {
   return (
     <div className="grid grid-cols-2 gap-6 my-2">
@@ -79,29 +78,28 @@ export function CardIconInfo({ list, minWidth = "55px" }: CardIconInfoProps) {
           <div
             key={idx}
             className={`flex items-center gap-2 rounded-xl ${
-              // if item is in the 2nd column → align to end
               (idx + 1) % 2 === 0 ? "justify-self-end" : ""
             }`}
           >
             {Icon && (
-              <div className="rounded-xl bg-[var(--bgThree)] p-3 flex items-center justify-center">
+              <div className="rounded-xl bg-[var(--bgThree)] p-2 sm:p-3 flex items-center justify-center">
                 <Icon
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6 xl:w-7 xl:h-7"
                   style={{ color: item.color || "var(--textOne)" }}
                 />
               </div>
             )}
             <div
-              className={`flex flex-col items-start text-left`}
+              className="flex flex-col items-start text-left"
               style={{ minWidth }}
             >
               <h3
-                className="text-lg font-bold"
+                className="text-base sm:text-lg xl:text-xl font-bold"
                 style={{ color: item.color || "var(--textOne)" }}
               >
                 {item.label}
               </h3>
-              <p className="text-sm text-[var(--textTwo)]">
+              <p className="text-xs sm:text-sm md:text-base xl:text-lg text-[var(--textTwo)]">
                 {item.description}
               </p>
             </div>
@@ -112,11 +110,19 @@ export function CardIconInfo({ list, minWidth = "55px" }: CardIconInfoProps) {
   );
 }
 
-export function SectionDetails({ list }: { list?: any[] }) {
+export function SectionDetails({
+  list,
+  contClass,
+}: {
+  list?: any[];
+  contClass?: any;
+}) {
   if (!list || list?.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap gap-6 my-2 border-1 border-[var(--borderThree)] gradient-one rounded-xl mx-2 sm:mx-1 mt-2 py-5">
+    <div
+      className={`flex flex-wrap gap-6 w-full  mx-auto my-2 border-1 border-[var(--borderThree)] gradient-one rounded-xl mx-2 sm:mx-1 mt-2 py-5 ${contClass}`}
+    >
       {list.map((item, idx) => (
         <div
           key={idx}

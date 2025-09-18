@@ -9,6 +9,7 @@ import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import { ScreenDetailsComp } from "@/components/TopComp";
 import { getGames } from "@/lib/game_ops";
 import { CategoryCardComp } from "@/components/common/CardComp";
+import { useAuth } from "@/context/AuthContext";
 
 const gameSection = {
   chip: [
@@ -28,11 +29,11 @@ export function GameCard({ gameInfo, contClass = "", style = {} }) {
   const router = useRouter();
 
   const primaryImage = gameInfo?.images.find((img: any) => img?.is_primary);
-  const genreList = gameInfo?.genres.map((genre: any) => genre?.name);
+  const genreList = gameInfo?.genres.map((genre: any) => genre?.name) ?? [];
 
   return (
     <div
-      className={`gradient-one border border-[var(--borderThree)] p-4 group relative w-68 min-w-[12rem] max-w-xs flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col ${contClass}`}
+      className={`gradient-one border border-[var(--borderThree)] p-4 group relative w-68 min-w-[12rem] max-w-xs flex-shrink-0 overflow-hidden rounded-xl flex flex-col ${contClass}`}
       style={{
         ...style,
       }}
@@ -74,8 +75,8 @@ export function GameCard({ gameInfo, contClass = "", style = {} }) {
 }
 
 export default function GameFeed() {
+  const { isAuthenticated, setLoading } = useAuth();
   const [gameData, setGameData] = useState(null);
-  const [loading, setLoading] = useState(null);
 
   function fetchGames(param?: any) {
     setLoading(true);
@@ -87,7 +88,7 @@ export default function GameFeed() {
 
   useEffect(() => {
     fetchGames();
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div className="relative px-1 py-1 pb-20">

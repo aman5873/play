@@ -110,18 +110,19 @@ export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
       )}
 
       {content?.title && (
-        <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold font-nyxerin text-[var(--textOne)]">
+        <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-semibold font-nyxerin text-[var(--textOne)]">
           {content.title}
         </h1>
       )}
       {content?.highlightTitle && (
-        <h2 className="text-2xl sm:text-2xl md:text-3xl lg:text-5xl font-bold font-nyxerin text-[var(--primary)]">
+        <h2 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-bold font-nyxerin text-[var(--primary)]">
           {content.highlightTitle}
         </h2>
       )}
+
       {content?.description && (
         <p
-          className="font-rajdhani text-sm sm:text-base lg:text-lg mt-3 leading-relaxed sm:max-w-[40rem] md:max-w-[42rem]"
+          className="font-rajdhani text-sm sm:text-base lg:text-lg xl:text-xl mt-3 leading-relaxed sm:max-w-[40rem] md:max-w-[42rem]"
           style={{
             color: "#ccc",
             display: "-webkit-box",
@@ -214,45 +215,59 @@ export const TopBgComp: React.FC<TopBgCompProps> = ({ content, children }) => {
     </div>
   );
 };
-
 const TopComp: React.FC<TopCompProps> = ({ content, contClass }) => {
   if (!content) return null;
 
   return (
     <div
-      className={`relative w-full rounded-lg gradient-primary p-6 sm:p-8 lg:p-12 flex flex-col-reverse flex-xlg-row items-center gap-6 lg:gap-12 ${
-        contClass || ""
-      }`}
+      className={`relative w-full 
+      mx-auto rounded-lg gradient-primary 
+      p-6 sm:p-8 lg:p-12 xl:px-16 2xl:px-24 
+      flex flex-col-reverse lg:flex-row items-center 
+      gap-6 lg:gap-12 xl:gap-16 2xl:gap-20 ${contClass || ""}`}
     >
       {/* Text Section */}
-      <div className="flex flex-1 flex-col gap-3 text-center lg:text-left max-w-2xl">
+      <div
+        className="flex flex-[1] flex-col gap-3 text-center lg:text-left 
+      w-full xl:max-w-[50%] 2xl:max-w-[55%]"
+      >
         <ScreenDetailsComp content={content} />
-        <div className="grid grid-cols-3 gap-2 mt-8">
+
+        <div className="grid grid-cols-3 gap-3 mt-8">
           {content?.details?.map((item, idx) => {
             const Icon = item.icon ? iconMap[item.icon] : null;
             return (
               <div
                 key={idx}
-                className="flex flex-col items-center text-center gap-2 p-1"
+                className="flex flex-col items-center text-center gap-3 p-2"
               >
                 {Icon && (
-                  <div className="rounded-xl bg-[var(--bgTwo)] border border-[var(--borderTwo)] p-4">
-                    <Icon className="w-5 h-5 text-[var(--primary)]" />
+                  <div className="rounded-xl bg-[var(--bgTwo)] border border-[var(--borderTwo)] p-4 xl:p-5">
+                    <Icon className="w-6 h-6 xl:w-7 xl:h-7 text-[var(--primary)]" />
                   </div>
                 )}
-                <h3 className="text-xl font-bold">{item.label}</h3>
-                <p className="text-sm text-gray-300">{item.description}</p>
+                <h3 className="text-lg xl:text-xl font-bold">{item.label}</h3>
+                <p className="text-sm xl:text-base text-gray-300">
+                  {item.description}
+                </p>
               </div>
             );
           })}
         </div>
+
         <ButtonComp buttons={content?.button} />
       </div>
 
       {/* Image Section */}
       {content?.thumbnail && (
-        <div className="flex-1 justify-center flex">
-          <div className="relative aspect-square overflow-hidden flex-shrink-0 w-[200px] sm:w-[250px] md:w-[300px] lg:w-[350px] xl:w-[400px] rounded-[30px] border border-[var(--borderTwo)] bg-[var(--bgTwo)] backdrop-blur-md shadow-lg">
+        <div className="flex flex-[1] justify-center xl:justify-end w-full xl:max-w-[50%] 2xl:max-w-[45%]">
+          <div
+            className="
+              relative aspect-square overflow-hidden flex-shrink-0 
+              w-[220px] sm:w-[280px] md:w-[320px] lg:w-[380px] 
+              xl:w-[480px] 2xl:w-[540px] 
+              rounded-[30px] border border-[var(--borderTwo)] bg-[var(--bgTwo)] backdrop-blur-md shadow-lg"
+          >
             <Image
               src={content.thumbnail}
               alt="thumbnail"

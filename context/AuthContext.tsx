@@ -22,12 +22,14 @@ interface User {
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: User | null | boolean | undefined;
-  setUser: (user: User | null | boolean | undefined) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
   loginOpen: boolean;
   setLoginOpen: (open: boolean) => void;
   loginWithGoogle: () => void;
   headerSearchValue: string;
+  loading: boolean;
+  setLoading: (open: boolean) => void;
   setHeaderSearchValue: (value: string) => void;
 
   forgotPassword: (email: string) => Promise<boolean>;
@@ -43,9 +45,11 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | false | undefined>(undefined);
+  const [user, setUser] = useState<User | null>(null);
+
   const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [autoLoginOpen, setAutoLoginOpen] = useState(false);
   const [headerSearchValue, setHeaderSearchValue] = useState<string>("");
 
   // Google login simulation
@@ -96,7 +100,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      setUser(false); // ✅ explicitly set to false
+      setUser(null);
+      setAutoLoginOpen(true); // 👈 trigger login modal open
       setLoading(false);
       return;
     }
@@ -112,13 +117,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setUser(res.data.user);
             localStorage.setItem("user", JSON.stringify(res.data.user));
           } else {
-            setUser(false); // ✅ no valid user found
+            setUser(null);
+            setAutoLoginOpen(true); // 👈 open login modal
             localStorage.removeItem("token");
             localStorage.removeItem("user");
           }
         })
         .catch(() => {
-          setUser(false); // ✅ error fetching profile → consider as logged out
+          setUser(null);
+          setAutoLoginOpen(true); // 👈 open login modal
           localStorage.removeItem("token");
           localStorage.removeItem("user");
         });
@@ -129,19 +136,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setUser(res.data.user);
             localStorage.setItem("user", JSON.stringify(res.data.user));
           } else {
-            setUser(false); // ✅ no user
+            setUser(null);
+            setAutoLoginOpen(true); // 👈 open login modal
             localStorage.removeItem("token");
           }
         })
         .catch(() => {
-          setUser(false); // ✅ fetch failed → logged out
+          setUser(null);
+          setAutoLoginOpen(true); // 👈 open login modal
           localStorage.removeItem("token");
         })
         .finally(() => setLoading(false));
     }
 
     const handleLogoutEvent = () => {
-      setUser(false);
+      setUser(null);
+      setAutoLoginOpen(true); // 👈 open login modal on logout
       localStorage.removeItem("user");
     };
 
@@ -151,10 +161,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Auto open login modal when user is explicitly false
   useEffect(() => {
-    if (user === false) {
-      setLoginOpen(true); // ✅ open login modal
+    if (autoLoginOpen) {
+      setLoginOpen(true);
+      setAutoLoginOpen(false); // reset so it doesn't keep reopening
     }
-  }, [user]);
+  }, [autoLoginOpen]);
 
   const value = useMemo<AuthContextType>(
     () => ({
@@ -165,6 +176,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setLoginOpen,
       headerSearchValue,
       setHeaderSearchValue,
+      loading,
+      setLoading,
       loginWithGoogle,
       forgotPassword,
       resetPassword,
@@ -175,6 +188,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       user,
       loginOpen,
       headerSearchValue,
+      loading,
       loginWithGoogle,
       forgotPassword,
       resetPassword,

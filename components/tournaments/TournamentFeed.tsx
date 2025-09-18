@@ -6,7 +6,7 @@ import moment from "moment";
 import { Trophy, Calendar } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { tournamentsData } from "@/constants/gameData";
+import { tournamentAnalytics } from "@/constants/data";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import {
@@ -17,6 +17,8 @@ import {
   ProgressBar,
 } from "@/components/common/CardComp";
 import { ScreenDetailsComp } from "@/components/TopComp";
+import { useAuth } from "@/context/AuthContext";
+import { getTournaments } from "@/lib/tournament_ops";
 
 const tournamentSection = {
   chip: [
@@ -34,8 +36,10 @@ const tournamentSection = {
 
 export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
   const now = moment();
-  const startDate = moment(tournamentInfo?.start_date);
+  const startDate = moment(tournamentInfo?.deadline);
   let timeLeftLabel = "--";
+  const categoryList =
+    tournamentInfo?.categories.map((category: any) => category?.name) ?? [];
 
   if (startDate.isValid()) {
     const diffInHours = startDate.diff(now, "hours", true);
@@ -60,8 +64,8 @@ export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
   return (
     <>
       <CategoryCardComp
-        categories={tournamentInfo?.categories}
-        maxVisible={tournamentInfo?.categories?.length}
+        categories={categoryList}
+        maxVisible={categoryList?.length}
       >
         <CardChip
           label={`${availableSlots ? `${availableSlots} slots` : ""}`}
@@ -101,45 +105,107 @@ export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
   );
 }
 
-export function TournamentCard(props) {
-  const {
-    tournamentInfo,
-    style = {},
-    contClass = "",
-    isFeatured = false,
-  } = props;
+export function TournamentFeaturedCard({
+  tournamentInfo,
+  style = {},
+  contClass = "",
+}) {
   const router = useRouter();
-  const primaryImage = tournamentInfo?.images.find((img) => img?.is_primary);
+  const primaryImage = tournamentInfo?.images.find(
+    (img: any) => img?.is_primary
+  );
   const availableSlots = tournamentInfo?.teams_participated_count;
+
+  return (
+    <div
+      className={`relative group w-full max-w-[1300px] lg:max-w-full mx-auto overflow-hidden rounded-xl mb-6 gradient-secondary border-[0.5px] border-[var(--primary)] p-4 flex-shrink-0 flex flex-col ${contClass}`}
+      style={style}
+    >
+      {/* Main Layout */}
+      <div className="flex flex-col lg:flex-row-reverse gap-4 xl:gap-6 2xl:gap-8">
+        {/* IMAGE */}
+        {primaryImage?.image_url && (
+          <div className="relative w-full lg:w-[55%] xl:w-[55%] 2xl:w-[60%]">
+            <div className="relative w-full h-full aspect-[16/9] overflow-hidden rounded-xl">
+              <Image
+                src={primaryImage?.image_url}
+                alt={tournamentInfo?.name}
+                fill
+                className="object-cover w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-108"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* CONTENT */}
+        <div className="flex flex-col gap-2 text-[var(--textOne)] mt-3 w-full lg:w-[45%] xl:w-[45%] 2xl:w-[40%]">
+          <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl 2xl:text-3xl font-semibold truncate">
+            {tournamentInfo?.game?.name}
+          </h2>
+          <h1 className="sm:text-lg md:text-xl lg:text-2xl 2xl:text-4xl font-bold truncate my-1">
+            {tournamentInfo?.name}
+          </h1>
+          <p
+            className="hidden 2xl:block 2xl:text-xl mt-2 text-[var(--textTwo)]"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {tournamentInfo?.tagline}
+          </p>
+          <p className="text-[14px] sm:text-sm md:text-base 2xl:text-lg mt-2 text-[var(--textTwo)]">
+            Hosted by Various Creators
+          </p>
+          <div className="flex flex-col gap-2 mt-auto">
+            <FeaturedCardDetails
+              tournamentInfo={tournamentInfo}
+              availableSlots={availableSlots}
+            />
+            <button
+              onClick={() => router.push(`/tournaments/${tournamentInfo?.id}`)}
+              className="px-4 py-2  2xl-mt-5 flex w-full items-center justify-center rounded-full border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md bg-[var(--primary)] text-[var(--secondary)]"
+            >
+              View Tournament
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function TournamentCard(props: any) {
+  const { tournamentInfo, style = {}, contClass = "" } = props;
+  const router = useRouter();
+  const primaryImage = tournamentInfo?.images.find(
+    (img: any) => img?.is_primary
+  );
+
+  // TODO: teams_participated_count WILL COMES IN API
+  const availableSlots = tournamentInfo?.teams_participated_count ?? 10;
+  const categoryList =
+    tournamentInfo?.categories.map((category: any) => category?.name) ?? [];
 
   if (tournamentInfo)
     return (
       <div
-        className={`${
-          isFeatured
-            ? "w-full mb-4 gradient-secondary border-[0.5px] border-[var(--primary)]"
-            : "gradient-one  w-[18rem] sm:w-[20rem] lg:w-[23.65rem] border border-[var(--borderThree)]"
-        }  p-4 flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col ${contClass}`}
+        className={`gradient-one  w-[18rem] sm:w-[20rem] lg:w-[23.65rem] border border-[var(--borderThree)]  p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col ${contClass}`}
         style={{
           ...style,
         }}
       >
-        <div
-          className={`flex flex-col ${
-            isFeatured ? "lg:flex-row-reverse" : ""
-          } gap-4`}
-        >
-          {primaryImage?.image_path && (
+        <div className={`flex flex-col gap-4`}>
+          {primaryImage?.image_url && (
             <div
-              className={`relative overflow-hidden rounded-lg group ${
-                isFeatured
-                  ? "w-full lg:w-3/5 h-[200px] sm:h-[250px] md:h-[350px] lg:h-auto"
-                  : "w-full h-[170px] sm:h-[150px] lg:h-[197px]"
-              }`}
+              className={`relative overflow-hidden rounded-lg group  w-full h-[170px] sm:h-[150px] lg:h-[197px]`}
             >
               <Image
-                src={primaryImage?.image_path}
-                alt={tournamentInfo?.title}
+                src={primaryImage?.image_url}
+                alt={tournamentInfo?.name}
                 fill
                 className="object-cover w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-110"
               />
@@ -147,49 +213,41 @@ export function TournamentCard(props) {
           )}
 
           <div
-            className={`flex flex-col gap-2 text-[var(--textOne)] mt-3  ${
-              isFeatured ? "w-full  lg:w-2/5 " : "w-full"
-            }`}
+            className={`flex flex-col gap-2 text-[var(--textOne)] mt-3  w-full`}
           >
             <h2 className="text-md font-semibold truncate">
               {tournamentInfo?.game?.title}
             </h2>
             <h1 className="sm:text-lg md:text-xl lg:text-2xl font-bold truncate my-1">
-              {tournamentInfo?.title}
+              {tournamentInfo?.name}
             </h1>
             <p className="text-[14px] mt-2 text-[var(--textTwo)]">
               Hosted by Various Creators
             </p>
 
-            {isFeatured ? (
-              <FeaturedCardDetails
-                tournamentInfo={tournamentInfo}
-                availableSlots={availableSlots}
-              />
-            ) : (
-              <>
-                <CategoryCardComp categories={tournamentInfo?.categories} />
-                <ProgressBar
-                  label="Slots"
-                  count={availableSlots}
-                  maxCount={tournamentInfo?.max_teams}
-                />
-                <div className="flex justify-between">
-                  {tournamentInfo?.start_date && (
-                    <div className="flex items-center gap-2 text-[var(--textTwo)]">
-                      <Calendar className="w-4 h-4" />
-                      <span>{tournamentInfo.start_date}</span>
-                    </div>
-                  )}
-                  {tournamentInfo?.prize && (
-                    <div className="flex items-center gap-2 text-[var(--textTwo)]">
-                      <Trophy className="w-4 h-4" />
-                      <span>$ {tournamentInfo.prize}</span>
-                    </div>
-                  )}
+            <CategoryCardComp categories={categoryList} />
+            <ProgressBar
+              label="Slots"
+              count={availableSlots}
+              maxCount={tournamentInfo?.max_teams}
+            />
+            <div className="flex justify-between">
+              {tournamentInfo?.start_date && (
+                <div className="flex items-center gap-2 text-[var(--textTwo)]">
+                  <Calendar className="w-4 h-4" />
+                  <span>{tournamentInfo.start_date}</span>
                 </div>
-              </>
-            )}
+              )}
+              {tournamentInfo?.prize && (
+                <div className="flex items-center gap-2 text-[var(--textTwo)]">
+                  <Trophy className="w-4 h-4" />
+                  <span>
+                    {tournamentInfo?.currency === "USD" ? "$ " : ""}
+                    {tournamentInfo.prize}
+                  </span>
+                </div>
+              )}
+            </div>
 
             <button
               onClick={() => router.push(`/tournaments/${tournamentInfo?.id}`)}
@@ -203,51 +261,77 @@ export function TournamentCard(props) {
     );
 }
 
-export default function TournamentFeed() {
-  const [tournamentList, setTournamentList] = useState([]);
+export default function TournamentFeed({ onlyFeed = false }) {
+  const { isAuthenticated, setLoading } = useAuth();
+  const [tournamentData, setTournamentData] = useState(null);
+
+  function fetchTournaments(param?: any) {
+    setLoading(true);
+    getTournaments(param).then((res: any) => {
+      setLoading(false);
+      if (res?.success && res?.data) setTournamentData(res.data);
+    });
+  }
 
   useEffect(() => {
-    setTournamentList(tournamentsData?.tournaments);
-  }, []);
+    fetchTournaments();
+  }, [isAuthenticated]);
 
   return (
-    <div className="relative px-1 py-5 pb-20">
-      {/* Scroll container */}
-      <TournamentCard tournamentInfo={tournamentList?.[0]} isFeatured={true} />
-      <ScrollableRowWrapper isReady={Boolean(tournamentList)}>
-        {tournamentList.map((obj) => (
-          <TournamentCard key={obj?.id} tournamentInfo={obj} />
-        ))}
-      </ScrollableRowWrapper>
+    <>
+      {onlyFeed ? (
+        <ScrollableRowWrapper isReady={Boolean(tournamentData?.data?.length)}>
+          {tournamentData?.data.map((obj: any) => (
+            <TournamentCard key={obj?.id} tournamentInfo={obj} />
+          ))}
+        </ScrollableRowWrapper>
+      ) : (
+        <div className="relative px-1 py-5 pb-20">
+          {/* Scroll container */}
+          {tournamentData?.data?.[0] && (
+            <TournamentFeaturedCard tournamentInfo={tournamentData.data[0]} />
+          )}
+          <ScrollableRowWrapper isReady={Boolean(tournamentData?.data)}>
+            {tournamentData?.data.map((obj: any) => (
+              <TournamentCard key={obj?.id} tournamentInfo={obj} />
+            ))}
+          </ScrollableRowWrapper>
 
-      <div className="flex justify-center items-center mb-5 mt-4 w-full">
-        <Link
-          href="/tournaments"
-          className=" px-5 py-2 border rounded-[50px] border-[var(--primary)] text-[var(--primary)] hover:text-[var(--textOne)] hover:border-[var(--textOne)]   text-sm md:text-base transition-colors duration-300 cursor-pointer text-sm md:text-base transition-colors duration-300"
-        >
-          View All
-        </Link>
-      </div>
-      <SectionDetails
-        list={[
-          {
-            label: tournamentsData?.active_tournaments,
-            description: "Active Tournaments",
-            color: "var(--primary)",
-          },
-          {
-            label: tournamentsData?.total_prize_pool,
-            description: "Total Prize Pool",
-            color: "var(--textFour)",
-          },
-          {
-            label: tournamentsData?.total_earned,
-            description: "Total Earned",
-            color: "var(--textFive)",
-          },
-        ]}
-      />
-    </div>
+          <div className="flex justify-center items-center mb-5 mt-4 w-full">
+            <Link
+              href="/tournaments"
+              className=" px-5 py-2 border rounded-[50px] border-[var(--primary)] text-[var(--primary)] hover:text-[var(--textOne)] hover:border-[var(--textOne)]   text-sm md:text-base transition-colors duration-300 cursor-pointer text-sm md:text-base transition-colors duration-300"
+            >
+              View All
+            </Link>
+          </div>
+
+          <div className="flex w-full justify-center">
+            <SectionDetails
+              list={[
+                {
+                  label: tournamentAnalytics?.active_tournaments,
+                  description: "Active Tournaments",
+                  color: "var(--primary)",
+                },
+                {
+                  label: tournamentAnalytics?.total_prize_pool,
+                  description: "Total Prize Pool",
+                  color: "var(--textFour)",
+                },
+                {
+                  label: tournamentAnalytics?.total_earned,
+                  description: "Total Earned",
+                  color: "var(--textFive)",
+                },
+              ]}
+              // TODO: If it to be centered according to TournamentFeaturedCard
+              // contClass={"group w-full max-w-[1300px]"}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

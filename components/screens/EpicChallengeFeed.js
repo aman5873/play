@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CoinIcon } from "@/app/icons";
 
-import { challengesData } from "@/constants/gameData";
+import { challengesData } from "@/constants/data";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import {
@@ -44,7 +44,7 @@ export function ChallengeCard(props) {
   if (challengeInfo)
     return (
       <div
-        className={`gradient-one  w-69 min-w-[12rem] max-w-xs border p-4 flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col ${contClass} ${
+        className={`gradient-one  w-69 min-w-[12rem] max-w-xs border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col ${contClass} ${
           isClaimed ? "border-[var(--primary)]" : "border-[var(--borderThree)]"
         }`}
       >
@@ -140,25 +140,27 @@ export default function EpicChallengeFeed() {
           View All
         </Link>
       </div>
-      <SectionDetails
-        list={[
-          {
-            label: challengesData?.completed_today,
-            description: "Completed Today",
-            color: "var(--primary)",
-          },
-          {
-            label: challengesData?.in_progress,
-            description: "In Progress",
-            color: "var(--textFour)",
-          },
-          {
-            label: challengesData?.total_earned,
-            description: "Total Earned",
-            color: "var(--textFive)",
-          },
-        ]}
-      />
+      <div className="flex w-full justify-center">
+        <SectionDetails
+          list={[
+            {
+              label: challengesData?.completed_today,
+              description: "Completed Today",
+              color: "var(--primary)",
+            },
+            {
+              label: challengesData?.in_progress,
+              description: "In Progress",
+              color: "var(--textFour)",
+            },
+            {
+              label: challengesData?.total_earned,
+              description: "Total Earned",
+              color: "var(--textFive)",
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 }

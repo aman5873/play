@@ -1,53 +1,57 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Circle } from "lucide-react";
 
 import { TopBgComp } from "@/components/TopComp";
-import { tournamentsData } from "@/constants/gameData";
-// import { ListInfoComp } from "@/components/common/PageComp";
 
 import { CardChip, iconMap } from "@/components/common/CardComp";
 import Image from "next/image";
-import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
-import { TournamentCard } from "@/components/tournaments/TournamentFeed";
+import TournamentFeed from "@/components/tournaments/TournamentFeed";
+import { getStatuses, getTournaments } from "@/lib/tournament_ops";
+import { useAuth } from "@/context/AuthContext";
+import moment from "moment";
 
 function ListComp({ title, list, variant = "bullet", start }) {
-  return (
-    <div className="flex flex-col gap-2">
-      {title && (
-        <h1 className="sm:text-md lg:text-lg font-bold my-1 uppercase opacity-95">
-          {title}
-        </h1>
-      )}
+  if (list?.length > 0)
+    return (
+      <div className="flex flex-col gap-1.5 mt-4">
+        {title && (
+          <h1 className="sm:text-md lg:text-lg  font-bold  uppercase opacity-95">
+            {title}
+          </h1>
+        )}
 
-      {list?.map((rule, index) => {
-        let prefix = null;
+        {list?.map((rule, index) => {
+          let prefix = null;
 
-        if (start) {
-          prefix = start;
-        } else if (variant === "number") {
-          prefix = `${index + 1}.`;
-        } else if (variant === "alpha") {
-          prefix = `${String.fromCharCode(97 + index)}.`; // a, b, c...
-        } else {
-          prefix = (
-            <Circle size={10} fill="currentColor" className="shrink-0" />
+          if (start) {
+            prefix = start;
+          } else if (variant === "number") {
+            prefix = `${index + 1}.`;
+          } else if (variant === "alpha") {
+            prefix = `${String.fromCharCode(97 + index)}.`; // a, b, c...
+          } else {
+            prefix = (
+              <Circle fill="currentColor" className="shrink-0 w-2 h-2" />
+            );
+          }
+
+          return (
+            <div
+              key={`rule-${index}`}
+              className="flex items-start gap-2 text-sm md:text-base font-medium text-[var(--subtitle)]"
+              style={{ alignItems: variant === "bullet" && "center" }}
+            >
+              <span className={`text-[var(--textTwo)] "align-top"`}>
+                {prefix}
+              </span>
+              <span>{rule}</span>
+            </div>
           );
-        }
-
-        return (
-          <div
-            key={`rule-${index}`}
-            className="flex items-start gap-2 text-sm md:text-base font-medium text-[var(--subtitle)]"
-          >
-            <span className="text-[var(--textTwo)] align-top">{prefix}</span>
-            <span>{rule}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
+        })}
+      </div>
+    );
 }
 
 function IconLabelInfo({ icon, label, labelStyle = {}, contStyle = {} }) {
@@ -63,14 +67,15 @@ function IconLabelInfo({ icon, label, labelStyle = {}, contStyle = {} }) {
 }
 
 function TournamentScreenDetailsComp({ tournamentInfo }) {
+  const deadline = moment(tournamentInfo?.deadline).format("Do MMM YYYY");
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-2">
-        {tournamentInfo?.categories?.map((label) => {
+        {tournamentInfo?.categories?.map(({ id, display_name }) => {
           return (
             <CardChip
-              key={label}
-              label={label}
+              key={id}
+              label={display_name}
               style={{
                 background: "transparent",
                 color: "var(--textOne",
@@ -82,41 +87,35 @@ function TournamentScreenDetailsComp({ tournamentInfo }) {
         })}
       </div>
       <div className="flex flex-wrap gap-2 ">
-        <IconLabelInfo icon="calender" label={tournamentInfo?.start_date} />
+        <IconLabelInfo icon="calender" label={deadline} />
         <IconLabelInfo icon="trophy" label={tournamentInfo?.prize} />
         <IconLabelInfo
           icon="users"
-          label={tournamentInfo?.teams_participated_count}
+          label={tournamentInfo?.teams_participated_count ?? "--"}
         />
       </div>
       <div className="flex flex-wrap gap-4  items-center">
         <h1 className="sm:text-md lg:text-lg truncate font-semibold">
           Hosted by :
         </h1>
-        {tournamentInfo?.organizer?.avatar_url && (
+        {tournamentInfo?.organizer_avatar_url && (
           <Image
-            src={tournamentInfo?.organizer?.avatar_url}
-            alt={tournamentInfo?.organizer?.name}
+            src={tournamentInfo?.organizer_avatar_url}
+            alt={tournamentInfo?.organizer_name}
             width={48}
             height={48}
             className="object-contain transition-transform duration-500 ease-in-out group-hover:scale-110 h-full"
           />
         )}
         <h1 className="sm:text-md lg:text-lg truncate font-bold">
-          {tournamentInfo?.organizer?.name}
+          {tournamentInfo?.organizer_name}
         </h1>
       </div>
     </div>
   );
 }
 
-function TournamentFeed() {
-  const [tournamentList, setTournamentList] = useState([]);
-
-  useEffect(() => {
-    setTournamentList(tournamentsData?.tournaments);
-  }, []);
-
+function TournamentFeedComp() {
   return (
     <div>
       <div className="flex justify-between items-center my-4 px-2">
@@ -132,40 +131,56 @@ function TournamentFeed() {
           contStyle={{ flexDirection: "row-reverse" }}
         />
       </div>
-      <ScrollableRowWrapper isReady={Boolean(tournamentList)}>
-        {tournamentList.map((obj) => (
-          <TournamentCard key={obj?.id} tournamentInfo={obj} />
-        ))}
-      </ScrollableRowWrapper>
+
+      <TournamentFeed onlyFeed={true} />
     </div>
   );
 }
 
 export default function TournamentPage() {
+  const { isAuthenticated, setLoading } = useAuth();
   const { tournamentId } = useParams();
   const [tournamentInfo, setTournamentInfo] = useState(null);
+  const [statusList, setStatusList] = useState([]);
 
-  // Fetch from local data
+  const fetchTournaments = useCallback(
+    (id) => {
+      if (!id) return;
+      setLoading(true);
+      getTournaments(id).then((res) => {
+        setLoading(false);
+        if (res?.success && res?.data) {
+          setTournamentInfo(res.data);
+        }
+      });
+    },
+    [isAuthenticated]
+  );
+
   useEffect(() => {
-    if (tournamentId) {
-      const tournament = tournamentsData?.tournaments?.find(
-        (t) => t.id == tournamentId
-      );
-      setTournamentInfo(tournament || null);
-    }
+    fetchTournaments(tournamentId);
+    getStatuses().then((res) => {
+      if (res?.success && res?.data) setStatusList(res.data);
+    });
   }, [tournamentId]);
 
   const primaryImage = tournamentInfo?.images?.find(
     (img) => img?.is_primary
-  )?.image_path;
+  )?.image_url;
 
   return (
     <div className="flex flex-col gap-4 p-4 pb-20">
       <TopBgComp
         content={{
-          chip: [{ label: tournamentInfo?.status, type: "primary" }],
-          title: tournamentInfo?.title,
-          description: tournamentInfo?.description,
+          chip: [
+            {
+              label: statusList?.find((s) => s?.id === tournamentInfo?.status)
+                ?.name,
+              type: "primary",
+            },
+          ],
+          title: tournamentInfo?.name,
+          description: tournamentInfo?.tagline,
           backgroundImage: primaryImage,
           button: [{ label: "Join", redirect: "", type: "primary" }],
         }}
@@ -173,20 +188,28 @@ export default function TournamentPage() {
         <TournamentScreenDetailsComp tournamentInfo={tournamentInfo} />
       </TopBgComp>
 
-      <div className="flex flex-wrap gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
+      <div className="flex flex-col gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
         <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">Description</h1>
         <ListComp
           title="HOW TO REGISTER"
-          list={tournamentInfo?.how_to_register}
+          list={tournamentInfo?.registration_steps?.map((obj) => obj.step_text)}
           variant="number"
         />
-        <ListComp title="FORMAT" list={tournamentInfo?.format} />
+        <ListComp
+          title="FORMAT"
+          list={tournamentInfo?.formats?.map((obj) => obj.format_text)}
+        />
+        <ListComp
+          title="FORMAT"
+          variant="alpha"
+          list={tournamentInfo?.formats?.map((obj) => obj.format_text)}
+        />
         <ListComp
           title="FREQUENTLY ASKED QUESTIONS?"
           list={tournamentInfo?.frequently_asked}
         />
       </div>
-      <TournamentFeed />
+      <TournamentFeedComp />
     </div>
   );
 }

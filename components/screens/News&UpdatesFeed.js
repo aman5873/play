@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, Calendar } from "lucide-react";
 
-import { newsData } from "@/constants/gameData";
+import { newsData } from "@/constants/data";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import { ScreenDetailsComp } from "@/components/TopComp";
@@ -32,7 +32,7 @@ export function NewsCard(props) {
     return (
       <div
         onClick={() => router.push(`/news/${newsInfo?.id}`)}
-        className={`gradient-one w-[18rem] sm:w-[20rem] lg:w-[23.65rem] border p-4 flex-shrink-0 mx-2 overflow-hidden rounded-xl flex flex-col ${contClass}  border-[var(--borderThree)] `}
+        className={`gradient-one w-[18rem] sm:w-[20rem] lg:w-[23.65rem] border p-4 flex-shrink-0  overflow-hidden rounded-xl flex flex-col ${contClass}  border-[var(--borderThree)] `}
       >
         {newsInfo?.image_path && (
           <div
