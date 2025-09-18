@@ -266,11 +266,13 @@ export default function TournamentFeed({ onlyFeed = false }) {
   const [tournamentData, setTournamentData] = useState(null);
 
   function fetchTournaments(param?: any) {
-    setLoading(true);
-    getTournaments(param).then((res: any) => {
-      setLoading(false);
-      if (res?.success && res?.data) setTournamentData(res.data);
-    });
+    if (isAuthenticated) {
+      setLoading(true);
+      getTournaments(param).then((res: any) => {
+        setLoading(false);
+        if (res?.success && res?.data) setTournamentData(res.data);
+      });
+    }
   }
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { GameCard } from "@/components/games/GameFeed";
@@ -13,6 +13,7 @@ export default function GamePageFeed() {
   const { headerSearchValue, isAuthenticated, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
 
+  const initialLoad = useRef(true);
   const [gameData, setGameData] = useState<any>(null);
 
   const [statusList, setStatusList] = useState([]);
@@ -42,9 +43,9 @@ export default function GamePageFeed() {
 
   // Fetch status & genres on mount + refetch games on pageSize change
   useEffect(() => {
+    if (!isAuthenticated) return;
     setCurrentPage(1);
     fetchGames({ page: 1, per_page: pageSize });
-
     getGameStatuses().then((res) => {
       if (res?.success && res?.data) setStatusList(res.data);
     });
@@ -82,12 +83,11 @@ export default function GamePageFeed() {
     [pageSize, currentPage, headerSearchValue, selectedStatus, selectedGenre]
   );
 
-  // Refetch games when filters or search change
   useEffect(() => {
-    fetchGames();
-  }, [fetchGames]);
-
-  useEffect(() => {
+    if (initialLoad.current) {
+      initialLoad.current = false;
+      return; // skip first run
+    }
     if (headerSearchValue !== undefined) {
       setCurrentPage(1);
       fetchGames({ page: 1 });

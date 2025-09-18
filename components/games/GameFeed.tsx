@@ -79,11 +79,13 @@ export default function GameFeed() {
   const [gameData, setGameData] = useState(null);
 
   function fetchGames(param?: any) {
-    setLoading(true);
-    getGames(param).then((res: any) => {
-      setLoading(false);
-      if (res?.success && res?.data) setGameData(res.data);
-    });
+    if (isAuthenticated) {
+      setLoading(true);
+      getGames(param).then((res: any) => {
+        setLoading(false);
+        if (res?.success && res?.data) setGameData(res.data);
+      });
+    }
   }
 
   useEffect(() => {

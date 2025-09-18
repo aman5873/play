@@ -145,7 +145,7 @@ export default function TournamentPage() {
 
   const fetchTournaments = useCallback(
     (id) => {
-      if (!id) return;
+      if (!id || !isAuthenticated) return;
       setLoading(true);
       getTournaments(id).then((res) => {
         setLoading(false);
@@ -159,10 +159,12 @@ export default function TournamentPage() {
 
   useEffect(() => {
     fetchTournaments(tournamentId);
-    getStatuses().then((res) => {
-      if (res?.success && res?.data) setStatusList(res.data);
-    });
-  }, [tournamentId]);
+    if (isAuthenticated) {
+      getStatuses().then((res) => {
+        if (res?.success && res?.data) setStatusList(res.data);
+      });
+    }
+  }, [tournamentId, isAuthenticated]);
 
   const primaryImage = tournamentInfo?.images?.find(
     (img) => img?.is_primary

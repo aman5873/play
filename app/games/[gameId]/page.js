@@ -327,7 +327,7 @@ export default function GamePage() {
 
   const fetchGames = useCallback(
     (id) => {
-      if (!id) return;
+      if (!id || !isAuthenticated) return;
       setLoading(true);
       getGames(id).then((res) => {
         setLoading(false);
