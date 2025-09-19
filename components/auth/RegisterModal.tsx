@@ -64,7 +64,7 @@ export default function RegisterModal({
       });
 
       if (success) {
-        handleApiMessage(customMessage ?? message, showAlert, "success"); // show success
+        handleApiMessage(customMessage ?? message, showAlert, "success"); //  show success
         setShowVerifyOtp(true);
       } else {
         handleApiMessage(message, showAlert, "error"); // show error

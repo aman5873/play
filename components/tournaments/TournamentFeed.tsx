@@ -19,20 +19,7 @@ import {
 import { ScreenDetailsComp } from "@/components/TopComp";
 import { useAuth } from "@/context/AuthContext";
 import { getTournaments } from "@/lib/tournament_ops";
-
-const tournamentSection = {
-  chip: [
-    {
-      label: "Live Gaming Tournaments",
-      icon: "trophy",
-      type: "primary",
-    },
-  ],
-  title: "Mobile & PC Gaming",
-  highlightTitle: "Championships",
-  description:
-    "Join elite gaming tournaments across mobile and PC platforms. Showcase your skills in your favorite games and compete for massive prize pools.",
-};
+import { useTranslation } from "react-i18next";
 
 export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
   const now = moment();
@@ -338,10 +325,25 @@ export default function TournamentFeed({ onlyFeed = false }) {
 }
 
 export function TournamentFeedComp() {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div>
       <div className=" w-full rounded-lg  p-4 sm:p-8 lg:p-8 flex flex-col items-center gap-4">
-        <ScreenDetailsComp content={tournamentSection} isCentered={true} />
+        <ScreenDetailsComp
+          content={{
+            chip: [
+              {
+                label: tScreen("tournament.chip"),
+                icon: "trophy",
+                type: "primary",
+              },
+            ],
+            title: tScreen("tournament.title"),
+            highlightTitle: tScreen("tournament.highlightTitle"),
+            description: tScreen("tournament.description"),
+          }}
+          isCentered={true}
+        />
       </div>
       <TournamentFeed />
     </div>

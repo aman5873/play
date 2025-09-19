@@ -1,5 +1,6 @@
 import SocialPageFeed from "@/components/social/SocialPageFeed";
-import { TopBgComp } from "@/components/TopComp";
+import SocialScreenTopComp from "@/components/social/SocialScreenTopComp";
+
 import React from "react";
 
 const socialSection = {
@@ -35,7 +36,7 @@ const socialSection = {
 export default function page() {
   return (
     <div className="flex flex-col gap-2 p-4">
-      <TopBgComp content={socialSection} />
+      <SocialScreenTopComp />
       <SocialPageFeed />
     </div>
   );

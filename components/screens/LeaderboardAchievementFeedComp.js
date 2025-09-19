@@ -10,20 +10,6 @@ import AchievementFeed from "./AchievementFeed";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
-const leaderboardSection = {
-  chip: [
-    {
-      label: "Global Ranking",
-      icon: "trophy",
-      type: "primary",
-    },
-  ],
-  title: "Elite",
-  highlightTitle: "Leaderboard",
-  description:
-    "Witness the rise of gaming legends. Compete against the best players worldwide and claim your spot among the elite.",
-};
-
 function LeaderboardCard({ leaderboardInfo }) {
   if (!leaderboardInfo) return null;
 
@@ -209,10 +195,25 @@ export default function LeaderboardAchievementFeed() {
 }
 
 export function LeaderboardAchievementFeedComp() {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div>
       <div className="relative w-full rounded-lg  p-6 sm:p-8 lg:p-12 flex flex-col items-center gap-4">
-        <ScreenDetailsComp content={leaderboardSection} isCentered={true} />
+        <ScreenDetailsComp
+          content={{
+            chip: [
+              {
+                label: tScreen("leaderboard.chip"),
+                icon: "trophy",
+                type: "primary",
+              },
+            ],
+            title: tScreen("leaderboard.title"),
+            highlightTitle: tScreen("leaderboard.highlightTitle"),
+            description: tScreen("leaderboard.description"),
+          }}
+          isCentered={true}
+        />
       </div>
       <LeaderboardAchievementFeed />
     </div>
