@@ -1,7 +1,7 @@
 import React from "react";
-import { TopBgComp } from "@/components/TopComp";
 
 import TournamentPageFeed from "@/components/tournaments/TournamentPageFeed";
+import TournamentScreenTopComp from "@/components/tournaments/TournamentScreenTopComp";
 
 const content = {
   chip: [{ label: "Live Gaming Tournaments", icon: "trophy", type: "primary" }],
@@ -16,7 +16,7 @@ const content = {
 export default function page() {
   return (
     <div className="flex flex-col gap-2 p-4">
-      <TopBgComp content={content} />
+      <TournamentScreenTopComp />
       <TournamentPageFeed />
     </div>
   );

@@ -10,20 +10,7 @@ import { ScreenDetailsComp } from "@/components/TopComp";
 import { getGames } from "@/lib/game_ops";
 import { CategoryCardComp } from "@/components/common/CardComp";
 import { useAuth } from "@/context/AuthContext";
-
-const gameSection = {
-  chip: [
-    {
-      label: "Game Library",
-      icon: "game",
-      type: "secondary",
-    },
-  ],
-  title: "Discover",
-  highlightTitle: "AMAZING GAMES",
-  description:
-    "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
-};
+import { useTranslation } from "react-i18next";
 
 export function GameCard({ gameInfo, contClass = "", style = {} }) {
   const router = useRouter();
@@ -113,10 +100,25 @@ export default function GameFeed() {
 }
 
 export function GameFeedComp() {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div>
       <div className="w-full rounded-lg  p-4 sm:p-8 lg:p-8 flex flex-col items-center gap-4">
-        <ScreenDetailsComp content={gameSection} isCentered={true} />
+        <ScreenDetailsComp
+          content={{
+            chip: [
+              {
+                label: tScreen("game.chip"),
+                icon: "game",
+                type: "secondary",
+              },
+            ],
+            title: tScreen("game.title"),
+            highlightTitle: tScreen("game.highlightTitle"),
+            description: tScreen("game.description"),
+          }}
+          isCentered={true}
+        />
       </div>
       <GameFeed />
     </div>

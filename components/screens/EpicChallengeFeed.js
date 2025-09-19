@@ -14,20 +14,7 @@ import {
   CardChip,
 } from "@/components/common/CardComp";
 import { ScreenDetailsComp } from "@/components/TopComp";
-
-const challengeSection = {
-  chip: [
-    {
-      label: "Daily Missions",
-      icon: "mission",
-      type: "secondary",
-    },
-  ],
-  title: "Complete",
-  highlightTitle: "EPIC CHALLENGES",
-  description:
-    "Take on exciting missions, earn exclusive rewards, and prove your gaming mastery across multiple challenges.",
-};
+import { useTranslation } from "react-i18next";
 
 export function ChallengeCard(props) {
   const { challengeInfo, contClass = "", isFeatured = false } = props;
@@ -166,10 +153,25 @@ export default function EpicChallengeFeed() {
 }
 
 export function EpicChallengeFeedComp() {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div>
       <div className="relative w-full rounded-lg  p-6 sm:p-8 lg:p-12 flex flex-col items-center gap-4">
-        <ScreenDetailsComp content={challengeSection} isCentered={true} />
+        <ScreenDetailsComp
+          content={{
+            chip: [
+              {
+                label: tScreen("epicChallenge.chip"),
+                icon: "mission",
+                type: "secondary",
+              },
+            ],
+            title: tScreen("epicChallenge.title"),
+            highlightTitle: tScreen("epicChallenge.highlightTitle"),
+            description: tScreen("epicChallenge.description"),
+          }}
+          isCentered={true}
+        />
       </div>
       <EpicChallengeFeed />
     </div>

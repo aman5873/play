@@ -11,34 +11,7 @@ import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import { ButtonComp, ScreenDetailsComp } from "@/components/TopComp";
 import { RatingComp } from "@/components/common/RatingComp";
 import { CardChip } from "@/components/common/CardComp";
-
-const socialSection = {
-  chip: [
-    {
-      label: "Social Hub",
-      icon: "trend",
-      type: "secondary",
-    },
-  ],
-  title: "Social",
-  highlightTitle: "Hub",
-  description:
-    "Join the largest VR Sports community. Share your best plays, vote for epic content, and participate in our Creator Program.",
-  button: [
-    {
-      icon: "trophy",
-      label: "Content Creator Program",
-      redirect: "/",
-      type: "primary",
-    },
-    {
-      icon: "upload",
-      label: "Upload Video",
-      redirect: "/tournaments",
-      type: "secondary",
-    },
-  ],
-};
+import { useTranslation } from "react-i18next";
 
 export function SocialCard(props: any) {
   const { socialInfo, contClass = "" } = props;
@@ -148,11 +121,41 @@ export default function SocialFeed() {
 }
 
 export function SocialFeedComp() {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div>
       <div className="relative w-full rounded-lg  p-6 sm:p-8 lg:p-12 flex flex-col items-center gap-4">
-        <ScreenDetailsComp content={socialSection} isCentered={true} />
-        <ButtonComp buttons={socialSection?.button} />
+        <ScreenDetailsComp
+          content={{
+            chip: [
+              {
+                label: tScreen("social.chip"),
+                icon: "trend",
+                type: "secondary",
+              },
+            ],
+            title: tScreen("social.title"),
+            highlightTitle: tScreen("social.highlightTitle"),
+            description: tScreen("social.description"),
+          }}
+          isCentered={true}
+        />
+        <ButtonComp
+          buttons={[
+            {
+              icon: "trophy",
+              label: tScreen("social.buttonPrimary"),
+              redirect: "/",
+              type: "primary",
+            },
+            {
+              icon: "upload",
+              label: tScreen("social.buttonSecondary"),
+              redirect: "/tournaments",
+              type: "secondary",
+            },
+          ]}
+        />
       </div>
       <SocialFeed />
     </div>

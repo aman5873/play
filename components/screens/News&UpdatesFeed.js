@@ -9,20 +9,7 @@ import { newsData } from "@/constants/data";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import { ScreenDetailsComp } from "@/components/TopComp";
-
-const newsSection = {
-  chip: [
-    {
-      label: "Latest News",
-      icon: "trend",
-      type: "secondary",
-    },
-  ],
-  title: "Gaming",
-  highlightTitle: "News & Updates",
-  description:
-    "Stay ahead of the game with the latest news, updates, and insights from the gaming world.",
-};
+import { useTranslation } from "react-i18next";
 
 export function NewsCard(props) {
   const { newsInfo, contClass = "" } = props;
@@ -116,10 +103,25 @@ export default function NewsFeed() {
 }
 
 export function NewsFeedComp() {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div>
       <div className="relative w-full rounded-lg  p-6 sm:p-8 lg:p-12 flex flex-col items-center gap-4">
-        <ScreenDetailsComp content={newsSection} isCentered={true} />
+        <ScreenDetailsComp
+          content={{
+            chip: [
+              {
+                label: tScreen("newsSection.title"),
+                icon: "trend",
+                type: "secondary",
+              },
+            ],
+            title: tScreen("newsSection.title"),
+            highlightTitle: tScreen("newsSection.highlightTitle"),
+            description: tScreen("newsSection.description"),
+          }}
+          isCentered={true}
+        />
       </div>
       <NewsFeed />
     </div>
