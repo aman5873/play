@@ -66,7 +66,6 @@ export default function LoginModal({
     try {
       setLoading(true);
       const res = await loginUser(formData);
-      console.log(res);
       setLoading(false);
       if (res?.status === 403) {
         // 🔥 Special handling for forbidden users
