@@ -44,8 +44,11 @@ export default function RegisterModal({
     setShowVerifyOtp(false);
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (
+    e: FormEvent<HTMLFormElement> | null,
+    customMessage?: string
+  ) => {
+    e?.preventDefault();
 
     if (password !== confirmPassword) {
       showAlert(tAuth("passwordMismatch"), "error");
@@ -61,7 +64,7 @@ export default function RegisterModal({
       });
 
       if (success) {
-        handleApiMessage(message, showAlert, "success"); // show success
+        handleApiMessage(customMessage ?? message, showAlert, "success"); // show success
         setShowVerifyOtp(true);
       } else {
         handleApiMessage(message, showAlert, "error"); // show error
@@ -181,9 +184,7 @@ export default function RegisterModal({
             duration={50}
             onResend={() => {
               // Manually call handleSubmit without event
-              handleSubmit(
-                new Event("submit") as unknown as FormEvent<HTMLFormElement>
-              );
+              handleSubmit(null, `${tAuth("resendOtpMessage")}`);
             }}
           />
         </form>
