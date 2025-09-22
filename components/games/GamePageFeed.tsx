@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 import { GameCard } from "@/components/games/GameFeed";
@@ -20,32 +20,31 @@ export default function GamePageFeed() {
   const [genresList, setGenresList] = useState([]);
 
   // Filters
-  const [selectedStatus, setSelectedStatus] = useState(null);
-  const [selectedGenre, setSelectedGenre] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState<any>(null);
+  const [selectedGenre, setSelectedGenre] = useState<any>(null);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize] = useState(10);
 
   // Dynamically adjust per_page based on screen size
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleResize = () => {
-        const newSize = window.innerWidth < 768 ? 4 : 8;
-        setPageSize(newSize);
-      };
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const handleResize = () => {
+  //       const newSize = window.innerWidth < 768 ? 4 : 8;
+  //       setPageSize(newSize);
+  //     };
 
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
+  //     handleResize();
+  //     window.addEventListener("resize", handleResize);
+  //     return () => window.removeEventListener("resize", handleResize);
+  //   }
+  // }, []);
 
-  // Fetch status & genres on mount + refetch games on pageSize change
+  // Fetch status & genres on mount
   useEffect(() => {
     if (!isAuthenticated) return;
-    setCurrentPage(1);
-    fetchGames({ page: 1, per_page: pageSize });
+
     getGameStatuses().then((res) => {
       if (res?.success && res?.data) setStatusList(res.data);
     });
@@ -53,60 +52,60 @@ export default function GamePageFeed() {
     getGameGenres().then((res) => {
       if (res?.success && res?.data) setGenresList(res.data);
     });
-  }, [pageSize, isAuthenticated]);
+  }, [isAuthenticated]);
 
-  const fetchGames = useCallback(
-    async (params?: any) => {
+  // Fetch games whenever filters, search, pagination, or pageSize changes
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    // Skip first search-triggered fetch
+    if (initialLoad.current) {
+      initialLoad.current = false;
+      return;
+    }
+
+    const params: Record<string, any> = {
+      page: currentPage,
+      per_page: pageSize,
+    };
+    // Only add search if it’s not empty
+    if (headerSearchValue?.trim()) {
+      params.search = headerSearchValue.trim();
+    }
+
+    if (selectedStatus?.id) params.status_id = selectedStatus.id;
+    if (selectedGenre?.id) params.genre_id = selectedGenre.id;
+
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const query: Record<string, any> = {};
-
-        if (params?.per_page ?? pageSize)
-          query.per_page = params?.per_page ?? pageSize;
-        if (params?.page ?? currentPage)
-          query.page = params?.page ?? currentPage;
-        if (params?.search ?? headerSearchValue)
-          query.search = params?.search ?? headerSearchValue;
-
-        // ✅ Use selected IDs
-        if (selectedStatus?.id) query.status_id = selectedStatus.id;
-        if (selectedGenre?.id) query.genre_id = selectedGenre.id;
-
-        const res: any = await getGames(query);
-        if (res?.success && res?.data) {
-          setGameData(res.data);
-        }
+        const res: any = await getGames(params);
+        if (res?.success && res?.data) setGameData(res.data);
       } finally {
         setLoading(false);
       }
-    },
-    [pageSize, currentPage, headerSearchValue, selectedStatus, selectedGenre]
-  );
+    };
 
-  useEffect(() => {
-    if (initialLoad.current) {
-      initialLoad.current = false;
-      return; // skip first run
-    }
-    if (headerSearchValue !== undefined) {
-      setCurrentPage(1);
-      fetchGames({ page: 1 });
-    }
-  }, [headerSearchValue]);
+    fetchData();
+  }, [
+    isAuthenticated,
+    currentPage,
+    pageSize,
+    headerSearchValue,
+    selectedStatus,
+    selectedGenre,
+  ]);
 
   return (
     <div className="mx-auto py-10 pb-20 w-full">
       {/* Filters + ShowingResults */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-        <div className="flex gap-4">
+        <div className="flex  gap-4">
           {/* Status Filter */}
-          <div className="w-[260px] lg:w-[260px]">
+          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
             <ReactSelectInput
               value={selectedStatus}
-              onChange={(value) => {
-                setSelectedStatus(value);
-                setCurrentPage(1);
-              }}
+              onChange={(value) => setSelectedStatus(value)}
               options={[
                 { id: "", name: tCommon("filters.all") },
                 ...statusList,
@@ -120,13 +119,10 @@ export default function GamePageFeed() {
           </div>
 
           {/* Genre Filter */}
-          <div className="w-[260px] lg:w-[260px]">
+          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
             <ReactSelectInput
               value={selectedGenre}
-              onChange={(value) => {
-                setSelectedGenre(value);
-                setCurrentPage(1);
-              }}
+              onChange={(value) => setSelectedGenre(value)}
               options={[
                 { id: "", name: tCommon("filters.all") },
                 ...genresList,
@@ -164,10 +160,7 @@ export default function GamePageFeed() {
       <Pagination
         currentPage={gameData?.current_page || currentPage}
         totalPages={gameData?.last_page || 1}
-        onPageChange={(page) => {
-          setCurrentPage(page);
-          fetchGames({ page });
-        }}
+        onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
   );
