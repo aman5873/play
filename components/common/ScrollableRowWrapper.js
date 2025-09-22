@@ -19,12 +19,15 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
     };
 
     const checkOverflow = () => {
-      if (!el) return;
       setShouldCenter(el.scrollWidth <= el.clientWidth);
     };
 
+    // initial check
     handleScroll();
     checkOverflow();
+
+    // re-check after paint
+    requestAnimationFrame(() => checkOverflow());
 
     el.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", () => {
@@ -47,8 +50,11 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
     const marginRight = style ? parseFloat(style.marginRight) || 0 : 0;
     const cardWidth = card ? card.offsetWidth + marginRight : 200;
 
+    // include left padding when scrolling left
+    const scrollAmount = direction === "left" ? -(cardWidth + 16) : cardWidth; // 16px = example left padding
+
     el.scrollBy({
-      left: direction === "left" ? -cardWidth : cardWidth,
+      left: scrollAmount,
       behavior: "smooth",
     });
   };
@@ -66,11 +72,17 @@ export default function ScrollableRowWrapper({ children, isReady = false }) {
 
       <div
         ref={scrollRef}
-        className={`flex flex-nowrap overflow-x-auto scrollbar-hide scroll-smooth space-x-4 w-full min-w-0 ${
-          shouldCenter ? "justify-center" : "justify-start"
-        }`}
+        className="overflow-x-auto scrollbar-hide scroll-smooth"
       >
-        {children}
+        <div
+          className={`flex gap-4 px-4 ${
+            shouldCenter
+              ? "justify-center w-full" // all cards fit → full width + center
+              : "justify-start w-max" // overflow → container shrinks to content, scrollable
+          }`}
+        >
+          {children}
+        </div>
       </div>
 
       {showRight && (
