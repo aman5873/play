@@ -31,7 +31,8 @@ export const maskEmail = (email: string) => {
 };
 
 const initError = {
-  password: false,
+  password: "",
+  confirm: "",
 };
 
 export default function ForgotPasswordModal({
@@ -85,9 +86,34 @@ export default function ForgotPasswordModal({
   // Step 3: Reset Password
   const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const checks = [
+      { regex: /[A-Z]/, msg: tAuth("validation.uppercaseLetter") },
+      { regex: /[a-z]/, msg: tAuth("validation.lowercaseLetter") },
+      { regex: /[0-9]/, msg: tAuth("validation.number") },
+      { regex: /[!@#$%^&*(),.?":{}|<>]/, msg: tAuth("validation.specialChar") },
+      { regex: /.{8,}/, msg: tAuth("validation.minChars") },
+    ];
+
+    // Password empty
+    if (!password.trim()) {
+      setError({ ...error, password: tAuth("validation.passwordRequired") });
+      return;
+    }
+
+    // Password rules
+    const failed = checks.filter((check) => !check.regex.test(password));
+    if (failed.length) {
+      setError({ ...error, password: failed.map((f) => f.msg).join(", ") });
+      return;
+    }
+
+    // Confirm password match
     if (password !== confirmPassword) {
-      setError({ ...error, password: true });
-      showAlert("Passwords do not match", "warning");
+      setError({
+        ...error,
+        confirm: tAuth("validation.passwordMismatch"),
+      });
       return;
     }
 
@@ -102,7 +128,7 @@ export default function ForgotPasswordModal({
       }
     } catch (err) {
       console.error("Reset password failed", err);
-      handleApiMessage("Reset password failed", showAlert, "error");
+      handleApiMessage(tAuth("resetPasswordFailed"), showAlert, "error");
     }
   };
 
@@ -167,11 +193,13 @@ export default function ForgotPasswordModal({
             label={tAuth("newPassword")}
             placeholder={tAuth("passwordPlaceholder")}
             type="password"
-            required
+            isRequired={true}
             showPasswordToggle
             value={password}
+            isError={Boolean(error.password)}
+            errorMessage={error.password}
             onChange={(e) => {
-              error.password && setError({ ...error, password: false });
+              if (error.password) setError({ ...error, password: "" });
               setPassword(e.target.value);
             }}
           />
@@ -180,11 +208,13 @@ export default function ForgotPasswordModal({
             label={tAuth("confirmPassword")}
             placeholder={tAuth("confirmPasswordPlaceholder")}
             type="password"
-            required
+            isRequired={true}
             showPasswordToggle
             value={confirmPassword}
+            isError={Boolean(error.confirm)}
+            errorMessage={error.confirm}
             onChange={(e) => {
-              error.password && setError({ ...error, password: false });
+              if (error.confirm) setError({ ...error, confirm: "" });
               setConfirmPassword(e.target.value);
             }}
           />

@@ -13,6 +13,13 @@ import InputComp from "../Form/InputComp";
 import OtpInputComp from "../OtpInput";
 import ResendOtp from "../Form/ResendOtp";
 
+const initError = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 interface RegisterModalProps {
   open: boolean;
   onClose: () => void;
@@ -33,6 +40,50 @@ export default function RegisterModal({
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showVerifyOtp, setShowVerifyOtp] = useState(false);
   const [otp, setOtp] = useState("");
+  const [error, setError] = useState(initError);
+
+  const formValidate = () => {
+    const newError = { name: "", email: "", password: "", confirmPassword: "" };
+
+    // name required
+    if (!name.trim()) newError.name = tAuth("validation.nameRequired");
+
+    // email required & basic pattern check
+    if (!email.trim()) {
+      newError.email = tAuth("emailRequired");
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email.trim())) {
+      newError.email = tAuth("emailInvalid");
+    }
+
+    // password validations
+    if (!password.trim()) {
+      newError.password = tAuth("validation.passwordRequired");
+    } else {
+      const checks = [
+        { regex: /[A-Z]/, msg: tAuth("validation.uppercaseLetter") },
+        { regex: /[a-z]/, msg: tAuth("validation.lowercaseLetter") },
+        { regex: /[0-9]/, msg: tAuth("validation.number") },
+        {
+          regex: /[!@#$%^&*(),.?":{}|<>]/,
+          msg: tAuth("validation.specialChar"),
+        },
+        { regex: /.{8,}/, msg: tAuth("validation.minChars") },
+      ];
+      const failed = checks.filter((c) => !c.regex.test(password));
+      if (failed.length)
+        newError.password = failed.map((f) => f.msg).join(", ");
+    }
+
+    // confirm password
+    if (password !== confirmPassword) {
+      newError.confirmPassword = tAuth("validation.passwordMismatch");
+    }
+
+    setError(newError);
+
+    // return true if no errors
+    return !Object.values(newError).some((val) => val);
+  };
 
   const clearCloseForm = () => {
     setName("");
@@ -42,6 +93,7 @@ export default function RegisterModal({
     setOtp("");
     onClose();
     setShowVerifyOtp(false);
+    setError(initError);
   };
 
   const handleSubmit = async (
@@ -49,11 +101,12 @@ export default function RegisterModal({
     customMessage?: string
   ) => {
     e?.preventDefault();
+    if (!formValidate()) return; // stop submission if validation fails
 
-    if (password !== confirmPassword) {
-      showAlert(tAuth("passwordMismatch"), "error");
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   showAlert(tAuth("passwordMismatch"), "error");
+    //   return;
+    // }
 
     try {
       const { success, message } = await registerUser({
@@ -112,38 +165,58 @@ export default function RegisterModal({
               label={tAuth("username")}
               placeholder={tAuth("namePlaceholder")}
               type="text"
-              required
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                setError({ ...error, name: "" });
+              }}
+              isRequired={true}
+              isError={Boolean(error.name)}
+              errorMessage={error.name}
             />
 
             <InputComp
               label={tAuth("email")}
               placeholder={tAuth("emailPlaceholder")}
               type="email"
-              required
+              isRequired={true}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError({ ...error, email: "" });
+              }}
+              isError={Boolean(error.email)}
+              errorMessage={error.email}
             />
 
             <InputComp
               label={tAuth("password")}
               placeholder={tAuth("passwordPlaceholder")}
               type="password"
-              required
+              isRequired={true}
               showPasswordToggle
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError({ ...error, password: "" });
+              }}
+              isError={Boolean(error.password)}
+              errorMessage={error.password}
             />
 
             <InputComp
               label={tAuth("confirmPassword")}
               placeholder={tAuth("passwordPlaceholder")}
               type="password"
-              required
+              isRequired={true}
               showPasswordToggle
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                setError({ ...error, confirmPassword: "" });
+              }}
+              isError={Boolean(error.confirmPassword)}
+              errorMessage={error.confirmPassword}
             />
 
             <button
