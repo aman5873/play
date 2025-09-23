@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import ReactSelectInput from "@/components/common/ReactSelectInput";
@@ -20,6 +20,7 @@ export default function TournamentPageFeed() {
   const { headerSearchValue, isAuthenticated, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
 
+  const initialLoad = useRef(true);
   const [tournamentData, setTournamentData] = useState<any>(null);
   const [statusList, setStatusList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -30,26 +31,25 @@ export default function TournamentPageFeed() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
+  const [pageSize] = useState(10);
 
   // Dynamically adjust per_page based on screen size
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleResize = () => {
-        const newSize = window.innerWidth < 768 ? 4 : 8;
-        setPageSize(newSize);
-      };
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const handleResize = () => {
+  //       const newSize = window.innerWidth < 768 ? 4 : 8;
+  //       setPageSize(newSize);
+  //     };
 
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
-  }, []);
+  //     handleResize();
+  //     window.addEventListener("resize", handleResize);
+  //     return () => window.removeEventListener("resize", handleResize);
+  //   }
+  // }, []);
 
   // Fetch status & genres on mount + refetch games on pageSize change
   useEffect(() => {
-    setCurrentPage(1);
-    fetchTournaments({ page: 1, per_page: pageSize });
+    if (!isAuthenticated) return;
 
     getStatuses().then((res) => {
       if (res?.success && res?.data) setStatusList(res.data);
@@ -58,47 +58,45 @@ export default function TournamentPageFeed() {
     getCategories().then((res) => {
       if (res?.success && res?.data) setCategoryList(res.data);
     });
-  }, [pageSize, isAuthenticated]);
+  }, [isAuthenticated]);
 
-  const fetchTournaments = useCallback(
-    async (params?: any) => {
+  // Fetch tournaments whenever filters, search, pagination, or pageSize changes
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    // Skip first search-triggered fetch
+    if (initialLoad.current) {
+      initialLoad.current = false;
+      return;
+    }
+
+    const params: Record<string, any> = {
+      page: currentPage,
+      per_page: pageSize,
+    };
+
+    if (selectedStatus?.id) params.status_id = selectedStatus.id;
+    if (selectedCategory?.id) params.category_id = selectedCategory.id;
+
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const query: Record<string, any> = {};
-
-        if (params?.per_page ?? pageSize)
-          query.per_page = params?.per_page ?? pageSize;
-        if (params?.page ?? currentPage)
-          query.page = params?.page ?? currentPage;
-        if (params?.search ?? headerSearchValue)
-          query.search = params?.search ?? headerSearchValue;
-
-        // ✅ Use selected IDs
-        if (selectedStatus?.id) query.status_id = selectedStatus.id;
-        if (selectedCategory?.id) query.genre_id = selectedCategory.id;
-
-        const res: any = await getTournaments(query);
-        if (res?.success && res?.data) {
-          setTournamentData(res.data);
-        }
+        const res: any = await getTournaments(params);
+        if (res?.success && res?.data) setTournamentData(res.data);
       } finally {
         setLoading(false);
       }
-    },
-    [pageSize, currentPage, headerSearchValue, selectedStatus, selectedCategory]
-  );
+    };
 
-  // Refetch games when filters or search change
-  useEffect(() => {
-    fetchTournaments();
-  }, [fetchTournaments]);
-
-  useEffect(() => {
-    if (headerSearchValue !== undefined) {
-      setCurrentPage(1);
-      fetchTournaments({ page: 1 });
-    }
-  }, [headerSearchValue]);
+    fetchData();
+  }, [
+    isAuthenticated,
+    currentPage,
+    pageSize,
+    headerSearchValue,
+    selectedStatus,
+    selectedCategory,
+  ]);
 
   return (
     <>
@@ -108,13 +106,12 @@ export default function TournamentPageFeed() {
       />
       <div className="mx-auto pb-20 w-full">
         {/* Filter + ShowingResults */}
-        <div className="flex flex-col   sm:flex-row items-center justify-between gap-4 mb-8 ">
-          <div className="w-[260px] lg:w-[260px]">
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
             <ReactSelectInput
               value={selectedStatus}
               onChange={(value) => {
                 setSelectedStatus(value);
-                setCurrentPage(1);
               }}
               options={[
                 { id: "", name: tCommon("filters.all") },
@@ -127,12 +124,11 @@ export default function TournamentPageFeed() {
               placeholder={tCommon("filters.status")}
             />
           </div>
-          <div className="w-[260px] lg:w-[260px]">
+          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
             <ReactSelectInput
               value={selectedCategory}
               onChange={(value) => {
                 setSelectedCategory(value);
-                setCurrentPage(1);
               }}
               options={[
                 { id: "", name: tCommon("filters.all") },
@@ -178,7 +174,6 @@ export default function TournamentPageFeed() {
           totalPages={tournamentData?.last_page || 1}
           onPageChange={(page) => {
             setCurrentPage(page);
-            fetchTournaments({ page });
           }}
         />
       </div>
