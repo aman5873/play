@@ -28,8 +28,7 @@ export default function SocialScreenTopComp() {
             type: "secondary",
           },
         ],
-        backgroundImage:
-          "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop",
+        backgroundImage: "/images/screens/social_bg.png",
       }}
     />
   );

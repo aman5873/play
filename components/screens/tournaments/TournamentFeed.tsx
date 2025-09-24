@@ -166,7 +166,11 @@ export function TournamentFeaturedCard({
 }
 
 export function TournamentCard(props: any) {
-  const { tournamentInfo, style = {}, contClass = "" } = props;
+  const {
+    tournamentInfo,
+    style = {},
+    contClass = "w-[18rem] sm:w-[20rem] lg:w-[23.65rem]",
+  } = props;
   const router = useRouter();
   const primaryImage = tournamentInfo?.images.find(
     (img: any) => img?.is_primary
@@ -180,7 +184,7 @@ export function TournamentCard(props: any) {
   if (tournamentInfo)
     return (
       <div
-        className={`gradient-one  w-[18rem] sm:w-[20rem] lg:w-[23.65rem] border border-[var(--borderThree)]  p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col ${contClass}`}
+        className={`gradient-one   border border-[var(--borderThree)]  p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col ${contClass}`}
         style={{
           ...style,
         }}

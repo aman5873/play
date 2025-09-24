@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { RatingComp } from "@/components/common/RatingComp";
@@ -203,12 +203,22 @@ function InfoComp({ label, value, isPrimary = false }) {
 
 function RightSection({ gameInfo }) {
   return (
-    <div className="flex flex-col gap-4 p-4 border border-[var(--borderThree)] gradient-one rounded-xl w-fit">
+    <div className="flex flex-col gap-4 p-4 border border-[var(--borderThree)] gradient-one rounded-xl w-full">
       <h1 className="sm:text-lg lg:text-xl font-bold my-1 w-full">
         {gameInfo?.title}
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-4">
+      <div
+        className="
+    grid
+    grid-cols-1       // mobile default <640px
+    sm:grid-cols-2    // 640px+
+    md:grid-cols-3    // 768px+
+    lg:grid-cols-3    // 1024px+
+    xl:grid-cols-3    // optional for 1280px+
+    gap-4
+  "
+      >
         <InfoComp
           label="Networks"
           isPrimary={true}
@@ -231,68 +241,74 @@ function RightSection({ gameInfo }) {
           }
         />
 
-        <InfoComp
-          label="Platforms"
-          value={
-            <div className="flex flex-wrap  gap-3 mt-1">
-              {gameInfo?.platforms?.map((platformObj, index) => {
-                const Icon = iconMap[platformObj?.name];
-                return (
-                  <a
-                    key={`${platformObj?.id}-${index}`}
-                    href={platformObj?.pivot?.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
-                  >
-                    {Icon && <Icon size={30} />}
-                  </a>
-                );
-              })}
-            </div>
-          }
-        />
-        <InfoComp
-          label="Socials"
-          value={
-            <div className="flex flex-wrap  gap-3 mt-1">
-              {gameInfo?.socials?.map((socialObj, index) => {
-                const Icon = iconMap[socialObj?.name];
-                return (
-                  <a
-                    key={socialObj?.id}
-                    href={socialObj?.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
-                  >
-                    {Icon && <Icon size={30} />}
-                  </a>
-                );
-              })}
-            </div>
-          }
-        />
-        <InfoComp
-          label="Genres"
-          value={
-            <div className="flex flex-wrap  gap-2 mt-1 w-full">
-              {gameInfo?.genres?.map((genre) => {
-                return (
-                  <CardChip
-                    key={genre?.id}
-                    label={genre?.name}
-                    style={{
-                      width: "fit-content",
-                      minWidth: 90,
-                      width: "auto",
-                    }}
-                  />
-                );
-              })}
-            </div>
-          }
-        />
+        {gameInfo?.platforms?.length > 0 && (
+          <InfoComp
+            label="Platforms"
+            value={
+              <div className="flex flex-wrap  gap-3 mt-1">
+                {gameInfo?.platforms?.map((platformObj, index) => {
+                  const Icon = iconMap[platformObj?.name];
+                  return (
+                    <a
+                      key={`${platformObj?.id}-${index}`}
+                      href={platformObj?.pivot?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
+                    >
+                      {Icon && <Icon size={30} />}
+                    </a>
+                  );
+                })}
+              </div>
+            }
+          />
+        )}
+        {gameInfo?.socials?.length > 0 && (
+          <InfoComp
+            label="Socials"
+            value={
+              <div className="flex flex-wrap  gap-3 mt-1">
+                {gameInfo?.socials?.map((socialObj, index) => {
+                  const Icon = iconMap[socialObj?.name];
+                  return (
+                    <a
+                      key={socialObj?.id}
+                      href={socialObj?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full text-[var(--primary)] hover:text-[var(--textOne)] transition-all duration-500 ease-in-out"
+                    >
+                      {Icon && <Icon size={30} />}
+                    </a>
+                  );
+                })}
+              </div>
+            }
+          />
+        )}
+        {gameInfo?.genres?.length > 0 && (
+          <InfoComp
+            label="Genres"
+            value={
+              <div className="flex flex-wrap  gap-2 mt-1 w-full">
+                {gameInfo?.genres?.map((genre) => {
+                  return (
+                    <CardChip
+                      key={genre?.id}
+                      label={genre?.name}
+                      style={{
+                        width: "fit-content",
+                        minWidth: 90,
+                        width: "auto",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            }
+          />
+        )}
         <InfoComp label="Developer" value={gameInfo?.developer} />
         <InfoComp label="Publisher" value={gameInfo?.publisher} />
         <InfoComp label="Release Date" value={gameInfo?.release_date} />
@@ -325,23 +341,22 @@ export default function GamePage() {
   const [gameInfo, setGameInfo] = useState(null);
   const [reviewData] = useState(gameReviewData);
 
-  const fetchGames = useCallback(
-    (id) => {
-      if (!id || !isAuthenticated) return;
-      setLoading(true);
-      getGames(id).then((res) => {
-        setLoading(false);
-        if (res?.success && res?.data) {
-          setGameInfo(res.data);
-        }
-      });
-    },
-    [isAuthenticated]
-  );
+  const fetchGames = (id) => {
+    if (!id || !isAuthenticated) return;
+    setLoading(true);
+    getGames(id).then((res) => {
+      setLoading(false);
+      if (res?.success && res?.data) {
+        setGameInfo(res.data);
+      }
+    });
+  };
 
   useEffect(() => {
-    fetchGames(gameId);
-  }, [gameId]);
+    if (gameId && isAuthenticated) {
+      fetchGames(gameId);
+    }
+  }, [gameId, isAuthenticated]);
 
   const primaryImage = gameInfo?.images?.find(
     (img) => img?.is_primary
@@ -383,7 +398,7 @@ export default function GamePage() {
         </div>
 
         {/* Right Section - fixed max width */}
-        <div className="w-fit flex flex-col gap-4">
+        <div className="w-full lg:w-fit flex flex-col gap-4">
           <RightSection gameInfo={gameInfo} reviewData={reviewData} />
         </div>
       </div>

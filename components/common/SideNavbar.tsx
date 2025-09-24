@@ -57,14 +57,15 @@ const navItems: NavItem[] = [
     icon: Disc2,
     active: false,
   },
-  { key: "news", label: "News", href: "/news", icon: Newspaper, active: false },
+  { key: "teams", label: "Teams", href: "/teams", icon: Users, active: true },
+  { key: "news", label: "News", href: "/news", icon: Newspaper, active: true },
 
   {
     key: "levels",
     label: "Levels",
-    href: "/levels",
+    href: "/leaderboard",
     icon: TrendingUp,
-    active: false,
+    active: true,
   },
   {
     key: "store",

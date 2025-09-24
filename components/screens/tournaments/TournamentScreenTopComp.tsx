@@ -18,8 +18,8 @@ export default function TournamentScreenTopComp() {
         title: tScreen("tournament.title"),
         highlightTitle: tScreen("tournament.highlightTitle"),
         description: tScreen("tournament.description"),
-        backgroundImage:
-          "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=2070&auto=format&fit=crop",
+        backgroundImage: "/images/screens/tournaments_bg.png",
+        // "https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=2070&auto=format&fit=crop",
       }}
     />
   );

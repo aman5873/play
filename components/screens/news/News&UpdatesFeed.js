@@ -12,18 +12,22 @@ import { ScreenDetailsComp } from "@/components/TopComp";
 import { useTranslation } from "react-i18next";
 
 export function NewsCard(props) {
-  const { newsInfo, contClass = "" } = props;
+  const {
+    newsInfo,
+    contClass = "w-[15rem] lg:w-[20rem]",
+    imgContClass = "",
+  } = props;
   const router = useRouter();
 
   if (newsInfo)
     return (
       <div
         onClick={() => router.push(`/news/${newsInfo?.id}`)}
-        className={`gradient-one w-[18rem] sm:w-[20rem] lg:w-[23.65rem] border p-4 flex-shrink-0  overflow-hidden rounded-xl flex flex-col ${contClass}  border-[var(--borderThree)] `}
+        className={`gradient-one border p-4 flex-shrink-0  overflow-hidden rounded-xl flex flex-col  border-[var(--borderThree)]  ${contClass}`}
       >
         {newsInfo?.image_path && (
           <div
-            className={`relative overflow-hidden rounded-lg group w-full h-[170px] sm:h-[150px] lg:h-[197px]`}
+            className={`relative overflow-hidden rounded-lg group w-full h-[170px] sm:h-[150px] lg:h-[197px]  ${imgContClass}`}
           >
             <Image
               src={newsInfo?.image_path}
@@ -49,7 +53,7 @@ export function NewsCard(props) {
           >
             {newsInfo?.title}
           </h1>
-          <p className="text-[14px] mt-2 text-[var(--textTwo)]">
+          <p className="text-[14px]  text-[var(--textTwo)]">
             {newsInfo?.description}
           </p>
 
@@ -86,7 +90,13 @@ export default function NewsFeed() {
 
       <ScrollableRowWrapper isReady={Boolean(newsList)}>
         {newsList?.map((obj, index) => {
-          return <NewsCard key={`news-${obj?.id}-${index}`} newsInfo={obj} />;
+          return (
+            <NewsCard
+              key={`news-${obj?.id}-${index}`}
+              newsInfo={obj}
+              contClass="w-[15rem] lg:w-[20rem]"
+            />
+          );
         })}
       </ScrollableRowWrapper>
 

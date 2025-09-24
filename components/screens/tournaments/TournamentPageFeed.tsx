@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import {
   TournamentCard,
   TournamentFeaturedCard,
-} from "@/components/tournaments/TournamentFeed";
+} from "@/components/screens/tournaments/TournamentFeed";
 import { useAuth } from "@/context/AuthContext";
 import Pagination, { ShowingResults } from "@/components/common/Pagination";
 import {
@@ -15,12 +15,14 @@ import {
   getStatuses,
   getTournaments,
 } from "@/lib/tournament_ops";
+import { SectionDetails } from "@/components/common/CardComp";
+import { tournamentAnalytics } from "@/constants/data";
 
 export default function TournamentPageFeed() {
   const { headerSearchValue, isAuthenticated, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
+  const { t: tScreen } = useTranslation("screen");
 
-  const initialLoad = useRef(true);
   const [tournamentData, setTournamentData] = useState<any>(null);
   const [statusList, setStatusList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -48,27 +50,31 @@ export default function TournamentPageFeed() {
   // }, []);
 
   // Fetch status & genres on mount + refetch games on pageSize change
+  // Fetch status & categories once when authenticated
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    getStatuses().then((res) => {
-      if (res?.success && res?.data) setStatusList(res.data);
-    });
+    const fetchFilters = async () => {
+      try {
+        const [statusRes, categoryRes] = await Promise.all([
+          getStatuses(),
+          getCategories(),
+        ]);
+        if (statusRes?.success && statusRes?.data)
+          setStatusList(statusRes.data);
+        if (categoryRes?.success && categoryRes?.data)
+          setCategoryList(categoryRes.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-    getCategories().then((res) => {
-      if (res?.success && res?.data) setCategoryList(res.data);
-    });
+    fetchFilters();
   }, [isAuthenticated]);
 
-  // Fetch tournaments whenever filters, search, pagination, or pageSize changes
+  // Fetch tournaments whenever filters/search/pagination changes
   useEffect(() => {
     if (!isAuthenticated) return;
-
-    // Skip first search-triggered fetch
-    if (initialLoad.current) {
-      initialLoad.current = false;
-      return;
-    }
 
     const params: Record<string, any> = {
       page: currentPage,
@@ -104,7 +110,7 @@ export default function TournamentPageFeed() {
         tournamentInfo={tournamentData?.data?.[0]}
         style={{ marginTop: 20 }}
       />
-      <div className="mx-auto pb-20 w-full">
+      <div className="mx-auto  w-full">
         {/* Filter + ShowingResults */}
         <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
           <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
@@ -151,14 +157,19 @@ export default function TournamentPageFeed() {
         </div>
 
         {/* Tournament cards */}
-        <div className="flex flex-wrap gap-2 scroll-smooth scrollbar-hide mx-auto justify-center">
+        <div
+          className="grid gap-4 scroll-smooth scrollbar-hide mx-auto justify-items-start
+    grid-cols-[repeat(auto-fit,minmax(16rem,23rem))]
+    sm:grid-cols-[repeat(auto-fit,minmax(20rem,23rem))]
+    lg:grid-cols-[repeat(auto-fit,minmax(21rem,23.65rem))]"
+        >
           {tournamentData?.data?.length > 0 ? (
             tournamentData.data.map((t: any) => (
               <TournamentCard
                 key={t.id}
                 tournamentInfo={t}
                 showDesc
-                style={{ maxWidth: "23rem" }}
+                contClass="w-full"
               />
             ))
           ) : (
@@ -175,6 +186,29 @@ export default function TournamentPageFeed() {
           onPageChange={(page) => {
             setCurrentPage(page);
           }}
+        />
+      </div>
+      <div className="flex w-full my-5 justify-center">
+        <SectionDetails
+          list={[
+            {
+              label: tournamentAnalytics?.active_tournaments,
+              description: tScreen("tournament.labels.active_tournaments"),
+              color: "var(--primary)",
+            },
+            {
+              label: tournamentAnalytics?.total_prize_pool,
+              description: tScreen("tournament.labels.total_prize_pool"),
+              color: "var(--textFour)",
+            },
+            {
+              label: tournamentAnalytics?.total_earned,
+              description: tScreen("tournament.labels.total_earned"),
+              color: "var(--textFive)",
+            },
+          ]}
+          // TODO: If it to be centered according to TournamentFeaturedCard
+          // contClass={"group w-full max-w-[1300px]"}
         />
       </div>
     </>

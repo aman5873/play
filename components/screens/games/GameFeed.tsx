@@ -12,7 +12,11 @@ import { CategoryCardComp } from "@/components/common/CardComp";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
 
-export function GameCard({ gameInfo, contClass = "", style = {} }) {
+export function GameCard({
+  gameInfo,
+  contClass = "w-68 min-w-[12rem] max-w-xs",
+  style = {},
+}) {
   const router = useRouter();
 
   const primaryImage = gameInfo?.images.find((img: any) => img?.is_primary);
@@ -20,7 +24,7 @@ export function GameCard({ gameInfo, contClass = "", style = {} }) {
 
   return (
     <div
-      className={`gradient-one border border-[var(--borderThree)] p-4 group relative w-68 min-w-[12rem] max-w-xs flex-shrink-0 overflow-hidden rounded-xl flex flex-col ${contClass}`}
+      className={`gradient-one border border-[var(--borderThree)] p-4 group relative  flex-shrink-0 overflow-hidden rounded-xl flex flex-col ${contClass}`}
       style={{
         ...style,
       }}

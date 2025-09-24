@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { GameCard } from "@/components/games/GameFeed";
+import { GameCard } from "@/components/screens/games/GameFeed";
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import { useAuth } from "@/context/AuthContext";
 import Pagination, { ShowingResults } from "@/components/common/Pagination";
@@ -13,7 +13,6 @@ export default function GamePageFeed() {
   const { headerSearchValue, isAuthenticated, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
 
-  const initialLoad = useRef(true);
   const [gameData, setGameData] = useState<any>(null);
 
   const [statusList, setStatusList] = useState([]);
@@ -27,52 +26,37 @@ export default function GamePageFeed() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
 
-  // Dynamically adjust per_page based on screen size
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const handleResize = () => {
-  //       const newSize = window.innerWidth < 768 ? 4 : 8;
-  //       setPageSize(newSize);
-  //     };
-
-  //     handleResize();
-  //     window.addEventListener("resize", handleResize);
-  //     return () => window.removeEventListener("resize", handleResize);
-  //   }
-  // }, []);
-
-  // Fetch status & genres on mount
+  // Fetch game statuses & genres when authenticated
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    getGameStatuses().then((res) => {
-      if (res?.success && res?.data) setStatusList(res.data);
-    });
+    const fetchFilters = async () => {
+      try {
+        const [statusRes, genreRes] = await Promise.all([
+          getGameStatuses(),
+          getGameGenres(),
+        ]);
+        if (statusRes?.success && statusRes?.data)
+          setStatusList(statusRes.data);
+        if (genreRes?.success && genreRes?.data) setGenresList(genreRes.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-    getGameGenres().then((res) => {
-      if (res?.success && res?.data) setGenresList(res.data);
-    });
+    fetchFilters();
   }, [isAuthenticated]);
 
   // Fetch games whenever filters, search, pagination, or pageSize changes
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    // Skip first search-triggered fetch
-    if (initialLoad.current) {
-      initialLoad.current = false;
-      return;
-    }
-
     const params: Record<string, any> = {
       page: currentPage,
       per_page: pageSize,
     };
-    // Only add search if it’s not empty
-    if (headerSearchValue?.trim()) {
-      params.search = headerSearchValue.trim();
-    }
 
+    if (headerSearchValue?.trim()) params.search = headerSearchValue.trim();
     if (selectedStatus?.id) params.status_id = selectedStatus.id;
     if (selectedGenre?.id) params.genre_id = selectedGenre.id;
 
@@ -146,10 +130,20 @@ export default function GamePageFeed() {
       </div>
 
       {/* Game Cards */}
-      <div className="flex flex-wrap gap-4 justify-center">
+      <div
+        className="
+  grid gap-4 justify-items-start
+    grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
+    sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
+    md:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]
+    lg:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]
+    xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
+    2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]
+    "
+      >
         {gameData?.data?.length > 0 ? (
           gameData.data.map((game: any) => (
-            <GameCard key={game.id} gameInfo={game} />
+            <GameCard key={game.id} gameInfo={game} contClass="w-full" />
           ))
         ) : (
           <p className="text-[var(--textTwo)]">{tCommon("messages.noGames")}</p>

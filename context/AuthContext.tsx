@@ -10,6 +10,7 @@ import {
 } from "react";
 import api, { fetchProfile, logoutUser } from "@/lib/auth_ops";
 import Loading from "@/components/common/Loading";
+import { usePathname } from "next/navigation";
 
 interface User {
   id?: string;
@@ -46,10 +47,10 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const pathname = usePathname();
 
   const [loading, setLoading] = useState(true);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [autoLoginOpen, setAutoLoginOpen] = useState(false);
   const [headerSearchValue, setHeaderSearchValue] = useState<string>("");
 
   // Google login simulation
@@ -95,77 +96,57 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   // Fetch user on page reload
-  // In AuthProvider
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
       setUser(null);
-      setAutoLoginOpen(true); // 👈 trigger login modal open
+      setLoginOpen(true);
       setLoading(false);
       return;
     }
+
+    const handleProfile = async () => {
+      try {
+        const res = await fetchProfile();
+
+        if (res?.data?.user) {
+          setUser(res.data.user);
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+        } else {
+          setUser(null);
+          setLoginOpen(true);
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+        }
+      } catch {
+        setUser(null);
+        setLoginOpen(true);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      } finally {
+        setLoading(false);
+      }
+    };
 
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
       setLoading(false);
-
-      fetchProfile()
-        .then((res) => {
-          if (res?.data?.user) {
-            setUser(res.data.user);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-          } else {
-            setUser(null);
-            setAutoLoginOpen(true); // 👈 open login modal
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-          }
-        })
-        .catch(() => {
-          setUser(null);
-          setAutoLoginOpen(true); // 👈 open login modal
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-        });
+      handleProfile(); // 👈 always re-validate profile
     } else {
-      fetchProfile()
-        .then((res) => {
-          if (res?.data?.user) {
-            setUser(res.data.user);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-          } else {
-            setUser(null);
-            setAutoLoginOpen(true); // 👈 open login modal
-            localStorage.removeItem("token");
-          }
-        })
-        .catch(() => {
-          setUser(null);
-          setAutoLoginOpen(true); // 👈 open login modal
-          localStorage.removeItem("token");
-        })
-        .finally(() => setLoading(false));
+      handleProfile(); // 👈 no stored user, still fetch
     }
 
     const handleLogoutEvent = () => {
       setUser(null);
-      setAutoLoginOpen(true); // 👈 open login modal on logout
+      setLoginOpen(true);
       localStorage.removeItem("user");
     };
 
     window.addEventListener("auth-logout", handleLogoutEvent);
     return () => window.removeEventListener("auth-logout", handleLogoutEvent);
-  }, []);
-
-  // Auto  open login modal when user is explicitly false
-  useEffect(() => {
-    if (autoLoginOpen) {
-      setLoginOpen(true);
-      setAutoLoginOpen(false); // reset so it doesn't keep reopening
-    }
-  }, [autoLoginOpen]);
+  }, [pathname]);
 
   const value = useMemo<AuthContextType>(
     () => ({

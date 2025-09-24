@@ -1,9 +1,9 @@
 {
   "home": {
     "chip": "La Próxima Generación de Deportes",
-    "title": "La Última",
-    "highlightTitle": "Arena de Gaming",
-    "description": "Participa en torneos prestigiosos, escala en la liga competitiva y establece tu reputación como una verdadera leyenda del gaming. Demuestra tus habilidades frente a los mejores jugadores, gana reconocimientos y deja tu huella en el mundo gamer. Con dedicación y estrategia, puedes pasar de novato a campeón consagrado.",
+    "title": "La Definitiva",
+    "highlightTitle": "Arena de Juegos",
+    "description": "Participa en torneos prestigiosos, escala en la jerarquía competitiva y establece tu reputación como una verdadera leyenda del gaming. Demuestra tus habilidades contra los mejores jugadores, gana reconocimientos y deja tu huella en el mundo de los videojuegos. Con dedicación y estrategia, puedes transformarte de principiante a campeón reconocido.",
     "activePlayers": "Jugadores Activos",
     "prizePool": "Bote de Premios",
     "tournaments": "Torneos",
@@ -13,45 +13,68 @@
   "epicChallenge": {
     "chip": "Misiones Diarias",
     "title": "Completa",
-    "highlightTitle": "DESAFÍOS ÉPICOS",
-    "description": "Enfrenta misiones emocionantes, gana recompensas exclusivas y demuestra tu maestría gamer a través de múltiples desafíos."
+    "highlightTitle": "RETOS ÉPICOS",
+    "description": "Enfrenta misiones emocionantes, gana recompensas exclusivas y demuestra tu maestría en múltiples desafíos."
   },
   "game": {
     "chip": "Biblioteca de Juegos",
     "title": "Descubre",
     "highlightTitle": "JUEGOS INCREÍBLES",
-    "description": "Explora nuestra amplia colección de juegos premium de todos los géneros. Encuentra tu próxima obsesión gamer."
+    "description": "Explora nuestra vasta colección de juegos premium en todos los géneros. Encuentra tu próxima obsesión gamer."
   },
   "tournament": {
     "chip": "Torneos de Juegos en Vivo",
     "title": "Gaming Móvil y PC",
     "highlightTitle": "Campeonatos",
-    "description": "Participa en torneos élite en plataformas móviles y de PC. Demuestra tus habilidades en tus juegos favoritos y compite por grandes premios."
+    "description": "Únete a torneos de élite en plataformas móviles y PC. Demuestra tus habilidades en tus juegos favoritos y compite por enormes botes de premios.",
+    "labels": {
+      "related_tournaments": "Torneos Relacionados",
+      "active_tournaments": "Torneos Activos",
+      "total_prize_pool": "Bote Total de Premios",
+      "total_earned": "Total Ganado"
+    }
   },
   "challenge": {
     "chip": "Misiones Diarias",
     "title": "Completa",
-    "highlightTitle": "DESAFÍOS ÉPICOS",
-    "description": "Enfrenta misiones emocionantes, gana recompensas exclusivas y demuestra tu maestría gamer a través de múltiples desafíos."
+    "highlightTitle": "RETOS ÉPICOS",
+    "description": "Enfrenta misiones emocionantes, gana recompensas exclusivas y demuestra tu maestría en múltiples desafíos."
   },
   "leaderboard": {
     "chip": "Clasificación Global",
     "title": "Élite",
     "highlightTitle": "Tabla de Líderes",
-    "description": "Sé testigo del ascenso de las leyendas del gaming. Compite contra los mejores jugadores del mundo y reclama tu lugar entre la élite."
+    "description": "Sé testigo del ascenso de las leyendas del gaming. Compite contra los mejores jugadores del mundo y asegura tu lugar entre la élite."
   },
   "newsSection": {
     "chip": "Últimas Noticias",
     "title": "Gaming",
     "highlightTitle": "Noticias y Actualizaciones",
-    "description": "Mantente al día con las últimas noticias, actualizaciones e información del mundo gamer."
+    "description": "Mantente al día con las últimas noticias, actualizaciones e información del mundo de los videojuegos.",
+    "labels": {
+      "featured_stories": "Historias Destacadas",
+      "latest_articles": "Últimos Artículos"
+    }
   },
   "social": {
     "chip": "Centro Social",
     "title": "Social",
     "highlightTitle": "Hub",
-    "description": "Únete a la mayor comunidad de deportes VR. Comparte tus mejores jugadas, vota por contenido épico y participa en nuestro Programa de Creadores.",
+    "description": "Únete a la comunidad de VR Sports más grande. Comparte tus mejores jugadas, vota contenido épico y participa en nuestro Programa de Creadores.",
     "buttonPrimary": "Programa de Creadores de Contenido",
-    "buttonSecondary": "Subir Video"
+    "buttonSecondary": "Subir Video",
+    "labels": {
+      "video_shared": "Video Compartido",
+      "active_members": "Miembros Activos",
+      "verified_creators": "Creadores Verificados",
+      "live_streams": "Transmisiones en Vivo"
+    }
+  },
+  "teams": {
+    "chip": "Equipos",
+    "title": "Élite",
+    "highlightTitle": "EQUIPOS",
+    "description": "Descubre y únete a los equipos de esports de VR más competitivos. Conéctate con jugadores de élite y domina la arena virtual.",
+    "buttonPrimary": "Crear Equipo"
   }
 }

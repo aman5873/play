@@ -6,11 +6,11 @@ import { useTranslation } from "react-i18next";
 import { RankSecondaryIcon, CrownIcon } from "@/app/icons";
 import { leaderboardData } from "@/constants/data";
 import { ScreenDetailsComp } from "@/components/TopComp";
-import AchievementFeed from "./AchievementFeed";
+import AchievementFeed from "@components/screens/leaderboard/AchievementFeed";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
-function LeaderboardCard({ leaderboardInfo }) {
+export function LeaderboardCard({ leaderboardInfo }) {
   if (!leaderboardInfo) return null;
 
   return (
@@ -32,13 +32,21 @@ function LeaderboardCard({ leaderboardInfo }) {
         </div>
       )}
 
-      <div className="flex flex-col flex-1">
-        <h2 className="sm:text-lg md:text-xl lg:text-2xl font-bold truncate text-[var(--textOne)]">
-          {leaderboardInfo?.name}
-        </h2>
-        <h2 className="text-md font-semibold truncate text-[var(--textTwo)]">
-          {leaderboardInfo?.country}
-        </h2>
+      <div className="flex gap-3 flex-1 items-center">
+        <div className="flex flex-col ">
+          <h2 className="sm:text-lg md:text-xl lg:text-2xl font-bold truncate text-[var(--textOne)]">
+            {leaderboardInfo?.name}
+          </h2>
+          <h2 className="text-md font-semibold truncate text-[var(--textTwo)]">
+            {leaderboardInfo?.country}
+          </h2>
+        </div>
+
+        {leaderboardInfo?.rank === 1 ? (
+          <CrownIcon size={30} color="transparent" />
+        ) : leaderboardInfo?.rank === 2 || leaderboardInfo?.rank === 3 ? (
+          <RankSecondaryIcon size={30} color="transparent" />
+        ) : null}
       </div>
       <div className="flex flex-col">
         <h2 className="sm:text-xl md:text-2xl lg:text-3xl font-bold text-[var(--textSeven)]">
@@ -51,7 +59,10 @@ function LeaderboardCard({ leaderboardInfo }) {
     </div>
   );
 }
-function TopLeaderboardCard({ leaderboardInfo }) {
+export function TopLeaderboardCard({
+  leaderboardInfo,
+  contClass = "w-[95%] lg:max-w-[90%]  h-fit min-h-[22vw]",
+}) {
   if (!leaderboardInfo) return null;
   const isRankOne = leaderboardInfo?.rank === 1;
 
@@ -59,7 +70,7 @@ function TopLeaderboardCard({ leaderboardInfo }) {
     <div
       className={`${
         isRankOne ? "gradient-three scale-[1.10]" : "gradient-one"
-      } w-[95%] lg:max-w-[90%]  h-fit min-h-[22vw] border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col justify-center items-center gap-3 border-[var(--borderThree)] transition-transform duration-300`}
+      }  border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col justify-center items-center gap-3 border-[var(--borderThree)] transition-transform duration-300 ${contClass}`}
     >
       {/* Rank Icon */}
       {isRankOne ? (

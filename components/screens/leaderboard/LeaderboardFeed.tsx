@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { MessageCircle, Heart, ThumbsUp, Share2 } from "lucide-react";
+import { Eye } from "lucide-react";
 
 import { socialData } from "@/constants/data";
 import Image from "next/image";
@@ -13,16 +14,35 @@ import { RatingComp } from "@/components/common/RatingComp";
 import { CardChip } from "@/components/common/CardComp";
 import { useTranslation } from "react-i18next";
 
+function formatVideoDuration(ms?: number | null): string | null {
+  if (!ms || ms < 0) return null; // ✅ handle no ms or invalid
+
+  let totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  totalSeconds %= 3600;
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  const pad = (num: number) => num.toString().padStart(2, "0");
+
+  if (hours > 0) {
+    return `${hours}:${pad(minutes)}:${pad(seconds)}`;
+  } else {
+    return `${minutes}:${pad(seconds)}`;
+  }
+}
+
 export function SocialCard(props: any) {
-  const { socialInfo, contClass = "" } = props;
+  const { socialInfo, contClass = "w-75 min-w-[12rem] max-w-xs" } = props;
   const router = useRouter();
+  const duration = formatVideoDuration(socialInfo?.media?.duration);
+  const { t: tCommon } = useTranslation("common");
 
   if (socialInfo)
     return (
       <div
         onClick={() => router.push(`/social/${socialInfo?.id}`)}
-        className={`gradient-one  border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col gap-3 border-[var(--borderThree)]
-          ${contClass ?? "w-75 min-w-[12rem] max-w-xs"} `}
+        className={`gradient-one  border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col gap-3 border-[var(--borderThree)] ${contClass} `}
       >
         {socialInfo?.media?.thumbnail && (
           <div
@@ -34,6 +54,22 @@ export function SocialCard(props: any) {
               fill
               className="object-cover w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-110"
             />
+            {socialInfo?.is_trending && (
+              <div className="text-sm flex gap-1 font-medium bg-[var(--bgFour)] border-[0.5px] border-[var(--borderFour)] px-2 py-1 rounded-[10px] text-[var(--textOne)] absolute top-2 left-2 px-1 rounded">
+                {tCommon("trending")}
+              </div>
+            )}
+            {socialInfo?.views_count && (
+              <div className="text-sm flex gap-1 font-medium bg-black/40  backdrop-blur-sm  border-[0.5px] border-[black] px-2 py-1 rounded-[10px] text-[var(--textOne)] absolute top-2 right-2 px-1 rounded">
+                <Eye size={18} className="text-[var(--textOne)]" />
+                {socialInfo?.views_count}
+              </div>
+            )}
+            {duration && (
+              <div className="text-sm font-medium bg-black/40 backdrop-blur-sm border-[0.5px] border-[black] px-3 py-0.5 rounded-[10px] text-[var(--textOne)] absolute bottom-2 right-2 px-1 rounded">
+                {duration}
+              </div>
+            )}
           </div>
         )}
 

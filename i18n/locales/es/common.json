@@ -8,6 +8,7 @@
   "rankings": "Clasificación",
   "social": "Social",
   "assets": "Recursos",
+  "trending": "Tendencias",
 
   "review": "Revisar",
   "reviews": "Opiniones",
@@ -23,6 +24,9 @@
     "all": "Todos"
   },
   "messages": {
-    "noGames": "No se encontraron juegos."
+    "noGames": "No se encontraron juegos.",
+    "noSocials": "No se encontraron publicaciones sociales.",
+    "noTournaments": "No se encontraron torneos.",
+    "noNews": "No se encontraron noticias."
   }
 }

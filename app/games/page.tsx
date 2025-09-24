@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import GamePageFeed from "@/components/games/GamePageFeed";
-import GameScreenTopComp from "@/components/games/GameScreenTopComp";
+import GamePageFeed from "@/components/screens/games/GamePageFeed";
+import GameScreenTopComp from "@/components/screens/games/GameScreenTopComp";
 
 export default function Page() {
   return (

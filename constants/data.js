@@ -122,6 +122,7 @@ export const challengesData = {
 export const newsData = [
   {
     id: 1,
+    is_featured: true,
     title: "Exciting Tournament News: Record-Breaking Prize Pool Announced",
     categories: ["Competitions", "Hot Topics"],
     image_path: "/images/home/news1.png",
@@ -132,6 +133,7 @@ export const newsData = [
   },
   {
     id: 2,
+    is_featured: true,
     title: "Exciting Tournament News: Record-Breaking Prize Pool Announced",
     categories: ["Competitions", "Hot Topics"],
     image_path: "/images/home/news2.png",
@@ -142,6 +144,29 @@ export const newsData = [
   },
   {
     id: 3,
+    is_featured: false,
+    title: "Exciting Tournament News: Record-Breaking Prize Pool Announced",
+    categories: ["Category"],
+    image_path: "/images/home/news1.png",
+    description:
+      "The upcoming Global Championship is set to shatter all records with an incredible $3M prize pool, showcasing teams from 40 nations.",
+    date_time: "Oct 10, 7:30 PM",
+    views_count: 350,
+  },
+  {
+    id: 4,
+    is_featured: false,
+    title: "Exciting Tournament News",
+    categories: ["Competitions", "Hot Topics"],
+    image_path: "/images/home/news2.png",
+    description:
+      "The upcoming Global Championship is set to shatter all records with an incredible $3M prize pool, showcasing teams from 40 nations.",
+    date_time: "Oct 10, 7:30 PM",
+    views_count: 350,
+  },
+  {
+    id: 5,
+    is_featured: false,
     title: "Exciting Tournament News: Record-Breaking Prize Pool Announced",
     categories: ["Competitions", "Hot Topics"],
     image_path: "/images/home/news1.png",
@@ -151,7 +176,30 @@ export const newsData = [
     views_count: 350,
   },
   {
-    id: 4,
+    id: 6,
+    is_featured: false,
+    title: "Exciting Tournament News: Record-Breaking Prize Pool Announced",
+    categories: ["Competitions", "Hot Topics"],
+    image_path: "/images/home/news2.png",
+    description:
+      "The upcoming Global Championship is set to shatter all records with an incredible $3M prize pool, showcasing teams from 40 nations.",
+    date_time: "Oct 10, 7:30 PM",
+    views_count: 350,
+  },
+  {
+    id: 7,
+    is_featured: false,
+    title: "Exciting Tournament News: Record-Breaking Prize Pool Announced",
+    categories: ["Competitions", "Hot Topics"],
+    image_path: "/images/home/news1.png",
+    description:
+      "The upcoming Global Championship is set to shatter all records with an incredible $3M prize pool, showcasing teams from 40 nations.",
+    date_time: "Oct 10, 7:30 PM",
+    views_count: 350,
+  },
+  {
+    id: 8,
+    is_featured: false,
     title: "Exciting Tournament News",
     categories: ["Competitions", "Hot Topics"],
     image_path: "/images/home/news2.png",
@@ -163,10 +211,18 @@ export const newsData = [
 ];
 
 // ***** socials
+export const socialAnalytics = {
+  video_shared: "150+",
+  active_members: "$2.5M+",
+  verified_creators: "50K+",
+  live_streams: "24/7",
+};
+
 export const socialData = [
   {
     id: 1,
     category: "VR Sports",
+    is_trending: true,
     channel: {
       logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
@@ -185,6 +241,7 @@ export const socialData = [
   {
     id: 2,
     category: "Tutorials",
+    is_trending: true,
     channel: {
       logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
@@ -203,6 +260,7 @@ export const socialData = [
   {
     id: 3,
     category: "Live Streams",
+    is_trending: true,
     channel: {
       logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
@@ -221,6 +279,7 @@ export const socialData = [
   {
     id: 4,
     category: "VR Sports",
+    is_trending: true,
     channel: {
       logo: "/images/home/user1Avatar.png",
       title: "Epic VR Basketball Slam Dunk",
@@ -249,6 +308,9 @@ export const leaderboardData = {
       country: "UK",
       score: "12000",
       points: "+89",
+      achievement: "Grandmaster",
+      equipment: "Phoenix VR",
+      main_game: "VR Basketball",
     },
     {
       id: 2,
@@ -258,6 +320,9 @@ export const leaderboardData = {
       country: "US",
       score: "12450",
       points: "+125",
+      achievement: "Master",
+      equipment: "Phoenix VR",
+      main_game: "VR Basketball",
     },
     {
       id: 3,
@@ -267,6 +332,9 @@ export const leaderboardData = {
       country: "GE",
       score: "10800",
       points: "+67",
+      achievement: "Master",
+      equipment: "Phoenix VR",
+      main_game: "VR Basketball",
     },
     {
       id: 4,
@@ -276,6 +344,9 @@ export const leaderboardData = {
       country: "GE",
       score: "9950",
       points: "+67",
+      achievement: "Grandmaster",
+      equipment: "Phoenix VR",
+      main_game: "VR Basketball",
     },
     {
       id: 5,
@@ -285,6 +356,9 @@ export const leaderboardData = {
       country: "EU",
       score: "9720",
       points: "+67",
+      achievement: "Master",
+      equipment: "Phoenix VR",
+      main_game: "VR Basketball",
     },
   ],
   selfRanking: {
@@ -330,33 +404,147 @@ export const leaderboardData = {
 };
 
 // ******** Teams
-export const teams = [
+export const teamsData = [
   {
     id: 1,
-    logo: "https://i.pravatar.cc/150?img=61",
+    logo: "/images/screens/team_avatar.png",
     title: "Phoenix VR",
     country: "Spain",
-    member_count: 8,
+    description: "Adventure Seekers",
+    success_rate: "80%",
+    is_private_team: false,
+    rank: 1,
+    max_team_member: 8,
+    member_count: 5,
+    victory_count: 130,
+    points: 12450,
+    founded_in: "March 2024",
+    tournaments_played: 12,
+    trophies_count: 4,
+    main_game: { name: "VR Basketball" },
+
+    team_members: [
+      {
+        avatar_url: "/images/home/user1Avatar.png",
+        name: "FuturePlay",
+        role: "Captain",
+        points: 8760,
+      },
+      {
+        avatar_url: "/images/home/user2Avatar.png",
+        name: "NeuroFusion",
+        role: "Co-Captain",
+        points: 10230,
+      },
+      {
+        avatar_url: "/images/home/user1Avatar.png",
+        name: "HoloDash",
+        role: "Player",
+        points: 12450,
+      },
+      {
+        avatar_url: "/images/home/user2Avatar.png",
+        name: "VirtuaSports",
+        role: "Player",
+        points: 11450,
+      },
+      {
+        avatar_url: "/images/home/user1Avatar.png",
+        name: "CyberArena",
+        role: "Player",
+        points: 11450,
+      },
+      {
+        avatar_url: "/images/home/user1Avatar.png",
+        name: "EchoGame",
+        role: "Player",
+        points: 10450,
+      },
+    ],
+    primary_games: [],
+    region: [],
+    settings: {},
+
+    // team_captain: {
+    //   avatar_url: "",
+    //   title: "Team Captain",
+    //   description: "Full team management",
+    // },
+    // team_co_captain: {
+    //   avatar_url: "",
+    //   title: "Co-Captain",
+    //   description: "Assist with management",
+    // },
+    // team_members: {
+    //   avatar_url: "",
+    //   title: "Members",
+    //   description: "Core team players",
+    // },
+    // requirements_preference: {
+    //   skill_level: { name: "Advanced" },
+    //   preferred_playStyles: { name: "Aggressive" },
+    //   additional_requirements: "",
+    // },
   },
   {
     id: 2,
-    logo: "https://i.pravatar.cc/150?img=62",
+    logo: "/images/screens/team_avatar.png",
     title: "Quantum Force",
     country: "Germany",
+    description: "Defender League",
     member_count: 7,
+    max_team_member: 8,
+    success_rate: "95%",
   },
   {
     id: 3,
-    logo: "https://i.pravatar.cc/150?img=63",
+    logo: "/images/screens/team_avatar.png",
     title: "Digital Tigers",
+    description: "Stealth Assassins",
     country: "France",
     member_count: 5,
+    max_team_member: 8,
+    success_rate: "70%",
   },
   {
     id: 4,
-    logo: "https://i.pravatar.cc/150?img=64",
+    logo: "/images/screens/team_avatar.png",
     title: "Virtual Vipers",
+    description: "Stealth Assassins",
     country: "Italy",
     member_count: 6,
+    max_team_member: 8,
+    success_rate: "85%",
+  },
+];
+
+export const team_tournaments = [
+  {
+    id: 1,
+    title: "VR World Cup 2022",
+    position: "1st Place",
+    prize: "$12450",
+    date: "Just now",
+  },
+  {
+    id: 2,
+    title: "European Basketball League",
+    position: "Champions",
+    prize: "$11200",
+    date: "24, sep, 2024",
+  },
+  {
+    id: 3,
+    title: "Tennis Masters 2021",
+    position: "Semifinalists",
+    prize: "$10800",
+    date: "24, sep, 2024",
+  },
+  {
+    id: 4,
+    title: "Soccer Challenge Cup",
+    position: "2nd Place",
+    prize: "$9949",
+    date: "24, sep, 2024",
   },
 ];

@@ -1,13 +1,13 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Circle } from "lucide-react";
 
 import { TopBgComp } from "@/components/TopComp";
 
-import { CardChip, iconMap } from "@/components/common/CardComp";
+import { CardChip, IconLabelInfo } from "@/components/common/CardComp";
 import Image from "next/image";
-import TournamentFeed from "@/components/tournaments/TournamentFeed";
+import TournamentFeed from "@/components/screens/tournaments/TournamentFeed";
 import { getStatuses, getTournaments } from "@/lib/tournament_ops";
 import { useAuth } from "@/context/AuthContext";
 import moment from "moment";
@@ -52,18 +52,6 @@ function ListComp({ title, list, variant = "bullet", start }) {
         })}
       </div>
     );
-}
-
-function IconLabelInfo({ icon, label, labelStyle = {}, contStyle = {} }) {
-  const Icon = iconMap[icon];
-  return (
-    <div className="flex gap-2 text-[var(--primary)]" style={contStyle}>
-      <Icon className="w-6 h-6" />
-      <h3 className="text-lg font-bold" style={labelStyle}>
-        {label}
-      </h3>
-    </div>
-  );
 }
 
 function TournamentScreenDetailsComp({ tournamentInfo }) {
@@ -143,27 +131,25 @@ export default function TournamentPage() {
   const [tournamentInfo, setTournamentInfo] = useState(null);
   const [statusList, setStatusList] = useState([]);
 
-  const fetchTournaments = useCallback(
-    (id) => {
-      if (!id || !isAuthenticated) return;
-      setLoading(true);
-      getTournaments(id).then((res) => {
-        setLoading(false);
-        if (res?.success && res?.data) {
-          setTournamentInfo(res.data);
-        }
-      });
-    },
-    [isAuthenticated]
-  );
+  const fetchTournaments = (id) => {
+    if (!id || !isAuthenticated) return;
+    setLoading(true);
+    getTournaments(id).then((res) => {
+      setLoading(false);
+      if (res?.success && res?.data) {
+        setTournamentInfo(res.data);
+      }
+    });
+  };
 
   useEffect(() => {
-    fetchTournaments(tournamentId);
-    if (isAuthenticated) {
-      getStatuses().then((res) => {
-        if (res?.success && res?.data) setStatusList(res.data);
-      });
+    if (tournamentId && isAuthenticated) {
+      fetchTournaments(tournamentId);
     }
+
+    getStatuses().then((res) => {
+      if (res?.success && res?.data) setStatusList(res.data);
+    });
   }, [tournamentId, isAuthenticated]);
 
   const primaryImage = tournamentInfo?.images?.find(
@@ -192,24 +178,28 @@ export default function TournamentPage() {
 
       <div className="flex flex-col gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
         <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">Description</h1>
+
         <ListComp
           title="HOW TO REGISTER"
-          list={tournamentInfo?.registration_steps?.map((obj) => obj.step_text)}
+          list={tournamentInfo?.registration_steps
+            ?.filter((obj) => obj.step_text)
+            .map((obj) => obj.step_text)}
           variant="number"
         />
+
         <ListComp
           title="FORMAT"
-          list={tournamentInfo?.formats?.map((obj) => obj.format_text)}
+          list={tournamentInfo?.formats
+            ?.filter((obj) => obj.format_text) // remove null/empty
+            .map((obj) => obj.format_text)}
         />
-        <ListComp
-          title="FORMAT"
-          variant="alpha"
-          list={tournamentInfo?.formats?.map((obj) => obj.format_text)}
-        />
-        <ListComp
-          title="FREQUENTLY ASKED QUESTIONS?"
-          list={tournamentInfo?.frequently_asked}
-        />
+
+        {tournamentInfo?.frequently_asked && (
+          <ListComp
+            title="FREQUENTLY ASKED QUESTIONS?"
+            list={tournamentInfo?.frequently_asked}
+          />
+        )}
       </div>
       <TournamentFeedComp />
     </div>

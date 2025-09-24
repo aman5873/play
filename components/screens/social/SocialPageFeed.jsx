@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import Pagination, { ShowingResults } from "@/components/common/Pagination";
-import { SocialCard } from "@/components/social/SocialHubFeed";
+import { SocialCard } from "@/components/screens/social/SocialHubFeed";
 import { socialData } from "@/constants/data";
 
 export default function SocialPageFeed() {
@@ -80,7 +80,7 @@ export default function SocialPageFeed() {
   }, [filteredSocial, safeCurrentPage, safePageSize]);
 
   return (
-    <div className="mx-auto py-10 pb-20 w-full">
+    <div className="mx-auto py-10 pb-10 w-full">
       {/* Filter + ShowingResults */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
         <div className="w-[260px] lg:w-[260px]">
@@ -101,13 +101,23 @@ export default function SocialPageFeed() {
       </div>
 
       {/* Social cards */}
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div
+        className="
+  grid gap-4 justify-items-start
+    grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
+    sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
+    md:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]
+    lg:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]
+    xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
+    2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]
+    "
+      >
         {paginatedSocial.length > 0 ? (
           paginatedSocial.map((obj, index) => (
             <SocialCard
               key={`social-${obj.id}-${index}`}
               socialInfo={obj}
-              // contClass="w-72 min-w-[10rem] max-w-xs"
+              contClass="w-full"
             />
           ))
         ) : (

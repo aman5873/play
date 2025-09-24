@@ -11,6 +11,8 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
+  Eye,
+  TrendingUp,
 } from "lucide-react";
 
 interface CardChipProps {
@@ -55,6 +57,8 @@ export const iconMap = {
   calender: Calendar,
   left: ChevronLeft,
   right: ChevronRight,
+  eye: Eye,
+  trend: TrendingUp,
 } satisfies Record<string, LucideIcon>;
 
 export function CardChip({ label, style }: CardChipProps) {
@@ -106,6 +110,23 @@ export function CardIconInfo({ list, minWidth = "55px" }: CardIconInfoProps) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+export function IconLabelInfo({
+  icon,
+  label,
+  labelStyle = {},
+  contStyle = {},
+}) {
+  const Icon = iconMap[icon];
+  return (
+    <div className="flex gap-2 text-[var(--primary)]" style={contStyle}>
+      {Icon && <Icon className="w-6 h-6" />}
+      <h3 className="text-lg font-bold" style={labelStyle}>
+        {label}
+      </h3>
     </div>
   );
 }

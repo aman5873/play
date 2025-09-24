@@ -31,7 +31,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    "**/*.jsx"
+    "**/*.jsx",
+    "components/screens/leaderboard/AchievementFeed.tsx"
   ],
   "exclude": ["node_modules"]
 }

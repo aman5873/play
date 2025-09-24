@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
 import { leaderboardData } from "@/constants/data";
-
 import { Trophy, TrendingUp, Crown, Star } from "lucide-react";
 import { CardChip, ProgressBar } from "@/components/common/CardComp";
 
@@ -13,7 +11,7 @@ const categoryIconMap = {
   Legendry: { icon: Star, color: "var(--textLegendary)" },
 };
 
-export function AchievementCard({ achievementInfo, contClass = "" }) {
+export function AchievementCard({ achievementInfo }) {
   const category = categoryIconMap[achievementInfo?.category];
   const Icon = category?.icon;
 
@@ -21,11 +19,11 @@ export function AchievementCard({ achievementInfo, contClass = "" }) {
 
   return (
     <div
-      className={`gradient-one w-full max-w-full border p-4 flex-shrink-0 overflow-hidden rounded-[16px] flex flex-col ${contClass} border-[var(--borderThree)]`}
+      className={`gradient-one border p-4 overflow-hidden rounded-[16px] flex flex-col border-[var(--borderThree)]`}
     >
-      <div className="flex gap-3 w-full lg:min-w-[18rem]">
+      <div className="flex flex-col gap-3 w-full">
         {Icon && (
-          <div className="rounded-[50px] w-fit h-fit bg-[var(--bgThree)] p-3 flex items-center justify-center">
+          <div className="rounded-full w-fit h-fit bg-[var(--bgThree)] p-3 flex items-center justify-center">
             <Icon
               className="w-6 h-6"
               style={{ color: category.color || "var(--textOne)" }}
@@ -34,7 +32,7 @@ export function AchievementCard({ achievementInfo, contClass = "" }) {
         )}
         <div className="flex flex-col gap-2 w-full">
           <div className="flex gap-2 justify-between w-full">
-            <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl font-semibold text-[var(--textOne)]">
+            <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl font-semibold text-[var(--textOne)] truncate">
               {achievementInfo?.title}
             </h2>
             <CardChip
@@ -46,7 +44,7 @@ export function AchievementCard({ achievementInfo, contClass = "" }) {
               }}
             />
           </div>
-          <p className="text-sm text-[var(--textTwo)]">
+          <p className="text-sm text-[var(--textTwo)] truncate">
             {achievementInfo?.description}
           </p>
           <ProgressBar
@@ -66,11 +64,11 @@ export default function AchievementFeed() {
   const [achievementList, setAchievementList] = useState([]);
 
   useEffect(() => {
-    setAchievementList(leaderboardData?.achievements);
+    setAchievementList(leaderboardData?.achievements || []);
   }, []);
 
   return (
-    <div className="gradient-one p-3 w-full h-fit max-w-[400px] rounded-[16px] border border-[var(--borderThree)]">
+    <div className="gradient-one p-3 w-full lg:h-fit lg:max-w-[500px] rounded-[16px] border border-[var(--borderThree)]">
       <div className="flex gap-2 items-center mb-5">
         <Star />
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[var(--textOne)]">
@@ -78,7 +76,12 @@ export default function AchievementFeed() {
         </h1>
       </div>
 
-      <div className="flex flex-col gap-3 justify-center items-center">
+      <div
+        className="
+          grid gap-4 justify-center
+          grid-cols-[repeat(auto-fit,minmax(300px,1fr))]
+        "
+      >
         {achievementList?.map((obj, index) => (
           <AchievementCard
             key={`achievement-${obj?.id}-${index}`}

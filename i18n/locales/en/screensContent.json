@@ -26,7 +26,13 @@
     "chip": "Live Gaming Tournaments",
     "title": "Mobile & PC Gaming",
     "highlightTitle": "Championships",
-    "description": "Join elite gaming tournaments across mobile and PC platforms. Showcase your skills in your favorite games and compete for massive prize pools."
+    "description": "Join elite gaming tournaments across mobile and PC platforms. Showcase your skills in your favorite games and compete for massive prize pools.",
+    "labels": {
+      "related_tournaments": "Related Tournaments",
+      "active_tournaments": "Active Tournaments",
+      "total_prize_pool": "Total Prize Pool",
+      "total_earned": "Total Earned"
+    }
   },
   "challenge": {
     "chip": "Daily Missions",
@@ -44,7 +50,11 @@
     "chip": "Latest News",
     "title": "Gaming",
     "highlightTitle": "News & Updates",
-    "description": "Stay ahead of the game with the latest news, updates, and insights from the gaming world."
+    "description": "Stay ahead of the game with the latest news, updates, and insights from the gaming world.",
+    "labels": {
+      "featured_stories": "Featured Stories",
+      "latest_articles": "Latest Articles"
+    }
   },
   "social": {
     "chip": "Social Hub",
@@ -52,6 +62,19 @@
     "highlightTitle": "Hub",
     "description": "Join the largest VR Sports community. Share your best plays, vote for epic content, and participate in our Creator Program.",
     "buttonPrimary": "Content Creator Program",
-    "buttonSecondary": "Upload Video"
+    "buttonSecondary": "Upload Video",
+    "labels": {
+      "video_shared": "Video Shared",
+      "active_members": "Active Members",
+      "verified_creators": "Verified Creators",
+      "live_streams": "Live Streams"
+    }
+  },
+  "teams": {
+    "chip": "Teams",
+    "title": "Elite",
+    "highlightTitle": "TEAMS",
+    "description": "Discover and join the most competitive VR esports teams. Connect with elite players and dominate the virtual arena.",
+    "buttonPrimary": "Create Team"
   }
 }

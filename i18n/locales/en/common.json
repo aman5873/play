@@ -8,9 +8,9 @@
   "rankings": "Rankings",
   "social": "Social",
   "assets": "Assets",
+  "trending": "Trending",
 
   "review": "Review",
-  "reviews": "Reviews",
   "pagination": {
     "prev": "Prev",
     "next": "Next",
@@ -23,6 +23,9 @@
     "all": "All"
   },
   "messages": {
-    "noGames": "No games found."
+    "noGames": "No games found.",
+    "noSocials": "No social posts found.",
+    "noTournaments": "No tournaments found.",
+    "noNews": "No news found."
   }
 }
