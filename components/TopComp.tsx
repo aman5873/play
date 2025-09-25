@@ -15,6 +15,8 @@ import {
   Newspaper,
   TrendingUp,
   Upload,
+  Plus,
+  Heart,
 } from "lucide-react";
 
 // Map string keys to lucide icons
@@ -28,6 +30,8 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   news: Newspaper,
   trend: TrendingUp,
   upload: Upload,
+  add: Plus,
+  heart: Heart,
 };
 
 // ------------------ Types ------------------
@@ -156,28 +160,13 @@ export const ButtonComp: React.FC<ButtonCompProps> = ({ buttons }) => {
             const Icon = btn.icon ? iconMap[btn.icon] : null;
 
             return (
-              <button
+              <AppButton
                 key={idx}
                 onClick={() => handleRedirect(btn.redirect)}
-                className={`px-4 py-2 flex items-center justify-center rounded-[100px] border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
-                  ${
-                    btn.type === "primary"
-                      ? "bg-[var(--primary)] text-[var(--secondary)]"
-                      : "bg-[var(--secondary)] text-[var(--primary)]"
-                  }`}
-                style={{ minWidth: "120px" }}
-              >
-                {Icon && (
-                  <Icon
-                    className={`w-5 h-5 mr-2 ${
-                      btn.type === "primary"
-                        ? "text-[var(--secondary)]"
-                        : "text-[var(--primary)]"
-                    }`}
-                  />
-                )}
-                <span>{btn.label}</span>
-              </button>
+                type={btn.type}
+                label={btn.label}
+                Icon={Icon}
+              />
             );
           })}
         </div>
@@ -185,6 +174,32 @@ export const ButtonComp: React.FC<ButtonCompProps> = ({ buttons }) => {
     </>
   );
 };
+
+export function AppButton({ onClick, type = "primary", label, Icon = null }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 flex items-center justify-center rounded-[100px] border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
+                  ${
+                    type === "primary"
+                      ? "bg-[var(--primary)] text-[var(--secondary)]"
+                      : "bg-[var(--secondary)] text-[var(--primary)]"
+                  }`}
+      style={{ minWidth: "120px" }}
+    >
+      {Icon && (
+        <Icon
+          className={`w-5 h-5 mr-2 ${
+            type === "primary"
+              ? "text-[var(--secondary)]"
+              : "text-[var(--primary)]"
+          }`}
+        />
+      )}
+      <span>{label}</span>
+    </button>
+  );
+}
 
 export const TopBgComp: React.FC<TopBgCompProps> = ({ content, children }) => {
   const backgroundImage = content?.backgroundImage;

@@ -8,62 +8,84 @@ import ReactSelectInput from "@/components/common/ReactSelectInput";
 import Pagination, { ShowingResults } from "@/components/common/Pagination";
 
 import { teamsData } from "@/constants/data";
-import { Trophy, Users } from "lucide-react";
-
 import Image from "next/image";
-
+import { CrownIcon, RankSecondaryIcon } from "@/app/icons";
+import GenericTable from "@/components/common/GenericTable";
 import { CardChip } from "@/components/common/CardComp";
 
-function TeamCard(props) {
-  const { teamInfo, contClass = "w-75 min-w-[12rem] max-w-xs" } = props;
-  // const router = useRouter();
-  const users = `${teamInfo?.max_team_member}/ ${teamInfo?.member_count}`;
-
-  if (teamInfo)
-    return (
-      <div
-        // onClick={() => router.push(`/teams/${teamInfo?.id}`)}
-        className={`gradient-one  border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col gap-3 border-[var(--borderThree)] ${contClass} `}
-      >
-        {teamInfo?.logo && (
-          <div
-            className={`relative overflow-hidden rounded-lg group w-full h-[170px] sm:h-[150px] lg:h-[197px]`}
-          >
-            <Image
-              src={teamInfo?.logo}
-              alt={teamInfo?.title}
-              fill
-              className="object-cover w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-110"
-            />
-          </div>
-        )}
-        <h1 className="sm:text-md lg:text-lg font-bold">{teamInfo?.title}</h1>
-        <p className="text-[14px]  text-[var(--textTwo)]">
-          {teamInfo?.description}
-        </p>
-
-        <div className="flex justify-between">
-          <CardChip label={teamInfo?.success_rate} />
-          <div>
-            <div className="flex gap-5">
-              {teamInfo?.trophies_count && (
-                <div className="flex items-center gap-1 text-[var(--textOne)] font-bold">
-                  <Trophy className="w-4 h-4 text-[var(--textTwo)] mr-1" />
-                  <span>{teamInfo.trophies_count}</span>
+function TeamsTable(props: any) {
+  const { paginatedTeams } = props;
+  return (
+    <GenericTable
+      data={paginatedTeams}
+      columns={[
+        {
+          key: "rank",
+          label: "Rank",
+          render: (row: any) => (
+            <span className="font-bold text-[var(--textOne)]">#{row.rank}</span>
+          ),
+        },
+        {
+          key: "title",
+          label: "Team",
+          render: (row: any) => (
+            <div className="flex items-center gap-3">
+              {row.logo && (
+                <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-[var(--borderTwo)]">
+                  <Image
+                    src={row?.logo}
+                    alt={row?.title}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               )}
-              {users && (
-                <div className="flex items-center gap-1 text-[var(--textOne)] font-bold">
-                  <Users className="w-4 h-4 text-[var(--textTwo)] mr-1" />
-                  <span>{users}</span>
-                </div>
-              )}
+              <div className="flex flex-col w-[7rem] max-w-full">
+                <span className="font-bold text-[var(--textOne)] truncate">
+                  {row?.title}
+                </span>
+                <span className="text-xs text-[var(--textTwo)]">
+                  {row?.country}
+                </span>
+              </div>
+              {row?.rank === 1 ? (
+                <CrownIcon size={30} color="transparent" />
+              ) : row?.rank === 2 || row?.rank === 3 ? (
+                <RankSecondaryIcon
+                  size={30}
+                  color="transparent"
+                  stroke="var(--textOne)"
+                />
+              ) : null}
             </div>
-          </div>
-        </div>
-      </div>
-    );
+          ),
+        },
+        {
+          key: "achievement",
+          label: "Achievement",
+          render: (row: any) => <CardChip label={row?.achievement} />,
+        },
+        {
+          key: "success_rate",
+          label: "Success Rate",
+          className: "hidden sm:table-cell",
+        },
+
+        {
+          key: "points",
+          label: "Points",
+          render: (row: any) => (
+            <span className="font-bold text-[var(--textSeven)]">
+              {row?.points}
+            </span>
+          ),
+        },
+      ]}
+    />
+  );
 }
+
 export default function TeamsPageFeed() {
   const { headerSearchValue } = useAuth();
   const { t: tCommon } = useTranslation("common");
@@ -96,7 +118,7 @@ export default function TeamsPageFeed() {
     ];
   }, [tCommon]);
 
-  const filteredSocial = useMemo(() => {
+  const filteredTeams = useMemo(() => {
     return teamsData.filter((item) => {
       const matchesSearch =
         !headerSearchValue ||
@@ -112,7 +134,7 @@ export default function TeamsPageFeed() {
     });
   }, [selectedCategory, headerSearchValue]);
 
-  const totalItems = filteredSocial.length;
+  const totalItems = filteredTeams.length;
   const safePageSize = pageSize || 6;
   const safeCurrentPage = currentPage || 1;
   const totalPages = Math.max(1, Math.ceil(totalItems / safePageSize));
@@ -123,13 +145,13 @@ export default function TeamsPageFeed() {
   }, [totalPages]);
 
   // Paginate
-  const paginatedSocial = useMemo(() => {
+  const paginatedTeams = useMemo(() => {
     const start = (safeCurrentPage - 1) * safePageSize;
-    return filteredSocial.slice(start, start + safePageSize);
-  }, [filteredSocial, safeCurrentPage, safePageSize]);
+    return filteredTeams.slice(start, start + safePageSize);
+  }, [filteredTeams, safeCurrentPage, safePageSize]);
 
   return (
-    <div className="mx-auto py-10 pb-10 w-full">
+    <div className="mx-auto py-10 w-full">
       {/* Filter + ShowingResults */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
         <div className="w-[260px] lg:w-[260px]">
@@ -149,32 +171,7 @@ export default function TeamsPageFeed() {
         />
       </div>
 
-      <div
-        className="
-  grid gap-4 justify-items-start
-    grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
-    sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
-    md:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]
-    lg:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]
-    xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
-    2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]
-    "
-      >
-        {paginatedSocial.length > 0 ? (
-          paginatedSocial.map((obj, index) => (
-            <TeamCard
-              key={`social-${obj.id}-${index}`}
-              teamInfo={obj}
-              contClass="w-full"
-            />
-          ))
-        ) : (
-          <p className="text-[var(--textTwo)]">
-            {tCommon("messages.noSocials")}
-          </p>
-        )}
-      </div>
-
+      <TeamsTable paginatedTeams={paginatedTeams} />
       {/* Pagination */}
       {totalPages > 1 && (
         <Pagination

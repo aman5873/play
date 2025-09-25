@@ -1,5 +1,9 @@
 "use client";
-export default function GenericTable({ data = [], columns = [] }) {
+export default function GenericTable({
+  data = [],
+  columns = [],
+  onClickRow = null,
+}) {
   if (!data || data.length === 0) {
     return (
       <p className="text-[var(--textTwo)]">No leaderboard data available</p>
@@ -7,8 +11,8 @@ export default function GenericTable({ data = [], columns = [] }) {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border border-[var(--borderThree)] gradient-one rounded-xl overflow-hidden">
+    <div className="overflow-x-auto border-1 border-[var(--borderThree)] rounded-xl">
+      <table className="min-w-full  gradient-one  overflow-hidden">
         <thead className="gradient-one">
           <tr>
             {columns.map((col) => (
@@ -29,6 +33,8 @@ export default function GenericTable({ data = [], columns = [] }) {
             <tr
               key={row.id}
               className="border-t border-[var(--borderThree)] hover:bg-[var(--bgTwo)] transition-colors"
+              onClick={() => onClickRow && onClickRow(row)}
+              style={{ cursor: onClickRow && "pointer" }}
             >
               {columns.map((col) => (
                 <td

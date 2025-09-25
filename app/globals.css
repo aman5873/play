@@ -72,11 +72,13 @@ body {
   --bgTwo: #2a3025;
   --bgThree: #1a1f15;
   --bgFour: #e23939;
+  --bgFive: #18241e;
 
   --borderOne: #115740;
   --borderTwo: #40453b;
   --borderThree: #2a2d27;
   --borderFour: #5c0000;
+  --borderFive: #2f3934;
 }
 
 .dark {
@@ -114,11 +116,13 @@ body {
   --bgTwo: #2a3025;
   --bgThree: #1a1f15;
   --bgFour: #e23939;
+  --bgFive: #18241e;
 
   --borderOne: #115740;
   --borderTwo: #40453b;
   --borderThree: #2a2d27;
   --borderFour: #5c0000;
+  --borderFive: #2f3934;
 }
 
 .gradient-primary {
@@ -127,6 +131,9 @@ body {
     rgb(193 255 0 / 31%) 0%,
     rgb(13 25 20 / 74%) 47.88%
   );
+}
+.gradient-modal-card {
+  background: linear-gradient(90deg, #191e15 100%, #1a1f16 0%);
 }
 .gradient-selected {
   background: linear-gradient(90deg, #30470f 0%, #213528 100%);

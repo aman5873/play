@@ -75,6 +75,13 @@
     "title": "Élite",
     "highlightTitle": "EQUIPOS",
     "description": "Descubre y únete a los equipos de esports de VR más competitivos. Conéctate con jugadores de élite y domina la arena virtual.",
-    "buttonPrimary": "Crear Equipo"
+    "buttonPrimary": "Crear Equipo",
+    "labels": {
+      "following": "Siguiendo",
+      "my_teams": "Mis equipos",
+      "active_members": "Miembros activos",
+      "verified_teams": "Equipos verificados",
+      "active_teams": "Equipos activos"
+    }
   }
 }

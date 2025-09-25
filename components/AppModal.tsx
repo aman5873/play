@@ -11,6 +11,7 @@ interface AppModalProps {
   subtitle?: string;
   description?: string;
   titleClass?: string;
+  contClass?: string;
   children?: ReactNode;
   headerIcon?: ReactNode; // <-- already JSX
   minWidth?: number;
@@ -27,8 +28,7 @@ export default function AppModal({
   description,
   children,
   headerIcon, // JSX element now
-  minWidth = 400,
-  maxWidth = 450,
+  contClass = "min-w-[500px] max-w-[900px] w-full sm:w-[80%]",
   showCloseIcon = true,
   closeOnBackdropClick = true,
   titleClass = "font-nyxerin",
@@ -44,8 +44,8 @@ export default function AppModal({
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="relative rounded-[16px] p-6 gradient-one border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col
-             w-auto sm:w-[95%] max-w-md"
+            className={`relative rounded-[16px] p-6 gradient-one border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col
+               ${contClass}`}
             onClick={(e) => e.stopPropagation()}
             initial={{ y: -50, opacity: 0, scale: 0.95 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}

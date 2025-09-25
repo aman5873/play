@@ -13,12 +13,14 @@ type IconProps = {
   size?: number;
   color?: string;
   className?: string;
+  stroke?: any;
 };
 
 const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
   const WrappedIcon = ({
     size = 20,
     color = "currentColor",
+    stroke = "",
     className = "",
   }: IconProps) => (
     <Icon
@@ -27,6 +29,7 @@ const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
       fill={color}
       className={className}
       aria-hidden="true"
+      stroke={stroke}
     />
   );
 

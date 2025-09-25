@@ -24,6 +24,7 @@ export default function TeamsScreenTopComp() {
             label: tScreen("teams.buttonPrimary"),
             redirect: "",
             type: "primary",
+            icon: "add",
           },
         ],
       }}

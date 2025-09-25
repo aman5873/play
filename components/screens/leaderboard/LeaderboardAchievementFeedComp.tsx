@@ -45,7 +45,11 @@ export function LeaderboardCard({ leaderboardInfo }) {
         {leaderboardInfo?.rank === 1 ? (
           <CrownIcon size={30} color="transparent" />
         ) : leaderboardInfo?.rank === 2 || leaderboardInfo?.rank === 3 ? (
-          <RankSecondaryIcon size={30} color="transparent" />
+          <RankSecondaryIcon
+            size={30}
+            color="transparent"
+            stroke="var(--textOne)"
+          />
         ) : null}
       </div>
       <div className="flex flex-col">
@@ -62,21 +66,27 @@ export function LeaderboardCard({ leaderboardInfo }) {
 export function TopLeaderboardCard({
   leaderboardInfo,
   contClass = "w-[95%] lg:max-w-[90%]  h-fit min-h-[22vw]",
+  onClick = null,
 }) {
   if (!leaderboardInfo) return null;
   const isRankOne = leaderboardInfo?.rank === 1;
 
   return (
     <div
-      className={`${
-        isRankOne ? "gradient-three scale-[1.10]" : "gradient-one"
-      }  border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col justify-center items-center gap-3 border-[var(--borderThree)] transition-transform duration-300 ${contClass}`}
+      onClick={onClick}
+      className={`${isRankOne ? "gradient-three scale-[1.10]" : "gradient-one"} 
+      ${onClick ? "cursor-pointer" : ""}
+       border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col justify-center items-center gap-3 border-[var(--borderThree)] transition-transform duration-300 ${contClass}`}
     >
       {/* Rank Icon */}
       {isRankOne ? (
         <CrownIcon size={30} color="transparent" />
       ) : (
-        <RankSecondaryIcon size={30} color="transparent" />
+        <RankSecondaryIcon
+          size={30}
+          color="transparent"
+          stroke="var(--textOne)"
+        />
       )}
 
       {/* Avatar Image */}
