@@ -12,6 +12,7 @@ import { getStatuses, getTournaments } from "@/lib/tournament_ops";
 import { useAuth } from "@/context/AuthContext";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import Loading from "@/components/common/Loading";
 
 function ListComp({ title, list, variant = "bullet", start }) {
   if (!list?.length) return null;
@@ -147,12 +148,14 @@ function TournamentFeedComp() {
 }
 
 export default function TournamentPage() {
-  const { isAuthenticated, setLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { tournamentId } = useParams();
   const [tournamentInfo, setTournamentInfo] = useState(null);
   const [statusList, setStatusList] = useState([]);
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
+
+  const [loading, setLoading] = useState(true);
 
   const fetchTournaments = (id) => {
     if (!id || !isAuthenticated) return;
@@ -180,63 +183,67 @@ export default function TournamentPage() {
   )?.image_url;
 
   return (
-    <div className="flex flex-col gap-4 p-4 pb-20">
-      <TopBgComp
-        content={{
-          chip: [
-            {
-              label: statusList?.find((s) => s?.id === tournamentInfo?.status)
-                ?.name,
-              type: "primary",
-            },
-          ],
-          title: tournamentInfo?.name,
-          description: tournamentInfo?.tagline,
-          backgroundImage: primaryImage,
-          button: [
-            {
-              label: tScreen("tournament.labels.join"),
-              redirect: "",
-              type: "primary",
-            },
-          ],
-        }}
-      >
-        <TournamentScreenDetailsComp tournamentInfo={tournamentInfo} />
-      </TopBgComp>
+    <>
+      <Loading loading={loading} />
 
-      <div className="flex flex-col gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
-        <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">
-          {tCommon("common_labels.description")}
-        </h1>
+      <div className="flex flex-col gap-4 p-4 pb-20">
+        <TopBgComp
+          content={{
+            chip: [
+              {
+                label: statusList?.find((s) => s?.id === tournamentInfo?.status)
+                  ?.name,
+                type: "primary",
+              },
+            ],
+            title: tournamentInfo?.name,
+            description: tournamentInfo?.tagline,
+            backgroundImage: primaryImage,
+            button: [
+              {
+                label: tScreen("tournament.labels.join"),
+                redirect: "",
+                type: "primary",
+              },
+            ],
+          }}
+        >
+          <TournamentScreenDetailsComp tournamentInfo={tournamentInfo} />
+        </TopBgComp>
 
-        <ListComp
-          title={tScreen("tournament.labels.registration_steps")}
-          list={tournamentInfo?.registration_steps
-            ?.filter((obj) => obj.step_text)
-            .map((obj) => obj.step_text)}
-          variant="number"
-        />
+        <div className="flex flex-col gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
+          <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">
+            {tCommon("common_labels.description")}
+          </h1>
 
-        <ListComp
-          title={tScreen("tournament.labels.formats")}
-          list={tournamentInfo?.formats
-            ?.filter((obj) => obj.format_text) // remove null/empty
-            .map((obj) => obj.format_text)}
-        />
+          <ListComp
+            title={tScreen("tournament.labels.registration_steps")}
+            list={tournamentInfo?.registration_steps
+              ?.filter((obj) => obj.step_text)
+              .map((obj) => obj.step_text)}
+            variant="number"
+          />
 
-        <ListComp
-          title={tScreen("tournament.labels.faqs")}
-          list={tournamentInfo?.faqs
-            ?.filter((obj) => obj?.question && obj?.answer)
-            .map((obj) => [
-              { label: "Q", value: obj?.question },
-              { label: "A", value: obj?.answer },
-            ])}
-          variant="faq"
-        />
+          <ListComp
+            title={tScreen("tournament.labels.formats")}
+            list={tournamentInfo?.formats
+              ?.filter((obj) => obj.format_text) // remove null/empty
+              .map((obj) => obj.format_text)}
+          />
+
+          <ListComp
+            title={tScreen("tournament.labels.faqs")}
+            list={tournamentInfo?.faqs
+              ?.filter((obj) => obj?.question && obj?.answer)
+              .map((obj) => [
+                { label: "Q", value: obj?.question },
+                { label: "A", value: obj?.answer },
+              ])}
+            variant="faq"
+          />
+        </div>
+        <TournamentFeedComp />
       </div>
-      <TournamentFeedComp />
-    </div>
+    </>
   );
 }

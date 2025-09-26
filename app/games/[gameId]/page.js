@@ -14,6 +14,7 @@ import { getGames } from "@/lib/game_ops";
 import { useAuth } from "@/context/AuthContext";
 import { gameReviewData } from "@/constants/data";
 import { useTranslation } from "react-i18next";
+import Loading from "@/components/common/Loading";
 
 function GalleryComp({ gameInfo }) {
   const { t: tCommon } = useTranslation("common");
@@ -348,7 +349,7 @@ function LeftSection({ gameInfo, reviewData }) {
   const { t: tCommon } = useTranslation("common");
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-wrap gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
+      <div className="flex flex-col gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
         <h1 className="sm:text-lg lg:text-xl font-bold my-1">
           {tCommon("common_labels.description")}
         </h1>
@@ -364,10 +365,12 @@ function LeftSection({ gameInfo, reviewData }) {
 
 export default function GamePage() {
   const { gameId } = useParams();
-  const { isAuthenticated, setLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [gameInfo, setGameInfo] = useState(null);
   const [reviewData] = useState(gameReviewData);
   const { t: tScreen } = useTranslation("screen");
+
+  const [loading, setLoading] = useState(true);
 
   const fetchGames = (id) => {
     if (!id || !isAuthenticated) return;
@@ -391,44 +394,49 @@ export default function GamePage() {
   )?.image_url;
 
   return (
-    <div className="flex flex-col gap-2 p-4">
-      <TopBgComp
-        content={{
-          chip: [{ label: gameInfo?.category, icon: "game", type: "primary" }],
-          title: gameInfo?.title,
-          description: gameInfo?.tagline ?? gameInfo?.description,
-          backgroundImage: primaryImage,
-          button: [
-            {
-              label: tScreen("game.labels.download_game"),
-              redirect: gameInfo?.download_link,
-              type: "primary",
-            },
-            {
-              label: tScreen("game.labels.view_website"),
-              redirect: gameInfo?.website_link,
-              type: "secondary",
-            },
-          ],
-        }}
-      >
-        <RatingComp
-          avg_rating={reviewData?.average_rating}
-          count={reviewData?.total_review}
-          isBold={true}
-        />
-      </TopBgComp>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Left Section */}
-        <div className="md:col-span-3 flex flex-col gap-4">
-          <LeftSection gameInfo={gameInfo} reviewData={reviewData} />
-        </div>
+    <>
+      <Loading loading={loading} />
+      <div className="flex flex-col gap-2 p-4">
+        <TopBgComp
+          content={{
+            chip: [
+              { label: gameInfo?.category, icon: "game", type: "primary" },
+            ],
+            title: gameInfo?.title,
+            description: gameInfo?.tagline ?? gameInfo?.description,
+            backgroundImage: primaryImage,
+            button: [
+              {
+                label: tScreen("game.labels.download_game"),
+                redirect: gameInfo?.download_link,
+                type: "primary",
+              },
+              {
+                label: tScreen("game.labels.view_website"),
+                redirect: gameInfo?.website_link,
+                type: "secondary",
+              },
+            ],
+          }}
+        >
+          <RatingComp
+            avg_rating={reviewData?.average_rating}
+            count={reviewData?.total_review}
+            isBold={true}
+          />
+        </TopBgComp>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* Left Section */}
+          <div className="md:col-span-3 flex flex-col gap-4">
+            <LeftSection gameInfo={gameInfo} reviewData={reviewData} />
+          </div>
 
-        {/* Right Section */}
-        <div className="md:col-span-1 flex flex-col gap-4">
-          <RightSection gameInfo={gameInfo} reviewData={reviewData} />
+          {/* Right Section */}
+          <div className="md:col-span-1 flex flex-col gap-4">
+            <RightSection gameInfo={gameInfo} reviewData={reviewData} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

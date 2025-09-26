@@ -72,7 +72,7 @@ export function CardChip({ label, style }: CardChipProps) {
       </div>
     );
 }
-export function CardIconInfo({ list, minWidth = "55px" }: CardIconInfoProps) {
+export function CardIconInfo({ list, minWidth = "7.5rem" }: CardIconInfoProps) {
   return (
     <div className="grid grid-cols-2 gap-6 my-2">
       {list?.map((item, idx) => {

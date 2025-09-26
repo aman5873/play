@@ -11,6 +11,7 @@ import { getGames } from "@/lib/game_ops";
 import { CategoryCardComp } from "@/components/common/CardComp";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
+import Loading from "@/components/common/Loading";
 
 export function GameCard({
   gameInfo,
@@ -67,9 +68,10 @@ export function GameCard({
 }
 
 export default function GameFeed() {
-  const { isAuthenticated, setLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [gameData, setGameData] = useState(null);
   const { t: tCommon } = useTranslation("common");
+  const [loading, setLoading] = useState(true);
 
   function fetchGames(param?: any) {
     if (isAuthenticated) {
@@ -86,22 +88,25 @@ export default function GameFeed() {
   }, [isAuthenticated]);
 
   return (
-    <div className="relative px-1 py-1 pb-20">
-      {/* Scroll container */}
-      <ScrollableRowWrapper isReady={Boolean(gameData?.data)}>
-        {gameData?.data?.map((obj: any) => (
-          <GameCard key={obj?.id} gameInfo={obj} />
-        ))}
-      </ScrollableRowWrapper>
-      <div className="flex justify-center items-center mb-5 mt-5 w-full">
-        <Link
-          href="/games"
-          className="px-5 py-2 border rounded-[50px] border-[var(--textOne)] text-[var(--textOne)]  hover:text-[var(--textTwo)] hover:border-[var(--textTwo)]  cursor-pointer "
-        >
-          {tCommon("common_labels.view_all")}
-        </Link>
+    <>
+      <Loading loading={loading} />
+      <div className="relative px-1 py-1 pb-20">
+        {/* Scroll container */}
+        <ScrollableRowWrapper isReady={Boolean(gameData?.data)}>
+          {gameData?.data?.map((obj: any) => (
+            <GameCard key={obj?.id} gameInfo={obj} />
+          ))}
+        </ScrollableRowWrapper>
+        <div className="flex justify-center items-center mb-5 mt-5 w-full">
+          <Link
+            href="/games"
+            className="px-5 py-2 border rounded-[50px] border-[var(--textOne)] text-[var(--textOne)]  hover:text-[var(--textTwo)] hover:border-[var(--textTwo)]  cursor-pointer "
+          >
+            {tCommon("common_labels.view_all")}
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
