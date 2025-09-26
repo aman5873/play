@@ -75,7 +75,7 @@ type TeamIconLabelInfoProps = {
   IconComp?: () => React.ReactNode; // 👈 function returning JSX
 };
 
-export function TeamIconLabelInfo({
+function TeamIconLabelInfo({
   icon,
   value,
   label,
@@ -268,7 +268,7 @@ function RightSection({ teamInfo }) {
   );
 }
 
-export default function page() {
+export default function TeamPage() {
   const { isAuthenticated, setLoading } = useAuth();
   const { teamId } = useParams();
   const [teamInfo, setTeamInfo] = useState(null);
