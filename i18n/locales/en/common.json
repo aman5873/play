@@ -16,11 +16,22 @@
     "next": "Next",
     "showing": "Showing {{start}}-{{end}} of {{total}} {{label}}"
   },
+  "common_labels": {
+    "review": "Review",
+    "reviews": "Reviews",
+    "write_review": "Write a review",
+    "description": "Description",
+    "gallery": "Gallery",
+    "images": "Images",
+    "view_all": "View All"
+  },
+
   "filters": {
     "category": "Filter by category",
     "genre": "Filter by Genre",
     "status": "Filter by Status",
-    "all": "All"
+    "all": "All",
+    "popularity": "Popularity"
   },
   "messages": {
     "noGames": "No games found.",

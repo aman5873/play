@@ -152,7 +152,7 @@ export default function TournamentPageFeed() {
             pageSize={tournamentData?.per_page || pageSize}
             totalItems={tournamentData?.total || 0}
             className="ml-auto"
-            label={tCommon("labels.games")}
+            label={tCommon("tournaments")}
           />
         </div>
 
@@ -207,8 +207,6 @@ export default function TournamentPageFeed() {
               color: "var(--textFive)",
             },
           ]}
-          // TODO: If it to be centered according to TournamentFeaturedCard
-          // contClass={"group w-full max-w-[1300px]"}
         />
       </div>
     </>

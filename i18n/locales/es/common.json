@@ -15,13 +15,23 @@
   "pagination": {
     "prev": "Anterior",
     "next": "Siguiente",
-    "showing": "Mostrando {{start}}-{{end}} de {{total}} juegos"
+    "showing": "Mostrando {{start}}-{{end}} de {{total}} {{label}}"
+  },
+  "common_labels": {
+    "review": "Reseña",
+    "reviews": "Reseñas",
+    "write_review": "Escribir una reseña",
+    "description": "Descripción",
+    "gallery": "Galería",
+    "images": "Imágenes",
+    "view_all": "Ver todo"
   },
   "filters": {
     "category": "Filtrar por categoría",
     "genre": "Filtrar por género",
     "status": "Filtrar por estado",
-    "all": "Todos"
+    "all": "Todos",
+    "popularity": "Popularidad"
   },
   "messages": {
     "noGames": "No se encontraron juegos.",

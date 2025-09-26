@@ -20,7 +20,27 @@
     "chip": "Game Library",
     "title": "Discover",
     "highlightTitle": "AMAZING GAMES",
-    "description": "Explore our vast collection of premium games across all genres. Find your next gaming obsession."
+    "description": "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+    "labels": {
+      "view_game": "View Game",
+      "view_website": "Ver sitio web",
+      "download_game": "Descargar juego",
+      "review": "Reseña",
+      "reviews": "Reseñas",
+      "write_review": "Escribir una reseña",
+      "description": "Descripción",
+      "gallery": "Galería",
+      "networks": "Redes",
+      "platforms": "Plataformas",
+      "socials": "Redes sociales",
+      "genres": "Géneros",
+      "developer": "Desarrollador",
+      "publisher": "Editor",
+      "release_date": "Fecha de lanzamiento",
+      "age_rating": "Clasificación por edad",
+      "in_app_purchases": "Compras dentro de la aplicación",
+      "size": "Tamaño"
+    }
   },
   "tournament": {
     "chip": "Live Gaming Tournaments",
@@ -28,10 +48,22 @@
     "highlightTitle": "Championships",
     "description": "Join elite gaming tournaments across mobile and PC platforms. Showcase your skills in your favorite games and compete for massive prize pools.",
     "labels": {
+      "view_tournament": "View Tournament",
       "related_tournaments": "Related Tournaments",
       "active_tournaments": "Active Tournaments",
       "total_prize_pool": "Total Prize Pool",
-      "total_earned": "Total Earned"
+      "total_earned": "Total Earned",
+      "prize_pool": "Prize Pool",
+      "time_left": "Time Left",
+      "players": "Players",
+      "difficulty": "Difficulty",
+      "hosted_by_creators": "Hosted by Various Creators",
+      "hosted_by": "Hosted by",
+      "join": "Join",
+      "slots": "Slots",
+      "registration_steps": "HOW TO REGISTER",
+      "formats": "FORMAT",
+      "faqs": "FREQUENTLY ASKED QUESTIONS?"
     }
   },
   "challenge": {

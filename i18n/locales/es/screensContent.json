@@ -20,18 +20,51 @@
     "chip": "Biblioteca de Juegos",
     "title": "Descubre",
     "highlightTitle": "JUEGOS INCREÍBLES",
-    "description": "Explora nuestra vasta colección de juegos premium en todos los géneros. Encuentra tu próxima obsesión gamer."
+    "description": "Explora nuestra vasta colección de juegos premium en todos los géneros. Encuentra tu próxima obsesión gamer.",
+    "labels": {
+      "view_game": "Ver juego",
+      "view_website": "Ver sitio web",
+      "download_game": "Descargar juego",
+      "review": "Reseña",
+      "reviews": "Reseñas",
+      "write_review": "Escribir una reseña",
+      "description": "Descripción",
+      "gallery": "Galería",
+      "networks": "Redes",
+      "platforms": "Plataformas",
+      "socials": "Redes sociales",
+      "genres": "Géneros",
+      "developer": "Desarrollador",
+      "publisher": "Editor",
+      "release_date": "Fecha de lanzamiento",
+      "age_rating": "Clasificación por edad",
+      "in_app_purchases": "Compras dentro de la aplicación",
+      "size": "Tamaño"
+    }
   },
   "tournament": {
     "chip": "Torneos de Juegos en Vivo",
     "title": "Gaming Móvil y PC",
     "highlightTitle": "Campeonatos",
     "description": "Únete a torneos de élite en plataformas móviles y PC. Demuestra tus habilidades en tus juegos favoritos y compite por enormes botes de premios.",
+
     "labels": {
+      "view_tournament": "Ver torneo",
       "related_tournaments": "Torneos Relacionados",
       "active_tournaments": "Torneos Activos",
-      "total_prize_pool": "Bote Total de Premios",
-      "total_earned": "Total Ganado"
+      "total_prize_pool": "Premio Total",
+      "total_earned": "Total Ganado",
+      "prize_pool": "Premio",
+      "time_left": "Tiempo restante",
+      "players": "Jugadores",
+      "difficulty": "Dificultad",
+      "hosted_by_creators": "Organizado por varios creadores",
+      "hosted_by": "Organizado por",
+      "join": "Unirse",
+      "slots": "Cupos",
+      "registration_steps": "CÓMO REGISTRARSE",
+      "formats": "FORMATO",
+      "faqs": "PREGUNTAS FRECUENTES"
     }
   },
   "challenge": {

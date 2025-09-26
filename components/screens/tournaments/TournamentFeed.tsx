@@ -22,6 +22,8 @@ import { getTournaments } from "@/lib/tournament_ops";
 import { useTranslation } from "react-i18next";
 
 export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
+  const { t: tScreen } = useTranslation("screen");
+
   const now = moment();
   const startDate = moment(tournamentInfo?.deadline);
   let timeLeftLabel = "--";
@@ -63,28 +65,27 @@ export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
           {
             icon: "trophy",
             label: tournamentInfo?.prize,
-            description: "Prize Pool",
+            description: tScreen("tournament.labels.prize_pool"),
             color: "var(--textThree)",
           },
           {
             icon: "clock",
-
             color: "var(--textFour)",
             label: timeLeftLabel,
-            description: "Time Left",
+            description: tScreen("tournament.labels.time_left"),
           },
           {
             icon: "users",
             color: "var(--textSix)",
             label: "--",
-            description: "Players",
+            description: tScreen("tournament.labels.players"),
           },
 
           {
             icon: "mission",
             color: "var(--textOne)",
             label: "--",
-            description: "Difficulty",
+            description: tScreen("tournament.labels.difficulty"),
           },
         ]}
       />
@@ -97,6 +98,7 @@ export function TournamentFeaturedCard({
   style = {},
   contClass = "",
 }) {
+  const { t: tScreen } = useTranslation("screen");
   const router = useRouter();
   const primaryImage = tournamentInfo?.images.find(
     (img: any) => img?.is_primary
@@ -145,7 +147,7 @@ export function TournamentFeaturedCard({
             {tournamentInfo?.tagline}
           </p>
           <p className="text-[14px] sm:text-sm md:text-base 2xl:text-lg mt-2 text-[var(--textTwo)]">
-            Hosted by Various Creators
+            {tScreen("tournament.labels.hosted_by_creators")}
           </p>
           <div className="flex flex-col gap-2 mt-auto">
             <FeaturedCardDetails
@@ -156,7 +158,7 @@ export function TournamentFeaturedCard({
               onClick={() => router.push(`/tournaments/${tournamentInfo?.id}`)}
               className="px-4 py-2  2xl-mt-5 flex w-full items-center justify-center rounded-full border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md bg-[var(--primary)] text-[var(--secondary)]"
             >
-              View Tournament
+              {tScreen("tournament.labels.view_tournament")}
             </button>
           </div>
         </div>
@@ -175,6 +177,7 @@ export function TournamentCard(props: any) {
   const primaryImage = tournamentInfo?.images.find(
     (img: any) => img?.is_primary
   );
+  const { t: tScreen } = useTranslation("screen");
 
   // TODO: teams_participated_count WILL COMES IN API
   const availableSlots = tournamentInfo?.teams_participated_count ?? 10;
@@ -213,12 +216,12 @@ export function TournamentCard(props: any) {
               {tournamentInfo?.name}
             </h1>
             <p className="text-[14px] mt-2 text-[var(--textTwo)]">
-              Hosted by Various Creators
+              {tScreen("tournament.labels.hosted_by_creators")}
             </p>
 
             <CategoryCardComp categories={categoryList} />
             <ProgressBar
-              label="Slots"
+              label={tScreen("tournament.labels.slots")}
               count={availableSlots}
               maxCount={tournamentInfo?.max_teams}
             />
@@ -244,7 +247,7 @@ export function TournamentCard(props: any) {
               onClick={() => router.push(`/tournaments/${tournamentInfo?.id}`)}
               className="px-4 py-2 flex items-center justify-center rounded-full border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md bg-[var(--primary)] text-[var(--secondary)]"
             >
-              View Tournament
+              {tScreen("tournament.labels.view_tournament")}
             </button>
           </div>
         </div>
@@ -255,6 +258,8 @@ export function TournamentCard(props: any) {
 export default function TournamentFeed({ onlyFeed = false }) {
   const { isAuthenticated, setLoading } = useAuth();
   const [tournamentData, setTournamentData] = useState(null);
+  const { t: tCommon } = useTranslation("common");
+  const { t: tScreen } = useTranslation("screen");
 
   function fetchTournaments(param?: any) {
     if (isAuthenticated) {
@@ -295,7 +300,7 @@ export default function TournamentFeed({ onlyFeed = false }) {
               href="/tournaments"
               className=" px-5 py-2 border rounded-[50px] border-[var(--primary)] text-[var(--primary)] hover:text-[var(--textOne)] hover:border-[var(--textOne)]   text-sm md:text-base transition-colors duration-300 cursor-pointer text-sm md:text-base transition-colors duration-300"
             >
-              View All
+              {tCommon("common_labels.view_all")}
             </Link>
           </div>
 
@@ -304,22 +309,20 @@ export default function TournamentFeed({ onlyFeed = false }) {
               list={[
                 {
                   label: tournamentAnalytics?.active_tournaments,
-                  description: "Active Tournaments",
+                  description: tScreen("tournament.labels.active_tournaments"),
                   color: "var(--primary)",
                 },
                 {
                   label: tournamentAnalytics?.total_prize_pool,
-                  description: "Total Prize Pool",
+                  description: tScreen("tournament.labels.total_prize_pool"),
                   color: "var(--textFour)",
                 },
                 {
                   label: tournamentAnalytics?.total_earned,
-                  description: "Total Earned",
+                  description: tScreen("tournament.labels.total_earned"),
                   color: "var(--textFive)",
                 },
               ]}
-              // TODO: If it to be centered according to TournamentFeaturedCard
-              // contClass={"group w-full max-w-[1300px]"}
             />
           </div>
         </div>

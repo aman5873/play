@@ -13,8 +13,10 @@ import { iconMap } from "@/components/Footer";
 import { getGames } from "@/lib/game_ops";
 import { useAuth } from "@/context/AuthContext";
 import { gameReviewData } from "@/constants/data";
+import { useTranslation } from "react-i18next";
 
 function GalleryComp({ gameInfo }) {
+  const { t: tCommon } = useTranslation("common");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 4;
 
@@ -29,12 +31,14 @@ function GalleryComp({ gameInfo }) {
   return (
     <div className="flex flex-col gap-4 p-4 border border-[var(--borderThree)] gradient-one rounded-xl">
       <div className="flex justify-between items-center">
-        <h1 className="sm:text-lg lg:text-xl font-bold my-1">Gallery</h1>
+        <h1 className="sm:text-lg lg:text-xl font-bold my-1">
+          {tCommon("common_labels.gallery")}
+        </h1>
         <ShowingResults
           currentPage={currentPage}
           pageSize={pageSize}
           totalItems={totalImages}
-          label="images"
+          label={tCommon("common_labels.images")}
         />
       </div>
 
@@ -98,6 +102,7 @@ function ReviewCard({ reviewInfo }) {
 }
 
 function ReviewsComp({ reviewData }) {
+  const { t: tCommon } = useTranslation("common");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 3; // Number of reviews per page
 
@@ -111,55 +116,62 @@ function ReviewsComp({ reviewData }) {
   }, [currentPage, reviewData?.reviews]);
 
   return (
-    <div className="flex flex-col gap-2 p-4 border border-[var(--borderThree)] gradient-one rounded-xl">
-      <div className="flex justify-between">
+    <div className="flex flex-col gap-4 p-4 border border-[var(--borderThree)] gradient-one rounded-xl">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="sm:text-lg lg:text-xl font-bold my-1">Reviews</h1>
+          <h1 className="sm:text-lg lg:text-xl font-bold my-1">
+            {tCommon("common_labels.reviews")}
+          </h1>
           <RatingComp
             avg_rating={reviewData?.average_rating}
             count={reviewData?.total_review}
             isBold={true}
           />
         </div>
-        <button className="cursor-pointer w-fit px-6 py-2 mt-3 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]">
-          Write a review
+
+        <button className="cursor-pointer w-full sm:w-fit px-6 py-2 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]">
+          {tCommon("common_labels.write_review")}
         </button>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mb-4 gap-4">
-        <div className="flex gap-4">
-          <div className="w-max[260px] lg:w-[256px]">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 flex-wrap">
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto flex-wrap">
+          <div className="w-full sm:w-[240px]">
             <ReactSelectInput
               value={""}
               onChange={() => {}}
               options={[
-                { label: "All", value: "" },
+                { id: "", label: tCommon("filters.all"), value: "" },
                 { label: "Positive", value: "positive" },
                 { label: "Negative", value: "negative" },
               ]}
-              placeholder={"All"}
+              placeholder={tCommon("filters.all")}
               isSecondary={true}
             />
           </div>
-          <div className="w-max[260px] lg:w-[256px]">
+
+          <div className="w-full sm:w-[240px]">
             <ReactSelectInput
               value={""}
               onChange={() => {}}
               options={[
+                { id: "", label: tCommon("filters.all"), value: "" },
                 { label: "Popularity", value: "popularity" },
                 { label: "Recent", value: "recent" },
               ]}
-              placeholder={"Popularity"}
+              placeholder={tCommon("filters.popularity")}
               isSecondary={true}
             />
           </div>
         </div>
+
         <ShowingResults
           currentPage={currentPage}
           pageSize={pageSize}
           totalItems={totalReviews}
-          label="reviews"
+          label={tCommon("common_labels.reviews")}
         />
       </div>
 
@@ -202,6 +214,7 @@ function InfoComp({ label, value, isPrimary = false }) {
 }
 
 function RightSection({ gameInfo }) {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div className="flex flex-col gap-4 p-4 border border-[var(--borderThree)] gradient-one rounded-xl w-full">
       <h1 className="sm:text-lg lg:text-xl font-bold my-1 w-full">
@@ -209,18 +222,11 @@ function RightSection({ gameInfo }) {
       </h1>
 
       <div
-        className="
-    grid
-    grid-cols-1       // mobile default <640px
-    sm:grid-cols-2    // 640px+
-    md:grid-cols-3    // 768px+
-    lg:grid-cols-3    // 1024px+
-    xl:grid-cols-3    // optional for 1280px+
-    gap-4
-  "
+        className="grid gap-4"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))" }}
       >
         <InfoComp
-          label="Networks"
+          label={tScreen("game.labels.networks")}
           isPrimary={true}
           value={
             <div className="flex flex-wrap  gap-2 mt-1 w-full">
@@ -243,7 +249,7 @@ function RightSection({ gameInfo }) {
 
         {gameInfo?.platforms?.length > 0 && (
           <InfoComp
-            label="Platforms"
+            label={tScreen("game.labels.platforms")}
             value={
               <div className="flex flex-wrap  gap-3 mt-1">
                 {gameInfo?.platforms?.map((platformObj, index) => {
@@ -266,7 +272,7 @@ function RightSection({ gameInfo }) {
         )}
         {gameInfo?.socials?.length > 0 && (
           <InfoComp
-            label="Socials"
+            label={tScreen("game.labels.socials")}
             value={
               <div className="flex flex-wrap  gap-3 mt-1">
                 {gameInfo?.socials?.map((socialObj, index) => {
@@ -289,7 +295,7 @@ function RightSection({ gameInfo }) {
         )}
         {gameInfo?.genres?.length > 0 && (
           <InfoComp
-            label="Genres"
+            label={tScreen("game.labels.genres")}
             value={
               <div className="flex flex-wrap  gap-2 mt-1 w-full">
                 {gameInfo?.genres?.map((genre) => {
@@ -309,22 +315,43 @@ function RightSection({ gameInfo }) {
             }
           />
         )}
-        <InfoComp label="Developer" value={gameInfo?.developer} />
-        <InfoComp label="Publisher" value={gameInfo?.publisher} />
-        <InfoComp label="Release Date" value={gameInfo?.release_date} />
-        <InfoComp label="Age Rating" value={gameInfo?.age_rating} />
-        <InfoComp label="In-App Purchases" value={gameInfo?.in_app_purchases} />
-        <InfoComp label="Size" value={`~ ${gameInfo?.size ?? "-"}`} />
+        <InfoComp
+          label={tScreen("game.labels.developer")}
+          value={gameInfo?.developer}
+        />
+        <InfoComp
+          label={tScreen("game.labels.publisher")}
+          value={gameInfo?.publisher}
+        />
+        <InfoComp
+          label={tScreen("game.labels.release_date")}
+          value={gameInfo?.release_date}
+        />
+        <InfoComp
+          label={tScreen("game.labels.age_rating")}
+          value={gameInfo?.age_rating}
+        />
+        <InfoComp
+          label={tScreen("game.labels.in_app_purchases")}
+          value={gameInfo?.in_app_purchases}
+        />
+        <InfoComp
+          label={tScreen("game.labels.size")}
+          value={`~ ${gameInfo?.size ?? "-"}`}
+        />
       </div>
     </div>
   );
 }
 
 function LeftSection({ gameInfo, reviewData }) {
+  const { t: tCommon } = useTranslation("common");
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
-        <h1 className="sm:text-lg lg:text-xl font-bold my-1">Description</h1>
+        <h1 className="sm:text-lg lg:text-xl font-bold my-1">
+          {tCommon("common_labels.description")}
+        </h1>
         <p className="text-[14px] text-[var(--textTwo)]">
           {gameInfo?.description}
         </p>
@@ -340,6 +367,7 @@ export default function GamePage() {
   const { isAuthenticated, setLoading } = useAuth();
   const [gameInfo, setGameInfo] = useState(null);
   const [reviewData] = useState(gameReviewData);
+  const { t: tScreen } = useTranslation("screen");
 
   const fetchGames = (id) => {
     if (!id || !isAuthenticated) return;
@@ -372,12 +400,12 @@ export default function GamePage() {
           backgroundImage: primaryImage,
           button: [
             {
-              label: " Download game",
+              label: tScreen("game.labels.download_game"),
               redirect: gameInfo?.download_link,
               type: "primary",
             },
             {
-              label: "View Website",
+              label: tScreen("game.labels.view_website"),
               redirect: gameInfo?.website_link,
               type: "secondary",
             },
@@ -390,15 +418,14 @@ export default function GamePage() {
           isBold={true}
         />
       </TopBgComp>
-
-      <div className="flex flex-col gap-4 lg:flex-row">
-        {/* Left Section - covers remaining space */}
-        <div className="flex-1 flex flex-col gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Left Section */}
+        <div className="md:col-span-3 flex flex-col gap-4">
           <LeftSection gameInfo={gameInfo} reviewData={reviewData} />
         </div>
 
-        {/* Right Section - fixed max width */}
-        <div className="w-full lg:w-fit flex flex-col gap-4">
+        {/* Right Section */}
+        <div className="md:col-span-1 flex flex-col gap-4">
           <RightSection gameInfo={gameInfo} reviewData={reviewData} />
         </div>
       </div>

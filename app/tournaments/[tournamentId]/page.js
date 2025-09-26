@@ -11,50 +11,69 @@ import TournamentFeed from "@/components/screens/tournaments/TournamentFeed";
 import { getStatuses, getTournaments } from "@/lib/tournament_ops";
 import { useAuth } from "@/context/AuthContext";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 function ListComp({ title, list, variant = "bullet", start }) {
-  if (list?.length > 0)
-    return (
-      <div className="flex flex-col gap-1.5 mt-4">
-        {title && (
-          <h1 className="sm:text-md lg:text-lg  font-bold  uppercase opacity-95">
-            {title}
-          </h1>
-        )}
+  if (!list?.length) return null;
 
-        {list?.map((rule, index) => {
-          let prefix = null;
+  return (
+    <div className="flex flex-col gap-1.5 mt-4">
+      {title && (
+        <h1 className="sm:text-md lg:text-lg font-bold uppercase opacity-95">
+          {title}
+        </h1>
+      )}
 
-          if (start) {
-            prefix = start;
-          } else if (variant === "number") {
-            prefix = `${index + 1}.`;
-          } else if (variant === "alpha") {
-            prefix = `${String.fromCharCode(97 + index)}.`; // a, b, c...
-          } else {
-            prefix = (
-              <Circle fill="currentColor" className="shrink-0 w-2 h-2" />
-            );
-          }
+      {list.map((rule, index) => {
+        let prefix = null;
 
-          return (
-            <div
-              key={`rule-${index}`}
-              className="flex items-start gap-2 text-sm md:text-base font-medium text-[var(--subtitle)]"
-              style={{ alignItems: variant === "bullet" && "center" }}
-            >
-              <span className={`text-[var(--textTwo)] "align-top"`}>
-                {prefix}
-              </span>
-              <span>{rule}</span>
-            </div>
-          );
-        })}
-      </div>
-    );
+        if (variant === "faq") {
+          prefix = `Q${index + 1}`; // Q1, Q2, ...
+        } else if (start) {
+          prefix = start;
+        } else if (variant === "number") {
+          prefix = `${index + 1}.`;
+        } else if (variant === "alpha") {
+          prefix = `${String.fromCharCode(97 + index)}.`; // a, b, c...
+        } else {
+          prefix = <Circle fill="currentColor" className="shrink-0 w-2 h-2" />;
+        }
+
+        return (
+          <div
+            key={`rule-${index}`}
+            className="flex flex-col gap-1 md:gap-2 text-sm md:text-base font-medium"
+          >
+            {variant === "faq" && Array.isArray(rule) ? (
+              <div className="flex flex-col gap-1">
+                <div className="text-[var(--textOne)] opacity-85 font-semibold flex items-start gap-2">
+                  <span>{prefix}:</span>
+                  <span>{rule.find((item) => item.label === "Q")?.value}</span>
+                </div>
+                <div className="text-[var(--textTwo)] pl-6">
+                  {rule.find((item) => item.label === "A")?.value}
+                </div>
+              </div>
+            ) : (
+              <div
+                className="flex items-start gap-2 text-[var(--subtitle)]"
+                style={{
+                  alignItems: variant === "bullet" ? "center" : "flex-start",
+                }}
+              >
+                <span className="text-[var(--textTwo)]">{prefix}</span>
+                <span>{rule}</span>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 function TournamentScreenDetailsComp({ tournamentInfo }) {
+  const { t: tScreen } = useTranslation("screen");
   const deadline = moment(tournamentInfo?.deadline).format("Do MMM YYYY");
   return (
     <div className="flex flex-col gap-5">
@@ -84,7 +103,7 @@ function TournamentScreenDetailsComp({ tournamentInfo }) {
       </div>
       <div className="flex flex-wrap gap-4  items-center">
         <h1 className="sm:text-md lg:text-lg truncate font-semibold">
-          Hosted by :
+          {tScreen("tournament.labels.hosted_by")} :
         </h1>
         {tournamentInfo?.organizer_avatar_url && (
           <Image
@@ -104,18 +123,20 @@ function TournamentScreenDetailsComp({ tournamentInfo }) {
 }
 
 function TournamentFeedComp() {
+  const { t: tScreen } = useTranslation("screen");
+  const { t: tCommon } = useTranslation("common");
   return (
     <div>
       <div className="flex justify-between items-center my-4 px-2">
         <IconLabelInfo
           icon="mission"
-          label="Related Tournaments"
+          label={tScreen("tournament.labels.related_tournaments")}
           labelStyle={{ color: "var(--textOne" }}
         />
 
         <IconLabelInfo
           icon="right"
-          label="View All"
+          label={tCommon("common_labels.view_all")}
           contStyle={{ flexDirection: "row-reverse" }}
         />
       </div>
@@ -130,6 +151,8 @@ export default function TournamentPage() {
   const { tournamentId } = useParams();
   const [tournamentInfo, setTournamentInfo] = useState(null);
   const [statusList, setStatusList] = useState([]);
+  const { t: tCommon } = useTranslation("common");
+  const { t: tScreen } = useTranslation("screen");
 
   const fetchTournaments = (id) => {
     if (!id || !isAuthenticated) return;
@@ -170,17 +193,25 @@ export default function TournamentPage() {
           title: tournamentInfo?.name,
           description: tournamentInfo?.tagline,
           backgroundImage: primaryImage,
-          button: [{ label: "Join", redirect: "", type: "primary" }],
+          button: [
+            {
+              label: tScreen("tournament.labels.join"),
+              redirect: "",
+              type: "primary",
+            },
+          ],
         }}
       >
         <TournamentScreenDetailsComp tournamentInfo={tournamentInfo} />
       </TopBgComp>
 
       <div className="flex flex-col gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
-        <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">Description</h1>
+        <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">
+          {tCommon("common_labels.description")}
+        </h1>
 
         <ListComp
-          title="HOW TO REGISTER"
+          title={tScreen("tournament.labels.registration_steps")}
           list={tournamentInfo?.registration_steps
             ?.filter((obj) => obj.step_text)
             .map((obj) => obj.step_text)}
@@ -188,18 +219,22 @@ export default function TournamentPage() {
         />
 
         <ListComp
-          title="FORMAT"
+          title={tScreen("tournament.labels.formats")}
           list={tournamentInfo?.formats
             ?.filter((obj) => obj.format_text) // remove null/empty
             .map((obj) => obj.format_text)}
         />
 
-        {tournamentInfo?.frequently_asked && (
-          <ListComp
-            title="FREQUENTLY ASKED QUESTIONS?"
-            list={tournamentInfo?.frequently_asked}
-          />
-        )}
+        <ListComp
+          title={tScreen("tournament.labels.faqs")}
+          list={tournamentInfo?.faqs
+            ?.filter((obj) => obj?.question && obj?.answer)
+            .map((obj) => [
+              { label: "Q", value: obj?.question },
+              { label: "A", value: obj?.answer },
+            ])}
+          variant="faq"
+        />
       </div>
       <TournamentFeedComp />
     </div>

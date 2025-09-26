@@ -28,7 +28,7 @@ export default function AppModal({
   description,
   children,
   headerIcon, // JSX element now
-  contClass = "min-w-[500px] max-w-[900px] w-full sm:w-[80%]",
+  contClass = "w-auto sm:w-[95%] max-w-md",
   showCloseIcon = true,
   closeOnBackdropClick = true,
   titleClass = "font-nyxerin",

@@ -18,6 +18,7 @@ export function GameCard({
   style = {},
 }) {
   const router = useRouter();
+  const { t: tScreen } = useTranslation("screen");
 
   const primaryImage = gameInfo?.images.find((img: any) => img?.is_primary);
   const genreList = gameInfo?.genres.map((genre: any) => genre?.name) ?? [];
@@ -59,7 +60,7 @@ export function GameCard({
         className={`px-4 py-2 mt-4  flex items-center justify-center rounded-[100px] border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
                  bg-[var(--primary)] text-[var(--secondary)]`}
       >
-        View Game
+        {tScreen("game.labels.view_game")}
       </button>
     </div>
   );
@@ -68,6 +69,7 @@ export function GameCard({
 export default function GameFeed() {
   const { isAuthenticated, setLoading } = useAuth();
   const [gameData, setGameData] = useState(null);
+  const { t: tCommon } = useTranslation("common");
 
   function fetchGames(param?: any) {
     if (isAuthenticated) {
@@ -96,7 +98,7 @@ export default function GameFeed() {
           href="/games"
           className="px-5 py-2 border rounded-[50px] border-[var(--textOne)] text-[var(--textOne)]  hover:text-[var(--textTwo)] hover:border-[var(--textTwo)]  cursor-pointer "
         >
-          View All
+          {tCommon("common_labels.view_all")}
         </Link>
       </div>
     </div>
