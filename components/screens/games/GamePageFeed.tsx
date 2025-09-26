@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import Loading from "@/components/common/Loading";
 import { GameCard } from "@/components/screens/games/GameFeed";
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import { useAuth } from "@/context/AuthContext";
@@ -10,8 +11,9 @@ import Pagination, { ShowingResults } from "@/components/common/Pagination";
 import { getGameGenres, getGames, getGameStatuses } from "@/lib/game_ops";
 
 export default function GamePageFeed() {
-  const { headerSearchValue, isAuthenticated, setLoading } = useAuth();
+  const { headerSearchValue, isAuthenticated } = useAuth();
   const { t: tCommon } = useTranslation("common");
+  const [loading, setLoading] = useState(true);
 
   const [gameData, setGameData] = useState<any>(null);
 
@@ -29,18 +31,21 @@ export default function GamePageFeed() {
   // Fetch game statuses & genres when authenticated
   useEffect(() => {
     if (!isAuthenticated) return;
-
+    setLoading(true);
     const fetchFilters = async () => {
       try {
         const [statusRes, genreRes] = await Promise.all([
           getGameStatuses(),
           getGameGenres(),
         ]);
+
         if (statusRes?.success && statusRes?.data)
           setStatusList(statusRes.data);
         if (genreRes?.success && genreRes?.data) setGenresList(genreRes.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -81,57 +86,59 @@ export default function GamePageFeed() {
   ]);
 
   return (
-    <div className="mx-auto py-10 pb-20 w-full">
-      {/* Filters + ShowingResults */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-        <div className="flex  gap-4">
-          {/* Status Filter */}
-          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
-            <ReactSelectInput
-              value={selectedStatus}
-              onChange={(value) => setSelectedStatus(value)}
-              options={[
-                { id: "", name: tCommon("filters.all") },
-                ...statusList,
-              ].map((s) => ({
-                value: s.id,
-                label: s.name,
-                id: s.id,
-              }))}
-              placeholder={tCommon("filters.status")}
-            />
+    <>
+      <Loading loading={loading} />
+      <div className="mx-auto py-10 pb-20 w-full">
+        {/* Filters + ShowingResults */}
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+          <div className="flex  gap-4">
+            {/* Status Filter */}
+            <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
+              <ReactSelectInput
+                value={selectedStatus}
+                onChange={(value) => setSelectedStatus(value)}
+                options={[
+                  { id: "", name: tCommon("filters.all") },
+                  ...statusList,
+                ].map((s) => ({
+                  value: s.id,
+                  label: s.name,
+                  id: s.id,
+                }))}
+                placeholder={tCommon("filters.status")}
+              />
+            </div>
+
+            {/* Genre Filter */}
+            <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
+              <ReactSelectInput
+                value={selectedGenre}
+                onChange={(value) => setSelectedGenre(value)}
+                options={[
+                  { id: "", name: tCommon("filters.all") },
+                  ...genresList,
+                ].map((g) => ({
+                  value: g.id,
+                  label: g.name,
+                  id: g.id,
+                }))}
+                placeholder={tCommon("filters.genre")}
+              />
+            </div>
           </div>
 
-          {/* Genre Filter */}
-          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
-            <ReactSelectInput
-              value={selectedGenre}
-              onChange={(value) => setSelectedGenre(value)}
-              options={[
-                { id: "", name: tCommon("filters.all") },
-                ...genresList,
-              ].map((g) => ({
-                value: g.id,
-                label: g.name,
-                id: g.id,
-              }))}
-              placeholder={tCommon("filters.genre")}
-            />
-          </div>
+          <ShowingResults
+            currentPage={gameData?.current_page || 1}
+            pageSize={gameData?.per_page || pageSize}
+            totalItems={gameData?.total || 0}
+            className="ml-auto"
+            label={tCommon("games")}
+          />
         </div>
 
-        <ShowingResults
-          currentPage={gameData?.current_page || 1}
-          pageSize={gameData?.per_page || pageSize}
-          totalItems={gameData?.total || 0}
-          className="ml-auto"
-          label={tCommon("games")}
-        />
-      </div>
-
-      {/* Game Cards */}
-      <div
-        className="
+        {/* Game Cards */}
+        <div
+          className="
   grid gap-4 justify-items-start
     grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
     sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
@@ -140,22 +147,25 @@ export default function GamePageFeed() {
     xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
     2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]
     "
-      >
-        {gameData?.data?.length > 0 ? (
-          gameData.data.map((game: any) => (
-            <GameCard key={game.id} gameInfo={game} contClass="w-full" />
-          ))
-        ) : (
-          <p className="text-[var(--textTwo)]">{tCommon("messages.noGames")}</p>
-        )}
-      </div>
+        >
+          {gameData?.data?.length > 0 ? (
+            gameData.data.map((game: any) => (
+              <GameCard key={game.id} gameInfo={game} contClass="w-full" />
+            ))
+          ) : (
+            <p className="text-[var(--textTwo)]">
+              {tCommon("messages.noGames")}
+            </p>
+          )}
+        </div>
 
-      {/* Pagination */}
-      <Pagination
-        currentPage={gameData?.current_page || currentPage}
-        totalPages={gameData?.last_page || 1}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
-    </div>
+        {/* Pagination */}
+        <Pagination
+          currentPage={gameData?.current_page || currentPage}
+          totalPages={gameData?.last_page || 1}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      </div>
+    </>
   );
 }

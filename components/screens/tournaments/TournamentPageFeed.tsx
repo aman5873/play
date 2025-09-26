@@ -17,11 +17,14 @@ import {
 } from "@/lib/tournament_ops";
 import { SectionDetails } from "@/components/common/CardComp";
 import { tournamentAnalytics } from "@/constants/data";
+import Loading from "@/components/common/Loading";
 
 export default function TournamentPageFeed() {
-  const { headerSearchValue, isAuthenticated, setLoading } = useAuth();
+  const { headerSearchValue, isAuthenticated } = useAuth();
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
+
+  const [loading, setLoading] = useState(true);
 
   const [tournamentData, setTournamentData] = useState<any>(null);
   const [statusList, setStatusList] = useState([]);
@@ -55,6 +58,7 @@ export default function TournamentPageFeed() {
     if (!isAuthenticated) return;
 
     const fetchFilters = async () => {
+      setLoading(true);
       try {
         const [statusRes, categoryRes] = await Promise.all([
           getStatuses(),
@@ -66,6 +70,8 @@ export default function TournamentPageFeed() {
           setCategoryList(categoryRes.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -106,6 +112,7 @@ export default function TournamentPageFeed() {
 
   return (
     <>
+      <Loading loading={loading} />
       <TournamentFeaturedCard
         tournamentInfo={tournamentData?.data?.[0]}
         style={{ marginTop: 20 }}
