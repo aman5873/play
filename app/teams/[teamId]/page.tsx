@@ -72,7 +72,7 @@ type TeamIconLabelInfoProps = {
   value: string | number;
   labelStyle?: React.CSSProperties;
   contStyle?: React.CSSProperties;
-  IconComp?: () => React.ReactNode; // 👈 function returning JSX
+  IconComp?: () => React.ReactNode;
 };
 
 function TeamIconLabelInfo({
