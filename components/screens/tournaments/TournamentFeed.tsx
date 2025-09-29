@@ -179,10 +179,10 @@ export function TournamentCard(props: any) {
   );
   const { t: tScreen } = useTranslation("screen");
 
-  // TODO: teams_participated_count WILL COMES IN API
   const availableSlots = tournamentInfo?.teams_participated_count ?? 10;
   const categoryList =
-    tournamentInfo?.categories.map((category: any) => category?.name) ?? [];
+    tournamentInfo?.categories.map((category: any) => category?.display_name) ??
+    [];
 
   if (tournamentInfo)
     return (

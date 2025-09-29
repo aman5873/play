@@ -22,6 +22,7 @@
     "highlightTitle": "AMAZING GAMES",
     "description": "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
     "labels": {
+      "active_players": "Active Players",
       "view_game": "View Game",
       "view_website": "Ver sitio web",
       "download_game": "Descargar juego",
