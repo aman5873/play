@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import moment from "moment";
 
@@ -26,6 +26,7 @@ import { ScreenDetailsComp } from "@/components/TopComp";
 import { useAuth } from "@/context/AuthContext";
 import { getTournaments } from "@/lib/tournament_ops";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
   const { t: tScreen } = useTranslation("screen");
@@ -301,6 +302,9 @@ export default function TournamentFeed({ onlyFeed = false }) {
   const [tournamentData, setTournamentData] = useState(null);
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
+  const { lang } = useLanguage();
+
+  const initialMount = useRef(true);
 
   function fetchTournaments(param?: any) {
     if (isAuthenticated) {
@@ -313,8 +317,15 @@ export default function TournamentFeed({ onlyFeed = false }) {
   }
 
   useEffect(() => {
-    fetchTournaments();
-  }, [isAuthenticated]);
+    // On first mount, prevent duplicate fetch
+    if (initialMount.current) {
+      initialMount.current = false;
+      fetchTournaments();
+    } else {
+      // On subsequent lang changes, always fetch
+      fetchTournaments();
+    }
+  }, [isAuthenticated, lang]);
 
   return (
     <>
