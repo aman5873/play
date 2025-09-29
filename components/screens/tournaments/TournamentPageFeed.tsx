@@ -24,7 +24,7 @@ export default function TournamentPageFeed() {
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [tournamentData, setTournamentData] = useState<any>(null);
   const [statusList, setStatusList] = useState([]);

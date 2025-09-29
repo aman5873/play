@@ -155,7 +155,7 @@ export default function TournamentPage() {
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchTournaments = (id) => {
     if (!id || !isAuthenticated) return;

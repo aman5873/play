@@ -13,7 +13,7 @@ import { getGameGenres, getGames, getGameStatuses } from "@/lib/game_ops";
 export default function GamePageFeed() {
   const { headerSearchValue, isAuthenticated } = useAuth();
   const { t: tCommon } = useTranslation("common");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [gameData, setGameData] = useState<any>(null);
 

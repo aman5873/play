@@ -370,7 +370,7 @@ export default function GamePage() {
   const [reviewData] = useState(gameReviewData);
   const { t: tScreen } = useTranslation("screen");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchGames = (id) => {
     if (!id || !isAuthenticated) return;

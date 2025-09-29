@@ -68,10 +68,9 @@ export function GameCard({
 }
 
 export default function GameFeed() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setLoading } = useAuth();
   const [gameData, setGameData] = useState(null);
   const { t: tCommon } = useTranslation("common");
-  const [loading, setLoading] = useState(true);
 
   function fetchGames(param?: any) {
     if (isAuthenticated) {
@@ -89,7 +88,6 @@ export default function GameFeed() {
 
   return (
     <>
-      <Loading loading={loading} />
       <div className="relative px-1 py-1 pb-20">
         {/* Scroll container */}
         <ScrollableRowWrapper isReady={Boolean(gameData?.data)}>
