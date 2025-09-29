@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import ReactSelectInput from "@/components/common/ReactSelectInput";
@@ -18,17 +18,21 @@ import {
 import { SectionDetails } from "@/components/common/CardComp";
 import { tournamentAnalytics } from "@/constants/data";
 import Loading from "@/components/common/Loading";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function TournamentPageFeed() {
   const { headerSearchValue, isAuthenticated } = useAuth();
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
+  const { lang } = useLanguage();
 
   const [loading, setLoading] = useState(false);
 
   const [tournamentData, setTournamentData] = useState<any>(null);
   const [statusList, setStatusList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+
+  const initialMount = useRef(true);
 
   // Dropdown filter
   const [selectedStatus, setSelectedStatus] = useState(null);
@@ -75,8 +79,15 @@ export default function TournamentPageFeed() {
       }
     };
 
-    fetchFilters();
-  }, [isAuthenticated]);
+    // Only skip duplicate fetch on initial mount
+    if (initialMount.current) {
+      initialMount.current = false;
+      fetchFilters();
+    } else {
+      // For subsequent lang changes, always fetch
+      fetchFilters();
+    }
+  }, [isAuthenticated, lang]);
 
   // Fetch tournaments whenever filters/search/pagination changes
   useEffect(() => {
@@ -108,6 +119,7 @@ export default function TournamentPageFeed() {
     headerSearchValue,
     selectedStatus,
     selectedCategory,
+    lang,
   ]);
 
   return (

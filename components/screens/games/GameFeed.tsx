@@ -92,10 +92,10 @@ export default function GameFeed() {
     // On first mount, prevent duplicate fetch
     if (initialMount.current) {
       initialMount.current = false;
-      fetchGames({ lang });
+      fetchGames();
     } else {
       // On subsequent lang changes, always fetch
-      fetchGames({ lang });
+      fetchGames();
     }
   }, [isAuthenticated, lang]);
 

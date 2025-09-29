@@ -75,7 +75,6 @@ export default function GamePageFeed() {
     if (headerSearchValue?.trim()) params.search = headerSearchValue.trim();
     if (selectedStatus?.id) params.status_id = selectedStatus.id;
     if (selectedGenre?.id) params.genre_id = selectedGenre.id;
-    if (lang) params.lan = lang;
 
     setLoading(true);
     try {

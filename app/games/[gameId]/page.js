@@ -15,6 +15,7 @@ import { useAuth } from "@/context/AuthContext";
 import { gameReviewData } from "@/constants/data";
 import { useTranslation } from "react-i18next";
 import Loading from "@/components/common/Loading";
+import { useLanguage } from "@/context/LanguageContext";
 
 function GalleryComp({ gameInfo }) {
   const { t: tCommon } = useTranslation("common");
@@ -369,6 +370,7 @@ export default function GamePage() {
   const [gameInfo, setGameInfo] = useState(null);
   const [reviewData] = useState(gameReviewData);
   const { t: tScreen } = useTranslation("screen");
+  const { lang } = useLanguage();
 
   const [loading, setLoading] = useState(false);
 
@@ -387,7 +389,7 @@ export default function GamePage() {
     if (gameId && isAuthenticated) {
       fetchGames(gameId);
     }
-  }, [gameId, isAuthenticated]);
+  }, [gameId, isAuthenticated, lang]);
 
   const primaryImage = gameInfo?.images?.find(
     (img) => img?.is_primary

@@ -154,6 +154,7 @@ export default function TournamentPage() {
   const [statusList, setStatusList] = useState([]);
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
+  const { lang } = useLanguage();
 
   const [loading, setLoading] = useState(false);
 
@@ -176,7 +177,7 @@ export default function TournamentPage() {
     getStatuses().then((res) => {
       if (res?.success && res?.data) setStatusList(res.data);
     });
-  }, [tournamentId, isAuthenticated]);
+  }, [tournamentId, isAuthenticated, lang]);
 
   const primaryImage = tournamentInfo?.images?.find(
     (img) => img?.is_primary
