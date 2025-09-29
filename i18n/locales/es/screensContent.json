@@ -22,6 +22,7 @@
     "highlightTitle": "JUEGOS INCREÍBLES",
     "description": "Explora nuestra vasta colección de juegos premium en todos los géneros. Encuentra tu próxima obsesión gamer.",
     "labels": {
+      "active_players": "Jugadores Activos",
       "view_game": "Ver juego",
       "view_website": "Ver sitio web",
       "download_game": "Descargar juego",

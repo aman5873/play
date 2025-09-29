@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import {
   TournamentCard,
-  TournamentFeaturedCard,
+  TournamentFeaturedFeed,
 } from "@/components/screens/tournaments/TournamentFeed";
 import { useAuth } from "@/context/AuthContext";
 import Pagination, { ShowingResults } from "@/components/common/Pagination";
@@ -24,7 +24,7 @@ export default function TournamentPageFeed() {
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [tournamentData, setTournamentData] = useState<any>(null);
   const [statusList, setStatusList] = useState([]);
@@ -113,10 +113,11 @@ export default function TournamentPageFeed() {
   return (
     <>
       <Loading loading={loading} />
-      <TournamentFeaturedCard
-        tournamentInfo={tournamentData?.data?.[0]}
-        style={{ marginTop: 20 }}
-      />
+
+      <div className="relative px-[5px] pt-5">
+        <TournamentFeaturedFeed tournamentData={tournamentData} />
+      </div>
+
       <div className="mx-auto  w-full">
         {/* Filter + ShowingResults */}
         <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">

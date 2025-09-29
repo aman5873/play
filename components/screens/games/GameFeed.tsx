@@ -11,7 +11,7 @@ import { getGames } from "@/lib/game_ops";
 import { CategoryCardComp } from "@/components/common/CardComp";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
-import Loading from "@/components/common/Loading";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function GameCard({
   gameInfo,
@@ -48,8 +48,11 @@ export function GameCard({
         <h2 className="sm:text-lg md:text-xl lg:text2xl font-bold truncate text-[var(--textOne)]">
           {gameInfo?.title}
         </h2>
+
         <h2 className=" text-base font-regular truncate text-[var(--textTwo)] ">
-          {gameInfo?.active_players_count} active players
+          {gameInfo?.active_players_count}
+          {gameInfo?.active_players_count ?? "000"}{" "}
+          {tScreen("game.labels.active_players")}
         </h2>
 
         {/* genres */}
@@ -68,10 +71,12 @@ export function GameCard({
 }
 
 export default function GameFeed() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setLoading } = useAuth();
   const [gameData, setGameData] = useState(null);
   const { t: tCommon } = useTranslation("common");
-  const [loading, setLoading] = useState(true);
+  const { lang } = useLanguage();
+
+  const initialMount = useRef(true); // ✅ track first mount
 
   function fetchGames(param?: any) {
     if (isAuthenticated) {
@@ -84,12 +89,18 @@ export default function GameFeed() {
   }
 
   useEffect(() => {
-    fetchGames();
-  }, [isAuthenticated]);
+    // On first mount, prevent duplicate fetch
+    if (initialMount.current) {
+      initialMount.current = false;
+      fetchGames({ lang });
+    } else {
+      // On subsequent lang changes, always fetch
+      fetchGames({ lang });
+    }
+  }, [isAuthenticated, lang]);
 
   return (
     <>
-      <Loading loading={loading} />
       <div className="relative px-1 py-1 pb-20">
         {/* Scroll container */}
         <ScrollableRowWrapper isReady={Boolean(gameData?.data)}>
