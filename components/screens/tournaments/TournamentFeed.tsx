@@ -6,6 +6,12 @@ import moment from "moment";
 import { Trophy, Calendar } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import { tournamentAnalytics } from "@/constants/data";
 import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
@@ -255,6 +261,41 @@ export function TournamentCard(props: any) {
     );
 }
 
+export function TournamentFeaturedFeed({ tournamentData }) {
+  return (
+    <>
+      {tournamentData?.data?.length > 0 && (
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          pagination={{
+            clickable: true,
+            renderBullet: (index, className) =>
+              `<span class="custom-bullet ${className}"></span>`,
+            bulletActiveClass: "custom-bullet-active",
+          }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          loop={true}
+          speed={1200}
+          spaceBetween={30}
+          centeredSlides={true}
+          slidesPerView={1.2}
+          breakpoints={{
+            768: { slidesPerView: 1 },
+            1024: { slidesPerView: 1 },
+          }}
+          className="featured-carousel mb-6"
+        >
+          {tournamentData.data.map((obj: any) => (
+            <SwiperSlide key={obj.id}>
+              <TournamentFeaturedCard tournamentInfo={obj} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
+    </>
+  );
+}
+
 export default function TournamentFeed({ onlyFeed = false }) {
   const { isAuthenticated, setLoading } = useAuth();
   const [tournamentData, setTournamentData] = useState(null);
@@ -285,10 +326,8 @@ export default function TournamentFeed({ onlyFeed = false }) {
         </ScrollableRowWrapper>
       ) : (
         <div className="relative px-1 py-5 pb-20">
-          {/* Scroll container */}
-          {tournamentData?.data?.[0] && (
-            <TournamentFeaturedCard tournamentInfo={tournamentData.data[0]} />
-          )}
+          <TournamentFeaturedFeed tournamentData={tournamentData} />
+
           <ScrollableRowWrapper isReady={Boolean(tournamentData?.data)}>
             {tournamentData?.data.map((obj: any) => (
               <TournamentCard key={obj?.id} tournamentInfo={obj} />

@@ -193,3 +193,20 @@ input:-webkit-autofill {
   -webkit-text-fill-color: var(--text) !important;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+/* slider */
+/* Default bullets */
+.custom-bullet {
+  background: var(--textTwo);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 4px;
+  transition: all 0.3s ease;
+}
+
+/* Active bullet */
+.custom-bullet-active {
+  background: var(--primary);
+  transform: scale(1.2); /* optional, makes active stand out */
+}
