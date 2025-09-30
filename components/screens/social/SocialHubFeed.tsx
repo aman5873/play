@@ -33,8 +33,8 @@ function formatVideoDuration(ms?: number | null): string | null {
 }
 
 export function SocialCard(props: any) {
-  const { socialInfo, contClass = "w-75 min-w-[12rem] max-w-xs" } = props;
-  const router = useRouter();
+  const { socialInfo, contClass = "w-75 min-w-[15rem] max-w-xs" } = props;
+  // const router = useRouter();
   const duration = formatVideoDuration(socialInfo?.media?.duration);
   const { t: tCommon } = useTranslation("common");
 

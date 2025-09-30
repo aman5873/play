@@ -156,7 +156,7 @@ export default function GamePageFeed() {
                 key={game.id}
                 gameInfo={game}
                 contClass="w-full 
-            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[18rem]
+            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[17.7rem]
             "
               />
             ))

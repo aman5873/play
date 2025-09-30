@@ -17,6 +17,7 @@ export function TeamCard(props: any) {
     cardType,
   } = props;
 
+  const { t: tScreen } = useTranslation("screen");
   const router = useRouter();
   const users = `${teamInfo?.max_team_member}/ ${teamInfo?.member_count}`;
 
@@ -64,13 +65,13 @@ export function TeamCard(props: any) {
         <AppButton
           onClick={() => router.push(`/teams/${teamInfo?.id}`)}
           type={"primary"}
-          label={"View Profile"}
+          label={tScreen("teams.labels.view_profile")}
         />
         {cardType === "my_teams" && (
           <AppButton
             onClick={() => router.push(`/teams/manage/${teamInfo?.id}`)}
             type={"secondary"}
-            label={"Manage"}
+            label={tScreen("teams.labels.manage")}
           />
         )}
       </div>
@@ -90,17 +91,7 @@ export default function TeamsFeed(props: any) {
           {tScreen(`${title}`)} <CardChip label={`(${teamList?.length})`} />
         </div>
       )}
-      {/* <div
-        className="
-  grid gap-4 justify-items-start
-    grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
-    sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
-    md:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]
-    lg:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]
-    xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
-    2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]
-    "
-      > */}
+
       <ScrollableRowWrapper isReady={Boolean(teamList)}>
         {teamList.length > 0 ? (
           teamList.map((obj, index) => (

@@ -659,3 +659,229 @@ export const team_tournaments = [
     date: "24, sep, 2024",
   },
 ];
+
+export const manageTeamData = {
+  activityFeed: [
+    {
+      id: 1,
+      icon: "trophy",
+      title: "Qualified for VR Championship Finals",
+      description:
+        "Team has secured their spot in the championship finals after defeating Azure Phantoms 3-1",
+      date_time: "2 hours ago",
+      chip: { label: "$100,000 Prize Pool" },
+      category: { value: "matches", label: "Matches" },
+      action: "Details",
+    },
+    {
+      id: 2,
+      icon: "trophy",
+      title: "Victory vs Azure Phantoms",
+      description: "Dominant performance in the semifinals",
+      date_time: "3 hours ago",
+      chip: { label: "3-1" },
+      category: { value: "matches", label: "Matches" },
+      action: "Details",
+    },
+    {
+      id: 3,
+      icon: "play",
+      title: "Insane 4K clutch by ProGamer",
+      description: "Incredible comeback play that secured the match",
+      date_time: "5 hours ago",
+      views_count: "15,420 views",
+      category: { value: "clips", label: "Clips" },
+      action: "Watch",
+    },
+    {
+      id: 4,
+      icon: "news",
+      title: "Featured in Esports Weekly",
+      description: "Team spotlight article discussing our championship run",
+      date_time: "2 days ago",
+      category: { value: "news", label: "News" },
+      action: "Read",
+    },
+  ],
+  invites: [
+    {
+      id: 1,
+      avatar_url: "/images/home/user1Avatar.png",
+      name: "Jake Thompson",
+      userName: "@FrostBite",
+      role: "Support",
+      rating: 8760,
+      date_time: "5 days ago",
+      status: { label: "Pending", value: "pending" },
+    },
+    {
+      id: 2,
+      avatar_url: "/images/home/user2Avatar.png",
+      name: "Maria Garcia",
+      userName: "@Quickshot",
+      role: "DPS",
+      rating: 7760,
+      date_time: "1 week ago",
+      status: { label: "Accepted", value: `accepted` },
+    },
+    {
+      id: 3,
+      avatar_url: "/images/home/user1Avatar.png",
+      name: "Ryan Park",
+      userName: "@Defender",
+      role: "Tank",
+      rating: 2590,
+      date_time: "3 days ago",
+      status: { label: "Declined", value: "declined" },
+    },
+  ],
+  notes: [
+    {
+      id: 1,
+      title: "Championship Strategy Notes",
+      category: { label: "Strategy", value: "strategy" },
+      created_by: "ProGamer",
+      date_time: "2 hours ago",
+      description:
+        "Key strategies for the upcoming finals match. Focus on early aggression and map control.",
+    },
+    {
+      id: 2,
+      title: "Roster Changes Discussion",
+      category: { label: "Roster", value: "roster" },
+      created_by: "Coach Mike",
+      date_time: "1 day ago",
+      description:
+        "Evaluating potential roster adjustments for next season based on performance metrics.",
+    },
+    {
+      id: 3,
+      title: "Training Schedule Updates",
+      category: { label: "General", value: "general" },
+      created_by: "TeamManager",
+      date_time: "2 days ago",
+      description:
+        "Updated practice schedule for the finals preparation. Increased scrimmage time.",
+    },
+  ],
+  wallet_splits: {
+    members: [
+      {
+        id: 1,
+        avatar_url: "/images/home/user1Avatar.png",
+        name: "FuturePlay",
+        role: "Captain",
+        per: "25%",
+        amount: "$12,500",
+        status: "active",
+      },
+      {
+        id: 2,
+        avatar_url: "/images/home/user2Avatar.png",
+        name: "NeuroFusion",
+        role: "Co-Captain",
+        per: "20%",
+        amount: "$10,000",
+        status: "active",
+      },
+      {
+        id: 3,
+        avatar_url: "/images/home/user1Avatar.png",
+        name: "HoloDash",
+        role: "Player",
+        per: "20%",
+        amount: "$10,000",
+        status: "active",
+      },
+      {
+        id: 4,
+        avatar_url: "/images/home/user2Avatar.png",
+        name: "VirtuaSports",
+        role: "Player",
+        per: "18%",
+        amount: "$9,000",
+        status: "pending",
+      },
+      {
+        id: 5,
+        avatar_url: "/images/home/user1Avatar.png",
+        name: "CyberArena",
+        role: "Player",
+        per: "17%",
+        amount: "$8,500",
+        status: "active",
+      },
+    ],
+    total: {
+      amount: "$50,000",
+      per: "100%",
+    },
+  },
+  roster: {
+    auto_lock_tournaments_roster: true,
+    allow_emergency_substitutions: false,
+
+    substitutions_requests: [
+      {
+        player: {
+          name: "Healer",
+          mobile: "+911234567890",
+        },
+        title: "Unavailable Feb 15–20",
+        description: "Medical appointment conflict",
+      },
+    ],
+    lock_statuses: {
+      current_status: "Unlocked",
+      next_tournament: {
+        id: 2,
+        title: "VR Champions League",
+        lock_date: "Feb 14, 2024 - 6:00 PM",
+      },
+      active_players: {
+        total_count: 8,
+        available_count: 7,
+        substitutes_available: 2,
+      },
+    },
+    recent_activities: [
+      {
+        id: 1,
+        title: "Roster auto-lock enabled for VR Champions League",
+        date_time: "2 hours ago",
+      },
+      {
+        id: 2,
+        title: "Healer submitted substitution request",
+        date_time: "1 day ago",
+      },
+      {
+        id: 3,
+        title: "Emergency substitutions policy updated",
+        date_time: "3 day ago",
+      },
+    ],
+    disputes: [
+      {
+        id: 1,
+        title: "Practice Schedule Conflict",
+        category: { label: "Medium", value: "medium" },
+        description:
+          "Several team members cannot attend the proposed practice times due to scheduling conflicts.",
+        reported_by: "Healer",
+        date_time: "1 day ago",
+        status: "open",
+      },
+      {
+        id: 1,
+        title: "Prize Distribution Concern",
+        category: { label: "High", value: "high" },
+        description:
+          "Question about the distribution of recent tournament winnings and transparency in calculations.",
+        reported_by: "TankMaster",
+        date_time: "1 day ago",
+        status: "open",
+      },
+    ],
+  },
+};

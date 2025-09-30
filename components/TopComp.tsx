@@ -17,6 +17,8 @@ import {
   Upload,
   Plus,
   Heart,
+  Eye,
+  Settings,
 } from "lucide-react";
 
 // Map string keys to lucide icons
@@ -32,6 +34,8 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   upload: Upload,
   add: Plus,
   heart: Heart,
+  eye: Eye,
+  settings: Settings,
 };
 
 // ------------------ Types ------------------
@@ -183,7 +187,15 @@ export const ButtonComp: React.FC<ButtonCompProps> = ({ buttons }) => {
   );
 };
 
-export function AppButton({ onClick, type = "primary", label, Icon = null }) {
+export function AppButton({
+  onClick,
+  type = "primary",
+  label,
+  Icon = null,
+  icon = null,
+}) {
+  const IconComp = icon ? iconMap[icon] : null;
+
   return (
     <button
       onClick={onClick}
@@ -198,6 +210,15 @@ export function AppButton({ onClick, type = "primary", label, Icon = null }) {
       {Icon && (
         <Icon
           className={`w-5 h-5 mr-2 ${
+            type === "primary"
+              ? "text-[var(--secondary)]"
+              : "text-[var(--primary)]"
+          }`}
+        />
+      )}
+      {IconComp && (
+        <IconComp
+          className={`w-5 h-5 mr-1  font-bold${
             type === "primary"
               ? "text-[var(--secondary)]"
               : "text-[var(--primary)]"

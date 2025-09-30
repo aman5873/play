@@ -15,20 +15,21 @@ import { CardChip } from "@/components/common/CardComp";
 
 function TeamsTable(props: any) {
   const { paginatedTeams } = props;
+  const { t: tScreen } = useTranslation("screen");
   return (
     <GenericTable
       data={paginatedTeams}
       columns={[
         {
           key: "rank",
-          label: "Rank",
+          label: tScreen("teams.labels.rank"),
           render: (row: any) => (
             <span className="font-bold text-[var(--textOne)]">#{row.rank}</span>
           ),
         },
         {
           key: "title",
-          label: "Team",
+          label: tScreen("teams.labels.team"),
           render: (row: any) => (
             <div className="flex items-center gap-3">
               {row.logo && (
@@ -63,18 +64,18 @@ function TeamsTable(props: any) {
         },
         {
           key: "achievement",
-          label: "Achievement",
+          label: tScreen("teams.labels.achievement"),
           render: (row: any) => <CardChip label={row?.achievement} />,
         },
         {
           key: "success_rate",
-          label: "Success Rate",
+          label: tScreen("teams.labels.success_rate"),
           className: "hidden sm:table-cell",
         },
 
         {
           key: "points",
-          label: "Points",
+          label: tScreen("teams.labels.points"),
           render: (row: any) => (
             <span className="font-bold text-[var(--textSeven)]">
               {row?.points}

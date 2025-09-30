@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Eye,
   TrendingUp,
+  Newspaper,
 } from "lucide-react";
 
 interface CardChipProps {
@@ -59,6 +60,7 @@ export const iconMap = {
   right: ChevronRight,
   eye: Eye,
   trend: TrendingUp,
+  news: Newspaper,
 } satisfies Record<string, LucideIcon>;
 
 export function CardChip({ label, style }: CardChipProps) {

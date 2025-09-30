@@ -11,6 +11,7 @@ import { teamsData, team_tournaments } from "@/constants/data";
 import { RankSecondaryIcon } from "@/app/icons";
 import GenericTable from "@/components/common/GenericTable";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 const initData = {
   is_private_team: false,
@@ -106,28 +107,29 @@ function TeamIconLabelInfo({
 }
 
 function TeamAnalyticsComp({ teamInfo }) {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div className="flex w-full justify-center">
       <SectionDetails
         list={[
           {
             label: teamInfo?.rank,
-            description: "Global Ranking",
+            description: tScreen("teams.labels.globalRanking"),
             color: "var(--primary)",
           },
           {
             label: teamInfo?.trophies_count,
-            description: "Trophies",
+            description: tScreen("teams.labels.trophies"),
             color: "var(--textFour)",
           },
           {
             label: teamInfo?.tournaments_played,
-            description: "Tournaments",
+            description: tScreen("teams.labels.tournaments"),
             color: "var(--textThree)",
           },
           {
             label: teamInfo?.main_game?.name,
-            description: "Main Game",
+            description: tScreen("teams.labels.mainGame"),
             color: "var(--textFive)",
           },
         ]}
@@ -137,6 +139,7 @@ function TeamAnalyticsComp({ teamInfo }) {
 }
 
 function TeamScreenDetailsComp({ teamInfo }) {
+  const { t: tScreen } = useTranslation("screen");
   const founded_in = moment(teamInfo?.founded_in).format("Do MMM");
   const members = `${teamInfo?.max_team_member}/ ${teamInfo?.member_count}`;
 
@@ -146,9 +149,13 @@ function TeamScreenDetailsComp({ teamInfo }) {
         <TeamIconLabelInfo
           icon="trophy"
           value={teamInfo?.victory_count}
-          label="Victories"
+          label={tScreen("teams.labels.victories")}
         />
-        <TeamIconLabelInfo icon="users" value={members} label="Members" />
+        <TeamIconLabelInfo
+          icon="users"
+          value={members}
+          label={tScreen("teams.labels.members")}
+        />
         <TeamIconLabelInfo
           IconComp={() => (
             <RankSecondaryIcon
@@ -157,13 +164,13 @@ function TeamScreenDetailsComp({ teamInfo }) {
               stroke="var(--primary)"
             />
           )}
-          value={founded_in}
-          label="Points"
+          value={teamInfo?.points}
+          label={tScreen("teams.labels.points")}
         />
         <TeamIconLabelInfo
           icon={"calender"}
           value={founded_in}
-          label="Founded in"
+          label={tScreen("teams.labels.foundedIn")}
         />
       </div>
     </div>
@@ -171,12 +178,13 @@ function TeamScreenDetailsComp({ teamInfo }) {
 }
 
 function TeamTable({ title, data, showDate = false }) {
+  const { t: tScreen } = useTranslation("screen");
   const baseColumns = [
-    { key: "title", label: "Title" },
-    { key: "position", label: "Position" },
+    { key: "title", label: tScreen("teams.labels.title") },
+    { key: "position", label: tScreen("teams.labels.position") },
     {
       key: "prize",
-      label: "Prize",
+      label: tScreen("teams.labels.prize"),
       render: (row: any) => (
         <span className="font-bold text-[var(--textSeven)]">{row?.prize}</span>
       ),
@@ -185,7 +193,7 @@ function TeamTable({ title, data, showDate = false }) {
 
   // Conditionally add the date column
   const columns = showDate
-    ? [...baseColumns, { key: "date", label: "Date" }]
+    ? [...baseColumns, { key: "date", label: tScreen("teams.labels.date") }]
     : baseColumns;
 
   return (
@@ -229,26 +237,37 @@ function TeamMemberCard({ memberInfo }) {
 }
 
 function LeftSection({ teamInfo }) {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div className="flex-1 flex flex-col gap-4">
       <div className="flex flex-col gap-2 p-4 border-1 border-[var(--borderThree)] gradient-one rounded-xl">
-        <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">About</h1>
+        <h1 className="sm:text-2xl lg:text-3xl font-bold my-1">
+          {tScreen("teams.labels.about")}
+        </h1>
         <p className="text-[14px] text-[var(--textTwo)]">
           {teamInfo?.description}
         </p>
         <TeamAnalyticsComp teamInfo={teamInfo} />
       </div>
-      <TeamTable title="Achievements and trophies" data={team_tournaments} />
-      <TeamTable title="Tournament history" data={team_tournaments} showDate />
+      <TeamTable
+        title={tScreen("teams.labels.achievementsTrophies")}
+        data={team_tournaments}
+      />
+      <TeamTable
+        title={tScreen("teams.labels.tournamentHistory")}
+        data={team_tournaments}
+        showDate
+      />
     </div>
   );
 }
 
 function RightSection({ teamInfo }) {
+  const { t: tScreen } = useTranslation("screen");
   return (
     <div className="gradient-one p-3 w-full h-fit rounded-[16px] border border-[var(--borderThree)]">
       <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[var(--textOne)]">
-        Achievements
+        {tScreen("teams.labels.achievements")}
       </h1>
 
       <div
@@ -272,6 +291,7 @@ export default function TeamPage() {
   const { isAuthenticated, setLoading } = useAuth();
   const { teamId } = useParams();
   const [teamInfo, setTeamInfo] = useState(null);
+  const { t: tScreen } = useTranslation("screen");
 
   const fetchTeams = (id: any) => {
     if (!id || !isAuthenticated) return;
@@ -295,7 +315,7 @@ export default function TeamPage() {
         content={{
           chip: [
             {
-              label: `Rank # ${teamInfo?.rank}`,
+              label: `${tScreen("teams.labels.rank")} # ${teamInfo?.rank}`,
               type: "primary",
             },
           ],
@@ -303,13 +323,13 @@ export default function TeamPage() {
           backgroundImage: teamInfo?.logo,
           button: [
             {
-              label: "Apply to team",
+              label: tScreen("teams.labels.applyTeam"),
               redirect: "",
               type: "primary",
               icon: "users",
             },
             {
-              label: "Follow team",
+              label: tScreen("teams.labels.followTeam"),
               redirect: "",
               type: "secondary",
               icon: "heart",
