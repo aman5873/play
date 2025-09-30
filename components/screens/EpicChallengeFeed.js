@@ -87,7 +87,7 @@ export function ChallengeCard(props) {
           </div>
 
           <button
-            onClick={() => router.push(`/challenges/${challengeInfo?.id}`)}
+            // onClick={() => router.push(`/challenges/${challengeInfo?.id}`)}
             className="px-4 py-2 flex items-center justify-center rounded-full border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md bg-[var(--primary)] text-[var(--secondary)]"
           >
             View Challenge
@@ -121,7 +121,8 @@ export default function EpicChallengeFeed() {
 
       <div className="flex justify-center items-center mb-5 mt-4 w-full">
         <Link
-          href="/challenges"
+          href="/"
+          // href="/challenges"
           className=" px-5 py-2 border rounded-[50px] border-[var(--primary)] text-[var(--primary)] hover:text-[var(--textOne)] hover:border-[var(--textOne)]   text-sm md:text-base transition-colors duration-300 cursor-pointer text-sm md:text-base transition-colors duration-300"
         >
           View All

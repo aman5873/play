@@ -96,8 +96,8 @@ export default function NewsPageFeed() {
         contStyle={{ marginBottom: 10, padding: "0 5px" }}
       />
       {/* Filter + ShowingResults */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-        <div className="w-[260px] lg:w-[260px]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+        <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
           <ReactSelectInput
             value={selectedCategory}
             onChange={setSelectedCategory}
@@ -116,24 +116,15 @@ export default function NewsPageFeed() {
 
       {/* Social cards */}
       {/* <div className="flex flex-wrap gap-4 justify-start w-fit bg-[red]"> */}
-      <div
-        className="
-    grid gap-4 justify-items-start
-    grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
-    sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
-    md:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]
-    lg:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]
-    xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
-    2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]
-   
-  "
-      >
+      <div className="flex flex-wrap justify-center sm:justify-start gap-4">
         {paginatedSocial.length > 0 ? (
           paginatedSocial.map((obj, index) => (
             <NewsCard
               key={`news-${obj.id}-${index}`}
               newsInfo={obj}
-              contClass="w-full" // card will shrink but not exceed max width
+              contClass="w-full 
+            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[18rem]
+            "
             />
           ))
         ) : (

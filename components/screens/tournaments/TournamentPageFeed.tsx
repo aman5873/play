@@ -132,40 +132,42 @@ export default function TournamentPageFeed() {
 
       <div className="mx-auto  w-full">
         {/* Filter + ShowingResults */}
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
-            <ReactSelectInput
-              value={selectedStatus}
-              onChange={(value) => {
-                setSelectedStatus(value);
-              }}
-              options={[
-                { id: "", name: tCommon("filters.all") },
-                ...statusList,
-              ].map((s) => ({
-                value: s.id,
-                label: s.name,
-                id: s.id,
-              }))}
-              placeholder={tCommon("filters.status")}
-            />
-          </div>
-          <div className="w-full sm:w-full md:w-[260px] lg:w-[260px] ">
-            <ReactSelectInput
-              value={selectedCategory}
-              onChange={(value) => {
-                setSelectedCategory(value);
-              }}
-              options={[
-                { id: "", name: tCommon("filters.all") },
-                ...categoryList,
-              ].map((c) => ({
-                value: c.id,
-                label: c.name,
-                id: c.id,
-              }))}
-              placeholder={tCommon("filters.category")}
-            />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+          <div className="flex flex-wrap gap-4 w-full sm:flex-1">
+            <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
+              <ReactSelectInput
+                value={selectedStatus}
+                onChange={(value) => {
+                  setSelectedStatus(value);
+                }}
+                options={[
+                  { id: "", name: tCommon("filters.all") },
+                  ...statusList,
+                ].map((s) => ({
+                  value: s.id,
+                  label: s.name,
+                  id: s.id,
+                }))}
+                placeholder={tCommon("filters.status")}
+              />
+            </div>
+            <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
+              <ReactSelectInput
+                value={selectedCategory}
+                onChange={(value) => {
+                  setSelectedCategory(value);
+                }}
+                options={[
+                  { id: "", name: tCommon("filters.all") },
+                  ...categoryList,
+                ].map((c) => ({
+                  value: c.id,
+                  label: c.name,
+                  id: c.id,
+                }))}
+                placeholder={tCommon("filters.category")}
+              />
+            </div>
           </div>
           <ShowingResults
             currentPage={tournamentData?.current_page || 1}
@@ -177,19 +179,16 @@ export default function TournamentPageFeed() {
         </div>
 
         {/* Tournament cards */}
-        <div
-          className="grid gap-4 scroll-smooth scrollbar-hide mx-auto justify-items-start
-    grid-cols-[repeat(auto-fit,minmax(16rem,23rem))]
-    sm:grid-cols-[repeat(auto-fit,minmax(20rem,23rem))]
-    lg:grid-cols-[repeat(auto-fit,minmax(21rem,23.65rem))]"
-        >
+        <div className="flex flex-wrap justify-center sm:justify-start gap-4">
           {tournamentData?.data?.length > 0 ? (
             tournamentData.data.map((t: any) => (
               <TournamentCard
                 key={t.id}
                 tournamentInfo={t}
                 showDesc
-                contClass="w-full"
+                contClass="w-full 
+            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[23.65rem]
+            "
               />
             ))
           ) : (

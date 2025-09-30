@@ -41,12 +41,12 @@ export function SocialCard(props: any) {
   if (socialInfo)
     return (
       <div
-        onClick={() => router.push(`/social/${socialInfo?.id}`)}
-        className={`gradient-one  border p-4 flex-shrink-0 overflow-hidden rounded-xl flex flex-col gap-3 border-[var(--borderThree)] ${contClass} `}
+        // onClick={() => router.push(`/social/${socialInfo?.id}`)}
+        className={`gradient-one border p-4 overflow-hidden rounded-xl flex flex-col gap-3 border-[var(--borderThree)] ${contClass}`}
       >
         {socialInfo?.media?.thumbnail && (
           <div
-            className={`relative overflow-hidden rounded-lg group w-full h-[170px] sm:h-[150px] lg:h-[197px]`}
+            className={`relative overflow-hidden rounded-lg group w-full h-[250px] sm:h-[197px] `}
           >
             <Image
               src={socialInfo?.media?.thumbnail}
@@ -181,13 +181,13 @@ export function SocialFeedComp() {
             {
               icon: "trophy",
               label: tScreen("social.buttonPrimary"),
-              redirect: "/",
+              redirect: "",
               type: "primary",
             },
             {
               icon: "upload",
               label: tScreen("social.buttonSecondary"),
-              redirect: "/tournaments",
+              redirect: "",
               type: "secondary",
             },
           ]}

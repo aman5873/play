@@ -7,7 +7,6 @@ import { useAuth } from "@/context/AuthContext";
 import LanguageToggle from "../LanguageToggle";
 import { useTranslation } from "react-i18next";
 
-import { useLanguage } from "@/context/LanguageContext";
 import SearchInput from "./Searchinput";
 import Image from "next/image";
 import Avatar from "../auth/Avatar";
@@ -69,11 +68,13 @@ export default function Header({ onMenuClick }: HeaderProps) {
               <SquareMenu size={35} />
             </div>
           </div>
-          <SearchInput
-            value={headerSearchValue}
-            onChange={setHeaderSearchValue} // Will trigger after debounce
-            placeholder={tCommon("search_placeholder")}
-          />
+          <div className="hidden sm:block">
+            <SearchInput
+              value={headerSearchValue}
+              onChange={setHeaderSearchValue} // Will trigger after debounce
+              placeholder={tCommon("search_placeholder")}
+            />
+          </div>
         </div>
 
         {/* Language toggle */}
@@ -89,7 +90,16 @@ export default function Header({ onMenuClick }: HeaderProps) {
             {user ? (
               <Avatar user={user} size={40} isHeader={true} />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-[var(--primary)] text-[var(--secondary)] font-bold">
+              <div
+                className="w-full h-full flex items-center justify-center bg-[var(--primary)] text-[var(--secondary)] font-bold"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 1,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
                 {user?.name?.[0] || user?.email?.[0]?.toUpperCase()}
               </div>
             )}

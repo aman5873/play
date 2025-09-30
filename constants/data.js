@@ -295,6 +295,25 @@ export const socialData = [
     comment_count: 350,
     views_count: 350,
   },
+  {
+    id: 5,
+    category: "VR Sports",
+    is_trending: true,
+    channel: {
+      logo: "/images/home/user1Avatar.png",
+      title: "Epic VR Basketball Slam Dunk",
+      description: "VRProGamer",
+    },
+    media: {
+      thumbnail: "/images/home/post2.png",
+      type: "video",
+      duration: 60000,
+    },
+    avg_rating: 4.8,
+    like_count: 1122,
+    comment_count: 350,
+    views_count: 350,
+  },
 ];
 
 // **** Leaderboard

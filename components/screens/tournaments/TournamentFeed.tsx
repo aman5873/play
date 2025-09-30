@@ -35,7 +35,8 @@ export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
   const startDate = moment(tournamentInfo?.deadline);
   let timeLeftLabel = "--";
   const categoryList =
-    tournamentInfo?.categories.map((category: any) => category?.name) ?? [];
+    tournamentInfo?.categories.map((category: any) => category?.display_name) ??
+    [];
 
   if (startDate.isValid()) {
     const diffInHours = startDate.diff(now, "hours", true);
@@ -268,26 +269,21 @@ export function TournamentFeaturedFeed({ tournamentData }) {
       {tournamentData?.data?.length > 0 && (
         <Swiper
           modules={[Pagination, Autoplay]}
+          className="featured-carousel relative mb-10" // make parent relative
           pagination={{
             clickable: true,
             renderBullet: (index, className) =>
-              `<span class="custom-bullet ${className}"></span>`,
-            bulletActiveClass: "custom-bullet-active",
+              `<span class="${className} custom-bullet"></span>`,
           }}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
           loop={true}
           speed={1200}
           spaceBetween={30}
           centeredSlides={true}
-          slidesPerView={1.2}
-          breakpoints={{
-            768: { slidesPerView: 1 },
-            1024: { slidesPerView: 1 },
-          }}
-          className="featured-carousel mb-6"
+          slidesPerView={1}
         >
           {tournamentData.data.map((obj: any) => (
-            <SwiperSlide key={obj.id}>
+            <SwiperSlide key={obj.id} className=" w-full">
               <TournamentFeaturedCard tournamentInfo={obj} />
             </SwiperSlide>
           ))}
