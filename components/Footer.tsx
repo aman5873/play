@@ -107,11 +107,11 @@ export default function Footer() {
   );
 
   return (
-    <div className="pt-4 px-4 mt-auto">
-      <footer className="w-full text-center p-8  gradient-one text-[var(--textTwo)]  rounded-lg border-t border-[var(--borderThree)]">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-left">
+    <div className="pt-4 px-4 ">
+      <footer className="w-full text-center p-4 md:p-8  gradient-one text-[var(--textTwo)]  rounded-lg border-t border-[var(--borderThree)]">
+        <div className="grid grid-cols-1 pb-11 sm:pb-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-left">
           {/* Logo + Tagline */}
-          <div className="flex flex-col items-start max-w-[200px]">
+          <div className="flex flex-col items-start md:max-w-[200px]">
             <Link href="/" className="flex items-center justify-center mb-4">
               <Image
                 src="/logo.png"
@@ -161,7 +161,7 @@ export default function Footer() {
             </ul>
 
             {/* Social icons row */}
-            <ul className="flex items-center mt-2">
+            <ul className="flex items-center mt-2 gap-2 py-2 h-full">
               {socialLinks.map((item) => (
                 <ContactItem
                   key={item.key}

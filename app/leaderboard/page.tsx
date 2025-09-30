@@ -3,7 +3,7 @@ import LeaderboardScreenTopComp from "@/components/screens/leaderboard/Leaderboa
 
 export default function page() {
   return (
-    <div className="flex flex-col gap-2 p-4">
+    <div className="flex flex-col gap-2 p-2 sm:p-4">
       <LeaderboardScreenTopComp />
       <LeaderboardPageFeed />
     </div>

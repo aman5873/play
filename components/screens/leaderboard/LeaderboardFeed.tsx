@@ -181,13 +181,13 @@ export function SocialFeedComp() {
             {
               icon: "trophy",
               label: tScreen("social.buttonPrimary"),
-              redirect: "/",
+              redirect: "",
               type: "primary",
             },
             {
               icon: "upload",
               label: tScreen("social.buttonSecondary"),
-              redirect: "/tournaments",
+              redirect: "",
               type: "secondary",
             },
           ]}

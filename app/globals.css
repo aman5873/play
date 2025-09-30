@@ -195,18 +195,21 @@ input:-webkit-autofill {
 }
 
 /* slider */
-/* Default bullets */
-.custom-bullet {
-  background: var(--textTwo);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin: 0 4px;
-  transition: all 0.3s ease;
+/* Pagination container */
+.featured-carousel .swiper-pagination {
+  position: absolute !important; /* override inline styles */
+  bottom: -5px !important; /* distance from top */
 }
 
-/* Active bullet */
-.custom-bullet-active {
-  background: var(--primary);
-  transform: scale(1.2); /* optional, makes active stand out */
+.swiper-pagination-bullet.custom-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: var(--textTwo) !important;
+  border-radius: 50%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.swiper-pagination-bullet-active.custom-bullet {
+  background-color: var(--primary) !important;
+  transform: scale(1.2);
 }

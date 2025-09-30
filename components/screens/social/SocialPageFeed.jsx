@@ -82,8 +82,8 @@ export default function SocialPageFeed() {
   return (
     <div className="mx-auto py-10 pb-10 w-full">
       {/* Filter + ShowingResults */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-        <div className="w-[260px] lg:w-[260px]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+        <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
           <ReactSelectInput
             value={selectedCategory}
             onChange={setSelectedCategory}
@@ -101,30 +101,16 @@ export default function SocialPageFeed() {
       </div>
 
       {/* Social cards */}
-      <div
-        className="
-  grid gap-4 justify-items-start
-    grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
-    sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
-    md:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]
-    lg:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]
-    xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
-    2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]
-    "
-      >
-        {paginatedSocial.length > 0 ? (
-          paginatedSocial.map((obj, index) => (
-            <SocialCard
-              key={`social-${obj.id}-${index}`}
-              socialInfo={obj}
-              contClass="w-full"
-            />
-          ))
-        ) : (
-          <p className="text-[var(--textTwo)]">
-            {tCommon("messages.noSocials")}
-          </p>
-        )}
+      <div className="flex flex-wrap justify-center sm:justify-start gap-4">
+        {paginatedSocial.map((obj, index) => (
+          <SocialCard
+            key={`social-${obj.id}-${index}`}
+            socialInfo={obj}
+            contClass="w-full 
+            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[18rem]
+            "
+          />
+        ))}
       </div>
 
       {/* Pagination */}

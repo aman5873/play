@@ -102,10 +102,10 @@ export default function GamePageFeed() {
       <Loading loading={loading} />
       <div className="mx-auto py-10 pb-20 w-full">
         {/* Filters + ShowingResults */}
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-          <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+          <div className="flex flex-wrap gap-4 w-full sm:flex-1">
             {/* Status Filter */}
-            <div className="w-full sm:w-full md:w-[260px] lg:w-[260px]">
+            <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
               <ReactSelectInput
                 value={selectedStatus}
                 onChange={setSelectedStatus}
@@ -122,7 +122,7 @@ export default function GamePageFeed() {
             </div>
 
             {/* Genre Filter */}
-            <div className="w-full sm:w-full md:w-[260px] lg:w-[260px]">
+            <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
               <ReactSelectInput
                 value={selectedGenre}
                 onChange={setSelectedGenre}
@@ -143,24 +143,22 @@ export default function GamePageFeed() {
             currentPage={gameData?.current_page || 1}
             pageSize={gameData?.per_page || pageSize}
             totalItems={gameData?.total || 0}
-            className="ml-auto"
+            className="ml-auto mt-2 sm:mt-0"
             label={tCommon("games")}
           />
         </div>
 
         {/* Game Cards */}
-        <div
-          className="grid gap-4 justify-items-start
-          grid-cols-[repeat(auto-fit,minmax(5rem,1fr))]
-          sm:grid-cols-[repeat(auto-fit,minmax(13rem,1fr))]
-          md:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]
-          lg:grid-cols-[repeat(auto-fit,minmax(15rem,1fr))]
-          xl:grid-cols-[repeat(auto-fit,minmax(16rem,1fr))]
-          2xl:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))]"
-        >
+        <div className="flex flex-wrap justify-center sm:justify-start gap-4">
           {gameData?.data?.length > 0 ? (
             gameData.data.map((game: any) => (
-              <GameCard key={game.id} gameInfo={game} contClass="w-full" />
+              <GameCard
+                key={game.id}
+                gameInfo={game}
+                contClass="w-full 
+            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[18rem]
+            "
+              />
             ))
           ) : (
             <p className="text-[var(--textTwo)]">

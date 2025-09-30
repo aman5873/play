@@ -13,6 +13,7 @@ import { useAuth } from "@/context/AuthContext";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import Loading from "@/components/common/Loading";
+import { useLanguage } from "@/context/LanguageContext";
 
 function ListComp({ title, list, variant = "bullet", start }) {
   if (!list?.length) return null;

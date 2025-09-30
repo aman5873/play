@@ -114,12 +114,20 @@ export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
       )}
 
       {content?.title && (
-        <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-semibold font-nyxerin text-[var(--textOne)]">
+        <h1
+          className={` ${
+            isCentered ? "text-center" : "text-center lg:text-left"
+          } text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-semibold font-nyxerin text-[var(--textOne)]`}
+        >
           {content.title}
         </h1>
       )}
       {content?.highlightTitle && (
-        <h2 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-bold font-nyxerin text-[var(--primary)]">
+        <h2
+          className={` ${
+            isCentered ? "text-center" : "text-center lg:text-left"
+          } text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-bold font-nyxerin text-[var(--primary)]`}
+        >
           {content.highlightTitle}
         </h2>
       )}

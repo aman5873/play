@@ -147,7 +147,7 @@ export function SectionDetails({
       {list.map((item, idx) => (
         <div
           key={idx}
-          className="flex flex-1 flex-col items-center justify-center text-left"
+          className="flex flex-1 flex-col items-center justify-center text-center "
         >
           <h3
             className="text-xl font-bold"
@@ -155,7 +155,9 @@ export function SectionDetails({
           >
             {item.label}
           </h3>
-          <p className="text-sm text-[var(--textOne)]">{item.description}</p>
+          <p className="text-sm text-[var(--textOne)] w-fit  min-w-[100px]">
+            {item.description}
+          </p>
         </div>
       ))}
     </div>

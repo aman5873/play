@@ -22,7 +22,7 @@ export function NewsCard(props) {
   if (newsInfo)
     return (
       <div
-        onClick={() => router.push(`/news/${newsInfo?.id}`)}
+        // onClick={() => router.push(`/news/${newsInfo?.id}`)}
         className={`gradient-one border p-4 flex-shrink-0  overflow-hidden rounded-xl flex flex-col  border-[var(--borderThree)]  ${contClass}`}
       >
         {newsInfo?.image_path && (
