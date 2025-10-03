@@ -40,7 +40,7 @@ function UserAnalyticsComp({ userAnalytics }) {
           },
         ]}
         // TODO: If it to be centered according to TournamentFeaturedCard
-        // contClass={"group w-full max-w-[1300px]"}
+        //  contClass={"group w-full max-w-[1300px]"}
       />
     </div>
   );
