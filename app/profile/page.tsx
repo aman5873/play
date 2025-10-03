@@ -40,16 +40,16 @@ function UserAnalyticsComp({ userAnalytics }) {
           },
         ]}
         // TODO: If it to be centered according to TournamentFeaturedCard
-        // contClass={"group w-full max-w-[1300px]"}
+        //  contClass={"group w-full max-w-[1300px]"}
       />
     </div>
   );
 }
 
-export default function page() {
+export default function UserPage() {
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
   const { t: tScreen } = useTranslation("screen");
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
