@@ -19,6 +19,7 @@ import {
 interface CardChipProps {
   label: string;
   style?: React.CSSProperties;
+  contClass?: string;
 }
 
 interface CardCompProps {
@@ -63,16 +64,31 @@ export const iconMap = {
   news: Newspaper,
 } satisfies Record<string, LucideIcon>;
 
-export function CardChip({ label, style }: CardChipProps) {
+export function CardChip({ label, style, contClass = "" }: CardChipProps) {
   if (label)
     return (
       <div
-        className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm  text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit capitalize`}
+        className={`bg-[var(--bgTwo)] border border-[var(--borderTwo)] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm  text-[var(--textOne)] flex-shrink-0 min-w-[45px] w-fit capitalize ${contClass}`}
         style={style}
       >
         {label}
       </div>
     );
+}
+
+export function CardSection({ label = "", children, contClass = "" }) {
+  return (
+    <div
+      className={`gradient-one border p-2 sm:p-4  gap:-2 gap-4  rounded-[16px] flex flex-col  border-[var(--borderThree)] ${contClass}`}
+    >
+      {label && (
+        <h1 className="text-lg lg:text-xl font-semibold text-[var(--textOne)]">
+          {label}
+        </h1>
+      )}
+      {children}
+    </div>
+  );
 }
 export function CardIconInfo({ list, minWidth = "7.5rem" }: CardIconInfoProps) {
   return (

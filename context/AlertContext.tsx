@@ -76,7 +76,10 @@ export function AlertProvider({ children }: AlertProviderProps) {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3 ${bg} ${text} w-auto sm:w-auto min-w-[90%]`}
+            className={`fixed top-5 left-1/2 -translate-x-1/2 z-50 
+              px-4 py-3 rounded-lg shadow-lg flex items-center space-x-3 
+              ${bg} ${text} 
+              w-[92%] sm:w-auto max-w-md`}
           >
             {/* Severity Icon */}
             <span className="flex-shrink-0">{Icon}</span>

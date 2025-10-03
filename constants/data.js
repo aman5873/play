@@ -823,6 +823,7 @@ export const manageTeamData = {
 
     substitutions_requests: [
       {
+        id: 1,
         player: {
           name: "Healer",
           mobile: "+911234567890",
@@ -832,7 +833,7 @@ export const manageTeamData = {
       },
     ],
     lock_statuses: {
-      current_status: "Unlocked",
+      current_status: { id: 1, label: "Unlocked" },
       next_tournament: {
         id: 2,
         title: "VR Champions League",
@@ -861,27 +862,51 @@ export const manageTeamData = {
         date_time: "3 day ago",
       },
     ],
-    disputes: [
-      {
-        id: 1,
-        title: "Practice Schedule Conflict",
-        category: { label: "Medium", value: "medium" },
-        description:
-          "Several team members cannot attend the proposed practice times due to scheduling conflicts.",
-        reported_by: "Healer",
-        date_time: "1 day ago",
-        status: "open",
-      },
-      {
-        id: 1,
-        title: "Prize Distribution Concern",
-        category: { label: "High", value: "high" },
-        description:
-          "Question about the distribution of recent tournament winnings and transparency in calculations.",
-        reported_by: "TankMaster",
-        date_time: "1 day ago",
-        status: "open",
-      },
-    ],
   },
+  disputes: [
+    {
+      id: 1,
+      title: "Practice Schedule Conflict",
+      category: { label: "Medium", value: "medium" },
+      description:
+        "Several team members cannot attend the proposed practice times due to scheduling conflicts.",
+      reported_by: "Healer",
+      date_time: "1 day ago",
+      status: { id: 1, value: "open", label: "Open" },
+    },
+    {
+      id: 2,
+      title: "Prize Distribution Concern",
+      category: { label: "Investigating", value: "investigating" },
+      description:
+        "Question about the distribution of recent tournament winnings and transparency in calculations.",
+      reported_by: "TankMaster",
+      date_time: "1 day ago",
+      status: { id: 1, value: "open", label: "Open" },
+    },
+  ],
 };
+
+export const userAchievements = [
+  {
+    id: 1,
+    title: "🏆 First Victory",
+    description: "Win your first match in any game",
+    category: "Common",
+    date: "2024-01-15",
+  },
+  {
+    id: 2,
+    title: "👑 Tournament Champion",
+    description: "Win your first tournament championship",
+    category: "Legendery",
+    date: "2024-01-15",
+  },
+  {
+    id: 3,
+    title: "⚡ Speed Demon",
+    description: "Complete 100 matches in 24 hours",
+    category: "Legendery",
+    date: "2024-01-15",
+  },
+];

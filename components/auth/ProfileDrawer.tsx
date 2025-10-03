@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import ChangePasswordModal from "@components/auth/ChangePasswordModal";
 import EditProfileModal from "./EditProfileModal";
 import Avatar from "./Avatar";
+import Link from "next/link";
 
 interface ProfileDrawerProps {
   open: boolean;
@@ -43,6 +44,12 @@ export default function ProfileDrawer({
   }, [open, onClose, anchorRef]);
 
   const menuItems = [
+    {
+      key: "Profile",
+      label: tAuth("profile"),
+      icon: User,
+      href: "/profile",
+    },
     {
       key: "editProfile",
       label: tAuth("editProfile"),
@@ -107,17 +114,34 @@ export default function ProfileDrawer({
               {menuItems.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <button
-                    key={item.key}
-                    onClick={item.onClick}
-                    className="flex items-center gap-3 py-2 px-3 rounded-md transition-colors
+                  <div key={item.key} className="w-full">
+                    {item?.href ? (
+                      <Link
+                        href={item?.href}
+                        onClick={() => {
+                          onClose();
+                        }}
+                        className="flex items-center gap-3 py-2 px-3 rounded-md transition-colors
                       text-[var(--textOne)] hover:text-[var(--primary)] hover:bg-[var(--bgThree)] cursor-pointer"
-                  >
-                    <span className="w-[25px] h-[25px] flex items-center justify-center rounded-md">
-                      <Icon size={18} />
-                    </span>
-                    <span>{item.label}</span>
-                  </button>
+                      >
+                        <span className="w-[25px] h-[25px] flex items-center justify-center rounded-md">
+                          <Icon size={18} />
+                        </span>
+                        <span>{item.label}</span>
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={item?.onClick}
+                        className="flex w-full items-center gap-3 py-2 px-3 rounded-md transition-colors
+                      text-[var(--textOne)] hover:text-[var(--primary)] hover:bg-[var(--bgThree)] cursor-pointer"
+                      >
+                        <span className="w-[25px] h-[25px] flex items-center justify-center rounded-md">
+                          <Icon size={18} />
+                        </span>
+                        <span>{item.label}</span>
+                      </button>
+                    )}
+                  </div>
                 );
               })}
             </nav>

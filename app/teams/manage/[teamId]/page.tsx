@@ -1,14 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { Circle } from "lucide-react";
 
 import { AppButton, TopBgComp } from "@/components/TopComp";
 import { useAuth } from "@/context/AuthContext";
 import { teamsData, manageTeamData } from "@/constants/data";
 import { useTranslation } from "react-i18next";
 import { TeamScreenDetailsComp } from "@/components/screens/teams/TeamsScreenTopComp";
-import { CardChip, iconMap } from "@/components/common/CardComp";
+import { CardChip, iconMap, CardSection } from "@/components/common/CardComp";
 import Image from "next/image";
+import { SwitchInput } from "@/components/Form/GenericInputComp";
 
 const initData = {
   is_private_team: false,
@@ -71,6 +73,30 @@ function ActivityFeed({ activityList }) {
     users: "bg-blue-500", // instead of #3B82F6
     news: "bg-gray-500", // instead of #6B7280
   };
+
+  const SubSection = ({ obj, contClass = "", children = null }) => (
+    <div className={`flex gap-4 mt-2 ${contClass}  items-center`}>
+      <p className="text-xs sm:text-sm md:text-base xl:text-md text-[var(--textTwo)]">
+        {obj.date_time}
+      </p>
+      {obj?.views_count && (
+        <p className="text-xs sm:text-sm md:text-base xl:text-md text-[var(--textTwo)]">
+          {obj?.views_count}
+        </p>
+      )}
+      {obj?.chip && (
+        <CardChip
+          label={obj?.chip?.label}
+          style={{
+            background: "var(--primary)",
+            color: "var(--secondary)",
+            fontWeight: 600,
+          }}
+        />
+      )}
+      {children}
+    </div>
+  );
   return (
     <div className="flex flex-col gap-4">
       {activityList.map((obj: any) => {
@@ -79,47 +105,40 @@ function ActivityFeed({ activityList }) {
         return (
           <div
             key={obj?.id}
-            className={`gradient-one border p-4 overflow-hidden rounded-[16px] flex  justify-between gap-4 border-[var(--borderThree)]`}
+            className={`gradient-one border p-4  sm:p-2 overflow-hidden rounded-[16px] flex flex-col border-[var(--borderThree)]`}
           >
-            {Icon && (
-              <div
-                className={`${iconBg[obj?.icon]} p-3 w-12 h-12 rounded-[100px]`}
-              >
-                <Icon size={25} />
-              </div>
-            )}
-            <div className="flex-1">
-              <h3 className="text-base sm:text-lg xl:text-xl font-bold text-[var(--textOne)]">
-                {obj.title}
-              </h3>
-              <p className="text-xs sm:text-sm md:text-base xl:text-lg text-[var(--textTwo)]">
-                {obj.description}
-              </p>
-              <div className="flex gap-4 mt-2">
-                <p className="text-xs sm:text-sm md:text-base xl:text-md text-[var(--textTwo)]">
-                  {obj.date_time}
+            <div className="flex  justify-between gap-4 sm:gap-2">
+              {Icon && (
+                <div
+                  className={`${
+                    iconBg[obj?.icon]
+                  } p-2 sm:p-3 w-10 h-10 sm:w-12 sm:h-12 rounded-full`}
+                >
+                  <Icon />
+                </div>
+              )}
+              <div className="flex-1">
+                <h3 className="text-base sm:text-lg xl:text-xl font-bold text-[var(--textOne)]">
+                  {obj.title}
+                </h3>
+                <p className="text-xs sm:text-sm md:text-base xl:text-lg text-[var(--textTwo)]">
+                  {obj.description}
                 </p>
-                {obj?.views_count && (
-                  <p className="text-xs sm:text-sm md:text-base xl:text-md text-[var(--textTwo)]">
-                    {obj?.views_count}
-                  </p>
-                )}
-                {obj?.chip && (
-                  <CardChip
-                    label={obj?.chip?.label}
-                    style={{
-                      background: "var(--primary)",
-                      color: "var(--secondary)",
-                      fontWeight: 600,
-                    }}
-                  />
-                )}
+                <SubSection obj={obj} contClass="hidden sm:block" />
               </div>
+              <CardChip
+                label={obj?.action}
+                style={{ padding: "5px 16px", height: "fit-content" }}
+                contClass="hidden sm:block"
+              />
             </div>
-            <CardChip
-              label={obj?.action}
-              style={{ padding: "5px 16px", height: "fit-content" }}
-            />
+            <SubSection obj={obj} contClass="block sm:hidden ">
+              <CardChip
+                label={obj?.action}
+                contClass="ml-auto"
+                style={{ padding: "5px 16px", height: "fit-content" }}
+              />
+            </SubSection>
           </div>
         );
       })}
@@ -307,19 +326,19 @@ function WalletSplits({ walletSplitList }) {
           label={tScreen("teams.manage.configureSplits")}
         />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-4">
         {walletSplitList.members?.map((obj: any) => {
           return (
             <div
               key={obj?.id}
-              className="gradient-one border p-4  overflow-hidden rounded-[16px] flex 
+              className="gradient-one border p-2 sm:p-4  overflow-hidden rounded-[16px] flex 
               flex-col sm:flex-row
                justify-between gap-4 border-[var(--borderThree)]"
             >
               {/* Left: Avatar + Name/Role */}
-              <div className="flex  justify-center sm:justify-start items-center sm:items-start gap-3 flex-1">
+              <div className="flex  justify-center sm:justify-start items-center sm:items-start gap-2 sm:gap-3 flex-1">
                 {obj.avatar_url && (
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-[var(--borderTwo)] flex-shrink-0">
+                  <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-[var(--borderTwo)] flex-shrink-0">
                     <Image
                       src={obj.avatar_url}
                       alt={obj.name}
@@ -364,10 +383,127 @@ function WalletSplits({ walletSplitList }) {
     </>
   );
 }
-function RosterLock() {
-  const { t: tScreen } = useTranslation("screen");
+
+function RosterSubstitution({ rosterInfo, tScreen }) {
   return (
-    <>
+    <CardSection label={tScreen("teams.manage.substitutionIntents")}>
+      {rosterInfo?.substitutions_requests?.length > 0 ? (
+        rosterInfo?.substitutions_requests?.map((obj: any) => {
+          return (
+            <div
+              key={obj?.id}
+              className="flex flex-col rounded-lg border border-[var(--borderOne)] bg-[var(--bgOne)] p-3"
+            >
+              <div className="flex gap-2 items-center">
+                <span className="text-md lg:text-lg mb-1 font-medium text-[var(--textOne)]">
+                  {obj?.player?.name}
+                </span>
+                {"-"}
+                <span className="text-md lg:text-lg mb-1 font-medium text-[var(--textYellow)]">
+                  {obj?.title}
+                </span>
+              </div>
+              <p className="text-sm lg:text-md  font-medium  text-[var(--textTwo)]">
+                {obj?.description}
+              </p>
+              <div className="flex flex-wrap gap-2 my-2">
+                <AppButton
+                  onClick={() => {}}
+                  type={"primary"}
+                  label={tScreen("teams.manage.approveRequest")}
+                  style={{ borderRadius: 10 }}
+                  contClass="w-full  sm:w-fit"
+                />
+                <AppButton
+                  onClick={() => {}}
+                  type={"secondaryTwo"}
+                  label={tScreen("teams.manage.denyRequest")}
+                  style={{ borderRadius: 10 }}
+                  contClass="w-full  sm:w-fit"
+                />
+                <AppButton
+                  onClick={() => {}}
+                  type={"outline"}
+                  label={tScreen("teams.manage.contactPlayer")}
+                  style={{ borderRadius: 10 }}
+                  contClass="w-full  sm:w-fit"
+                />
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <p className="text-[var(--textTwo)]">
+          {tScreen("teams.manage.noSubstitutionMsg")}
+        </p>
+      )}
+    </CardSection>
+  );
+}
+
+function RosterLockStatus({ rosterInfo, tScreen }) {
+  return (
+    <CardSection label={tScreen("teams.manage.rosterLockStatus")}>
+      <div className="flex flex-col rounded-lg border border-[var(--borderOne)] bg-[var(--bgOne)] p-3">
+        <div className="flex justify-between">
+          <h3 className="text-md lg:text-lg mb-1 font-medium text-[var(--textOne)] flex items-center gap-2">
+            <Circle className="shrink-0 w-2 h-2 bg-[var(--primary)] rounded-2xl" />
+            {tScreen("teams.manage.currentStatus")}
+          </h3>
+          <h3 className="text-md lg:text-lg mb-1 font-semibold text-[var(--primary)]">
+            {rosterInfo?.lock_statuses?.current_status?.label}
+          </h3>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-[var(--borderOne)] bg-[var(--bgOne)] p-3">
+        <div className="flex flex-col gap-1 mb-2 sm:flex-row sm:justify-between">
+          <h3 className="text-md lg:text-lg  font-medium text-[var(--textOne)] flex items-center gap-2">
+            {tScreen("teams.manage.nextTournament")}
+          </h3>
+          <h3 className="text-md lg:text-lg font-medium text-[var(--textYellow)] flex items-center gap-2">
+            {rosterInfo?.lock_statuses?.next_tournament?.title}
+          </h3>
+        </div>
+        <div className="flex flex-col gap-1 sm:flex-row sm:justify-between">
+          <p className="text-sm lg:text-md  font-medium  text-[var(--textTwo)]">
+            {tScreen("teams.manage.lockDate")}
+          </p>
+          <p className="text-sm lg:text-md font-medium  sm:text-right text-[var(--textOne)]">
+            {rosterInfo?.lock_statuses?.next_tournament?.lock_date}
+          </p>
+        </div>
+      </div>
+    </CardSection>
+  );
+}
+function RosterLock({ rosterInfo }) {
+  const { t: tScreen } = useTranslation("screen");
+  const [autoLockTournamentRoster, setAutoLockTournamentRoster] =
+    useState(false);
+  const [allowEmergencySubstitutions, setAllowEmergencySubstitutions] =
+    useState(false);
+
+  const ToggleStatusComp = ({ title, description, checked, onToggle }) => (
+    <div className="flex flex-col sm:flex-row sm:justify-between ">
+      <div>
+        <h1 className="text-md lg:text-lg mb-1 font-medium text-[var(--textOne)]">
+          {title}
+        </h1>
+        <p className="text-xs md:text-sm lg:text-md font-medium  text-[var(--textTwo)]">
+          {description}
+        </p>
+      </div>
+      <SwitchInput checked={checked} onChange={onToggle} />
+    </div>
+  );
+
+  useEffect(() => {
+    setAutoLockTournamentRoster(rosterInfo?.auto_lock_tournaments_roster);
+    setAllowEmergencySubstitutions(rosterInfo?.allow_emergency_substitutions);
+  }, [rosterInfo]);
+  return (
+    <div className="flex flex-col gap-4">
       <div className="pt-3 pb-4 flex justify-between items-center">
         <div>
           <h1 className="text-lg sm:text-md md:text-xl lg:text-2xl font-semibold text-[var(--textOne)]">
@@ -378,11 +514,85 @@ function RosterLock() {
           </p>
         </div>
       </div>
-    </>
+
+      <CardSection label={tScreen("teams.manage.tournamentRosterLock")}>
+        <ToggleStatusComp
+          title={tScreen("teams.manage.AutoLockTournamentRoster")}
+          description={tScreen("teams.manage.AutoLockTournamentRosterDesc")}
+          checked={autoLockTournamentRoster}
+          onToggle={setAutoLockTournamentRoster}
+        />
+        <ToggleStatusComp
+          title={tScreen("teams.manage.allowEmergencySubstitutions")}
+          description={tScreen("teams.manage.allowEmergencySubstitutionsDesc")}
+          checked={allowEmergencySubstitutions}
+          onToggle={setAllowEmergencySubstitutions}
+        />
+      </CardSection>
+
+      <RosterSubstitution rosterInfo={rosterInfo} tScreen={tScreen} />
+      <RosterLockStatus rosterInfo={rosterInfo} tScreen={tScreen} />
+      <CardSection label={tScreen("teams.manage.recentActivity")}>
+        {rosterInfo?.recent_activities?.length > 0 ? (
+          rosterInfo?.recent_activities?.map((obj: any) => {
+            return (
+              <div
+                key={obj?.id}
+                className="flex flex-col rounded-lg border border-[var(--borderOne)] bg-[var(--bgOne)] p-3"
+              >
+                <div className="flex flex-col gap-1  sm:flex-row sm:justify-between">
+                  <h3 className="text-md lg:text-lg font-medium text-[var(--textOne)] flex items-center gap-2">
+                    <Circle className="shrink-0 w-2 h-2 bg-[var(--primary)] rounded-2xl" />
+                    {obj?.title}
+                  </h3>
+                  <h3 className="text-md lg:text-lg  font-medium text-[var(--textTwo)]">
+                    {obj?.date_time}
+                  </h3>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p className="text-[var(--textTwo)]">No Recent Activities</p>
+        )}
+      </CardSection>
+    </div>
   );
 }
-function Disputes() {
+function Disputes({ disputesList }) {
   const { t: tScreen } = useTranslation("screen");
+  const chip = {
+    investigating: {
+      background: "var(--bgYellow)",
+      fontWeight: "bold",
+    },
+    medium: {
+      background: "var(--bgYellow)",
+      fontWeight: "bold",
+      // color: "var(--secondary)",
+    },
+    high: {
+      background: "var(--bgFour)",
+      fontWeight: "bold",
+    },
+    open: {
+      background: "var(--bgFour)",
+      fontWeight: "bold",
+    },
+    startInvestigate: {},
+    view: {
+      background: "black",
+    },
+  };
+
+  const ChipButton = ({ label, contClass = "", onClick }) => (
+    <div
+      onClick={onClick}
+      className={`rounded-[20px] px-4 py-2 cursor-pointer  text-center font-medium  text-sm  text-[var(--textOne)] w-fit capitalize flex items-center justify-center transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md ${contClass}`}
+    >
+      {label}
+    </div>
+  );
   return (
     <>
       <div className="pt-3 pb-4 flex justify-between items-center">
@@ -400,13 +610,65 @@ function Disputes() {
           label={tScreen("teams.manage.reportIssue")}
         />
       </div>
+      <div className="flex flex-col gap-4">
+        {disputesList?.map((obj: any) => {
+          return (
+            <div
+              key={obj?.id}
+              className={`gradient-one border p-2 sm:p-4  gap-2 overflow-hidden rounded-[16px] flex flex-col  border-[var(--borderThree)] `}
+            >
+              <div className="flex justify-between">
+                <h1 className="text-lg lg:text-xl font-semibold text-[var(--textOne)]">
+                  {obj?.title}
+                </h1>
+                <CardChip
+                  label={obj?.status?.label}
+                  style={chip?.[obj?.status?.value]}
+                />
+              </div>
+              <CardChip
+                label={obj?.category?.label}
+                style={chip?.[obj?.category?.value]}
+              />
+              <p className="text-sm lg:text-md  font-medium  text-[var(--textTwo)]">
+                {obj?.description}
+              </p>
+              <div className="flex gap-2 items-center">
+                <span className="text-md font-medium text-[var(--textTwo)]">
+                  Reported by{" "}
+                  <span className="text-[var(--textOne)]">
+                    {obj.reported_by}
+                  </span>
+                </span>
+                <span>:</span>
+                <span className="text-md text-[var(--textTwo)]">
+                  {obj.date_time}
+                </span>
+              </div>
+
+              <div className="flex gap-2">
+                <ChipButton
+                  onClick={() => {}}
+                  label={tScreen("teams.manage.viewDetails")}
+                  contClass={`bg-["black"] border border-[var(--borderTwo)]`}
+                />
+                <ChipButton
+                  onClick={() => {}}
+                  label={tScreen("teams.manage.startInvestigation")}
+                  contClass={`bg-[var(--bgBlue)]`}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 }
 
 function TeamTabFeed({ manageTeamData }) {
   const { t: tScreen } = useTranslation("screen");
-  const [activeTab, setActiveTab] = useState("wallet");
+  const [activeTab, setActiveTab] = useState("activity");
 
   const teamTabs = [
     {
@@ -436,12 +698,12 @@ function TeamTabFeed({ manageTeamData }) {
     {
       key: "roster",
       label: tScreen("teams.manage.rosterLock"),
-      component: <RosterLock />,
+      component: <RosterLock rosterInfo={manageTeamData?.roster} />,
     },
     {
       key: "disputes",
       label: tScreen("teams.manage.disputes"),
-      component: <Disputes />,
+      component: <Disputes disputesList={manageTeamData?.disputes || []} />,
     },
   ];
 
@@ -453,7 +715,9 @@ function TeamTabFeed({ manageTeamData }) {
           flex gap-3 sm:gap-4 
           overflow-x-auto sm:overflow-x-visible
           scrollbar-hide
-          pb-2 sm:pb-0
+          p-[5px]
+          // pb-2 sm:pb-0
+          
         "
       >
         {teamTabs.map((tab) => (

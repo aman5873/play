@@ -10,7 +10,7 @@ import { SocialCard } from "@/components/screens/social/SocialHubFeed";
 import { socialData } from "@/constants/data";
 
 export default function SocialPageFeed() {
-  const { headerSearchValue } = useAuth();
+  const { headerSearchValue, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
 
   // Filters
@@ -67,6 +67,16 @@ export default function SocialPageFeed() {
   const safePageSize = pageSize || 6;
   const safeCurrentPage = currentPage || 1;
   const totalPages = Math.max(1, Math.ceil(totalItems / safePageSize));
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // 1 second
+
+    return () => clearTimeout(timer); // cleanup on unmount
+  }, []);
 
   // Reset currentPage if exceeds totalPages
   useEffect(() => {

@@ -308,7 +308,7 @@ function AchievementFeed() {
 }
 
 export default function SocialPageFeed() {
-  const { headerSearchValue } = useAuth();
+  const { headerSearchValue, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
 
   // Filters
@@ -373,6 +373,16 @@ export default function SocialPageFeed() {
     const start = (safeCurrentPage - 1) * safePageSize;
     return filteredSocial.slice(start, start + safePageSize);
   }, [filteredSocial, safeCurrentPage, safePageSize]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // 1 second
+
+    return () => clearTimeout(timer); // cleanup on unmount
+  }, []);
 
   return (
     <div className="mx-auto py-10 pb-10 w-full">

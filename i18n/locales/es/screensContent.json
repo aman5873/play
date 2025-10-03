@@ -199,7 +199,7 @@
       "startInvestigation": "Iniciar investigación"
     }
   },
-  "create_team": {
+  "createTeam": {
     "chip": "Crear equipo",
     "title": "Forma TU",
     "highlightTitle": "ESCUADRA ÉLITE",
@@ -227,6 +227,7 @@
       "teamCoCaptainDesc": "Asiste con la gestión",
       "teamMembers": "Miembros",
       "teamMembersDesc": "Jugadores principales del equipo",
+      "you": "tú",
 
       "reqPreferences": "Preferencias de reclutamiento",
       "skillLevelReq": "Requisitos de nivel de habilidad",
@@ -235,5 +236,21 @@
       "createTeam": "Crear equipo",
       "saveAsDraft": "Guardar como borrador"
     }
+  },
+  "user": {
+    "profile": "Perfil",
+    "editProfile": "Editar Perfil",
+    "profileInfo": "Información del Perfil",
+    "Username": "Nombre de Usuario",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "dob": "Fecha de Nacimiento",
+    "country": "País",
+    "bio": "Biografía",
+    "medalsAchievements": "Medallas y Logros",
+    "gamePlayed": "Juegos Jugados",
+    "wins": "Victorias",
+    "winRate": "Tasa de Victoria",
+    "totalEarnings": "Ganancias Totales"
   }
 }

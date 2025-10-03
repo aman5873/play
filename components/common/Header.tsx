@@ -8,7 +8,7 @@ import LanguageToggle from "../LanguageToggle";
 import { useTranslation } from "react-i18next";
 
 import SearchInput from "./Searchinput";
-import Image from "next/image";
+// import Image from "next/image";
 import Avatar from "../auth/Avatar";
 
 const LoginModal = dynamic(() => import("@/components/auth/LoginModal"), {

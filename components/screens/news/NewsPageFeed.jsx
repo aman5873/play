@@ -11,7 +11,7 @@ import { newsData } from "@/constants/data";
 import { IconLabelInfo } from "@/components/common/CardComp";
 
 export default function NewsPageFeed() {
-  const { headerSearchValue } = useAuth();
+  const { headerSearchValue, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
   const { t: tNav } = useTranslation("navigation");
   const { t: tScreen } = useTranslation("screen");
@@ -86,6 +86,16 @@ export default function NewsPageFeed() {
     const start = (safeCurrentPage - 1) * safePageSize;
     return filteredSocial.slice(start, start + safePageSize);
   }, [filteredSocial, safeCurrentPage, safePageSize]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // 1 second
+
+    return () => clearTimeout(timer); // cleanup on unmount
+  }, []);
 
   return (
     <div className="mx-auto py-10 pb-10 w-full">

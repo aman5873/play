@@ -19,6 +19,7 @@ import {
   Heart,
   Eye,
   Settings,
+  Edit,
 } from "lucide-react";
 
 // Map string keys to lucide icons
@@ -33,6 +34,7 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   trend: TrendingUp,
   upload: Upload,
   add: Plus,
+  edit: Edit,
   heart: Heart,
   eye: Eye,
   settings: Settings,
@@ -193,19 +195,25 @@ export function AppButton({
   label,
   Icon = null,
   icon = null,
+  style = {},
+  contClass = "",
 }) {
   const IconComp = icon ? iconMap[icon] : null;
 
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 flex items-center justify-center rounded-[100px] border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
+      className={`px-4 py-2 flex items-center justify-center rounded-[100px] border  cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
                   ${
                     type === "primary"
-                      ? "bg-[var(--primary)] text-[var(--secondary)]"
-                      : "bg-[var(--secondary)] text-[var(--primary)]"
-                  }`}
-      style={{ minWidth: "120px" }}
+                      ? "bg-[var(--primary)] text-[var(--secondary)] border-[var(--primary)]"
+                      : type === "secondary"
+                      ? "bg-[var(--secondary)] text-[var(--primary)] border-[var(--primary)]"
+                      : type === "secondaryTwo"
+                      ? "bg-[var(--borderTwo)] text-[var(--textOne)] border-[var(--borderTwo)]"
+                      : "bg-[transparent] text-[var(--textOne)] border-[var(--textTwo)]"
+                  } ${contClass}`}
+      style={{ minWidth: "120px", ...style }}
     >
       {Icon && (
         <Icon

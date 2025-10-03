@@ -62,6 +62,7 @@ body {
   --textFive: #6146f9;
   --textSix: #4abed7;
   --textSeven: #006956;
+  --textYellow: #f5b528;
 
   --textCommon: #49998c;
   --textRare: #5a8899;
@@ -73,6 +74,8 @@ body {
   --bgThree: #1a1f15;
   --bgFour: #e23939;
   --bgFive: #18241e;
+  --bgYellow: #f59e0b;
+  --bgBlue: #3b82f6;
 
   --borderOne: #115740;
   --borderTwo: #40453b;
@@ -110,6 +113,7 @@ body {
   --textCommon: #49998c;
   --textRare: #5a8899;
   --textLegendary: #d4a574;
+  --textYellow: #f5b528;
 
   --bg: #0d1914;
   --bgOne: #1d332b;
@@ -117,6 +121,7 @@ body {
   --bgThree: #1a1f15;
   --bgFour: #e23939;
   --bgFive: #18241e;
+  --bgYellow: #f59e0b;
 
   --borderOne: #115740;
   --borderTwo: #40453b;

@@ -8,7 +8,9 @@ interface ReactSelectInputProps {
   onChange?: (value: any) => void;
   options?: any[];
   placeholder?: string;
+  label?: string;
   selectedBorder?: string;
+  errorMessage?: string;
   isSecondary?: boolean;
   [key: string]: any;
 }
@@ -19,10 +21,20 @@ export default function ReactSelectInput({
   options,
   placeholder = "Select...",
   selectedBorder = "",
+  label = "",
+  errorMessage = "",
   isSecondary = false,
+  isPrimaryTwo = true,
+  isError = false,
+  required = false,
+  isRequired = false,
   ...rest
 }: ReactSelectInputProps) {
-  const controlBg = isSecondary ? "transparent" : "var(--bgOne)";
+  const controlBg = isSecondary
+    ? "transparent"
+    : isPrimaryTwo
+    ? "var(--bgTwo)"
+    : "var(--bgOne)";
 
   const customStyles = {
     control: (base: any, state: any) => ({
@@ -33,6 +45,8 @@ export default function ReactSelectInput({
           ? "var(--borderTwo)"
           : isSecondary
           ? "var(--textTwo)"
+          : isPrimaryTwo
+          ? "var(--borderTwo)"
           : "var(--borderOne)"
       }`,
       borderRadius: "10px",
@@ -40,8 +54,12 @@ export default function ReactSelectInput({
       boxShadow: "none",
       transition: "all 0.2s ease",
       "&:hover": {
-        borderColor: isSecondary ? "var(--textTwo)" : "var(--borderTwo)",
-        backgroundColor: "var(--bgTwo)",
+        borderColor: isSecondary
+          ? "var(--textTwo)"
+          : isPrimaryTwo
+          ? "var(--borderOne)"
+          : "var(--borderTwo)",
+        backgroundColor: isPrimaryTwo ? "var(--bgOne)" : "var(--bgTwo)",
       },
     }),
     singleValue: (base: any) => ({
@@ -79,7 +97,11 @@ export default function ReactSelectInput({
     }),
     indicatorSeparator: (base: any) => ({
       ...base,
-      backgroundColor: isSecondary ? "var(--textTwo)" : "var(--borderOne)",
+      backgroundColor: isSecondary
+        ? "var(--textTwo)"
+        : isPrimaryTwo
+        ? "var(--borderOne)"
+        : "var(--borderOne)",
     }),
     input: (base: any) => ({
       ...base,
@@ -88,14 +110,27 @@ export default function ReactSelectInput({
   };
 
   return (
-    <Select
-      value={value}
-      onChange={onChange}
-      options={options}
-      placeholder={placeholder}
-      styles={customStyles}
-      classNamePrefix="react-select"
-      {...rest}
-    />
+    <div className="flex flex-col gap-1 w-full">
+      {label && (
+        <label
+          className="text-[var(--textOne)] text-md font-medium"
+          htmlFor={rest.id}
+        >
+          {label} {(isRequired || required) && "*"}
+        </label>
+      )}
+      <Select
+        value={value}
+        onChange={onChange}
+        options={options}
+        placeholder={placeholder}
+        styles={customStyles}
+        classNamePrefix="react-select"
+        {...rest}
+      />
+      {isError && errorMessage && (
+        <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+      )}
+    </div>
   );
 }

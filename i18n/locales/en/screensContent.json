@@ -198,7 +198,7 @@
       "startInvestigation": "Start Investigation"
     }
   },
-  "create_team": {
+  "createTeam": {
     "chip": "Create Teams",
     "title": "Build YOUR",
     "highlightTitle": "ELITE SQUAD",
@@ -226,6 +226,7 @@
       "teamCoCaptainDesc": "Assist with management",
       "teamMembers": "Members",
       "teamMembersDesc": "Core team players",
+      "you": "You",
 
       "reqPreferences": "Recruitment Preferences",
       "skillLevelReq": "Skill Level Requirements",
@@ -234,5 +235,21 @@
       "createTeam": "Create Team",
       "saveAsDraft": "Save as Draft"
     }
+  },
+  "user": {
+    "profile": "Profile",
+    "editProfile": "Edit Profile",
+    "profileInfo": "Profile Information",
+    "Username": "Username",
+    "name": "Name",
+    "email": "Email Address",
+    "dob": "Date of Birth",
+    "country": "Country",
+    "bio": "Bio",
+    "medalsAchievements": "Medals & Achievements",
+    "gamePlayed": "Games Played",
+    "wins": "Wins",
+    "winRate": "Win Rate",
+    "totalEarnings": "Total Earnings"
   }
 }

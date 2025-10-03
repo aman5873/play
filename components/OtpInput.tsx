@@ -59,7 +59,7 @@ export default function OtpInputComp({
   return (
     <div className="flex flex-col gap-2 w-full items-center">
       {label && (
-        <label className="block text-[var(--textOne)] text-md font-semibold mb-1">
+        <label className="block text-[var(--textOne)] text-md font-medium mb-1">
           {label}
         </label>
       )}
@@ -75,7 +75,7 @@ export default function OtpInputComp({
             onChange={(e) => handleChange(e, i)}
             onKeyDown={(e) => handleKeyDown(e, i)}
             maxLength={1}
-            className="w-10 h-12 text-center text-xl font-semibold rounded-md
+            className="w-10 h-12 text-center text-xl font-medium rounded-md
               border border-[var(--borderTwo)] bg-[var(--bgTwo)]
               text-[var(--textOne)] placeholder:text-[var(--textTwo)]
               outline-none transition-colors duration-200

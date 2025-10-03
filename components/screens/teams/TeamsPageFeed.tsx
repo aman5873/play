@@ -88,7 +88,7 @@ function TeamsTable(props: any) {
 }
 
 export default function TeamsPageFeed() {
-  const { headerSearchValue } = useAuth();
+  const { headerSearchValue, setLoading } = useAuth();
   const { t: tCommon } = useTranslation("common");
 
   // Filters
@@ -150,6 +150,16 @@ export default function TeamsPageFeed() {
     const start = (safeCurrentPage - 1) * safePageSize;
     return filteredTeams.slice(start, start + safePageSize);
   }, [filteredTeams, safeCurrentPage, safePageSize]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // 1 second
+
+    return () => clearTimeout(timer); // cleanup on unmount
+  }, []);
 
   return (
     <div className="mx-auto py-10 w-full">

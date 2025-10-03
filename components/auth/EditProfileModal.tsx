@@ -87,6 +87,7 @@ export default function EditProfileModal({ open, onClose }) {
       onClose={onClose}
       title={tAuth("profile")}
       titleClass="font-rajdhani"
+      contClass="w-[95%] sm:w-md "
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
         {/* Avatar */}
