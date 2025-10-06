@@ -31,7 +31,10 @@
     "genre": "Filter by Genre",
     "status": "Filter by Status",
     "all": "All",
-    "popularity": "Popularity"
+    "popularity": "Popularity",
+    "platform": "Platform",
+    "region": "Region",
+    "game": "Game"
   },
   "messages": {
     "noGames": "No games found.",

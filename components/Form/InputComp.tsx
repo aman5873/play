@@ -22,6 +22,7 @@ export default function InputComp({
   errorMessage = "",
   showPasswordToggle = false,
   radius = "50px",
+  value = "",
   ...props
 }: InputCompProps) {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,6 +53,7 @@ export default function InputComp({
           <textarea
             placeholder={placeholder}
             required={required}
+            value={value}
             {...props}
             className={baseClasses}
           />
@@ -66,6 +68,7 @@ export default function InputComp({
             }
             placeholder={placeholder}
             required={required}
+            value={value}
             {...props}
             className={`${baseClasses} ${
               showPasswordToggle && isPasswordType ? "pr-10" : ""

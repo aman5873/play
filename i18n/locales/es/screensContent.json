@@ -244,6 +244,7 @@
     "Username": "Nombre de Usuario",
     "name": "Nombre",
     "email": "Correo Electrónico",
+    "phone": "Teléfono",
     "dob": "Fecha de Nacimiento",
     "country": "País",
     "bio": "Biografía",
@@ -252,5 +253,44 @@
     "wins": "Victorias",
     "winRate": "Tasa de Victoria",
     "totalEarnings": "Ganancias Totales"
+  },
+
+  "contentCreator": {
+    "chip": "Centro Social",
+    "title": "CREADOR DE CONTENIDO",
+    "highlightTitle": "PROGRAMA",
+    "description": "Explora a los creadores de contenido más talentosos de la comunidad gaming. Sigue su trayectoria, aprende de sus estrategias e inspírate con sus historias de éxito.",
+    "buttonPrimary": "Crear Contenido",
+    "buttonSecondary": "Ver perfil",
+    "labels": {
+      "myProfile": "Mi Perfil",
+      "dashboard": "Panel de Control",
+      "topCreators": "Mejores Creadores",
+      "socialMediaAnalytics": "Analítica de Redes Sociales",
+      "posts": "Publicaciones",
+      "engagement": "Interacción",
+      "avgViews": "Vistas Promedio",
+      "achievements": "Logros",
+      "latestContent": "Contenido Reciente",
+
+      "creatorDashboard": "Panel del Creador",
+      "creatorDashboardDesc": "¡Bienvenido de nuevo, Alex Chen!",
+      "totalFollowers": "Seguidores Totales",
+      "avgEngagement": "Interacción Promedio",
+      "totalWatchTime": "Tiempo Total de Visualización",
+      "earnings": "Ganancias",
+
+      "questsRewards": "Misiones y Recompensas",
+      "payouts": "Pagos",
+      "socialAccounts": "Cuentas Sociales",
+      "activeQuests": "Misiones Activas",
+      "progress": "Progreso",
+
+      "payoutHistory": "Historial de Pagos",
+      "connectedAccounts": "Cuentas Conectadas",
+
+      "connect": "Conectar {{account}}",
+      "connectDesc": "Vincula tu cuenta de {{account}} para rastrear el rendimiento"
+    }
   }
 }

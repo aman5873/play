@@ -26,13 +26,18 @@
     "images": "Imágenes",
     "view_all": "Ver todo"
   },
+
   "filters": {
     "category": "Filtrar por categoría",
     "genre": "Filtrar por género",
     "status": "Filtrar por estado",
     "all": "Todos",
-    "popularity": "Popularidad"
+    "popularity": "Popularidad",
+    "platform": "Plataforma",
+    "region": "Región",
+    "game": "Juego"
   },
+
   "messages": {
     "noGames": "No se encontraron juegos.",
     "noSocials": "No se encontraron publicaciones sociales.",

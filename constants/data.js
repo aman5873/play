@@ -210,112 +210,6 @@ export const newsData = [
   },
 ];
 
-// ***** socials
-export const socialAnalytics = {
-  video_shared: "150+",
-  active_members: "$2.5M+",
-  verified_creators: "50K+",
-  live_streams: "24/7",
-};
-
-export const socialData = [
-  {
-    id: 1,
-    category: "VR Sports",
-    is_trending: true,
-    channel: {
-      logo: "/images/home/user1Avatar.png",
-      title: "Epic VR Basketball Slam Dunk",
-      description: "VRProGamer",
-    },
-    media: {
-      thumbnail: "/images/home/post1.png",
-      type: "video",
-      duration: 60000,
-    },
-    avg_rating: 4.8,
-    like_count: 1122,
-    comment_count: 350,
-    views_count: 350,
-  },
-  {
-    id: 2,
-    category: "Tutorials",
-    is_trending: true,
-    channel: {
-      logo: "/images/home/user1Avatar.png",
-      title: "Epic VR Basketball Slam Dunk",
-      description: "VRProGamer",
-    },
-    media: {
-      thumbnail: "/images/home/post2.png",
-      type: "video",
-      duration: 60000,
-    },
-    avg_rating: 4.8,
-    like_count: 1122,
-    comment_count: 350,
-    views_count: 350,
-  },
-  {
-    id: 3,
-    category: "Live Streams",
-    is_trending: true,
-    channel: {
-      logo: "/images/home/user1Avatar.png",
-      title: "Epic VR Basketball Slam Dunk",
-      description: "VRProGamer",
-    },
-    media: {
-      thumbnail: "/images/home/post1.png",
-      type: "video",
-      duration: 60000,
-    },
-    avg_rating: 4.8,
-    like_count: 1122,
-    comment_count: 350,
-    views_count: 350,
-  },
-  {
-    id: 4,
-    category: "VR Sports",
-    is_trending: true,
-    channel: {
-      logo: "/images/home/user1Avatar.png",
-      title: "Epic VR Basketball Slam Dunk",
-      description: "VRProGamer",
-    },
-    media: {
-      thumbnail: "/images/home/post2.png",
-      type: "video",
-      duration: 60000,
-    },
-    avg_rating: 4.8,
-    like_count: 1122,
-    comment_count: 350,
-    views_count: 350,
-  },
-  {
-    id: 5,
-    category: "VR Sports",
-    is_trending: true,
-    channel: {
-      logo: "/images/home/user1Avatar.png",
-      title: "Epic VR Basketball Slam Dunk",
-      description: "VRProGamer",
-    },
-    media: {
-      thumbnail: "/images/home/post2.png",
-      type: "video",
-      duration: 60000,
-    },
-    avg_rating: 4.8,
-    like_count: 1122,
-    comment_count: 350,
-    views_count: 350,
-  },
-];
-
 // **** Leaderboard
 export const leaderboardData = {
   leaderboard: [
@@ -910,3 +804,533 @@ export const userAchievements = [
     date: "2024-01-15",
   },
 ];
+
+export const assetsData = [
+  {
+    id: 1,
+    title: "Arena Basketball Pro",
+    description:
+      "Professional basketball arena with realistic sound effects and immersive crowd atmosphere",
+    created_by: "NBAFan2024",
+    game: {
+      id: 1,
+      title: "VR Basketball",
+    },
+    category: {
+      id: "1",
+      label: "Stadiums",
+      value: "stadiums",
+    },
+    amount: {
+      currency: "€",
+      value: 2.99,
+    },
+    avg_rating: 4.8,
+    download_count: "12.5k",
+    level: {
+      id: "1",
+      label: "Advanced",
+      value: 4,
+    },
+    images: [
+      {
+        id: "6dd387eb-ccc0-42d1-8fcc-28aa459c3c05",
+        is_primary: 1,
+        image_url: "/images/assets/vr_basketball",
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Ultimate Drift Simulator",
+    description:
+      "Experience high-speed drifting on a variety of tracks with stunning graphics and responsive controls",
+    created_by: "Speedster2024",
+    game: {
+      id: 1,
+      title: "Formula Drift",
+    },
+    category: {
+      id: "1",
+      label: "Racetracks",
+      value: "Racetracks",
+    },
+    amount: {
+      currency: "€",
+      value: 2.99,
+    },
+    avg_rating: 4.7,
+    download_count: "8.49k",
+    level: {
+      id: "5",
+      label: "Expert",
+      value: 5,
+    },
+    images: [
+      {
+        id: "b4e81f28-7ed6-4422-bab2-f0508b2f1dc0",
+        is_primary: 1,
+        image_url: "/images/assets/vr_drift.png",
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Wildlife Adventure",
+    description:
+      "Experience high-speed drifting on a variety of tracks with stunning graphics and responsive controls",
+    created_by: "Speedster2024",
+    game: {
+      id: 1,
+      title: "Explorer",
+    },
+    category: {
+      id: "1",
+      label: "Parks",
+      value: "Parks",
+    },
+    amount: {
+      currency: "€",
+      value: 1.99,
+    },
+    avg_rating: 4.5,
+    download_count: "5.2k",
+    level: {
+      id: "3",
+      label: "Intermediate",
+      value: 3,
+    },
+
+    images: [
+      {
+        id: "c3a4357a-da9e-4467-92ad-a07c122dab1d",
+        is_primary: 1,
+        image_url: "/images/assets/vr_park.png",
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "Simulator",
+    description:
+      "Build and manage your dream city, with dynamic events and challenges",
+    created_by: "CityBuilder2024",
+    game: {
+      id: 1,
+      title: "Urban Journey",
+    },
+    category: {
+      id: "1",
+      label: "Parks",
+      value: "Parks",
+    },
+    amount: {
+      currency: "€",
+      value: 2.99,
+    },
+    avg_rating: 4.9,
+    download_count: "15.7k",
+    level: {
+      id: "5",
+      label: "Expert",
+      value: 5,
+    },
+
+    images: [
+      {
+        id: "c3a4357a-da9e-4467-92ad-a07c122dab1d",
+        is_primary: 1,
+        image_url: "/images/assets/vr_city.png",
+      },
+    ],
+  },
+];
+
+//
+// ***** socials
+export const socialAnalytics = {
+  video_shared: "150+",
+  active_members: "$2.5M+",
+  verified_creators: "50K+",
+  live_streams: "24/7",
+};
+
+export const socialData = [
+  {
+    id: 1,
+    category: "VR Sports",
+    is_trending: true,
+    channel: {
+      logo: "/images/home/user1Avatar.png",
+      title: "Epic VR Basketball Slam Dunk",
+      description: "VRProGamer",
+    },
+    media: {
+      thumbnail: "/images/home/post1.png",
+      type: "video",
+      duration: 60000,
+    },
+    avg_rating: 4.8,
+    like_count: 1122,
+    comment_count: 350,
+    views_count: 350,
+  },
+  {
+    id: 2,
+    category: "Tutorials",
+    is_trending: true,
+    channel: {
+      logo: "/images/home/user1Avatar.png",
+      title: "Epic VR Basketball Slam Dunk",
+      description: "VRProGamer",
+    },
+    media: {
+      thumbnail: "/images/home/post2.png",
+      type: "video",
+      duration: 60000,
+    },
+    avg_rating: 4.8,
+    like_count: 1122,
+    comment_count: 350,
+    views_count: 350,
+  },
+  {
+    id: 3,
+    category: "Live Streams",
+    is_trending: true,
+    channel: {
+      logo: "/images/home/user1Avatar.png",
+      title: "Epic VR Basketball Slam Dunk",
+      description: "VRProGamer",
+    },
+    media: {
+      thumbnail: "/images/home/post1.png",
+      type: "video",
+      duration: 60000,
+    },
+    avg_rating: 4.8,
+    like_count: 1122,
+    comment_count: 350,
+    views_count: 350,
+  },
+  {
+    id: 4,
+    category: "VR Sports",
+    is_trending: true,
+    channel: {
+      logo: "/images/home/user1Avatar.png",
+      title: "Epic VR Basketball Slam Dunk",
+      description: "VRProGamer",
+    },
+    media: {
+      thumbnail: "/images/home/post2.png",
+      type: "video",
+      duration: 60000,
+    },
+    avg_rating: 4.8,
+    like_count: 1122,
+    comment_count: 350,
+    views_count: 350,
+  },
+  {
+    id: 5,
+    category: "VR Sports",
+    is_trending: true,
+    channel: {
+      logo: "/images/home/user1Avatar.png",
+      title: "Epic VR Basketball Slam Dunk",
+      description: "VRProGamer",
+    },
+    media: {
+      thumbnail: "/images/home/post2.png",
+      type: "video",
+      duration: 60000,
+    },
+    avg_rating: 4.8,
+    like_count: 1122,
+    comment_count: 350,
+    views_count: 350,
+  },
+];
+
+export const contentCreatorData = {
+  profile: {
+    analytics: [
+      {
+        id: 1,
+        name: "instagram",
+        growth_per: "+15.2%",
+        followers: "1.2M",
+        avg_views: "85K",
+        engagement_per: "12.5%",
+        posts_count: 342,
+      },
+      {
+        id: 1,
+        name: "tickTock",
+        growth_per: "+15.2%",
+        followers: "1.2M",
+        avg_views: "85K",
+        engagement_per: "12.5%",
+        posts_count: 342,
+      },
+    ],
+    achievements: [
+      {
+        id: 1,
+        icon: "",
+        title: "Top Creator",
+        subtitle: "Achievement Unlocked",
+        description:
+          "Recognized as one of the top gaming content creators in the FPS category with over 1M+ combined followers across all platforms.",
+      },
+      {
+        id: 2,
+        icon: "",
+        title: "Engagement Master",
+        subtitle: "Achievement Unlocked",
+        description:
+          "Achieved exceptional engagement rates across all social media platforms with an average of 15%+ engagement on all content.",
+      },
+    ],
+  },
+  latestContent: [
+    {
+      id: 1,
+      category: "VR Sports",
+      is_trending: true,
+      channel: {
+        logo: "/images/home/user1Avatar.png",
+        title: "Epic VR Basketball Slam Dunk",
+        description: "VRProGamer",
+      },
+      media: {
+        thumbnail: "/images/home/post1.png",
+        type: "video",
+        duration: 60000,
+      },
+      avg_rating: 4.8,
+      like_count: 1122,
+      comment_count: 350,
+      views_count: 350,
+    },
+    {
+      id: 2,
+      category: "Tutorials",
+      is_trending: true,
+      channel: {
+        logo: "/images/home/user1Avatar.png",
+        title: "Epic VR Basketball Slam Dunk",
+        description: "VRProGamer",
+      },
+      media: {
+        thumbnail: "/images/home/post2.png",
+        type: "video",
+        duration: 60000,
+      },
+      avg_rating: 4.8,
+      like_count: 1122,
+      comment_count: 350,
+      views_count: 350,
+    },
+    {
+      id: 3,
+      category: "Live Streams",
+      is_trending: true,
+      channel: {
+        logo: "/images/home/user1Avatar.png",
+        title: "Epic VR Basketball Slam Dunk",
+        description: "VRProGamer",
+      },
+      media: {
+        thumbnail: "/images/home/post1.png",
+        type: "video",
+        duration: 60000,
+      },
+      avg_rating: 4.8,
+      like_count: 1122,
+      comment_count: 350,
+      views_count: 350,
+    },
+    {
+      id: 4,
+      category: "VR Sports",
+      is_trending: true,
+      channel: {
+        logo: "/images/home/user1Avatar.png",
+        title: "Epic VR Basketball Slam Dunk",
+        description: "VRProGamer",
+      },
+      media: {
+        thumbnail: "/images/home/post2.png",
+        type: "video",
+        duration: 60000,
+      },
+      avg_rating: 4.8,
+      like_count: 1122,
+      comment_count: 350,
+      views_count: 350,
+    },
+    {
+      id: 5,
+      category: "VR Sports",
+      is_trending: true,
+      channel: {
+        logo: "/images/home/user1Avatar.png",
+        title: "Epic VR Basketball Slam Dunk",
+        description: "VRProGamer",
+      },
+      media: {
+        thumbnail: "/images/home/post2.png",
+        type: "video",
+        duration: 60000,
+      },
+      avg_rating: 4.8,
+      like_count: 1122,
+      comment_count: 350,
+      views_count: 350,
+    },
+  ],
+
+  creator_dashboard: {
+    analytics: [
+      {
+        id: 1,
+        followers_growth: "+12.5%",
+        total_followers: "125,400",
+      },
+      {
+        id: 2,
+        avg_eng_growth: "8.7%",
+        avg_eng: "8.7%",
+      },
+      {
+        id: 3,
+        watch_growth: "+18.7%",
+        total_watch_time: "2,847h",
+      },
+      {
+        id: 4,
+        earnings_growth: "+18.2%",
+        earnings: "2,847h",
+      },
+    ],
+    quest_rewards: [
+      {
+        id: 1,
+        title: "Weekly Highlight Reel",
+        description: "Create and upload a weekly highlight compilation video",
+        status: { label: "Active", value: "active" },
+        date_time: "3 days left",
+        progress_per: "75%",
+        tokens: "+500",
+      },
+      {
+        id: 1,
+        title: "Viral Moment",
+        description: "Achieve 100K+ views on a single piece of content",
+        status: { label: "Active", value: "active" },
+        date_time: "5 days left",
+        progress_per: "45%",
+        tokens: "+1000",
+      },
+      {
+        id: 1,
+        title: "Community Engagement",
+        description: "Respond to 50+ comments across all platforms",
+        status: { label: "Completed", value: "completed" },
+        progress_per: "75%",
+        tokens: "+250",
+      },
+    ],
+    payouts: [
+      {
+        id: 1,
+        title: "Weekly content quest completion",
+        date: "Dec 15, 2024",
+        amount: {
+          currency: "$",
+          value: 450,
+        },
+        status: { label: "completed" },
+        category: { label: "quest completion" },
+      },
+      {
+        id: 2,
+        title: "Monthly creator bonus",
+        date: "Dec 10, 2024",
+        amount: {
+          currency: "$",
+          value: 450,
+        },
+        status: { label: "pending" },
+        category: { label: "monthly bonus" },
+      },
+      {
+        id: 3,
+        title: "Brand collaboration payout",
+        date: "Dec 8, 2024",
+        amount: {
+          currency: "$",
+          value: 2800,
+        },
+        status: { label: "processing" },
+        category: { label: "collaboration" },
+      },
+    ],
+
+    social_accounts: [
+      {
+        id: 1,
+        title: "Instagram",
+        followers: "89.2K",
+        avg_views: "45.8K",
+        engagement: "7.2%",
+        posts: "156",
+      },
+      {
+        id: 1,
+        title: "TikTok",
+        followers: "234.7K",
+        avg_views: "128.8k",
+        engagement: "9.8%",
+        posts: "89",
+      },
+    ],
+  },
+  top_creators: [
+    {
+      id: 1,
+      avatar_url: "/images/home/user1Avatar.png",
+      name: "Jake Thompson",
+      userName: "@FrostBite",
+      location: "Austin,Tx",
+      followers: "150K",
+      monthly_growth: "+13%",
+      engagement: "8.0%",
+      avg_views: "50.0K",
+    },
+    {
+      id: 2,
+      avatar_url: "/images/home/user2Avatar.png",
+      name: "Maria Garcia",
+      userName: "@Quickshot",
+      location: "San Francisco, CA",
+      followers: "250K",
+      monthly_growth: "+13%",
+      engagement: "8.5%",
+      avg_views: "60.0K",
+    },
+    {
+      id: 3,
+      avatar_url: "/images/home/user1Avatar.png",
+      name: "Ryan Park",
+      userName: "@Defender",
+      location: "New York, NY",
+      followers: "98.3K",
+      monthly_growth: "+10.5%",
+      engagement: "7.2%",
+      avg_views: "30.0K",
+    },
+  ],
+};

@@ -7,6 +7,7 @@ import Chip from "@/components/common/Chip";
 
 import {
   Users,
+  User,
   Trophy,
   Medal,
   Play,
@@ -25,6 +26,7 @@ import {
 // Map string keys to lucide icons
 const iconMap: Record<string, React.ComponentType<any>> = {
   users: Users,
+  user: User,
   trophy: Trophy,
   medal: Medal,
   play: Play,

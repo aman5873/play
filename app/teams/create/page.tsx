@@ -196,7 +196,7 @@ export default function CreateTeamPage() {
           required
           radius="10px"
           rows={3}
-          value={form?.description}
+          value={form?.description ?? ""}
           onChange={handleChange}
         />
 
@@ -289,7 +289,7 @@ export default function CreateTeamPage() {
             type="textarea"
             radius="10px"
             rows={3}
-            value={form?.additional_requirement}
+            value={form?.additional_requirement ?? ""}
             onChange={handleChange}
           />
         </CardSection>

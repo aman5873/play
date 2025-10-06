@@ -9,23 +9,40 @@ import InputComp from "../Form/InputComp";
 import { useAlert } from "@/context/AlertContext";
 import { handleApiMessage, updateProfile } from "@/lib/auth_ops";
 import { useAuth } from "@/context/AuthContext";
+import DatePicker from "../Form/DatePicker";
+import CountryPicker from "../Form/CountryPicker";
 
 export default function EditProfileModal({ open, onClose }) {
   const { t: tAuth } = useTranslation("auth");
+  const { t: tScreen } = useTranslation("screen");
   const { showAlert } = useAlert();
   const { user, setUser } = useAuth();
 
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [phone, setPhone] = useState("");
+
+  const [userData, setFormData] = useState({
+    name: "",
+    phone: "",
+    username: "",
+    dob: "",
+    country: "",
+    bio: "",
+  });
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
 
   useEffect(() => {
     if (user) {
       setPreview(user.avatar_url || "");
-      setName(user.name || "");
-      setPhone(user.phone || "");
+      setFormData({
+        ...userData,
+        name: user.name,
+        phone: user.phone,
+        username: user?.username,
+        dob: user?.dob,
+        country: user?.country,
+        bio: user?.bio,
+      });
     }
   }, [user, open]);
 
@@ -60,8 +77,11 @@ export default function EditProfileModal({ open, onClose }) {
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("name", name);
-    formData.append("phone", phone);
+    // Append all fields dynamically
+    Object.entries(userData).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
     if (avatarFile) formData.append("avatar", avatarFile);
 
     try {
@@ -87,9 +107,12 @@ export default function EditProfileModal({ open, onClose }) {
       onClose={onClose}
       title={tAuth("profile")}
       titleClass="font-rajdhani"
-      contClass="w-[95%] sm:w-md "
+      contClass="w-[95%] sm:w-2xl"
     >
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 mt-4  h-full"
+      >
         {/* Avatar */}
         <div className="flex flex-col items-center">
           <label className="relative cursor-pointer w-20 h-20">
@@ -121,32 +144,69 @@ export default function EditProfileModal({ open, onClose }) {
           </p>
         </div>
 
-        {/* Name */}
-        <InputComp
-          label={tAuth("username")}
-          placeholder={tAuth("namePlaceholder")}
-          type="text"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <InputComp
+            label={tScreen("user.Username")}
+            type="text"
+            required
+            value={userData?.username ?? ""}
+            onChange={(e: any) =>
+              setFormData({ ...userData, username: e.target.value })
+            }
+          />
+          <InputComp
+            label={tScreen("user.name")}
+            type="text"
+            required
+            value={userData?.name ?? ""}
+            onChange={(e: any) =>
+              setFormData({ ...userData, name: e.target.value })
+            }
+          />
 
-        {/* Phone */}
-        <InputComp
-          label={tAuth("phone") || "Phone"}
-          placeholder={tAuth("phonePlaceholder") || "Enter your phone number"}
-          type="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
+          {/* Phone */}
+          <InputComp
+            label={tScreen("user.phone")}
+            placeholder={tAuth("phonePlaceholder") || "Enter your phone number"}
+            type="tel"
+            value={userData?.phone ?? ""}
+            onChange={(e) =>
+              setFormData({ ...userData, phone: e.target.value })
+            }
+          />
 
-        {/* Email (readonly) */}
+          {/* Email (readonly) */}
+          <InputComp
+            label={tScreen("user.email")}
+            placeholder={tAuth("emailPlaceholder")}
+            type="email"
+            value={user?.email || ""}
+            readOnly
+          />
+
+          <DatePicker
+            label={tScreen("user.dob")}
+            value={userData?.dob ?? ""}
+            onChange={(dob: any) => {
+              setFormData({ ...userData, dob });
+            }}
+          />
+          <CountryPicker
+            label={tScreen("user.country")}
+            value={userData?.country ?? ""}
+            onChange={(country: any) => setFormData({ ...userData, country })}
+          />
+        </div>
         <InputComp
-          label={tAuth("email")}
-          placeholder={tAuth("emailPlaceholder")}
-          type="email"
-          value={user?.email || ""}
-          readOnly
+          label={tScreen("user.bio")}
+          name="bio"
+          type="textarea"
+          radius="10px"
+          rows={3}
+          value={userData?.bio ?? ""}
+          onChange={(e: any) =>
+            setFormData({ ...userData, bio: e?.target?.value })
+          }
         />
 
         {/* Submit */}

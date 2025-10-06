@@ -12,12 +12,14 @@ interface AvatarProps {
   };
   size?: number; // size in px
   isHeader?: boolean;
+  contClass?: string;
 }
 
 export default function Avatar({
   user,
   size = 80,
   isHeader = false,
+  contClass = "",
 }: AvatarProps) {
   const { t: tCommon } = useTranslation("common");
 
@@ -27,7 +29,7 @@ export default function Avatar({
 
     return (
       <div
-        className="relative rounded-full overflow-hidden bg-[var(--secondary)] flex items-center justify-center text-[var(--primary)] font-bold"
+        className={`relative rounded-full overflow-hidden bg-[var(--secondary)] flex items-center justify-center text-[var(--primary)] font-bold ${contClass}`}
         style={{ width: size, height: size }}
       >
         {user?.avatar_url ? (

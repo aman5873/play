@@ -13,7 +13,7 @@ interface AppModalProps {
   titleClass?: string;
   contClass?: string;
   children?: ReactNode;
-  headerIcon?: ReactNode; // <-- already JSX
+  headerIcon?: ReactNode;
   minWidth?: number;
   maxWidth?: number;
   showCloseIcon?: boolean;
@@ -27,7 +27,7 @@ export default function AppModal({
   subtitle,
   description,
   children,
-  headerIcon, // JSX element now
+  headerIcon,
   contClass = "w-auto sm:w-[95%] max-w-md",
   showCloseIcon = true,
   closeOnBackdropClick = true,
@@ -42,16 +42,20 @@ export default function AppModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          style={{
+            maxHeight: "98vh", // keep modal inside viewport
+            overflow: "hidden", // prevent modal itself from overflowing
+          }}
         >
           <motion.div
-            className={`relative rounded-[16px] p-6 gradient-one border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col
-               ${contClass}`}
+            className={`relative rounded-[16px] p-6 gradient-one border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col ${contClass}`}
             onClick={(e) => e.stopPropagation()}
             initial={{ y: -50, opacity: 0, scale: 0.95 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: -50, opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
+            {/* Close Button */}
             {showCloseIcon && (
               <button
                 className="absolute top-3 right-3 text-[var(--textOne)] hover:text-[var(--primary)] cursor-pointer"
@@ -61,10 +65,11 @@ export default function AppModal({
               </button>
             )}
 
+            {/* Header */}
             {(title || headerIcon) && (
               <div className="flex items-center flex-col justify-center gap-2">
                 {headerIcon && (
-                  <div className="bg-[var(--bgTwo)] p-3 rounded-[100px] text-[var(--primary)]">
+                  <div className="bg-[var(--bgTwo)] p-3 rounded-full text-[var(--primary)]">
                     {headerIcon}
                   </div>
                 )}
@@ -78,6 +83,7 @@ export default function AppModal({
               </div>
             )}
 
+            {/* Subtitle */}
             {subtitle && (
               <h3
                 className={`text-[var(--primary)] font-bold text-lg sm:text-xl md:text-2xl lg:text-[24px] text-center mb-2 ${titleClass}`}
@@ -86,13 +92,25 @@ export default function AppModal({
               </h3>
             )}
 
+            {/* Description */}
             {description && (
               <p className="text-[var(--textTwo)] text-sm text-center mb-4">
                 {description}
               </p>
             )}
 
-            {children && <div className="flex flex-col gap-4">{children}</div>}
+            {/* Scrollable Content */}
+            {children && (
+              <div
+                className="flex flex-col gap-4 overflow-y-auto scrollbar-hide"
+                style={{
+                  maxHeight: "calc(98vh - 150px)", // subtract header/footer height
+                  paddingRight: "4px",
+                }}
+              >
+                {children}
+              </div>
+            )}
           </motion.div>
         </motion.div>
       )}
