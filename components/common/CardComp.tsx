@@ -14,6 +14,10 @@ import {
   Eye,
   TrendingUp,
   Newspaper,
+  Flame,
+  Upload,
+  Globe,
+  Heart,
 } from "lucide-react";
 
 interface CardChipProps {
@@ -41,11 +45,13 @@ interface CardIconInfoProps {
 }
 
 interface ProgressBarProps {
-  label: string;
+  label?: string;
   count: number;
   maxCount: number;
   fillStyle?: React.CSSProperties;
+  contStyle?: React.CSSProperties;
   showPercent?: boolean;
+  showCount?: boolean;
 }
 
 export const iconMap = {
@@ -62,6 +68,10 @@ export const iconMap = {
   eye: Eye,
   trend: TrendingUp,
   news: Newspaper,
+  flame: Flame,
+  upload: Upload,
+  globe: Globe,
+  heart: Heart,
 } satisfies Record<string, LucideIcon>;
 
 export function CardChip({ label, style, contClass = "" }: CardChipProps) {
@@ -187,7 +197,9 @@ export function ProgressBar({
   count,
   maxCount,
   fillStyle = {},
+  contStyle = {},
   showPercent = false,
+  showCount = true,
 }: ProgressBarProps) {
   const safeCount = Math.max(0, Math.min(count, maxCount)); // ensure count is within 0-maxCount
   const percentage = maxCount > 0 ? (safeCount / maxCount) * 100 : 0;
@@ -195,16 +207,19 @@ export function ProgressBar({
   return (
     <div className="w-full space-y-1 my-1">
       {/* Label */}
-      <div className="flex justify-between text-md font-semibold text-[var(--textTwo)]">
-        <span>{label}</span>
-        <span className="text-sm">
-          {showPercent ? `${count}%` : `${safeCount}/${maxCount}`}
-        </span>
-      </div>
+      {showCount && (
+        <div className="flex justify-between text-md font-semibold text-[var(--textTwo)]">
+          <span>{label}</span>
+          <span className="text-sm">
+            {showPercent ? `${count}%` : `${safeCount}/${maxCount}`}
+          </span>
+        </div>
+      )}
 
       {/* Progress bar container */}
       <div
         className={`w-full h-4 rounded-lg  bg-[var(--bgThree)] overflow-hidden`}
+        style={{ ...contStyle }}
       >
         <div
           className={`h-full gradient-fill transition-all duration-500`}

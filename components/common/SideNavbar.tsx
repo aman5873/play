@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -10,20 +11,27 @@ import {
   Disc2,
   Gamepad2,
   Newspaper,
-  Users,
   TrendingUp,
   Store,
   Gift,
-  BadgeCent,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { CommunityIcon, NftIcon, SocialIcon, TeamIcon } from "@/app/icons";
 
 type NavItem = {
   key: string;
   label: string;
   href: string;
-  icon: React.ComponentType<{ size?: number }>;
+  icon?: React.ComponentType<{ size?: number }>;
+  iconComp?: React.ReactNode;
   active?: boolean;
+  iconSize?: number;
+};
+
+type IconProps = {
+  size?: number;
+  color?: string;
+  className?: string;
 };
 
 // --------------------- NAV ITEMS ---------------------
@@ -47,7 +55,8 @@ const navItems: NavItem[] = [
     key: "social",
     label: "Social Hub",
     href: "/social",
-    icon: Users,
+    icon: SocialIcon,
+    iconSize: 22,
     active: true,
   },
   {
@@ -57,14 +66,27 @@ const navItems: NavItem[] = [
     icon: Disc2,
     active: false,
   },
-  { key: "teams", label: "Teams", href: "/teams", icon: Users, active: true },
+  {
+    key: "teams",
+    label: "Teams",
+    href: "/teams",
+    icon: TeamIcon,
+    active: true,
+  },
   { key: "news", label: "News", href: "/news", icon: Newspaper, active: true },
-
   {
     key: "levels",
     label: "Levels",
     href: "/leaderboard",
     icon: TrendingUp,
+    active: true,
+  },
+  {
+    key: "quests",
+    label: "Quests",
+    href: "/quests",
+    icon: Gift,
+    iconSize: 20,
     active: true,
   },
   {
@@ -81,18 +103,19 @@ const navItems: NavItem[] = [
     icon: Gift,
     active: false,
   },
+
   {
     key: "nft",
     label: "NFT Marketplace",
     href: "/nft",
-    icon: BadgeCent,
+    iconComp: <NftIcon size={22} />,
     active: false,
   },
   {
     key: "communities",
     label: "Communities",
     href: "/communities",
-    icon: Users,
+    iconComp: <CommunityIcon size={22} />,
     active: false,
   },
 ];
@@ -113,19 +136,26 @@ function SidebarNav({
   return (
     <nav className="flex flex-col gap-2 font-rajdhani font-semibold">
       {navItems.map((item) => {
-        const Icon = item.icon;
         const isActiveRoute = pathname === item.href;
+        const label = tNav(item.key);
 
-        const label = tNav(item.key); // <-- translate the key
+        const IconEl = item.iconComp ? (
+          item.iconComp
+        ) : item.icon ? (
+          <item.icon size={variant === "mobile" ? 22 : 17} />
+        ) : null;
+
+        const baseClasses =
+          "flex items-center gap-3 py-2 px-3 rounded-md transition-colors border-[1px]";
 
         if (!item.active) {
           return (
             <div
               key={item.key}
-              className="flex items-center gap-3 text-[var(--textTwo)] cursor-not-allowed py-2 px-3 border-[1px] border-[transparent] rounded-md"
+              className={`${baseClasses} text-[var(--textTwo)] cursor-not-allowed border-transparent`}
             >
               <span className="w-[25px] h-[25px] flex items-center justify-center rounded-md">
-                <Icon size={variant === "mobile" ? 22 : 17} />
+                {IconEl}
               </span>
               <span>{label}</span>
             </div>
@@ -137,16 +167,14 @@ function SidebarNav({
             key={item.key}
             href={item.href}
             onClick={onClick}
-            className={`flex items-center gap-3 py-2 px-3 rounded-md transition-colors border-[1px]
-              ${
-                isActiveRoute
-                  ? "gradient-selected text-[var(--primary)] border-[var(--primary)]"
-                  : "text-[var(--textOne)] hover:text-[var(--primary)] border-transparent"
-              }
-            `}
+            className={`${baseClasses} ${
+              isActiveRoute
+                ? "gradient-selected text-[var(--primary)] border-[var(--primary)]"
+                : "text-[var(--textOne)] hover:text-[var(--primary)] border-transparent"
+            }`}
           >
             <span className="w-[25px] h-[25px] flex items-center justify-center rounded-md">
-              <Icon size={variant === "mobile" ? 22 : 17} />
+              {IconEl}
             </span>
             <span>{label}</span>
           </Link>

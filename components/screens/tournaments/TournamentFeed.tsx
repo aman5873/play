@@ -24,7 +24,7 @@ import {
 } from "@/components/common/CardComp";
 import { ScreenDetailsComp } from "@/components/TopComp";
 import { useAuth } from "@/context/AuthContext";
-import { getTournaments } from "@/lib/tournament_ops";
+import { getTournaments, getFeaturedTournaments } from "@/lib/tournament_ops";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -263,10 +263,37 @@ export function TournamentCard(props: any) {
     );
 }
 
-export function TournamentFeaturedFeed({ tournamentData }) {
+export function TournamentFeaturedFeed() {
+  const { isAuthenticated, setLoading } = useAuth();
+  const { lang } = useLanguage();
+  const [featuredTournaments, setFeaturedTournaments] = useState([]);
+
+  const initialMount = useRef(true);
+
+  function fetchTournaments() {
+    if (isAuthenticated) {
+      setLoading(true);
+      getFeaturedTournaments().then((res: any) => {
+        setLoading(false);
+        if (res?.success && res?.data) setFeaturedTournaments(res.data);
+      });
+    }
+  }
+
+  useEffect(() => {
+    // On first mount, prevent duplicate fetch
+    if (initialMount.current) {
+      initialMount.current = false;
+      fetchTournaments();
+    } else {
+      // On subsequent lang changes, always fetch
+      fetchTournaments();
+    }
+  }, [isAuthenticated, lang]);
+
   return (
     <>
-      {tournamentData?.data?.length > 0 && (
+      {featuredTournaments?.length > 0 && (
         <Swiper
           modules={[Pagination, Autoplay]}
           className="featured-carousel relative mb-10" // make parent relative
@@ -282,7 +309,7 @@ export function TournamentFeaturedFeed({ tournamentData }) {
           centeredSlides={true}
           slidesPerView={1}
         >
-          {tournamentData.data.map((obj: any) => (
+          {featuredTournaments.map((obj: any) => (
             <SwiperSlide key={obj.id} className=" w-full">
               <TournamentFeaturedCard tournamentInfo={obj} />
             </SwiperSlide>
@@ -333,7 +360,7 @@ export default function TournamentFeed({ onlyFeed = false }) {
         </ScrollableRowWrapper>
       ) : (
         <div className="relative px-1 py-5 pb-20">
-          <TournamentFeaturedFeed tournamentData={tournamentData} />
+          <TournamentFeaturedFeed />
 
           <ScrollableRowWrapper isReady={Boolean(tournamentData?.data)}>
             {tournamentData?.data.map((obj: any) => (

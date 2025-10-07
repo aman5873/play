@@ -946,7 +946,6 @@ export const assetsData = [
   },
 ];
 
-//
 // ***** socials
 export const socialAnalytics = {
   video_shared: "150+",
@@ -1066,7 +1065,7 @@ export const contentCreatorData = {
         posts_count: 342,
       },
       {
-        id: 1,
+        id: 2,
         name: "tickTock",
         growth_per: "+15.2%",
         followers: "1.2M",
@@ -1334,3 +1333,105 @@ export const contentCreatorData = {
     },
   ],
 };
+
+// quest
+export const questData = [
+  {
+    id: 1,
+    category: { label: "Social Media" },
+    title: "Follow us on X",
+    description:
+      "Follow @SuraGaming on X for the latest updates and exclusive content",
+    completed_count: 0,
+    total_count: 1,
+    points: "100",
+    icon: "xIcon",
+  },
+  {
+    id: 2,
+    icon: "instagram",
+    category: { label: "Social Media" },
+    completed_count: 1,
+    total_count: 1,
+    points: "100",
+    title: "Follow us on Instagram",
+    description:
+      "Follow our Instagram for behind-the-scenes content and community highlights",
+  },
+  {
+    id: 3,
+    icon: "upload",
+    category: { label: "Daily Challenge" },
+    completed_count: 0,
+    total_count: 1,
+    points: "100",
+    title: "First Upload",
+    description: "Upload your first gaming clip to the platform",
+  },
+  {
+    id: 4,
+    icon: "social",
+    category: { label: "Community" },
+    completed_count: 0,
+    total_count: 1,
+    points: "100",
+    title: "Join a Team",
+    description: "Join or create a team to compete with friends",
+    isVerify: true,
+  },
+  {
+    id: 5,
+    icon: "media",
+    category: { label: "Engagement" },
+    completed_count: 1,
+    total_count: 1,
+    points: "100",
+    title: "Share Epic Moment",
+    description:
+      "Share your favorite clip on social media and tag us for bonus rewards",
+  },
+  {
+    id: 6,
+    icon: "game",
+    category: { label: "Gameplay" },
+    completed_count: 1,
+    total_count: 5,
+    points: "100",
+    title: "Game Registration",
+    description: "Connect a new game to your profile and verify your stats",
+  },
+];
+
+export const questAnalytics = [
+  {
+    id: 1,
+    title: "Total Progress",
+    description: "quests completed",
+    completed_count: 1,
+    total_count: 8,
+    icon: "mission",
+  },
+  {
+    id: 2,
+    title: "Active Quests",
+    description: "in progress",
+    completed_count: 2,
+    total_count: 5,
+    icon: "trend",
+  },
+  {
+    id: 3,
+    title: "Daily Challenges",
+    description: "time limited",
+    time_left: "22h 15m left",
+    icon: "calender",
+  },
+  {
+    id: 4,
+    title: "Current Streak",
+    description: "daily",
+    completed_count: 5,
+    total_count: 7,
+    icon: "flame",
+  },
+];

@@ -127,7 +127,7 @@ export default function TournamentPageFeed() {
       <Loading loading={loading} />
 
       <div className="relative px-[5px] pt-5">
-        <TournamentFeaturedFeed tournamentData={tournamentData} />
+        <TournamentFeaturedFeed />
       </div>
 
       <div className="mx-auto  w-full">

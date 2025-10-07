@@ -128,7 +128,7 @@ export default function DatePicker({
     if (focused) return "border-[var(--borderTwo)]";
     if (isSecondary) return "border-[var(--textTwo)]";
     if (isPrimaryTwo) return "border-[var(--borderTwo)]";
-    return "border-[var(--borderOne)]";
+    return "border-[var(--borderTwo)]";
   };
 
   return (

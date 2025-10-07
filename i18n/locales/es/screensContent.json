@@ -292,5 +292,25 @@
       "connect": "Conectar {{account}}",
       "connectDesc": "Vincula tu cuenta de {{account}} para rastrear el rendimiento"
     }
+  },
+  "quests": {
+    "chip": "Misiones",
+    "title": "Sociales",
+    "highlightTitle": "MISIONES",
+    "description": "Completa tareas sociales y desafíos de juego para ganar recompensas y aumentar tu presencia en la comunidad gamer",
+    "labels": {
+      "allQuest": "Todas las misiones",
+      "socialMedia": "Redes Sociales",
+      "engagement": "Interacción",
+      "dailyChallenge": "Desafío Diario",
+      "gameplay": "Juego",
+      "community": "Comunidad",
+      "social": "Social",
+      "start": "Comenzar",
+      "completed": "Completado",
+      "verify": "Verificar",
+      "watch": "Ver",
+      "progress": "Progreso"
+    }
   }
 }

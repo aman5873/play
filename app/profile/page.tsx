@@ -75,7 +75,7 @@ export default function UserPage() {
             <AppButton
               onClick={() => setShowUpdateProfile(true)}
               type={"primary"}
-              icon="edit"
+              icon="squarePen"
               label={tScreen("user.editProfile")}
             />
           </div>

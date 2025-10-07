@@ -291,5 +291,25 @@
       "connect": "Connect {{account}}",
       "connectDesc": "Link your {{account}} account to track performance"
     }
+  },
+  "quests": {
+    "chip": "Quests",
+    "title": "SOCIAL",
+    "highlightTitle": "QUESTS",
+    "description": "Complete social tasks and gameplay challenges to earn rewards and grow your presence in the gaming community",
+    "labels": {
+      "allQuest": "All Quests",
+      "socialMedia": "Social Media",
+      "engagement": "Engagement",
+      "dailyChallenge": "Daily Challenge",
+      "gameplay": "Gameplay",
+      "community": "Community",
+      "social": "Social",
+      "start": "Start",
+      "completed": "Completed",
+      "verify": "verify",
+      "watch": "Watch",
+      "progress": "Progress"
+    }
   }
 }
