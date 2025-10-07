@@ -194,7 +194,7 @@ function QuestTabFeed({ questData }) {
         })}
       </div>
 
-      {/* Active Tab Content */}
+      {/* Active Tab Content  */}
       <div className="w-full">
         {questTabs.find((tab) => tab.key === activeTab)?.component}
       </div>
