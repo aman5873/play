@@ -105,7 +105,7 @@ export default function GamePageFeed() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div className="flex flex-wrap gap-4 w-full sm:flex-1">
             {/* Status Filter */}
-            <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
+            <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
               <ReactSelectInput
                 value={selectedStatus}
                 onChange={setSelectedStatus}
@@ -122,7 +122,7 @@ export default function GamePageFeed() {
             </div>
 
             {/* Genre Filter */}
-            <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
+            <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
               <ReactSelectInput
                 value={selectedGenre}
                 onChange={setSelectedGenre}

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 import { Star } from "lucide-react";
 import { AppButton } from "@/components/TopComp";
+import Loading from "@/components/common/Loading";
 
 function QuestTabFeedList({ list }) {
   const { t: tScreen } = useTranslation("screen");
@@ -23,21 +24,21 @@ function QuestTabFeedList({ list }) {
               className="rounded-xl gradient-one border border-[var(--borderThree)] p-4 flex flex-col gap-2"
             >
               <div className="flex gap-2">
-                <div className="bg-[var(--borderThree)] p-2 w-10 h-10  rounded-xl  items-center">
+                <div className="bg-[var(--borderThree)] w-12 h-12  rounded-xl flex justify-center items-center ">
                   {Icon ? (
-                    <Icon />
+                    <Icon size={26} />
                   ) : obj?.icon === "xIcon" ? (
-                    <XIcon size={24} />
+                    <XIcon size={20} />
                   ) : obj?.icon === "instagram" ? (
-                    <InstagramIcon color="white" size={24} />
+                    <InstagramIcon color="white" size={28} />
                   ) : obj?.icon === "social" ? (
-                    <SocialIcon color="white" size={24} />
+                    <SocialIcon color="white" size={26} />
                   ) : obj?.icon === "media" ? (
-                    <MediaIcon color="white" size={24} />
+                    <MediaIcon color="white" size={28} />
                   ) : null}
                 </div>
 
-                <div>
+                <div className="flex-1">
                   <h1 className="text-md truncate font-bold">{obj?.title}</h1>
                   <p className="text-[14px] text-[var(--textTwo)]">
                     {obj?.description}
@@ -97,6 +98,7 @@ function QuestTabFeedList({ list }) {
 function QuestTabFeed({ questData }) {
   const { t: tScreen } = useTranslation("screen");
   const [activeTab, setActiveTab] = useState("allQuest");
+  const [loading, setLoading] = useState(false);
 
   const socialData = questData?.filter(
     (obj: any) => obj?.category.label === "Social Media"
@@ -151,12 +153,21 @@ function QuestTabFeed({ questData }) {
       component: <QuestTabFeedList list={gameplayData || []} />,
     },
   ];
+  function handleTabSwitch(tab: any) {
+    setActiveTab(tab.key);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000); // 1 second delay
+  }
 
   return (
-    <div className="flex flex-col gap-4 mt-5">
-      {/* Tabs Header */}
-      <div
-        className="
+    <>
+      <Loading loading={loading} />
+      <div className="flex flex-col gap-4 mt-5">
+        {/* Tabs Header */}
+        <div
+          className="
           flex gap-3 sm:gap-4 
           overflow-x-auto 
           scrollbar-hide
@@ -164,14 +175,14 @@ function QuestTabFeed({ questData }) {
           // pb-2 sm:pb-0
           
         "
-      >
-        {questTabs.map((tab) => {
-          const Icon = iconMap?.[tab?.icon];
-          return (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`
+        >
+          {questTabs.map((tab) => {
+            const Icon = iconMap?.[tab?.icon];
+            return (
+              <button
+                key={tab.key}
+                onClick={() => handleTabSwitch(tab)}
+                className={`
               cursor-pointer flex gap-1 flex-shrink-0 px-4 py-2 
               font-medium font-semibold rounded-3xl 
               transition-colors transition-transform duration-300 ease-in-out
@@ -182,23 +193,24 @@ function QuestTabFeed({ questData }) {
                   : "bg-[var(--borderThree)] text-[var(--textOne)] "
               }
             `}
-            >
-              {Icon && (
-                <span>
-                  <Icon />
-                </span>
-              )}
-              {tab.label}
-            </button>
-          );
-        })}
-      </div>
+              >
+                {Icon && (
+                  <span>
+                    <Icon />
+                  </span>
+                )}
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
 
-      {/* Active Tab Content  */}
-      <div className="w-full">
-        {questTabs.find((tab) => tab.key === activeTab)?.component}
+        {/* Active Tab Content  */}
+        <div className="w-full">
+          {questTabs.find((tab) => tab.key === activeTab)?.component}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

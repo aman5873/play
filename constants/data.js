@@ -822,21 +822,18 @@ export const assetsData = [
       value: "stadiums",
     },
     amount: {
-      currency: "€",
+      currency: "EUR",
       value: 2.99,
     },
     avg_rating: 4.8,
     download_count: "12.5k",
-    level: {
-      id: "1",
-      label: "Advanced",
-      value: 4,
-    },
+    level: 4,
+    rank: "Advanced",
     images: [
       {
         id: "6dd387eb-ccc0-42d1-8fcc-28aa459c3c05",
         is_primary: 1,
-        image_url: "/images/assets/vr_basketball",
+        image_url: "/images/assets/vr_basketball.png",
       },
     ],
   },
@@ -856,16 +853,14 @@ export const assetsData = [
       value: "Racetracks",
     },
     amount: {
-      currency: "€",
+      currency: "EUR",
       value: 2.99,
     },
     avg_rating: 4.7,
     download_count: "8.49k",
-    level: {
-      id: "5",
-      label: "Expert",
-      value: 5,
-    },
+    level: 5,
+    rank: "Expert",
+
     images: [
       {
         id: "b4e81f28-7ed6-4422-bab2-f0508b2f1dc0",
@@ -890,16 +885,14 @@ export const assetsData = [
       value: "Parks",
     },
     amount: {
-      currency: "€",
+      currency: "EUR",
       value: 1.99,
     },
     avg_rating: 4.5,
     download_count: "5.2k",
-    level: {
-      id: "3",
-      label: "Intermediate",
-      value: 3,
-    },
+
+    level: 3,
+    rank: "Intermediate",
 
     images: [
       {
@@ -925,16 +918,13 @@ export const assetsData = [
       value: "Parks",
     },
     amount: {
-      currency: "€",
+      currency: "EUR",
       value: 2.99,
     },
     avg_rating: 4.9,
     download_count: "15.7k",
-    level: {
-      id: "5",
-      label: "Expert",
-      value: 5,
-    },
+    level: 5,
+    rank: "Expert",
 
     images: [
       {

@@ -93,7 +93,7 @@ export default function SocialPageFeed() {
     <div className="mx-auto py-10 pb-10 w-full">
       {/* Filter + ShowingResults */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-        <div className="flex-1 min-w-[170px] max-w-[260px] sm:w-auto">
+        <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
           <ReactSelectInput
             value={selectedCategory}
             onChange={setSelectedCategory}

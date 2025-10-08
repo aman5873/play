@@ -26,6 +26,7 @@ import Search from "@/app/icons/search.svg";
 import Social from "@/app/icons/social.svg";
 import Streak from "@/app/icons/streak.svg";
 import Store from "@/app/icons/store.svg";
+import Star from "@/app/icons/star.svg";
 import Team from "@/app/icons/team.svg";
 import Tiktok from "@/app/icons/tiktok.svg";
 import Trophy from "@/app/icons/trophy.svg";
@@ -41,6 +42,7 @@ type IconProps = {
   color?: string;
   className?: string;
   stroke?: any;
+  fill?: any;
 };
 
 const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
@@ -49,6 +51,7 @@ const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
     color = "currentColor",
     stroke = "",
     className = "",
+    fill = "none",
   }: IconProps) => (
     <Icon
       width={size}
@@ -57,7 +60,7 @@ const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
       // aria-hidden="true"
       // fill={color}
       // stroke={stroke}
-      fill="none"
+      fill={fill}
       stroke={color}
     />
   );
@@ -91,6 +94,7 @@ export const PaypalIcon = wrapIcon(Paypal);
 export const SearchIcon = wrapIcon(Search);
 export const SocialIcon = wrapIcon(Social);
 export const StoreIcon = wrapIcon(Store);
+export const StarIcon = wrapIcon(Star);
 export const CommunityIcon = wrapIcon(Social);
 export const StreakIcon = wrapIcon(Streak);
 export const TeamIcon = wrapIcon(Team);

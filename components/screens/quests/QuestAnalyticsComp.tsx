@@ -71,7 +71,7 @@ export default function QuestAnalyticsComp() {
                 <div
                   className={`${
                     iconBg[obj?.icon]
-                  } p-2 sm:p-3 w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex justify-center items-center`}
+                  } p-2 sm:p-3 w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex justify-center items-center`}
                 >
                   <Icon />
                 </div>

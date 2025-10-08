@@ -3,11 +3,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 
-interface LoadingOverlayProps {
+interface LoadingProps {
   loading: boolean;
 }
 
-const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ loading }) => {
+const Loading: React.FC<LoadingProps> = ({ loading }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -43,4 +43,4 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ loading }) => {
   );
 };
 
-export default LoadingOverlay;
+export default Loading;

@@ -28,7 +28,12 @@ export const ShowingResults: React.FC<ShowingResultsProps> = ({
 }) => {
   const { t: tCommon } = useTranslation("common");
 
-  if (totalItems === 0) return null;
+  if (totalItems === 0)
+    return (
+      <p className={`text-sm text-[var(--textOne)] ${className}`}>
+        {tCommon("messages.noData")}
+      </p>
+    );
 
   const startIndex = (currentPage - 1) * pageSize + 1;
   const endIndex = Math.min(currentPage * pageSize, totalItems);

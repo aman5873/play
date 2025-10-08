@@ -312,5 +312,22 @@
       "watch": "Ver",
       "progress": "Progreso"
     }
+  },
+  "assets": {
+    "title": "Recursos",
+    "highlightTitle": "Marketplace",
+    "description": "Descubre y descarga recursos creados por la comunidad para mejorar tu experiencia en VR.",
+    "labels": {
+      "assets": "Recursos",
+      "searchAssets": "Buscar recursos",
+      "game": "Juego",
+      "allGames": "Todos los juegos",
+      "by": "Por",
+      "rank": "Rango",
+      "allRank": "Todos los rangos",
+      "preview": "Vista previa",
+      "buyNow": "Comprar ahora",
+      "level": "Nivel"
+    }
   }
 }

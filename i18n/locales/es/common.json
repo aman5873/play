@@ -43,6 +43,7 @@
     "noSocials": "No se encontraron publicaciones sociales.",
     "noTournaments": "No se encontraron torneos.",
     "noNews": "No se encontraron noticias.",
-    "noTeams": "No se encontraron equipos."
+    "noTeams": "No se encontraron equipos.",
+    "noData": "No se encontraron datos."
   }
 }

@@ -90,11 +90,11 @@ const navItems: NavItem[] = [
     active: true,
   },
   {
-    key: "store",
+    key: "assets",
     label: "Online Store",
-    href: "/store",
+    href: "/assets",
     icon: Store,
-    active: false,
+    active: true,
   },
   {
     key: "benefits",
@@ -146,7 +146,7 @@ function SidebarNav({
         ) : null;
 
         const baseClasses =
-          "flex items-center gap-3 py-2 px-3 rounded-md transition-colors border-[1px]";
+          "flex items-center gap-3 py-2 px-3 rounded-3xl transition-colors border-[1px]";
 
         if (!item.active) {
           return (
@@ -187,7 +187,7 @@ function SidebarNav({
 // --------------------- DESKTOP SIDEBAR ---------------------
 export function Sidebar() {
   return (
-    <div className="hidden lg:flex flex-col h-full w-64 flex-shrink-0 bg-[var(--secondary)] p-4 overflow-y-auto">
+    <div className="hidden lg:flex flex-col h-full w-64 flex-shrink-0 bg-[var(--secondary)] p-4 overflow-y-auto scrollbar-hide">
       <Link href="/" className="flex items-center justify-center mb-8">
         <Image
           src="/logo.png"
@@ -223,7 +223,7 @@ export function MobileSidebar({
           transition={{ duration: 0.2 }}
         >
           <motion.div
-            className="w-64 h-full bg-[var(--secondary)] p-4"
+            className="w-64 h-full bg-[var(--secondary)] p-4 overflow-y-auto scrollbar-hide"
             onClick={(e) => e.stopPropagation()}
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}

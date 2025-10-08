@@ -311,5 +311,22 @@
       "watch": "Watch",
       "progress": "Progress"
     }
+  },
+  "assets": {
+    "title": "Assets",
+    "highlightTitle": "Marketplace",
+    "description": "Discover and download community-created assets to enhance your VR experience.",
+    "labels": {
+      "assets": "Assets",
+      "searchAssets": "Search for Assets",
+      "game": "Game",
+      "allGames": "All Games",
+      "by": "By",
+      "rank": "Rank",
+      "allRank": "All Rank",
+      "preview": "Preview",
+      "buyNow": "Buy Now",
+      "level": "Level"
+    }
   }
 }

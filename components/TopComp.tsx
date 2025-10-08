@@ -22,6 +22,7 @@ import {
   Settings,
   Edit,
   SquarePen,
+  ShoppingCart,
 } from "lucide-react";
 
 // Map string keys to lucide icons
@@ -42,6 +43,7 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   eye: Eye,
   settings: Settings,
   squarePen: SquarePen,
+  cart: ShoppingCart,
 };
 
 // ------------------ Types ------------------
