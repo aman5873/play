@@ -8,6 +8,7 @@ type InputCompProps = InputHTMLAttributes<HTMLInputElement> &
     radius?: string;
     showPasswordToggle?: boolean; // For password inputs
     isRequired?: boolean;
+    hideArrows?: boolean;
     isError?: boolean;
     errorMessage?: string;
   };
@@ -21,6 +22,7 @@ export default function InputComp({
   isError = false,
   errorMessage = "",
   showPasswordToggle = false,
+  hideArrows = true,
   radius = "50px",
   value = "",
   ...props
@@ -36,6 +38,17 @@ export default function InputComp({
     outline-none transition-colors duration-200
     focus:border-[var(--borderOne)] focus:bg-[var(--bgOne)] focus:text-[var(--textOne)]
     ${props.className ?? ""}`;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (type === "number" && hideArrows) {
+      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        e.preventDefault();
+      }
+    }
+    if (props.onKeyDown) {
+      props.onKeyDown(e);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-1 w-full">
@@ -72,7 +85,34 @@ export default function InputComp({
             {...props}
             className={`${baseClasses} ${
               showPasswordToggle && isPasswordType ? "pr-10" : ""
-            }`}
+            }
+            ${type === "number" ? "no-spinner" : ""}`}
+            onKeyDown={(e) => {
+              if (type === "number") {
+                // Restrict invalid keys
+                if (
+                  ["e", "E", "+", "-", ".", ","].includes(e.key) ||
+                  e.key === " " ||
+                  e.key === "Tab"
+                ) {
+                  e.preventDefault();
+                }
+              }
+              handleKeyDown?.(e); // Preserve any custom logic
+            }}
+            onWheel={(e) => {
+              if (type === "number" && hideArrows) {
+                (e.target as HTMLInputElement).blur(); // Prevent scroll changing value
+              }
+            }}
+            onInput={(e: React.FormEvent<HTMLInputElement>) => {
+              if (type === "number") {
+                e.currentTarget.value = e.currentTarget.value.replace(
+                  /[^0-9]/g,
+                  ""
+                );
+              }
+            }}
           />
         )}
 

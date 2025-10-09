@@ -218,3 +218,15 @@ input:-webkit-autofill {
   background-color: var(--primary) !important;
   transform: scale(1.2);
 }
+
+/* Chrome, Safari, Edge, Opera : input-number arrow disable*/
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.no-spinner[type="number"] {
+  -moz-appearance: textfield;
+}

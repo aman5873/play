@@ -8,8 +8,12 @@ import LanguageToggle from "../LanguageToggle";
 import { useTranslation } from "react-i18next";
 
 import SearchInput from "./Searchinput";
-// import Image from "next/image";
 import Avatar from "../auth/Avatar";
+
+const WalletChipComp = dynamic(
+  () => import("@/components/screens/wallet/WalletChipComp"),
+  { ssr: false }
+);
 
 const LoginModal = dynamic(() => import("@/components/auth/LoginModal"), {
   ssr: false,
@@ -68,7 +72,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
               <SquareMenu size={35} />
             </div>
           </div>
-          <div className="hidden sm:block">
+          <div className="hidden md:block">
             <SearchInput
               value={headerSearchValue}
               onChange={setHeaderSearchValue} // Will trigger after debounce
@@ -77,6 +81,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
           </div>
         </div>
 
+        <WalletChipComp />
         {/* Language toggle */}
         <LanguageToggle />
 
@@ -144,6 +149,10 @@ export default function Header({ onMenuClick }: HeaderProps) {
         onSwitchToLogin={() => {
           setForgotOpen(false);
           setLoginOpen(true);
+        }}
+        onSwitchToRegister={() => {
+          setForgotOpen(false);
+          setRegisterOpen(true);
         }}
       />
       <ProfileDrawer

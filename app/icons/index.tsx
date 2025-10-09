@@ -49,9 +49,10 @@ const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
   const WrappedIcon = ({
     size = 20,
     color = "currentColor",
-    stroke = "",
+    stroke = "none",
     className = "",
     fill = "none",
+    ...props
   }: IconProps) => (
     <Icon
       width={size}
@@ -60,8 +61,9 @@ const wrapIcon = (Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>) => {
       // aria-hidden="true"
       // fill={color}
       // stroke={stroke}
-      fill={fill}
-      stroke={color}
+      fill={fill ?? "currentColor"} // 👈 use fill if not provided
+      stroke={stroke ?? "currentColor"}
+      {...props}
     />
   );
 

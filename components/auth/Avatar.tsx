@@ -53,7 +53,18 @@ export default function Avatar({
       <div className="flex items-center px-3 py-1.5 gap-2 rounded-[100px] border-[2px] border-[var(--borderOne)] bg-[var(--bgOne)] text-[var(--textOne)] hover:bg-[var(--bgTwo)] hover:border-[var(--borderTwo)]">
         <AvatarIcon />
         <div className="flex flex-col text-[var(--textOne)] text-sm">
-          <span className="font-semibold">{user?.name}</span>
+          <span
+            className="font-semibold"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 1,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {user?.name}
+          </span>
           <span className="text-[var(--textTwo)] text-[12px]">
             {tCommon("level")} {user?.level ?? "-"}
           </span>

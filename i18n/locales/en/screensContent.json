@@ -328,5 +328,51 @@
       "buyNow": "Buy Now",
       "level": "Level"
     }
+  },
+  "wallet": {
+    "chip": "Digital Wallet",
+    "title": "Gaming",
+    "highlightTitle": "Wallet",
+    "description": "Manage your gaming funds, track transactions, and take advantage of exclusive offers to maximize your gaming experience.",
+    "labels": {
+      "walletBalance": "Wallet Balance",
+      "availableBalance": "Available Balance",
+      "addMoney": "Add Money",
+      "withdrawMoney": "Withdraw Money",
+      "transactionHistory": "Transaction History",
+      "all": "All",
+      "credits": "Credits",
+      "debits": "Debits",
+      "active": "Active",
+      "exclusiveOffers": "Exclusive Offers",
+      "claimOffer": "Claim Offer",
+      "quickStats": "Quick Stats",
+      "thisMonth": "This Month",
+      "totalEarned": "Total Earned",
+      "totalSpent": "Total Spent",
+      "netProfit": "Net Profit",
+
+      "selectAmount": "Select Amount",
+      "selectAmountDesc": "Choose how much you want to add to your wallet",
+      "customAmount": "Custom Amount",
+      "amount": "Amount",
+      "processingFee": "Processing Fee",
+      "free": "Free",
+      "bonusFirstDeposit": "Bonus (First Deposit)",
+      "totalCredit": "Total Credit",
+
+      "back": "Back",
+      "continue": "Continue",
+      "paymentMethod": "Payment Method",
+      "paymentMethodDesc": "Choose your preferred payment method",
+      "creditDebitCard": "Credit/Debit Card",
+      "creditDebitCardDesc": "Visa, Mastercard, American Express",
+      "payPal": "PayPal",
+      "payPalDesc": "Pay with your PayPal account",
+      "cryptocurrency": "Bitcoin, Ethereum, USDT",
+      "cryptocurrencyDesc": "Bitcoin, Ethereum, USDT",
+      "bankTransfer": "Bank Transfer",
+      "bankTransferDesc": "Direct bank account transfer"
+    }
   }
 }

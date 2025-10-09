@@ -114,9 +114,10 @@ export default function LoginModal({
 
   return (
     <AppModal
+      showCloseIcon={false}
+      closeOnBackdropClick={false}
       open={open}
       onClose={handleClose}
-      closeOnBackdropClick={false}
       title={showVerifyOtp ? tAuth("verifyMail") : tAuth("loginTitle")}
       subtitle={showVerifyOtp ? "" : tAuth("loginSubtitle")}
       headerIcon={showVerifyOtp ? <Mail /> : null}

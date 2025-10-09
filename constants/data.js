@@ -1425,3 +1425,86 @@ export const questAnalytics = [
     icon: "flame",
   },
 ];
+
+// user-wallet
+export const walletData = {
+  status: "Active",
+  balance: "$1275.00",
+  transactionHistory: [
+    {
+      id: 1,
+      title: "Tournament Prize - Olderfall Championship",
+      date_time: "Jan 15 at 14:30",
+      amount: "$500.00",
+      status: "completed",
+      type: "credited",
+    },
+    {
+      id: 2,
+      title: "Entry Fee - Paladins Tournament",
+      date_time: "Jan 14 at 18:45",
+      amount: "$50.00",
+      status: "completed",
+      type: "debited",
+    },
+    {
+      id: 3,
+      title: "Daily Mission Reward",
+      date_time: "Jan 14 at 12:20",
+      amount: "$100.00",
+      status: "completed",
+      type: "credited",
+    },
+    {
+      id: 4,
+      title: "Steam Game Purchase",
+      date_time: "Jan 13 at 20:15",
+      amount: "$25.00",
+      status: "completed",
+      type: "debited",
+    },
+    {
+      id: 5,
+      title: "Weekly Challenge Bonus",
+      date_time: "Jan 12 at 16:00",
+      amount: "$750.00",
+      status: "completed",
+      type: "credited",
+    },
+    {
+      id: 6,
+      title: "Weekly Challenge Bonus",
+      date_time: "Jan 12 at 16:00",
+      amount: "$750.00",
+      status: "completed",
+      type: "debited",
+    },
+  ],
+  offers: [
+    {
+      id: 1,
+      title: "First Deposit Bonus",
+      description: "Get 50% extra on your first deposit of $20 or more",
+      reward: "50%",
+    },
+    {
+      id: 2,
+      title: "Weekend Special",
+      description: "Add $50 and get $10 bonus this weekend only",
+      reward: "$10",
+    },
+    {
+      id: 3,
+      title: "High Roller Bonus",
+      description: "Deposit $100+ and receive 25% bonus up to $50",
+      reward: "25%",
+    },
+  ],
+  quickStats: {
+    this_month: "$1250",
+    total_earned: "$1,250",
+    total_spent: "$1,250",
+    net_profit: "$2,180",
+    net_profit: "$3,240",
+  },
+};

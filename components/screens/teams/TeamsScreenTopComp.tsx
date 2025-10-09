@@ -99,7 +99,7 @@ export default function TeamsScreenTopComp() {
         title: tScreen("teams.title"),
         highlightTitle: tScreen("teams.highlightTitle"),
         description: tScreen("teams.description"),
-        backgroundImage: "/images/screens/news_bg.png",
+        backgroundImage: "/images/screens/team_avatar.png",
         button: [
           {
             label: tScreen("teams.buttonPrimary"),

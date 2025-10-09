@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
-import { User, Lock, LogOut } from "lucide-react"; // icons
+import { User, Lock, LogOut, Wallet } from "lucide-react"; // icons
 
 import { useTranslation } from "react-i18next";
 import ChangePasswordModal from "@components/auth/ChangePasswordModal";
@@ -23,6 +23,7 @@ export default function ProfileDrawer({
   anchorRef,
 }: ProfileDrawerProps) {
   const { t: tAuth } = useTranslation("auth");
+  const { t: tScreen } = useTranslation("screen");
   const { user, logout } = useAuth();
   const drawerRef = useRef<HTMLDivElement>(null);
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -51,14 +52,20 @@ export default function ProfileDrawer({
       href: "/profile",
     },
     {
-      key: "editProfile",
-      label: tAuth("editProfile"),
-      icon: User,
-      onClick: () => {
-        setShowUpdateProfile(true);
-        onClose();
-      },
+      key: "Wallet",
+      label: `${tScreen("wallet.labels.walletBalance")}`,
+      icon: Wallet,
+      href: "/wallet",
     },
+    // {
+    //   key: "editProfile",
+    //   label: tAuth("editProfile"),
+    //   icon: User,
+    //   onClick: () => {
+    //     setShowUpdateProfile(true);
+    //     onClose();
+    //   },
+    // },
     {
       key: "changePassword",
       label: tAuth("changePassword"),
@@ -100,7 +107,9 @@ export default function ProfileDrawer({
           >
             {/* User Info */}
             <div className="flex items-center gap-3 mb-4">
-              <Avatar user={user} size={40} />
+              <div>
+                <Avatar user={user} size={40} />
+              </div>
               <div>
                 <h3 className="text-[var(--textOne)] font-semibold">
                   {user?.name}

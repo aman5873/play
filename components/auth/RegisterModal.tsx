@@ -147,11 +147,11 @@ export default function RegisterModal({
 
   return (
     <AppModal
+      showCloseIcon={false}
+      closeOnBackdropClick={false}
       open={open}
       onClose={clearCloseForm}
       title={tAuth("register")}
-      showCloseIcon
-      closeOnBackdropClick={false}
       headerIcon={showVerifyOtp ? <Mail /> : null}
       description={
         showVerifyOtp ? tAuth("otpSentDetail", { email: maskEmail(email) }) : ""

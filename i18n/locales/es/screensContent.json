@@ -329,5 +329,51 @@
       "buyNow": "Comprar ahora",
       "level": "Nivel"
     }
+  },
+  "wallet": {
+    "chip": "Billetera Digital",
+    "title": "Gaming",
+    "highlightTitle": "Billetera",
+    "description": "Administra tus fondos de juego, controla tus transacciones y aprovecha ofertas exclusivas para maximizar tu experiencia de juego.",
+    "labels": {
+      "walletBalance": "Saldo de la Billetera",
+      "availableBalance": "Saldo Disponible",
+      "addMoney": "Agregar Dinero",
+      "withdrawMoney": "Retirar Dinero",
+      "transactionHistory": "Historial de Transacciones",
+      "all": "Todo",
+      "credits": "Créditos",
+      "debits": "Débitos",
+      "active": "Activo",
+      "exclusiveOffers": "Ofertas Exclusivas",
+      "claimOffer": "Reclamar Oferta",
+      "quickStats": "Estadísticas Rápidas",
+      "thisMonth": "Este Mes",
+      "totalEarned": "Total Ganado",
+      "totalSpent": "Total Gastado",
+      "netProfit": "Ganancia Neta",
+
+      "selectAmount": "Seleccionar Monto",
+      "selectAmountDesc": "Elige cuánto deseas agregar a tu billetera",
+      "customAmount": "Monto Personalizado",
+      "amount": "Monto",
+      "processingFee": "Tarifa de Procesamiento",
+      "free": "Gratis",
+      "bonusFirstDeposit": "Bono (Primer Depósito)",
+      "totalCredit": "Crédito total",
+
+      "back": "Atrás",
+      "continue": "Continuar",
+      "paymentMethod": "Método de Pago",
+      "paymentMethodDesc": "Elige tu método de pago preferido",
+      "creditDebitCard": "Tarjeta de Crédito/Débito",
+      "creditDebitCardDesc": "Visa, Mastercard, American Express",
+      "payPal": "PayPal",
+      "payPalDesc": "Paga con tu cuenta de PayPal",
+      "cryptocurrency": "Criptomoneda",
+      "cryptocurrencyDesc": "Bitcoin, Ethereum, USDT",
+      "bankTransfer": "Transferencia Bancaria",
+      "bankTransferDesc": "Transferencia directa a cuenta bancaria"
+    }
   }
 }

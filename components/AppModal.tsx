@@ -28,7 +28,8 @@ export default function AppModal({
   description,
   children,
   headerIcon,
-  contClass = "w-auto sm:w-[95%] max-w-md",
+  // contClass = "w-auto sm:w-[95%] max-w-md",
+  contClass = "w-[95%] sm:w-md max-w-md",
   showCloseIcon = true,
   closeOnBackdropClick = true,
   titleClass = "font-nyxerin",
@@ -43,7 +44,7 @@ export default function AppModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           style={{
-            maxHeight: "98vh", // keep modal inside viewport
+            maxHeight: "100vh", // keep modal inside viewport
             overflow: "hidden", // prevent modal itself from overflowing
           }}
         >
@@ -105,7 +106,7 @@ export default function AppModal({
                 className="flex flex-col gap-4 overflow-y-auto scrollbar-hide"
                 style={{
                   maxHeight: "calc(98vh - 150px)", // subtract header/footer height
-                  paddingRight: "4px",
+                  // paddingRight: "4px",
                 }}
               >
                 {children}

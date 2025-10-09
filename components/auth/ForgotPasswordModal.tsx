@@ -19,6 +19,7 @@ interface ForgotPasswordModalProps {
   open: boolean;
   onClose: () => void;
   onSwitchToLogin: () => void;
+  onSwitchToRegister?: () => void;
 }
 
 // Utility to mask email
@@ -39,6 +40,7 @@ export default function ForgotPasswordModal({
   open,
   onClose,
   onSwitchToLogin,
+  onSwitchToRegister,
 }: ForgotPasswordModalProps) {
   const { t: tAuth } = useTranslation("auth");
   const { showAlert } = useAlert();
@@ -134,9 +136,10 @@ export default function ForgotPasswordModal({
 
   return (
     <AppModal
+      showCloseIcon={false}
+      closeOnBackdropClick={false}
       open={open}
       onClose={handleClose}
-      closeOnBackdropClick={false}
       title={
         step === 1
           ? tAuth("forgotPassword")
@@ -151,22 +154,51 @@ export default function ForgotPasswordModal({
       titleClass="font-rajdhani"
     >
       {step === 1 && (
-        <form onSubmit={handleRequestOtp} className="flex flex-col gap-4 mt-4">
-          <InputComp
-            label={tAuth("email")}
-            placeholder={tAuth("emailPlaceholder")}
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="cursor-pointer w-full px-6 py-2 mt-3 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+        <>
+          <form
+            onSubmit={handleRequestOtp}
+            className="flex flex-col gap-4 mt-4"
           >
-            {tAuth("sendOtp")}
-          </button>
-        </form>
+            <InputComp
+              label={tAuth("email")}
+              placeholder={tAuth("emailPlaceholder")}
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="cursor-pointer w-full px-6 py-2 mt-3 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+            >
+              {tAuth("sendOtp")}
+            </button>
+          </form>
+          <div className="mt-2 text-center">
+            <div className="text-center">{tAuth("or")}</div>
+            <div className="text-[var(--textTwo)] font-md flex gap-2 justify-center mt-2">
+              <span
+                className="text-[var(--primary)] cursor-pointer hover:text-[var(--textOne)]"
+                onClick={() => {
+                  handleClose();
+                  onSwitchToLogin();
+                }}
+              >
+                {tAuth("login")}
+              </span>
+              <span>|</span>
+              <span
+                className="text-[var(--primary)] cursor-pointer hover:text-[var(--textOne)]"
+                onClick={() => {
+                  handleClose();
+                  onSwitchToRegister();
+                }}
+              >
+                {tAuth("register")}
+              </span>
+            </div>
+          </div>
+        </>
       )}
 
       {step === 2 && (

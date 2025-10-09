@@ -87,10 +87,11 @@ export default function ChangePasswordModal({
     <AppModal
       open={open}
       onClose={onClose}
-      title={t("validation.register")}
+      title={t("changePassword")}
       titleClass="font-rajdhani"
+      contClass="w-[95%] sm:w-md max-w-md"
     >
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4 w-full">
         <InputComp
           label={t("validation.passwordPlaceholder")}
           placeholder={t("validation.passwordPlaceholder")}
