@@ -86,7 +86,7 @@ const navItems: NavItem[] = [
     label: "Quests",
     href: "/quests",
     icon: Gift,
-    iconSize: 20,
+
     active: true,
   },
   {
@@ -108,14 +108,15 @@ const navItems: NavItem[] = [
     key: "nft",
     label: "NFT Marketplace",
     href: "/nft",
-    iconComp: <NftIcon size={22} />,
-    active: false,
+    iconComp: <NftIcon size={20} />,
+    active: true,
   },
   {
     key: "communities",
     label: "Communities",
     href: "/communities",
-    iconComp: <CommunityIcon size={22} />,
+    icon: CommunityIcon,
+    // iconComp: <CommunityIcon size={20} />,
     active: false,
   },
 ];

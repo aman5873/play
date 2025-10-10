@@ -11,7 +11,10 @@ interface ReactSelectInputProps {
   label?: string;
   selectedBorder?: string;
   errorMessage?: string;
-  isSecondary?: boolean;
+  isError?: boolean;
+  required?: boolean;
+  isRequired?: boolean;
+  variant?: "primary" | "primaryTwo" | "secondary"; // ✅ unified variant
   [key: string]: any;
 }
 
@@ -23,17 +26,23 @@ export default function ReactSelectInput({
   selectedBorder = "",
   label = "",
   errorMessage = "",
-  isSecondary = false,
-  isPrimaryTwo = true,
   isError = false,
   required = false,
   isRequired = false,
+  variant = "primary", // default
   ...rest
 }: ReactSelectInputProps) {
-  const controlBg = isSecondary
-    ? "transparent"
-    : isPrimaryTwo
+  // ✅ Swap styles for primary and primaryTwo
+  const primaryTwoStyle = variant === "primary"; // primary now uses old primaryTwo style
+  const primaryStyle = variant === "primaryTwo"; // primaryTwo now uses old primary style
+  const secondaryStyle = variant === "secondary"; // secondary unchanged
+
+  const controlBg = primaryStyle
     ? "var(--bgTwo)"
+    : primaryTwoStyle
+    ? "var(--bgOne)"
+    : secondaryStyle
+    ? "transparent"
     : "var(--bgOne)";
 
   const customStyles = {
@@ -43,10 +52,12 @@ export default function ReactSelectInput({
       border: `2px solid ${
         state.isFocused
           ? "var(--borderTwo)"
-          : isSecondary
-          ? "var(--textTwo)"
-          : isPrimaryTwo
+          : primaryStyle
           ? "var(--borderTwo)"
+          : primaryTwoStyle
+          ? "var(--borderOne)"
+          : secondaryStyle
+          ? "var(--textTwo)"
           : "var(--borderOne)"
       }`,
       borderRadius: "10px",
@@ -54,17 +65,49 @@ export default function ReactSelectInput({
       boxShadow: "none",
       transition: "all 0.2s ease",
       "&:hover": {
-        borderColor: isSecondary
-          ? "var(--textTwo)"
-          : isPrimaryTwo
+        borderColor: primaryStyle
           ? "var(--borderOne)"
+          : primaryTwoStyle
+          ? "var(--borderTwo)"
+          : secondaryStyle
+          ? "var(--textTwo)"
           : "var(--borderTwo)",
-        backgroundColor: isPrimaryTwo ? "var(--bgOne)" : "var(--bgTwo)",
+        backgroundColor: primaryStyle
+          ? "var(--bgOne)"
+          : primaryTwoStyle
+          ? "var(--bgTwo)"
+          : secondaryStyle
+          ? "transparent"
+          : "var(--bgTwo)",
       },
     }),
-    singleValue: (base: any) => ({
+    singleValue: (base: any) => ({ ...base, color: "var(--textOne)" }),
+    multiValue: (base: any) => ({
+      ...base,
+      backgroundColor: primaryStyle
+        ? "var(--bgOne)" // primaryTwoStyle / primary
+        : primaryTwoStyle
+        ? "var(--bgTwo)" // old primary style
+        : "var(--bgThree)", // fallback / secondary
+      borderRadius: "6px",
+      border: `1px solid var(--borderTwo)`,
+      padding: "0 4px",
+    }),
+
+    multiValueLabel: (base: any) => ({
       ...base,
       color: "var(--textOne)",
+      fontWeight: "500",
+    }),
+
+    multiValueRemove: (base: any) => ({
+      ...base,
+      color: "var(--textTwo)",
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "unset",
+        color: "var(--bgFour)",
+      },
     }),
     menu: (base: any) => ({
       ...base,
@@ -84,29 +127,23 @@ export default function ReactSelectInput({
       cursor: "pointer",
       transition: "background-color 0.2s ease, color 0.2s ease",
     }),
-    placeholder: (base: any) => ({
-      ...base,
-      color: "var(--placeholder)",
-    }),
+    placeholder: (base: any) => ({ ...base, color: "var(--placeholder)" }),
     dropdownIndicator: (base: any) => ({
       ...base,
       color: "var(--textOne)",
-      "&:hover": {
-        color: "var(--primary)",
-      },
+      "&:hover": { color: "var(--primary)" },
     }),
     indicatorSeparator: (base: any) => ({
       ...base,
-      backgroundColor: isSecondary
-        ? "var(--textTwo)"
-        : isPrimaryTwo
+      backgroundColor: primaryStyle
         ? "var(--borderOne)"
+        : primaryTwoStyle
+        ? "var(--borderTwo)"
+        : secondaryStyle
+        ? "var(--textTwo)"
         : "var(--borderOne)",
     }),
-    input: (base: any) => ({
-      ...base,
-      color: "var(--textOne)",
-    }),
+    input: (base: any) => ({ ...base, color: "var(--textOne)" }),
   };
 
   return (

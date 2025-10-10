@@ -21,6 +21,7 @@
     "title": "Descubre",
     "highlightTitle": "JUEGOS INCREÍBLES",
     "description": "Explora nuestra vasta colección de juegos premium en todos los géneros. Encuentra tu próxima obsesión gamer.",
+    "buttonPrimary": "Crear Juego",
     "labels": {
       "active_players": "Jugadores Activos",
       "view_game": "Ver juego",
@@ -374,6 +375,75 @@
       "cryptocurrencyDesc": "Bitcoin, Ethereum, USDT",
       "bankTransfer": "Transferencia Bancaria",
       "bankTransferDesc": "Transferencia directa a cuenta bancaria"
+    }
+  },
+  "gameRegister": {
+    "chip": "Registro de Juegos",
+    "title": "Registra tu",
+    "highlightTitle": "JUEGO",
+    "description": "Envía tu juego a IMM Play para incluirlo en torneos, misiones y funciones sociales. Completa el asistente de registro para comenzar.",
+    "labels": {
+      "gameBasics": "Información Básica del Juego",
+      "gameTitle": "Título del Juego",
+      "gameTitlePlaceholder": "Ingresa el título de tu juego",
+      "gameTagline": "Eslogan del juego",
+      "gameTaglinePlaceholder": "Introduce el eslogan de tu juego",
+
+      "gameDesc": "Descripción del Juego",
+      "gameDescPlaceholder": "Ingresa la descripción de tu juego",
+      "platformsDevices": "Plataformas/Dispositivos",
+      "platformsPlaceholder": "Selecciona plataformas/dispositivos",
+      "genres": "Géneros",
+      "genresPlaceholder": "Selecciona géneros",
+
+      "gameModes": "Modos de Juego",
+      "mediaAssets": "Medios y Recursos",
+      "screenshots": "Capturas de Pantalla",
+      "uploadScreenshots": "Subir Capturas de Pantalla",
+      "uploadScreenshotsDesc": "Arrastra y suelta las capturas de tu juego aquí, o haz clic para explorar",
+      "chooseFiles": "Elegir Archivos",
+      "chooseFilesDesc": "PNG, JPG hasta 10 MB cada uno. Se requieren al menos 3 capturas de pantalla.",
+      "trailerUrl": "URL del Tráiler",
+      "trailerUrlPlaceholder": "Ingresa la URL del tráiler",
+      "studioDeveloper": "Nombre del Estudio/Desarrollador",
+      "studioDeveloperPlaceholder": "Ingresa el nombre del estudio/desarrollador",
+      "studioWebsite": "Sitio Web del Estudio",
+      "studioWebsitePlaceholder": "Ingresa el sitio web del estudio",
+      "gameDownload": "Enlace de descarga del juego",
+      "gameDownloadPlaceholder": "Introduce el enlace de descarga del juego",
+
+      "supportEmail": "Correo de Soporte",
+      "supportEmailPlaceholder": "Dirección de correo de soporte",
+      "validationCompliance": "Validación y Cumplimiento",
+      "ageRating": "Clasificación por Edad",
+      "ageRatingPlaceholder": "Ingresa la clasificación por edad",
+      "antiCheatNotes": "Notas anti-trampa",
+      "antiCheatNotesPlaceholder": "Introduce cualquier nota sobre anti-trampa aquí",
+
+      "minimumClientVersion": "Versión Mínima del Cliente",
+      "licenseRights": "Licencia y Declaración de Derechos",
+      "licenseRightsDesc": "Confirmo que tengo los derechos legales para distribuir este juego y todo su contenido, incluyendo música, arte y código. Entiendo que una declaración falsa puede resultar en la eliminación de la plataforma.",
+      "integrationOptions": "Opciones de Integración",
+      "chooseIntegrationType": "Seleccionar Tipo de Integración",
+      "submit": "Enviar",
+
+      "reviewSubmit": "Revisar y Enviar",
+      "Game Information": "Información del Juego",
+      "title": "Título",
+      "studio": "Estudio",
+      "platforms": "Plataformas",
+      "integrationType": "Tipo de Integración",
+
+      "submissionComplete": "¡Envío Completado!",
+      "submissionCompleteDesc": "Tu juego ha sido enviado para revisión. Recibirás una confirmación por correo electrónico en breve.",
+      "successMessage": [
+        "El proceso de revisión generalmente tarda de 3 a 5 días hábiles",
+        "Recibirás actualizaciones por correo electrónico sobre el estado de tu envío",
+        "Una vez aprobado, podrás crear torneos y misiones",
+        "Tu juego aparecerá en el directorio de IMM Play"
+      ],
+      "viewDashboard": "Ver Panel",
+      "submitAnotherGame": "Enviar Otro Juego"
     }
   }
 }

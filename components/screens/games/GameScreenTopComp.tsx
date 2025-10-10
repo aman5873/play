@@ -12,6 +12,14 @@ export default function GameScreenTopComp() {
         title: tScreen("game.title"),
         highlightTitle: tScreen("game.highlightTitle"),
         description: tScreen("game.description"),
+        button: [
+          {
+            label: tScreen("game.buttonPrimary"),
+            redirect: "/games/create",
+            type: "primary",
+            icon: "add",
+          },
+        ],
 
         backgroundImage: "/images/screens/games_bg.png",
         // "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=2078&auto=format&fit=crop",

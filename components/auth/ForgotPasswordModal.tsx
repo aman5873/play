@@ -160,6 +160,7 @@ export default function ForgotPasswordModal({
             className="flex flex-col gap-4 mt-4"
           >
             <InputComp
+              variant="secondary"
               label={tAuth("email")}
               placeholder={tAuth("emailPlaceholder")}
               type="email"
@@ -206,8 +207,13 @@ export default function ForgotPasswordModal({
           <OtpInputComp length={6} value={otp} onChange={setOtp} />
 
           <button
+            disabled={otp?.length !== 6}
             type="submit"
-            className="cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-bold font-rajdhani transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+            className={`cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px]  font-bold font-rajdhani transition duration-200 ${
+              otp?.length !== 6
+                ? "bg-[var(--bgThree)] text-[var(--textTwo)]"
+                : "bg-[var(--primary)] text-[var(--secondary)]"
+            }`}
           >
             {tAuth("verifyOtp")}
           </button>
@@ -222,6 +228,7 @@ export default function ForgotPasswordModal({
           className="flex flex-col gap-4 mt-3"
         >
           <InputComp
+            variant="secondary"
             label={tAuth("newPassword")}
             placeholder={tAuth("passwordPlaceholder")}
             type="password"
@@ -237,6 +244,7 @@ export default function ForgotPasswordModal({
           />
 
           <InputComp
+            variant="secondary"
             label={tAuth("confirmPassword")}
             placeholder={tAuth("confirmPasswordPlaceholder")}
             type="password"

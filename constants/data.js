@@ -1429,7 +1429,7 @@ export const questAnalytics = [
 // user-wallet
 export const walletData = {
   status: "Active",
-  balance: "$1275.00",
+  balance: "$00.00",
   transactionHistory: [
     {
       id: 1,

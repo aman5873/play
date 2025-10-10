@@ -17,8 +17,7 @@ type Props = {
   required?: boolean;
   isError?: boolean;
   errorMessage?: string;
-  isSecondary?: boolean;
-  isPrimaryTwo?: boolean;
+  variant?: "primary" | "secondary"; // ✅ unified variant
   readOnly?: boolean;
 };
 
@@ -32,8 +31,7 @@ export default function DatePicker({
   required = false,
   isError = false,
   errorMessage,
-  isSecondary = false,
-  isPrimaryTwo = false,
+  variant = "primary",
   readOnly = false,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -51,14 +49,14 @@ export default function DatePicker({
       mode,
       dateFormat: "Y-m-d",
       appendTo: document.body,
-      clickOpens: !readOnly, // prevent opening calendar in read-only mode
-      allowInput: !readOnly, // prevent typing
+      clickOpens: !readOnly,
+      allowInput: !readOnly,
       onChange: (dates, _str, inst) => {
         const out = dates[0] ? inst.formatDate(dates[0], "Y-m-d") : "";
         onChange?.(out);
       },
       onOpen: () => {
-        if (readOnly) instance.close(); // immediately close if read-only
+        if (readOnly) instance.close();
         const el = instance.calendarContainer;
         if (el) {
           el.style.zIndex = "100010";
@@ -122,14 +120,30 @@ export default function DatePicker({
     }
   }, [value]);
 
-  // 🎨 Custom theme logic (mirrors your customStyles)
-  const getBorderColor = (focused: boolean) => {
-    if (isError) return "border-red-500";
-    if (focused) return "border-[var(--borderTwo)]";
-    if (isSecondary) return "border-[var(--textTwo)]";
-    if (isPrimaryTwo) return "border-[var(--borderTwo)]";
-    return "border-[var(--borderTwo)]";
-  };
+  // 🎨 Switched primary ↔ secondary styles
+  const isPrimary = variant === "primary";
+
+  const baseClasses = `
+    w-full px-3 py-2 rounded-[10px] border 
+    ${
+      isError
+        ? "border-red-500"
+        : isPrimary
+        ? "border-[var(--borderOne)]"
+        : "border-[var(--borderTwo)]"
+    }
+    ${
+      isPrimary
+        ? "bg-[var(--bgOne)] text-[var(--textOne)] placeholder:text-[var(--placeholder)]"
+        : "bg-[var(--bgTwo)] text-[var(--textOne)] placeholder:text-[var(--placeholder)]"
+    }
+    outline-none transition-all duration-200
+    ${
+      isPrimary
+        ? "focus:border-[var(--borderTwo)] focus:bg-[var(--bgTwo)]"
+        : "focus:border-[var(--borderOne)] focus:bg-[var(--bgOne)]"
+    }
+  `;
 
   return (
     <div className="flex flex-col gap-1 w-full">
@@ -151,13 +165,7 @@ export default function DatePicker({
           placeholder={placeholder || "Select date"}
           readOnly
           onKeyDown={(e) => e.preventDefault()}
-          className={`w-full px-3 py-2 rounded-[10px] border 
-            bg-[var(--bgTwo)] text-[var(--textOne)] placeholder:text-[var(--placeholder)]
-            outline-none transition-all duration-200
-            focus:${getBorderColor(true)} focus:bg-[var(--bgOne)]
-            ${getBorderColor(false)} 
-            group-hover:border-[var(--borderTwo)]
-          `}
+          className={`${baseClasses} group-hover:border-[var(--borderOne)]`}
         />
 
         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--textTwo)] group-hover:text-[var(--primary)] transition-colors">

@@ -150,7 +150,7 @@ function ReviewsComp({ reviewData }) {
                 { label: "Negative", value: "negative" },
               ]}
               placeholder={tCommon("filters.all")}
-              isSecondary={true}
+              variant="secondary"
             />
           </div>
 
@@ -164,7 +164,7 @@ function ReviewsComp({ reviewData }) {
                 { label: "Recent", value: "recent" },
               ]}
               placeholder={tCommon("filters.popularity")}
-              isSecondary={true}
+              variant="secondary"
             />
           </div>
         </div>

@@ -200,7 +200,7 @@ export const ButtonComp: React.FC<ButtonCompProps> = ({ buttons }) => {
 };
 
 export function AppButton({
-  onClick,
+  onClick = () => {},
   type = "primary",
   label,
   Icon = null,
@@ -208,6 +208,7 @@ export function AppButton({
   style = {},
   contClass = "",
   disabled = false,
+  actionType = "button" as "button" | "submit" | "reset", // ✅
 }) {
   const IconComp = icon ? iconMap[icon] : null;
 
@@ -215,6 +216,7 @@ export function AppButton({
     <button
       onClick={onClick}
       disabled={disabled}
+      type={actionType}
       className={`px-4 py-2 flex items-center justify-center rounded-[100px] border  cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
                   ${
                     type === "primary"

@@ -93,6 +93,7 @@ export default function ChangePasswordModal({
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4 w-full">
         <InputComp
+          variant="secondary"
           label={t("validation.passwordPlaceholder")}
           placeholder={t("validation.passwordPlaceholder")}
           type="password"
@@ -108,6 +109,7 @@ export default function ChangePasswordModal({
         />
 
         <InputComp
+          variant="secondary"
           label={t("validation.newPassword")}
           placeholder={t("validation.passwordPlaceholder")}
           type="password"
@@ -123,6 +125,7 @@ export default function ChangePasswordModal({
         />
 
         <InputComp
+          variant="secondary"
           label={t("validation.confirmPassword")}
           placeholder={t("validation.passwordPlaceholder")}
           type="password"

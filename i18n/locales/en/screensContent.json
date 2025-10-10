@@ -21,6 +21,7 @@
     "title": "Discover",
     "highlightTitle": "AMAZING GAMES",
     "description": "Explore our vast collection of premium games across all genres. Find your next gaming obsession.",
+    "buttonPrimary": "Create Game",
     "labels": {
       "active_players": "Active Players",
       "view_game": "View Game",
@@ -373,6 +374,83 @@
       "cryptocurrencyDesc": "Bitcoin, Ethereum, USDT",
       "bankTransfer": "Bank Transfer",
       "bankTransferDesc": "Direct bank account transfer"
+    }
+  },
+  "gameRegister": {
+    "chip": "Game Register",
+    "title": "Register your",
+    "highlightTitle": "GAMES",
+    "description": "Submit your game to IMM Play for inclusion in tournaments, quests, and social features. Complete the registration wizard to get started.",
+    "labels": {
+      "gameBasics": "Game Basics",
+
+      "gameTitle": "Game Title",
+      "gameTitlePlaceholder": "Enter your game title",
+
+      "gameTagline": "Game Tagline",
+      "gameTaglinePlaceholder": "Enter your game Tagline",
+
+      "gameDesc": "Game Description",
+      "gameDescPlaceholder": "Enter your game title",
+
+      "platformsDevices": "Platforms/Devices",
+      "platformsPlaceholder": "Select Platforms/devices",
+      "genres": "Genres",
+      "genresPlaceholder": "Select Genres",
+
+      "gameModes": "Game Modes",
+      "mediaAssets": "Media & Assets",
+
+      "screenshots": "Screenshots",
+      "uploadScreenshots": "Upload Screenshots",
+      "uploadScreenshotsDesc": "Drag and drop your game screenshots here, or click to browse",
+      "chooseFiles": "Choose Files",
+      "chooseFilesDesc": "PNG, JPG up to 10MB each. Minimum 3 screenshots required.",
+
+      "trailerUrl": "Trailer URL",
+      "trailerUrlPlaceholder": "Enter Trailer URL",
+
+      "studioDeveloper": "Studio/Developer Name",
+      "studioDeveloperPlaceholder": "Enter studio/Developer name",
+      "studioWebsite": "Studio Website",
+
+      "gameDownload": "Game Download Link",
+      "gameDownloadPlaceholder": "Enter Game Download Link",
+
+      "studioWebsitePlaceholder": "Enter studio website",
+      "supportEmail": "Support Contact Email",
+      "supportEmailPlaceholder": "Support email address",
+
+      "validationCompliance": "Validation & Compliance",
+      "ageRating": "Age Rating",
+      "ageRatingPlaceholder": "Enter age rating",
+      "antiCheatNotes": "Anti-Cheat Notes",
+      "antiCheatNotesPlaceholder": "Enter any anti-cheat notes here",
+
+      "minimumClientVersion": "Minimum Client Version",
+      "licenseRights": "License & Rights Attestation",
+      "licenseRightsDesc": "I confirm that I have the legal rights to distribute this game and all included content, including music, art, and code. I understand that false attestation may result in removal from the platform.",
+      "integrationOptions": "Integration Options",
+      "chooseIntegrationType": "Choose Integration Type",
+      "submit": "Submit",
+
+      "reviewSubmit": "Review & Submit",
+      "Game Information": "Game Information",
+      "title": "Title",
+      "studio": "Studio",
+      "platforms": "Platforms",
+      "integrationType": "Integration Type",
+
+      "submissionComplete": "Submission Complete!",
+      "submissionCompleteDesc": "Your game has been submitted for review. You'll receive an email confirmation shortly.",
+      "successMessage": [
+        "Review process typically takes 3-5 business days",
+        "You'll receive email updates on your submission status",
+        "Once approved, you can create tournaments and quests",
+        "Your game will appear in the IMM Play directory"
+      ],
+      "viewDashboard": "View Dashboard",
+      "submitAnotherGame": "Submit Another Game"
     }
   }
 }

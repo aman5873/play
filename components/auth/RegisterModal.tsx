@@ -135,9 +135,11 @@ export default function RegisterModal({
       const { success, message } = await verifyOtpApi(email, otp);
 
       if (success) {
-        showAlert(message, "success");
+        handleApiMessage(message, showAlert, "success");
         clearCloseForm();
         onSwitchToLogin();
+      } else {
+        handleApiMessage(message, showAlert, "error"); // show error
       }
     } catch (err) {
       console.error("OTP verification failed", err);
@@ -162,6 +164,7 @@ export default function RegisterModal({
         <>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-3">
             <InputComp
+              variant="secondary"
               label={tAuth("username")}
               placeholder={tAuth("namePlaceholder")}
               type="text"
@@ -176,6 +179,7 @@ export default function RegisterModal({
             />
 
             <InputComp
+              variant="secondary"
               label={tAuth("email")}
               placeholder={tAuth("emailPlaceholder")}
               type="email"
@@ -190,6 +194,7 @@ export default function RegisterModal({
             />
 
             <InputComp
+              variant="secondary"
               label={tAuth("password")}
               placeholder={tAuth("passwordPlaceholder")}
               type="password"
@@ -205,6 +210,7 @@ export default function RegisterModal({
             />
 
             <InputComp
+              variant="secondary"
               label={tAuth("confirmPassword")}
               placeholder={tAuth("passwordPlaceholder")}
               type="password"
@@ -248,8 +254,13 @@ export default function RegisterModal({
         <form onSubmit={handleVerifyOtp} className="mt-3">
           <OtpInputComp length={6} value={otp} onChange={setOtp} />
           <button
+            disabled={otp?.length !== 6}
             type="submit"
-            className="cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-bold font-rajdhani transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+            className={`cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px]  font-bold font-rajdhani transition duration-200 ${
+              otp?.length !== 6
+                ? "bg-[var(--bgThree)] text-[var(--textTwo)]"
+                : "bg-[var(--primary)] text-[var(--secondary)]"
+            }`}
           >
             {tAuth("verifyOtp")}
           </button>

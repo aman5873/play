@@ -11,6 +11,7 @@ type InputCompProps = InputHTMLAttributes<HTMLInputElement> &
     hideArrows?: boolean;
     isError?: boolean;
     errorMessage?: string;
+    variant?: "primary" | "secondary"; // ✅ Variant selector
   };
 
 export default function InputComp({
@@ -25,19 +26,38 @@ export default function InputComp({
   hideArrows = true,
   radius = "50px",
   value = "",
+  variant = "primary", // ✅ default variant
   ...props
 }: InputCompProps) {
   const [showPassword, setShowPassword] = useState(false);
   const isPasswordType = type === "password";
   const isTextarea = type === "textarea";
 
-  const baseClasses = `w-full px-3 py-2 rounded-[${radius}] border ${
-    isError ? "border-red-500" : "border-[var(--borderTwo)]"
-  } bg-[var(--bgTwo)]
-    text-[var(--textOne)] placeholder:text-[var(--textTwo)]
+  const isSecondary = variant === "secondary";
+
+  // ✅ Styles switched (primary ↔ secondary)
+  const baseClasses = `
+    w-full px-3 py-2 rounded-[${radius}] border
+    ${
+      isError
+        ? "border-red-500"
+        : isSecondary
+        ? "border-[var(--borderTwo)]"
+        : "border-[var(--borderOne)]"
+    }
+    ${
+      isSecondary
+        ? "bg-[var(--bgTwo)] text-[var(--textOne)] placeholder:text-[var(--textTwo)]"
+        : "bg-[var(--bgOne)] text-[var(--textOne)] placeholder:text-[var(--textTwo)]"
+    }
     outline-none transition-colors duration-200
-    focus:border-[var(--borderOne)] focus:bg-[var(--bgOne)] focus:text-[var(--textOne)]
-    ${props.className ?? ""}`;
+    ${
+      isSecondary
+        ? "focus:border-[var(--borderOne)] focus:bg-[var(--bgOne)] focus:text-[var(--textOne)]"
+        : "focus:border-[var(--borderTwo)] focus:bg-[var(--bgTwo)] focus:text-[var(--textOne)]"
+    }
+    ${props.className ?? ""}
+  `;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (type === "number" && hideArrows) {
@@ -85,11 +105,9 @@ export default function InputComp({
             {...props}
             className={`${baseClasses} ${
               showPasswordToggle && isPasswordType ? "pr-10" : ""
-            }
-            ${type === "number" ? "no-spinner" : ""}`}
+            } ${type === "number" ? "no-spinner" : ""}`}
             onKeyDown={(e) => {
               if (type === "number") {
-                // Restrict invalid keys
                 if (
                   ["e", "E", "+", "-", ".", ","].includes(e.key) ||
                   e.key === " " ||
@@ -98,11 +116,11 @@ export default function InputComp({
                   e.preventDefault();
                 }
               }
-              handleKeyDown?.(e); // Preserve any custom logic
+              handleKeyDown?.(e);
             }}
             onWheel={(e) => {
               if (type === "number" && hideArrows) {
-                (e.target as HTMLInputElement).blur(); // Prevent scroll changing value
+                (e.target as HTMLInputElement).blur();
               }
             }}
             onInput={(e: React.FormEvent<HTMLInputElement>) => {
