@@ -49,23 +49,25 @@ export default function ReactSelectInput({
     control: (base: any, state: any) => ({
       ...base,
       backgroundColor: controlBg,
-      border: `2px solid ${
-        state.isFocused
-          ? "var(--borderTwo)"
-          : primaryStyle
-          ? "var(--borderTwo)"
-          : primaryTwoStyle
-          ? "var(--borderOne)"
-          : secondaryStyle
-          ? "var(--textTwo)"
-          : "var(--borderOne)"
-      }`,
       borderRadius: "10px",
       color: "var(--textOne)",
       boxShadow: "none",
       transition: "all 0.2s ease",
+      border: isError
+        ? "2px solid var(--color-red-500)" // 🔴 error state overrides all
+        : state.isFocused
+        ? "2px solid var(--borderTwo)"
+        : primaryStyle
+        ? "2px solid var(--borderTwo)"
+        : primaryTwoStyle
+        ? "2px solid var(--borderOne)"
+        : secondaryStyle
+        ? "2px solid var(--textTwo)"
+        : "2px solid var(--borderOne)",
       "&:hover": {
-        borderColor: primaryStyle
+        borderColor: isError
+          ? "red"
+          : primaryStyle
           ? "var(--borderOne)"
           : primaryTwoStyle
           ? "var(--borderTwo)"
@@ -81,33 +83,30 @@ export default function ReactSelectInput({
           : "var(--bgTwo)",
       },
     }),
-    singleValue: (base: any) => ({ ...base, color: "var(--textOne)" }),
     multiValue: (base: any) => ({
       ...base,
       backgroundColor: primaryStyle
-        ? "var(--bgOne)" // primaryTwoStyle / primary
+        ? "var(--bgOne)"
         : primaryTwoStyle
-        ? "var(--bgTwo)" // old primary style
-        : "var(--bgThree)", // fallback / secondary
+        ? "var(--bgTwo)"
+        : "var(--bgThree)",
       borderRadius: "6px",
-      border: `1px solid var(--borderTwo)`,
+      border: isError
+        ? "1px solid var(--color-red-500);"
+        : "1px solid var(--borderTwo)",
       padding: "0 4px",
     }),
-
+    singleValue: (base: any) => ({ ...base, color: "var(--textOne)" }),
     multiValueLabel: (base: any) => ({
       ...base,
       color: "var(--textOne)",
-      fontWeight: "500",
+      fontWeight: 500,
     }),
-
     multiValueRemove: (base: any) => ({
       ...base,
       color: "var(--textTwo)",
       cursor: "pointer",
-      "&:hover": {
-        backgroundColor: "unset",
-        color: "var(--bgFour)",
-      },
+      "&:hover": { backgroundColor: "unset", color: "var(--bgFour)" },
     }),
     menu: (base: any) => ({
       ...base,

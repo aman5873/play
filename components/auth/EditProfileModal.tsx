@@ -11,25 +11,59 @@ import { handleApiMessage, updateProfile } from "@/lib/auth_ops";
 import { useAuth } from "@/context/AuthContext";
 import DatePicker from "../Form/DatePicker";
 import CountryPicker from "../Form/CountryPicker";
+import TagSelect from "../common/TagSelect";
+
+const initError = {
+  name: "",
+  username: "",
+  tags: "",
+};
+const initUser = {
+  name: "",
+  phone: "",
+  username: "",
+  dob: "",
+  country: "",
+  bio: "",
+};
 
 export default function EditProfileModal({ open, onClose }) {
   const { t: tAuth } = useTranslation("auth");
   const { t: tScreen } = useTranslation("screen");
   const { showAlert } = useAlert();
-  const { user, setUser } = useAuth();
+  const { user, setUser, handleProfile } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
-  const [userData, setFormData] = useState({
-    name: "",
-    phone: "",
-    username: "",
-    dob: "",
-    country: "",
-    bio: "",
-  });
+  const [tags, setTags] = useState([]);
+  const [userData, setFormData] = useState(initUser);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
+  const [error, setError] = useState(initError);
+
+  function handleClose() {
+    onClose();
+    setError(initError);
+    setFormData(initUser);
+    setTags([]);
+  }
+
+  const formValidate = () => {
+    const newError = { ...initError }; // clone object
+
+    // name required
+    if (!userData?.name.trim())
+      newError.name = tAuth("validation.nameRequired");
+    if (!userData?.username.trim())
+      newError.username = tAuth("validation.usernameRequired");
+    if (!tags.length) newError.tags = tAuth("validation.tagRequired");
+
+    setError(newError);
+    console.log("in validate", newError);
+
+    // return true if no errors
+    return !Object.values(newError).some((val) => val);
+  };
 
   useEffect(() => {
     if (user) {
@@ -43,7 +77,15 @@ export default function EditProfileModal({ open, onClose }) {
         country: user?.country,
         bio: user?.bio,
       });
+      const mapped = user?.tags?.map((t: any) => ({
+        id: t.id,
+        value: t.id,
+        label: t.name,
+        name: t.name,
+      }));
+      setTags(mapped);
     }
+    setError(initError);
   }, [user, open]);
 
   // 🧹 Cleanup blob URL on unmount or when preview changes
@@ -74,20 +116,29 @@ export default function EditProfileModal({ open, onClose }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return; // prevent duplicate submissions
-    setLoading(true);
+
+    if (!formValidate()) return; // stop submission if validation fails
 
     const formData = new FormData();
-    // Append all fields dynamically
+
+    // Append other fields
     Object.entries(userData).forEach(([key, value]) => {
-      formData.append(key, value as string);
+      if (value != null) formData.append(key, String(value));
+    });
+
+    // Append tags as tags[index] = tagId
+    tags?.forEach((t, i) => {
+      formData.append(`tags[${i}]`, String(t.id));
     });
 
     if (avatarFile) formData.append("avatar", avatarFile);
 
     try {
+      setLoading(true);
       const res = await updateProfile(formData);
       if (res?.success) {
         setUser(res?.data?.user);
+        handleProfile();
         handleApiMessage(res?.message, showAlert, "success");
         onClose();
       } else {
@@ -104,7 +155,7 @@ export default function EditProfileModal({ open, onClose }) {
   return (
     <AppModal
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       title={tAuth("profile")}
       titleClass="font-rajdhani"
       contClass="w-[95%] sm:w-2xl"
@@ -148,20 +199,26 @@ export default function EditProfileModal({ open, onClose }) {
           <InputComp
             label={tScreen("user.Username")}
             type="text"
-            required
+            // required
+            isError={Boolean(error.username)}
+            errorMessage={error.username}
             value={userData?.username ?? ""}
-            onChange={(e: any) =>
-              setFormData({ ...userData, username: e.target.value })
-            }
+            onChange={(e: any) => {
+              setError({ ...error, username: "" });
+              setFormData({ ...userData, username: e.target.value });
+            }}
           />
           <InputComp
+            isError={Boolean(error.name)}
+            errorMessage={error.name}
             label={tScreen("user.name")}
             type="text"
-            required
+            // required
             value={userData?.name ?? ""}
-            onChange={(e: any) =>
-              setFormData({ ...userData, name: e.target.value })
-            }
+            onChange={(e: any) => {
+              setError({ ...error, name: "" });
+              setFormData({ ...userData, name: e.target.value });
+            }}
           />
 
           {/* Phone */}
@@ -207,6 +264,16 @@ export default function EditProfileModal({ open, onClose }) {
           onChange={(e: any) =>
             setFormData({ ...userData, bio: e?.target?.value })
           }
+        />
+
+        <TagSelect
+          tags={tags}
+          setTags={(list) => {
+            setTags(list);
+            setError({ ...error, tags: "" });
+          }}
+          isError={Boolean(error.tags)}
+          errorMessage={error.tags}
         />
 
         {/* Submit */}

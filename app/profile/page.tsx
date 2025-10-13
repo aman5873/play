@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Pencil, Trophy, User } from "lucide-react";
 
@@ -16,6 +16,7 @@ import { userAchievements } from "@/constants/data";
 import { useAuth } from "@/context/AuthContext";
 import DatePicker from "@/components/Form/DatePicker";
 import CountryPicker from "@/components/Form/CountryPicker";
+import TagSelect from "@/components/common/TagSelect";
 
 function UserAnalyticsComp({ userAnalytics }) {
   const { t: tScreen } = useTranslation("screen");
@@ -56,6 +57,19 @@ export default function UserPage() {
   const { t: tScreen } = useTranslation("screen");
   const { t: tCommon } = useTranslation("common");
   const { user } = useAuth();
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    if (user?.tags?.length) {
+      const mapped = user?.tags?.map((t: any) => ({
+        id: t.id,
+        value: t.id,
+        label: t.name,
+        name: t.name,
+      }));
+      setTags(mapped);
+    }
+  }, [user?.tags]);
 
   return (
     <>
@@ -159,6 +173,7 @@ export default function UserPage() {
             rows={3}
             value={user?.bio ?? ""}
           />
+          <TagSelect tags={tags} readOnly={true} />
         </CardSection>
 
         <CardSection>

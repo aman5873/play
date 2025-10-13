@@ -12,12 +12,15 @@ import { maskEmail } from "./ForgotPasswordModal";
 import InputComp from "../Form/InputComp";
 import OtpInputComp from "../OtpInput";
 import ResendOtp from "../Form/ResendOtp";
+import TagSelect from "../common/TagSelect";
+import Loading from "../common/Loading";
 
 const initError = {
   name: "",
   email: "",
   password: "",
   confirmPassword: "",
+  tags: "",
 };
 
 interface RegisterModalProps {
@@ -34,6 +37,8 @@ export default function RegisterModal({
   const { t: tAuth } = useTranslation("auth");
   const { showAlert } = useAlert();
 
+  const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,16 +48,23 @@ export default function RegisterModal({
   const [error, setError] = useState(initError);
 
   const formValidate = () => {
-    const newError = { name: "", email: "", password: "", confirmPassword: "" };
+    const newError = {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      tags: "",
+    };
 
     // name required
     if (!name.trim()) newError.name = tAuth("validation.nameRequired");
+    if (!tags.length) newError.tags = tAuth("validation.tagRequired");
 
     // email required & basic pattern check
     if (!email.trim()) {
       newError.email = tAuth("emailRequired");
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email.trim())) {
-      newError.email = tAuth("emailInvalid");
+      newError.email = tAuth("validation.emailInvalid");
     }
 
     // password validations
@@ -103,17 +115,16 @@ export default function RegisterModal({
     e?.preventDefault();
     if (!formValidate()) return; // stop submission if validation fails
 
-    // if (password !== confirmPassword) {
-    //   showAlert(tAuth("passwordMismatch"), "error");
-    //   return;
-    // }
+    const tagsIds = tags?.map((obj) => obj?.id);
 
     try {
+      setLoading(true);
       const { success, message } = await registerUser({
         name,
         email,
         password,
         password_confirmation: confirmPassword,
+        tags: tagsIds,
       });
 
       if (success) {
@@ -125,6 +136,8 @@ export default function RegisterModal({
     } catch (err) {
       console.error("Register failed", err);
       handleApiMessage(tAuth("registerFailed"), showAlert, "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -148,131 +161,147 @@ export default function RegisterModal({
   };
 
   return (
-    <AppModal
-      showCloseIcon={false}
-      closeOnBackdropClick={false}
-      open={open}
-      onClose={clearCloseForm}
-      title={tAuth("register")}
-      headerIcon={showVerifyOtp ? <Mail /> : null}
-      description={
-        showVerifyOtp ? tAuth("otpSentDetail", { email: maskEmail(email) }) : ""
-      }
-      titleClass="font-rajdhani"
-    >
-      {!showVerifyOtp ? (
-        <>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-3">
-            <InputComp
-              variant="secondary"
-              label={tAuth("username")}
-              placeholder={tAuth("namePlaceholder")}
-              type="text"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setError({ ...error, name: "" });
-              }}
-              isRequired={true}
-              isError={Boolean(error.name)}
-              errorMessage={error.name}
-            />
+    <>
+      <Loading loading={loading} />
 
-            <InputComp
-              variant="secondary"
-              label={tAuth("email")}
-              placeholder={tAuth("emailPlaceholder")}
-              type="email"
-              isRequired={true}
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setError({ ...error, email: "" });
-              }}
-              isError={Boolean(error.email)}
-              errorMessage={error.email}
-            />
-
-            <InputComp
-              variant="secondary"
-              label={tAuth("password")}
-              placeholder={tAuth("passwordPlaceholder")}
-              type="password"
-              isRequired={true}
-              showPasswordToggle
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError({ ...error, password: "" });
-              }}
-              isError={Boolean(error.password)}
-              errorMessage={error.password}
-            />
-
-            <InputComp
-              variant="secondary"
-              label={tAuth("confirmPassword")}
-              placeholder={tAuth("passwordPlaceholder")}
-              type="password"
-              isRequired={true}
-              showPasswordToggle
-              value={confirmPassword}
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                setError({ ...error, confirmPassword: "" });
-              }}
-              isError={Boolean(error.confirmPassword)}
-              errorMessage={error.confirmPassword}
-            />
-
-            <button
-              type="submit"
-              className="cursor-pointer px-6 py-2 mt-3 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
-            >
-              {tAuth("register")}
-            </button>
-          </form>
-
-          <div className="text-center">{tAuth("or")}</div>
-
-          <div className="mt-2 text-center">
-            <span className="text-[var(--textTwo)] font-md">
-              {tAuth("haveAccount")}{" "}
-              <span
-                className="text-[var(--primary)] cursor-pointer hover:text-[var(--textOne)]"
-                onClick={() => {
-                  clearCloseForm();
-                  onSwitchToLogin();
+      <AppModal
+        showCloseIcon={false}
+        closeOnBackdropClick={false}
+        open={open}
+        onClose={clearCloseForm}
+        title={tAuth("register")}
+        headerIcon={showVerifyOtp ? <Mail /> : null}
+        description={
+          showVerifyOtp
+            ? tAuth("otpSentDetail", { email: maskEmail(email) })
+            : ""
+        }
+        titleClass="font-rajdhani"
+      >
+        {!showVerifyOtp ? (
+          <>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-3">
+              <InputComp
+                variant="secondary"
+                label={tAuth("username")}
+                placeholder={tAuth("namePlaceholder")}
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setError({ ...error, name: "" });
                 }}
+                isRequired={true}
+                isError={Boolean(error.name)}
+                errorMessage={error.name}
+              />
+
+              <InputComp
+                variant="secondary"
+                label={tAuth("email")}
+                placeholder={tAuth("emailPlaceholder")}
+                type="email"
+                isRequired={true}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError({ ...error, email: "" });
+                }}
+                isError={Boolean(error.email)}
+                errorMessage={error.email}
+              />
+
+              <InputComp
+                variant="secondary"
+                label={tAuth("password")}
+                placeholder={tAuth("passwordPlaceholder")}
+                type="password"
+                isRequired={true}
+                showPasswordToggle
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError({ ...error, password: "" });
+                }}
+                isError={Boolean(error.password)}
+                errorMessage={error.password}
+              />
+
+              <InputComp
+                variant="secondary"
+                label={tAuth("confirmPassword")}
+                placeholder={tAuth("passwordPlaceholder")}
+                type="password"
+                isRequired={true}
+                showPasswordToggle
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  setError({ ...error, confirmPassword: "" });
+                }}
+                isError={Boolean(error.confirmPassword)}
+                errorMessage={error.confirmPassword}
+              />
+
+              <TagSelect
+                tags={tags}
+                setTags={(list) => {
+                  setTags(list);
+                  setError({ ...error, tags: "" });
+                }}
+                isError={Boolean(error.tags)}
+                errorMessage={error.tags}
+              />
+
+              <button
+                type="submit"
+                className="cursor-pointer px-6 py-2 mt-3 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
               >
-                {tAuth("login")}
+                {tAuth("register")}
+              </button>
+            </form>
+
+            <div className="text-center">{tAuth("or")}</div>
+
+            <div className="mt-2 text-center">
+              <span className="text-[var(--textTwo)] font-md">
+                {tAuth("haveAccount")}{" "}
+                <span
+                  className="text-[var(--primary)] cursor-pointer hover:text-[var(--textOne)]"
+                  onClick={() => {
+                    clearCloseForm();
+                    onSwitchToLogin();
+                  }}
+                >
+                  {tAuth("login")}
+                </span>
               </span>
-            </span>
-          </div>
-        </>
-      ) : (
-        <form onSubmit={handleVerifyOtp} className="mt-3">
-          <OtpInputComp length={6} value={otp} onChange={setOtp} />
-          <button
-            disabled={otp?.length !== 6}
-            type="submit"
-            className={`cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px]  font-bold font-rajdhani transition duration-200 ${
-              otp?.length !== 6
-                ? "bg-[var(--bgThree)] text-[var(--textTwo)]"
-                : "bg-[var(--primary)] text-[var(--secondary)]"
-            }`}
-          >
-            {tAuth("verifyOtp")}
-          </button>
-          <ResendOtp
-            duration={50}
-            onResend={() => {
-              // Manually call handleSubmit without event
-              handleSubmit(null, `${tAuth("resendOtpMessage")}`);
-            }}
-          />
-        </form>
-      )}
-    </AppModal>
+            </div>
+          </>
+        ) : (
+          <form onSubmit={handleVerifyOtp} className="mt-3">
+            <OtpInputComp length={6} value={otp} onChange={setOtp} />
+            <button
+              disabled={otp?.length !== 6}
+              type="submit"
+              className={`cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px]  font-bold font-rajdhani transition duration-200 ${
+                otp?.length !== 6
+                  ? "bg-[var(--bgThree)] text-[var(--textTwo)]"
+                  : "bg-[var(--primary)] text-[var(--secondary)]"
+              }`}
+            >
+              {tAuth("verifyOtp")}
+            </button>
+            <ResendOtp
+              duration={50}
+              onResend={() => {
+                // Manually call handleSubmit without event
+                handleSubmit(null, `${tAuth("resendOtpMessage")}`);
+              }}
+            />
+          </form>
+        )}
+      </AppModal>
+    </>
   );
 }

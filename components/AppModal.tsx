@@ -31,7 +31,7 @@ export default function AppModal({
   // contClass = "w-auto sm:w-[95%] max-w-md",
   contClass = "w-[95%] sm:w-md max-w-md",
   showCloseIcon = true,
-  closeOnBackdropClick = true,
+  closeOnBackdropClick = false,
   titleClass = "font-nyxerin",
 }: AppModalProps) {
   return (

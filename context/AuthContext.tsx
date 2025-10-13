@@ -37,6 +37,7 @@ interface AuthContextType {
   resetPassword: (newPassword: string) => Promise<boolean>;
   verifyOtp: (email: string, token: string) => Promise<any>;
   logout: () => Promise<void>;
+  handleProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -95,6 +96,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     sessionStorage.removeItem("user");
   }, []);
 
+  const handleProfile = useCallback(async () => {
+    try {
+      const res = await fetchProfile();
+
+      if (res?.data?.user) {
+        setUser(res.data.user);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      } else {
+        setUser(null);
+        setLoginOpen(true);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
+    } catch {
+      setUser(null);
+      setLoginOpen(true);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   // Fetch user on page reload
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -105,29 +129,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setLoading(false);
       return;
     }
-
-    const handleProfile = async () => {
-      try {
-        const res = await fetchProfile();
-
-        if (res?.data?.user) {
-          setUser(res.data.user);
-          localStorage.setItem("user", JSON.stringify(res.data.user));
-        } else {
-          setUser(null);
-          setLoginOpen(true);
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-        }
-      } catch {
-        setUser(null);
-        setLoginOpen(true);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-      } finally {
-        setLoading(false);
-      }
-    };
 
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -164,6 +165,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       resetPassword,
       verifyOtp,
       logout,
+      handleProfile,
     }),
     [
       user,
@@ -175,6 +177,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       resetPassword,
       verifyOtp,
       logout,
+      handleProfile,
     ]
   );
 
