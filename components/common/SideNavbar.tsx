@@ -59,13 +59,7 @@ const navItems: NavItem[] = [
     iconSize: 22,
     active: true,
   },
-  {
-    key: "missions",
-    label: "Missions",
-    href: "/missions",
-    icon: Disc2,
-    active: false,
-  },
+
   {
     key: "teams",
     label: "Teams",
@@ -97,6 +91,13 @@ const navItems: NavItem[] = [
     active: true,
   },
   {
+    key: "missions",
+    label: "Missions",
+    href: "/missions",
+    icon: Disc2,
+    active: false,
+  },
+  {
     key: "benefits",
     label: "Benefits",
     href: "/benefits",
@@ -109,7 +110,7 @@ const navItems: NavItem[] = [
     label: "NFT Marketplace",
     href: "/nft",
     iconComp: <NftIcon size={20} />,
-    active: true,
+    active: false,
   },
   {
     key: "communities",
