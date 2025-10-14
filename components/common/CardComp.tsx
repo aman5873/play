@@ -81,11 +81,15 @@ export function CardChip({
   borderColor = "var(--borderTwo)",
   color = "var(--textOne)",
   bg = "var(--bgTwo)",
+  onClick = null,
 }: any) {
   if (label)
     return (
       <div
-        className={`bg-[${bg}] border border-[${borderColor}] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm  text-[${color}] flex-shrink-0 min-w-[45px] w-fit capitalize ${contClass}`}
+        onClick={onClick}
+        className={`bg-[${bg}] ${
+          onClick ? "cursor-pointer" : ""
+        } border border-[${borderColor}] rounded-[20px] px-2 py-1 text-center flex items-center justify-center text-sm  text-[${color}] flex-shrink-0 min-w-[45px] w-fit capitalize ${contClass}`}
         style={style}
       >
         {label}

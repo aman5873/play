@@ -270,53 +270,53 @@ export function TournamentFeaturedFeed() {
 
   const initialMount = useRef(true);
 
-  function fetchTournaments() {
-    if (isAuthenticated) {
+  const fetchTournaments = async () => {
+    if (!isAuthenticated) return;
+    try {
       setLoading(true);
-      getFeaturedTournaments().then((res: any) => {
-        setLoading(false);
-        if (res?.success && res?.data) setFeaturedTournaments(res.data);
-      });
+      const res = await getFeaturedTournaments();
+      if (res?.success && Array.isArray(res?.data)) {
+        setFeaturedTournaments(res.data);
+      }
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    // On first mount, prevent duplicate fetch
+    // Fetch only once on mount, and again on language change
     if (initialMount.current) {
       initialMount.current = false;
       fetchTournaments();
     } else {
-      // On subsequent lang changes, always fetch
       fetchTournaments();
     }
-  }, [isAuthenticated, lang]);
+  }, [lang, isAuthenticated]);
+
+  if (!featuredTournaments?.length) return null;
 
   return (
-    <>
-      {featuredTournaments?.length > 0 && (
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          className="featured-carousel relative mb-10" // make parent relative
-          pagination={{
-            clickable: true,
-            renderBullet: (index, className) =>
-              `<span class="${className} custom-bullet"></span>`,
-          }}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-          loop={true}
-          speed={1200}
-          spaceBetween={30}
-          centeredSlides={true}
-          slidesPerView={1}
-        >
-          {featuredTournaments.map((obj: any) => (
-            <SwiperSlide key={obj.id} className=" w-full">
-              <TournamentFeaturedCard tournamentInfo={obj} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      )}
-    </>
+    <Swiper
+      modules={[Pagination, Autoplay]}
+      className="featured-carousel relative mb-10"
+      pagination={{
+        clickable: true,
+        renderBullet: (_, className) =>
+          `<span class="${className} custom-bullet"></span>`,
+      }}
+      autoplay={{ delay: 5000, disableOnInteraction: false }}
+      loop
+      speed={1200}
+      spaceBetween={30}
+      centeredSlides
+      slidesPerView={1}
+    >
+      {featuredTournaments.map((obj: any) => (
+        <SwiperSlide key={obj.id} className="w-full">
+          <TournamentFeaturedCard tournamentInfo={obj} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 }
 

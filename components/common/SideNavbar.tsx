@@ -138,9 +138,12 @@ function SidebarNav({
   return (
     <nav className="flex flex-col gap-2 font-rajdhani font-semibold">
       {navItems.map((item) => {
-        const isActiveRoute = pathname === item.href;
-        const label = tNav(item.key);
+        const isActiveRoute =
+          item.href === "/"
+            ? pathname === "/" // only exact match for home
+            : pathname.startsWith(item.href);
 
+        const label = tNav(item.key);
         const IconEl = item.iconComp ? (
           item.iconComp
         ) : item.icon ? (

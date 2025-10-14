@@ -10,6 +10,8 @@ import Image from "next/image";
 import ScrollableRowWrapper from "@/components/common/ScrollableRowWrapper";
 import { ScreenDetailsComp } from "@/components/TopComp";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function NewsCard(props) {
   const {
@@ -77,12 +79,14 @@ export function NewsCard(props) {
 }
 
 export default function NewsFeed() {
-  const [newsList, setNewsList] = useState([]);
+  const { isAuthenticated } = useAuth();
+  const { lang } = useLanguage();
+  const [newsList, setNewsList] = useState(null);
 
   //
   useEffect(() => {
     setNewsList(newsData);
-  }, []);
+  }, [isAuthenticated, lang]);
 
   return (
     <div className="relative px-1 py-5 pb-20">

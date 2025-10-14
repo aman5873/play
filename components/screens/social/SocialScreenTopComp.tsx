@@ -18,7 +18,7 @@ export default function SocialScreenTopComp() {
           {
             icon: "trophy",
             label: tScreen("social.buttonPrimary"),
-            redirect: "",
+            redirect: "/social/content-creator",
             type: "primary",
           },
           {

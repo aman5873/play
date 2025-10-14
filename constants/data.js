@@ -1348,6 +1348,84 @@ export const contentCreatorData = {
   ],
 };
 
+export const contentCreatorPosts = [
+  {
+    id: 1,
+    name: "Stream Queen",
+    username: "@Queen",
+    avatar_url: "/images/home/user2Avatar.png",
+    isVerified: true,
+    level: "Diamond",
+    achievement: "Apex Legends",
+    date_time: "2h ago",
+    description:
+      "Just hit a new personal record! 47 eliminations in ranked. The grind never stops! 🔥",
+    like_count: 1122,
+    comment_count: 350,
+    images: [
+      {
+        id: "b4e81f28-7ed6-4422-bab2-f0508b2f1dc0",
+        is_primary: 1,
+        image_url: "/images/assets/vr_drift.png",
+      },
+    ],
+    user: {
+      id: "userid",
+      is_liked: false,
+      comment: "",
+    },
+  },
+  {
+    id: 2,
+    name: "Shadow Ninja",
+    username: "@ShadowNinja",
+    avatar_url: "/images/home/user1Avatar.png",
+    isVerified: true,
+    level: "Diamond",
+    achievement: "Apex Legends",
+    date_time: "5h ago",
+    description: `Just hit Grandmaster! 🏆\n The grind was real but worth it 💪\n Hours of practice finally paid off 🔥\n GGs to everyone who made it fun 💚\n Next stop — world domination! 🌍`,
+    like_count: 1122,
+    comment_count: 350,
+    images: [],
+    user: {
+      id: "userid",
+      is_liked: false,
+      comment: "",
+    },
+  },
+  {
+    id: 3,
+    name: "StriverOp",
+    username: "@Striver",
+    avatar_url: "/images/home/user2Avatar.png",
+    isVerified: true,
+    level: "Diamond",
+    achievement: "Apex Legends",
+    date_time: "10h ago",
+    description: `Just hit Grandmaster! `,
+    like_count: 112,
+    comment_count: 850,
+    images: [
+      {
+        id: "6dd387eb-ccc0-42d1-8fcc-28aa459c3c05",
+        is_primary: 1,
+        image_url: "/images/assets/vr_park.png",
+      },
+      {
+        id: "b4e81f28-7ed6-4422-bab2-f0508b2f1dc0",
+        is_primary: 1,
+        image_url: "/images/assets/vr_drift.png",
+      },
+    ],
+    user: {
+      id: "userid",
+      is_liked: true,
+      comment: "",
+    },
+  },
+];
+
 // quest
 export const questData = [
   {

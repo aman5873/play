@@ -291,6 +291,12 @@
 
       "connect": "Connect {{account}}",
       "connectDesc": "Link your {{account}} account to track performance"
+    },
+    "home": {
+      "shareMoment": "Share your gaming moment...",
+      "justHitNewRank": "Just hit a new rank! 🎯",
+      "goingLive": "Going live now! 🔴",
+      "newSetupReveal": "New setup reveal! ⚡"
     }
   },
   "quests": {

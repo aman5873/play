@@ -14,6 +14,7 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import Loading from "@/components/common/Loading";
 import { useLanguage } from "@/context/LanguageContext";
+import Link from "next/link";
 
 function ListComp({ title, list, variant = "bullet", start }) {
   if (!list?.length) return null;
@@ -136,11 +137,13 @@ function TournamentFeedComp() {
           labelStyle={{ color: "var(--textOne" }}
         />
 
-        <IconLabelInfo
-          icon="right"
-          label={tCommon("common_labels.view_all")}
-          contStyle={{ flexDirection: "row-reverse" }}
-        />
+        <Link href="/tournaments/">
+          <IconLabelInfo
+            icon="right"
+            label={tCommon("common_labels.view_all")}
+            contStyle={{ flexDirection: "row-reverse", cursor: "pointer" }}
+          />
+        </Link>
       </div>
 
       <TournamentFeed onlyFeed={true} />

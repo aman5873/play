@@ -15,8 +15,8 @@ export default function GamePageFeed() {
   const { headerSearchValue, isAuthenticated } = useAuth();
   const { t: tCommon } = useTranslation("common");
   const { lang } = useLanguage();
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const [gameData, setGameData] = useState<any>(null);
   const [statusList, setStatusList] = useState<any[]>([]);
   const [genresList, setGenresList] = useState<any[]>([]);
@@ -29,13 +29,17 @@ export default function GamePageFeed() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
 
-  const initialMount = useRef(true);
+  // Prevent duplicate calls due to React.StrictMode (dev-only double mount)
+  const isFetchingFilters = useRef(false);
+  const isFetchingGames = useRef(false);
 
   // Fetch filters (statuses & genres)
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || isFetchingFilters.current) return;
+    isFetchingFilters.current = true;
 
-    const fetchFilters = async () => {
+    let mounted = true;
+    (async () => {
       setLoading(true);
       try {
         const [statusRes, genreRes] = await Promise.all([
@@ -43,29 +47,27 @@ export default function GamePageFeed() {
           getGameGenres(),
         ]);
 
+        if (!mounted) return;
         if (statusRes?.success && statusRes?.data)
           setStatusList(statusRes.data);
         if (genreRes?.success && genreRes?.data) setGenresList(genreRes.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching filters:", err);
       } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
+        isFetchingFilters.current = false;
       }
-    };
+    })();
 
-    // Only skip duplicate fetch on initial mount
-    if (initialMount.current) {
-      initialMount.current = false;
-      fetchFilters();
-    } else {
-      // For subsequent lang changes, always fetch
-      fetchFilters();
-    }
+    return () => {
+      mounted = false;
+    };
   }, [isAuthenticated, lang]);
 
   // Fetch games whenever filters, search, pagination, or language changes
   const fetchGames = async () => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || isFetchingGames.current) return;
+    isFetchingGames.current = true;
 
     const params: Record<string, any> = {
       page: currentPage,
@@ -80,8 +82,11 @@ export default function GamePageFeed() {
     try {
       const res: any = await getGames(params);
       if (res?.success && res?.data) setGameData(res.data);
+    } catch (err) {
+      console.error("Error fetching games:", err);
     } finally {
       setLoading(false);
+      isFetchingGames.current = false;
     }
   };
 
@@ -156,8 +161,7 @@ export default function GamePageFeed() {
                 key={game.id}
                 gameInfo={game}
                 contClass="w-full 
-            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[17.7rem]
-            "
+            [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[17.7rem]"
               />
             ))
           ) : (

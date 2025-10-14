@@ -11,7 +11,7 @@ type InputCompProps = InputHTMLAttributes<HTMLInputElement> &
     hideArrows?: boolean;
     isError?: boolean;
     errorMessage?: string;
-    variant?: "primary" | "secondary"; // ✅ Variant selector
+    variant?: "primary" | "secondary" | "secondaryTwo"; // ✅ Variant selector
   };
 
 export default function InputComp({
@@ -34,6 +34,7 @@ export default function InputComp({
   const isTextarea = type === "textarea";
 
   const isSecondary = variant === "secondary";
+  const isSecondaryTwo = variant === "secondaryTwo";
 
   // ✅ Styles switched (primary ↔ secondary)
   const baseClasses = `
@@ -43,17 +44,23 @@ export default function InputComp({
         ? "border-red-500"
         : isSecondary
         ? "border-[var(--borderTwo)]"
+        : isSecondaryTwo
+        ? "border-[var(--borderThree)]"
         : "border-[var(--borderOne)]"
     }
     ${
       isSecondary
         ? "bg-[var(--bgTwo)] text-[var(--textOne)] placeholder:text-[var(--textTwo)]"
+        : isSecondaryTwo
+        ? "bg-[var(--black-800)] text-[var(--textOne)] placeholder:text-[var(--textTwo)]"
         : "bg-[var(--bgOne)] text-[var(--textOne)] placeholder:text-[var(--textTwo)]"
     }
     outline-none transition-colors duration-200
     ${
       isSecondary
         ? "focus:border-[var(--borderOne)] focus:bg-[var(--bgOne)] focus:text-[var(--textOne)]"
+        : isSecondaryTwo
+        ? "focus:border-[var(--borderTwo)] focus:bg-[var(--black-500)] focus:text-[var(--textOne)]"
         : "focus:border-[var(--borderTwo)] focus:bg-[var(--bgTwo)] focus:text-[var(--textOne)]"
     }
     ${props.className ?? ""}

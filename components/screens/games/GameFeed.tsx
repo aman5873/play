@@ -72,9 +72,9 @@ export function GameCard({
 
 export default function GameFeed() {
   const { isAuthenticated, setLoading } = useAuth();
+  const { lang } = useLanguage();
   const [gameData, setGameData] = useState(null);
   const { t: tCommon } = useTranslation("common");
-  const { lang } = useLanguage();
 
   const initialMount = useRef(true); // ✅ track first mount
 

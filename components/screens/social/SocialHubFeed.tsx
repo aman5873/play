@@ -13,6 +13,8 @@ import { ButtonComp, ScreenDetailsComp } from "@/components/TopComp";
 import { RatingComp } from "@/components/common/RatingComp";
 import { CardChip } from "@/components/common/CardComp";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 function formatVideoDuration(ms?: number | null): string | null {
   if (!ms || ms < 0) return null; // ✅ handle no ms or invalid
@@ -126,11 +128,13 @@ export function SocialCard(props: any) {
 }
 
 export default function SocialFeed() {
-  const [socialList, setSocialList] = useState([]);
+  const { isAuthenticated } = useAuth();
+  const { lang } = useLanguage();
+  const [socialList, setSocialList] = useState(null);
 
   useEffect(() => {
     setSocialList(socialData);
-  }, []);
+  }, [isAuthenticated, lang]);
 
   return (
     <div className="relative px-1 py-5 pb-20">
