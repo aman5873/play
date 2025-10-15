@@ -104,6 +104,50 @@
       "live_streams": "Live Streams"
     }
   },
+  "contentCreator": {
+    "chip": "Social Hub",
+    "title": "CONTENT CREATOR",
+    "highlightTitle": "PROGRAM",
+    "description": "Explore the most talented content creators in the gaming community. Follow their journey, learn from their strategies, and get inspired by their success stories.",
+    "buttonPrimary": "Create Content",
+    "buttonSecondary": "View Profile",
+
+    "home": {
+      "shareMoment": "Share your gaming moment...",
+      "justHitNewRank": "Just hit a new rank! 🎯",
+      "goingLive": "Going live now! 🔴",
+      "newSetupReveal": "New setup reveal! ⚡"
+    },
+    "profile": {
+      "posts": "Posts",
+      "followers": "Followers",
+      "following": "Following",
+      "editProfile": "Edit Profile",
+      "follow": "Follow",
+      "shareProfile": "Share Profile",
+      "mainGame": "Main Game",
+      "liked": "Liked",
+
+      "displayName": "Display Name",
+      "userName": "User Name",
+      "email": "Email",
+      "bio": "Bio",
+      "location": "Location",
+      "website": "Website",
+      "socialLinks": "Social Links",
+
+      "saved": "Saved",
+      "saveChanges": "Save Changes",
+      "cancel": "Cancel"
+    },
+    "createPost": {
+      "title": "Create Post",
+      "text": "Text",
+      "image": "Image",
+      "video": "Video",
+      "clickToUpload": "Click to upload"
+    }
+  },
   "teams": {
     "chip": "Teams",
     "title": "Elite",
@@ -255,50 +299,6 @@
     "totalEarnings": "Total Earnings"
   },
 
-  "contentCreator": {
-    "chip": "Social Hub",
-    "title": "CONTENT CREATOR",
-    "highlightTitle": "PROGRAM",
-    "description": "Explore the most talented content creators in the gaming community. Follow their journey, learn from their strategies, and get inspired by their success stories.",
-    "buttonPrimary": "Create Content",
-    "buttonSecondary": "View Profile",
-    "labels": {
-      "myProfile": "My Profile",
-      "dashboard": "Dashboard",
-      "topCreators": "Top Creators",
-      "socialMediaAnalytics": "Social Media Analytics",
-      "posts": "Posts",
-      "engagement": "Engagement",
-      "avgViews": "Avg Views",
-      "achievements": "Achievements",
-      "latestContent": "Latest Content",
-
-      "creatorDashboard": "Creator Dashboard",
-      "creatorDashboardDesc": "Welcome back, Alex Chen!",
-      "totalFollowers": "Total Followers",
-      "avgEngagement": "Avg Engagement",
-      "totalWatchTime": "Total Watch Time",
-      "earnings": "Earnings",
-
-      "questsRewards": "Quests & Rewards",
-      "payouts": "Payouts",
-      "socialAccounts": "Social Accounts",
-      "activeQuests": "Active Quests",
-      "progress": "Progress",
-
-      "payoutHistory": "Payout History",
-      "connectedAccounts": "Connected Accounts",
-
-      "connect": "Connect {{account}}",
-      "connectDesc": "Link your {{account}} account to track performance"
-    },
-    "home": {
-      "shareMoment": "Share your gaming moment...",
-      "justHitNewRank": "Just hit a new rank! 🎯",
-      "goingLive": "Going live now! 🔴",
-      "newSetupReveal": "New setup reveal! ⚡"
-    }
-  },
   "quests": {
     "chip": "Quests",
     "title": "SOCIAL",

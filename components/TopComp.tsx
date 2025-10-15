@@ -62,6 +62,7 @@ interface ButtonItem {
   type?: string;
   icon?: string;
   redirect?: string;
+  onClick?: any;
 }
 
 interface DetailItem {
@@ -186,7 +187,13 @@ export const ButtonComp: React.FC<ButtonCompProps> = ({ buttons }) => {
             return (
               <AppButton
                 key={idx}
-                onClick={() => handleRedirect(btn.redirect)}
+                onClick={() => {
+                  if (btn.redirect) {
+                    handleRedirect(btn.redirect);
+                  } else if (btn?.onClick) {
+                    btn.onClick();
+                  }
+                }}
                 type={btn.type}
                 label={btn.label}
                 Icon={Icon}

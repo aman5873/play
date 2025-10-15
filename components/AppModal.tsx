@@ -11,6 +11,8 @@ interface AppModalProps {
   subtitle?: string;
   description?: string;
   titleClass?: string;
+  headerContClass?: string;
+  closeIconClass?: string;
   contClass?: string;
   children?: ReactNode;
   headerIcon?: ReactNode;
@@ -32,7 +34,9 @@ export default function AppModal({
   contClass = "w-[95%] sm:w-md max-w-md",
   showCloseIcon = true,
   closeOnBackdropClick = false,
+  headerContClass = "",
   titleClass = "font-nyxerin",
+  closeIconClass = "top-3 right-3",
 }: AppModalProps) {
   return (
     <AnimatePresence>
@@ -59,7 +63,7 @@ export default function AppModal({
             {/* Close Button */}
             {showCloseIcon && (
               <button
-                className="absolute top-3 right-3 text-[var(--textOne)] hover:text-[var(--primary)] cursor-pointer"
+                className={`absolute  text-[var(--textOne)] hover:text-[var(--primary)] cursor-pointer ${closeIconClass}`}
                 onClick={onClose}
               >
                 <X size={24} />
@@ -68,7 +72,9 @@ export default function AppModal({
 
             {/* Header */}
             {(title || headerIcon) && (
-              <div className="flex items-center flex-col justify-center gap-2">
+              <div
+                className={`flex items-center flex-col justify-center gap-2 ${headerContClass}`}
+              >
                 {headerIcon && (
                   <div className="bg-[var(--bgTwo)] p-3 rounded-full text-[var(--primary)]">
                     {headerIcon}
@@ -76,7 +82,7 @@ export default function AppModal({
                 )}
                 {title && (
                   <h2
-                    className={`text-[var(--textOne)] font-bold text-lg sm:text-xl md:text-2xl lg:text-[24px] text-center ${titleClass}`}
+                    className={`text-[var(--textOne)] font-bold text-lg sm:text-xl md:text-2xl lg:text-[24px]  text-center ${titleClass}`}
                   >
                     {title}
                   </h2>

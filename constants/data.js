@@ -1350,13 +1350,7 @@ export const contentCreatorData = {
 
 export const contentCreatorPosts = [
   {
-    id: 1,
-    name: "Stream Queen",
-    username: "@Queen",
-    avatar_url: "/images/home/user2Avatar.png",
-    isVerified: true,
-    level: "Diamond",
-    achievement: "Apex Legends",
+    id: "1",
     date_time: "2h ago",
     description:
       "Just hit a new personal record! 47 eliminations in ranked. The grind never stops! 🔥",
@@ -1365,43 +1359,49 @@ export const contentCreatorPosts = [
     images: [
       {
         id: "b4e81f28-7ed6-4422-bab2-f0508b2f1dc0",
-        is_primary: 1,
         image_url: "/images/assets/vr_drift.png",
       },
     ],
+    created_by: {
+      id: "creator-1",
+      name: "Stream Queen",
+      username: "@Queen",
+      avatar_url: "/images/home/user2Avatar.png",
+      isVerified: true,
+      level: "Diamond",
+      achievement: "Apex Legends",
+    },
     user: {
-      id: "userid",
+      id: "user-1",
       is_liked: false,
       comment: "",
     },
   },
   {
-    id: 2,
-    name: "Shadow Ninja",
-    username: "@ShadowNinja",
-    avatar_url: "/images/home/user1Avatar.png",
-    isVerified: true,
-    level: "Diamond",
-    achievement: "Apex Legends",
+    id: "2",
     date_time: "5h ago",
     description: `Just hit Grandmaster! 🏆\n The grind was real but worth it 💪\n Hours of practice finally paid off 🔥\n GGs to everyone who made it fun 💚\n Next stop — world domination! 🌍`,
     like_count: 1122,
     comment_count: 350,
     images: [],
+    created_by: {
+      id: "creator-2",
+      name: "Shadow Ninja",
+      username: "@ShadowNinja",
+      avatar_url: "/images/home/user1Avatar.png",
+      isVerified: true,
+      level: "Diamond",
+      achievement: "Apex Legends",
+    },
     user: {
-      id: "userid",
+      id: "user-2",
       is_liked: false,
       comment: "",
     },
   },
   {
-    id: 3,
-    name: "StriverOp",
-    username: "@Striver",
-    avatar_url: "/images/home/user2Avatar.png",
-    isVerified: true,
-    level: "Diamond",
-    achievement: "Apex Legends",
+    id: "3",
+
     date_time: "10h ago",
     description: `Just hit Grandmaster! `,
     like_count: 112,
@@ -1418,6 +1418,97 @@ export const contentCreatorPosts = [
         image_url: "/images/assets/vr_drift.png",
       },
     ],
+    created_by: {
+      name: "StriverOp",
+      username: "@Striver",
+      avatar_url: "/images/home/user2Avatar.png",
+      isVerified: true,
+      level: "Diamond",
+      achievement: "Apex Legends",
+    },
+    user: {
+      id: "userid",
+      is_liked: true,
+      comment: "",
+    },
+  },
+  {
+    id: "4",
+    date_time: "2h ago",
+    description:
+      "Just hit a new personal record! 47 eliminations in ranked. The grind never stops! 🔥",
+    like_count: 1122,
+    comment_count: 350,
+    images: [
+      {
+        id: "b4e81f28-7ed6-4422-bab2-f0508b2f1dc0",
+        image_url: "/images/assets/vr_drift.png",
+      },
+    ],
+    created_by: {
+      id: "creator-1",
+      name: "Stream Queen",
+      username: "@Queen",
+      avatar_url: "/images/home/user2Avatar.png",
+      isVerified: true,
+      level: "Diamond",
+      achievement: "Apex Legends",
+    },
+    user: {
+      id: "user-1",
+      is_liked: false,
+      comment: "",
+    },
+  },
+  {
+    id: "5",
+    date_time: "5h ago",
+    description: `Just hit Grandmaster! 🏆\n The grind was real but worth it 💪\n Hours of practice finally paid off 🔥\n GGs to everyone who made it fun 💚\n Next stop — world domination! 🌍`,
+    like_count: 1122,
+    comment_count: 350,
+    images: [],
+    created_by: {
+      id: "creator-2",
+      name: "Shadow Ninja",
+      username: "@ShadowNinja",
+      avatar_url: "/images/home/user1Avatar.png",
+      isVerified: true,
+      level: "Diamond",
+      achievement: "Apex Legends",
+    },
+    user: {
+      id: "user-2",
+      is_liked: false,
+      comment: "",
+    },
+  },
+  {
+    id: "6",
+
+    date_time: "10h ago",
+    description: `Just hit Grandmaster! `,
+    like_count: 112,
+    comment_count: 850,
+    images: [
+      {
+        id: "6dd387eb-ccc0-42d1-8fcc-28aa459c3c05",
+        is_primary: 1,
+        image_url: "/images/assets/vr_park.png",
+      },
+      {
+        id: "b4e81f28-7ed6-4422-bab2-f0508b2f1dc0",
+        is_primary: 1,
+        image_url: "/images/assets/vr_drift.png",
+      },
+    ],
+    created_by: {
+      name: "StriverOp",
+      username: "@Striver",
+      avatar_url: "/images/home/user2Avatar.png",
+      isVerified: true,
+      level: "Diamond",
+      achievement: "Apex Legends",
+    },
     user: {
       id: "userid",
       is_liked: true,
@@ -1425,7 +1516,6 @@ export const contentCreatorPosts = [
     },
   },
 ];
-
 // quest
 export const questData = [
   {

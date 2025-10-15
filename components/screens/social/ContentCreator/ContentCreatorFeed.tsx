@@ -82,7 +82,7 @@ function PostMedia({ media = [] }) {
   if (!media?.length) return null;
 
   const ImageCard = ({ obj }: { obj: any }) => (
-    <div className="w-full aspect-[2/1] overflow-hidden rounded-xl bg-[var(--bgTwo)] relative">
+    <div className="w-full aspect-[2.5/1] overflow-hidden rounded-xl bg-[var(--bgTwo)] relative">
       <Image
         src={obj.image_url}
         alt="post"
@@ -180,15 +180,17 @@ function PostCard({ obj }) {
   return (
     <div className="gradient-one border p-4 w-full overflow-hidden rounded-xl flex flex-col gap-3 border-[var(--borderThree)]">
       <div className="flex gap-2">
-        <Avatar user={{ avatar_url: obj?.avatar_url }} size={45} />
+        <Avatar user={{ avatar_url: obj?.created_by?.avatar_url }} size={45} />
         <div className="flex flex-col gap-1">
           <div className="flex gap-2">
             <h1 className="text-lg lg:text-lg font-semibold text-[var(--textOne)]">
-              {obj?.name}
+              {obj?.created_by?.name}
             </h1>
-            <BadgeIcon className="text-[var(--primary)]" size={20} />
+            {obj?.created_by?.isVerified && (
+              <BadgeIcon className="text-[var(--primary)]" size={20} />
+            )}
             <CardChip
-              label={obj?.level}
+              label={obj?.created_by?.level}
               style={{
                 background: "var(--textFive)",
                 fontWeight: 600,
@@ -199,12 +201,14 @@ function PostCard({ obj }) {
             />
           </div>
           <div className="flex gap-2">
-            <p className="text-[14px] text-[var(--textTwo)]">{obj?.username}</p>
+            <p className="text-[14px] text-[var(--textTwo)]">
+              {obj?.created_by?.username}
+            </p>
             <p className="text-[14px] text-[var(--textTwo)]">
               {obj?.date_time}
             </p>
             <p className="text-[14px] font-semibold text-[var(--primary)]">
-              {obj?.achievement}
+              {obj?.created_by?.achievement}
             </p>
           </div>
         </div>

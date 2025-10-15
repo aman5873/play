@@ -105,6 +105,69 @@
       "live_streams": "Transmisiones en Vivo"
     }
   },
+  "contentCreator": {
+    "chip": "Centro Social",
+    "title": "CREADOR DE CONTENIDO",
+    "highlightTitle": "PROGRAMA",
+    "description": "Explora a los creadores de contenido más talentosos de la comunidad gaming. Sigue su trayectoria, aprende de sus estrategias e inspírate con sus historias de éxito.",
+    "buttonPrimary": "Crear Contenido",
+    "buttonSecondary": "Ver perfil",
+    "labels": {
+      "myProfile": "Mi Perfil",
+      "dashboard": "Panel de Control",
+      "topCreators": "Mejores Creadores",
+      "socialMediaAnalytics": "Analítica de Redes Sociales",
+      "posts": "Publicaciones",
+      "engagement": "Interacción",
+      "avgViews": "Vistas Promedio",
+      "achievements": "Logros",
+      "latestContent": "Contenido Reciente",
+
+      "creatorDashboard": "Panel del Creador",
+      "creatorDashboardDesc": "¡Bienvenido de nuevo, Alex Chen!",
+      "totalFollowers": "Seguidores Totales",
+      "avgEngagement": "Interacción Promedio",
+      "totalWatchTime": "Tiempo Total de Visualización",
+      "earnings": "Ganancias",
+
+      "questsRewards": "Misiones y Recompensas",
+      "payouts": "Pagos",
+      "socialAccounts": "Cuentas Sociales",
+      "activeQuests": "Misiones Activas",
+      "progress": "Progreso",
+
+      "payoutHistory": "Historial de Pagos",
+      "connectedAccounts": "Cuentas Conectadas",
+
+      "connect": "Conectar {{account}}",
+      "connectDesc": "Vincula tu cuenta de {{account}} para rastrear el rendimiento"
+    },
+    "home": {
+      "shareMoment": "Comparte tu momento de juego...",
+      "justHitNewRank": "¡Acabo de alcanzar un nuevo rango! 🎯",
+      "goingLive": "¡Estoy en vivo ahora! 🔴",
+      "newSetupReveal": "¡Nueva configuración revelada! ⚡"
+    },
+    "profile": {
+      "posts": "Publicaciones",
+      "followers": "Seguidores",
+      "following": "Siguiendo",
+      "editProfile": "Editar perfil",
+      "shareProfile": "Compartir perfil",
+      "mainGame": "Juego principal",
+      "liked": "Me gusta",
+      "saved": "Guardado",
+      "saveChanges": "Guardar cambios",
+      "cancel": "Cancelar",
+      "displayName": "Nombre para mostrar",
+      "userName": "Nombre de usuario",
+      "email": "Correo electrónico",
+      "bio": "Biografía",
+      "location": "Ubicación",
+      "website": "Sitio web",
+      "socialLinks": "Enlaces sociales"
+    }
+  },
   "teams": {
     "chip": "Equipos",
     "title": "Élite",
@@ -256,50 +319,6 @@
     "totalEarnings": "Ganancias Totales"
   },
 
-  "contentCreator": {
-    "chip": "Centro Social",
-    "title": "CREADOR DE CONTENIDO",
-    "highlightTitle": "PROGRAMA",
-    "description": "Explora a los creadores de contenido más talentosos de la comunidad gaming. Sigue su trayectoria, aprende de sus estrategias e inspírate con sus historias de éxito.",
-    "buttonPrimary": "Crear Contenido",
-    "buttonSecondary": "Ver perfil",
-    "labels": {
-      "myProfile": "Mi Perfil",
-      "dashboard": "Panel de Control",
-      "topCreators": "Mejores Creadores",
-      "socialMediaAnalytics": "Analítica de Redes Sociales",
-      "posts": "Publicaciones",
-      "engagement": "Interacción",
-      "avgViews": "Vistas Promedio",
-      "achievements": "Logros",
-      "latestContent": "Contenido Reciente",
-
-      "creatorDashboard": "Panel del Creador",
-      "creatorDashboardDesc": "¡Bienvenido de nuevo, Alex Chen!",
-      "totalFollowers": "Seguidores Totales",
-      "avgEngagement": "Interacción Promedio",
-      "totalWatchTime": "Tiempo Total de Visualización",
-      "earnings": "Ganancias",
-
-      "questsRewards": "Misiones y Recompensas",
-      "payouts": "Pagos",
-      "socialAccounts": "Cuentas Sociales",
-      "activeQuests": "Misiones Activas",
-      "progress": "Progreso",
-
-      "payoutHistory": "Historial de Pagos",
-      "connectedAccounts": "Cuentas Conectadas",
-
-      "connect": "Conectar {{account}}",
-      "connectDesc": "Vincula tu cuenta de {{account}} para rastrear el rendimiento"
-    },
-    "home": {
-      "shareMoment": "Comparte tu momento de juego...",
-      "justHitNewRank": "¡Acabo de alcanzar un nuevo rango! 🎯",
-      "goingLive": "¡Estoy en vivo ahora! 🔴",
-      "newSetupReveal": "¡Nueva configuración revelada! ⚡"
-    }
-  },
   "quests": {
     "chip": "Misiones",
     "title": "Sociales",
