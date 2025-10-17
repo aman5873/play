@@ -9,10 +9,11 @@
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    stroke="currentColor"
   />
   <path
     d="M3 7.5H21M16.5 3L13.5 7.5M10.5 3L7.5 7.5M10.25 14V10.969L12.875 12.484L15.5 14L12.875 15.5155L10.25 17.031V14Z"
-
+ stroke="currentColor"
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
