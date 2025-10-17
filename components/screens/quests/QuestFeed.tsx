@@ -71,10 +71,13 @@ function QuestVerifyModal({ show, onClose, questInfo, handleRefresh }) {
     const formData = new FormData();
     if (image) formData.append("proof_screenshot", image);
     if (url) formData.append("proof_url", url);
+    handleRequest({ id: questInfo?.id, data: formData });
+  };
 
+  async function handleRequest({ id, data }) {
     try {
       setLoading(true);
-      const res = await claimQuest({ id: questInfo?.id, data: formData });
+      const res = await claimQuest({ id, data });
 
       if (res?.message) {
         handleApiMessage(
@@ -93,86 +96,96 @@ function QuestVerifyModal({ show, onClose, questInfo, handleRefresh }) {
     } finally {
       setLoading(false);
     }
-  };
+  }
+
+  useEffect(() => {
+    if (questInfo?.category === "Daily Challenge") {
+      handleRequest({ id: questInfo?.id, data: undefined });
+      onClose();
+    }
+  }, [questInfo?.category, show]);
 
   return (
-    <AppModal
-      open={show}
-      onClose={handleClose}
-      titleClass="font-rajdhani"
-      contClass="w-[95%] max-w-lg"
-    >
-      <h2 className="text-[var(--textOne)] text-center font-semibold mb-4">
-        <span className="text-lg sm:text-xl">Submit Proof for: </span>
-        <span className="sm:text-md text-[var(--primary)] capitalize">
-          {questInfo?.title}
-        </span>
-      </h2>
+    <>
+      <Loading loading={loading} />
+      <AppModal
+        open={show}
+        onClose={handleClose}
+        titleClass="font-rajdhani"
+        contClass="w-[95%] max-w-lg"
+      >
+        <h2 className="text-[var(--textOne)] text-center font-semibold mb-4">
+          <span className="text-lg sm:text-xl">Submit Proof for: </span>
+          <span className="sm:text-md text-[var(--primary)] capitalize">
+            {questInfo?.title}
+          </span>
+        </h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {/* Image Input */}
-        <div className="flex flex-col gap-2">
-          <label className="font-medium text-[var(--textOne)]">
-            Upload Screenshot <span className="text-[var(--primary)]">*</span>
-          </label>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {/* Image Input */}
+          <div className="flex flex-col gap-2">
+            <label className="font-medium text-[var(--textOne)]">
+              Upload Screenshot <span className="text-[var(--primary)]">*</span>
+            </label>
 
-          <div
-            className="relative w-full border-2 border-dashed border-[var(--borderThree)] rounded-xl  transition-colors duration-200 
+            <div
+              className="relative w-full border-2 border-dashed border-[var(--borderThree)] rounded-xl  transition-colors duration-200 
                bg-[var(--bgSecondary)] p-4 cursor-pointer text-center"
-          >
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setImage(e.target.files[0])}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-            />
-            {image ? (
-              <div className="flex flex-col items-center gap-2">
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt="preview"
-                  className="w-20 h-20 object-cover rounded-md shadow-sm"
-                />
-                <span className="text-sm text-[var(--textTwo)] truncate max-w-[200px]">
-                  {image.name}
-                </span>
-              </div>
-            ) : (
-              <div className="text-[var(--textTwo)] text-sm">
-                <span className="block">Click or drag image here</span>
-                <span className="text-xs text-[var(--textThree)]">
-                  Supported: JPG, PNG
-                </span>
-              </div>
-            )}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImage(e.target.files[0])}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+              {image ? (
+                <div className="flex flex-col items-center gap-2">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="preview"
+                    className="w-20 h-20 object-cover rounded-md shadow-sm"
+                  />
+                  <span className="text-sm text-[var(--textTwo)] truncate max-w-[200px]">
+                    {image.name}
+                  </span>
+                </div>
+              ) : (
+                <div className="text-[var(--textTwo)] text-sm">
+                  <span className="block">Click or drag image here</span>
+                  <span className="text-xs text-[var(--textThree)]">
+                    Supported: JPG, PNG
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* URL Input */}
-        <InputComp
-          variant="secondaryTwo"
-          label={"Enter URL"}
-          name="url"
-          placeholder={""}
-          type="text"
-          radius="10px"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
+          {/* URL Input */}
+          <InputComp
+            variant="secondaryTwo"
+            label={"Enter URL"}
+            name="url"
+            placeholder={""}
+            type="text"
+            radius="10px"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
 
-        <button
-          disabled={loading}
-          type="submit"
-          className={`cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px]  font-bold font-rajdhani transition duration-200 ${
-            loading
-              ? "bg-[var(--bgThree)] text-[var(--textTwo)]"
-              : "bg-[var(--primary)] text-[var(--secondary)]"
-          }`}
-        >
-          {loading ? "Submitting..." : "Submit Proof"}
-        </button>
-      </form>
-    </AppModal>
+          <button
+            disabled={loading}
+            type="submit"
+            className={`cursor-pointer w-full px-6 py-2 mt-4 rounded-[100px]  font-bold font-rajdhani transition duration-200 ${
+              loading
+                ? "bg-[var(--bgThree)] text-[var(--textTwo)]"
+                : "bg-[var(--primary)] text-[var(--secondary)]"
+            }`}
+          >
+            {loading ? "Submitting..." : "Submit Proof"}
+          </button>
+        </form>
+      </AppModal>
+    </>
   );
 }
 
