@@ -1,5 +1,5 @@
-import ContentCreatorTopComp from "@/components/screens/social/ContentCreator/ContentCreatorTopComp";
-import ContentProfileFeed from "@/components/screens/social/ContentCreator/ContentProfileFeed";
+import ContentCreatorTopComp from "@/components/screens/social/creator/ContentCreatorTopComp";
+import ContentProfileFeed from "@/components/screens/social/creator/ContentCreatorFeed";
 
 export default function page() {
   return (
