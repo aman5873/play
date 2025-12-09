@@ -3,11 +3,16 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
-import { User, Lock, LogOut, Wallet } from "lucide-react"; // icons
+import {
+  User,
+  Lock,
+  LogOut,
+  // Wallet
+} from "lucide-react"; // icons
 
 import { useTranslation } from "react-i18next";
 import ChangePasswordModal from "@components/auth/ChangePasswordModal";
-import EditProfileModal from "./EditProfileModal";
+// import EditProfileModal from "./EditProfileModal";
 import Avatar from "./Avatar";
 import Link from "next/link";
 
@@ -23,11 +28,10 @@ export default function ProfileDrawer({
   anchorRef,
 }: ProfileDrawerProps) {
   const { t: tAuth } = useTranslation("auth");
-  const { t: tScreen } = useTranslation("screen");
+  // const { t: tScreen } = useTranslation("screen");
   const { user, logout } = useAuth();
   const drawerRef = useRef<HTMLDivElement>(null);
   const [showChangePassword, setShowChangePassword] = useState(false);
-  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
 
   // Close when clicking outside
   useEffect(() => {
@@ -44,54 +48,59 @@ export default function ProfileDrawer({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open, onClose, anchorRef]);
 
-  const menuItems = [
-    {
-      key: "Profile",
-      label: tAuth("profile"),
-      icon: User,
-      href: "/profile",
-    },
-    {
-      key: "Wallet",
-      label: `${tScreen("wallet.labels.walletBalance")}`,
-      icon: Wallet,
-      href: "/wallet",
-    },
-    // {
-    //   key: "editProfile",
-    //   label: tAuth("editProfile"),
-    //   icon: User,
-    //   onClick: () => {
-    //     setShowUpdateProfile(true);
-    //     onClose();
-    //   },
-    // },
-    {
-      key: "changePassword",
-      label: tAuth("changePassword"),
-      icon: Lock,
-      onClick: () => {
-        setShowChangePassword(true);
-        onClose();
-      },
-    },
-    {
-      key: "logout",
-      label: tAuth("logout"),
-      icon: LogOut,
-      onClick: logout,
-    },
-  ];
+  const menuItems = Boolean(user?.is_guest)
+    ? [
+        {
+          key: "logout",
+          label: tAuth("loginAsUser"),
+          icon: LogOut,
+          onClick: logout,
+        },
+      ]
+    : user?.auth_type === "google"
+    ? [
+        {
+          key: "Profile",
+          label: tAuth("profile"),
+          icon: User,
+          href: "/profile",
+        },
+        {
+          key: "logout",
+          label: tAuth("logout"),
+          icon: LogOut,
+          onClick: logout,
+        },
+      ]
+    : [
+        {
+          key: "Profile",
+          label: tAuth("profile"),
+          icon: User,
+          href: "/profile",
+        },
+        {
+          key: "changePassword",
+          label: tAuth("changePassword"),
+          icon: Lock,
+          onClick: () => {
+            setShowChangePassword(true);
+            onClose();
+          },
+        },
+        {
+          key: "logout",
+          label: tAuth("logout"),
+          icon: LogOut,
+          onClick: logout,
+        },
+      ];
 
   return (
     <>
       <ChangePasswordModal
         open={showChangePassword}
         onClose={() => setShowChangePassword(false)}
-      />
-      <EditProfileModal
-        open={showUpdateProfile}
-        onClose={() => setShowUpdateProfile(false)}
       />
 
       <AnimatePresence>
@@ -111,10 +120,12 @@ export default function ProfileDrawer({
                 <Avatar user={user} size={40} />
               </div>
               <div>
-                <h3 className="text-[var(--textOne)] font-semibold">
+                <h3 className="text-[var(--textOne)] font-semibold line-clamp-1">
                   {user?.name}
                 </h3>
-                <p className="text-[var(--textTwo)] text-sm">{user?.email}</p>
+                <p className="text-[var(--textTwo)] text-sm line-clamp-1">
+                  {user?.email}
+                </p>
               </div>
             </div>
 

@@ -35,7 +35,7 @@ export default function GamePageFeed() {
 
   // Fetch filters (statuses & genres)
   useEffect(() => {
-    if (!isAuthenticated || isFetchingFilters.current) return;
+    if (isFetchingFilters.current) return;
     isFetchingFilters.current = true;
 
     let mounted = true;
@@ -47,7 +47,7 @@ export default function GamePageFeed() {
           getGameGenres(),
         ]);
 
-        if (!mounted) return;
+        // if (!mounted) return;
         if (statusRes?.success && statusRes?.data)
           setStatusList(statusRes.data);
         if (genreRes?.success && genreRes?.data) setGenresList(genreRes.data);
@@ -66,7 +66,7 @@ export default function GamePageFeed() {
 
   // Fetch games whenever filters, search, pagination, or language changes
   const fetchGames = async () => {
-    if (!isAuthenticated || isFetchingGames.current) return;
+    if (isFetchingGames.current) return;
     isFetchingGames.current = true;
 
     const params: Record<string, any> = {
@@ -74,9 +74,20 @@ export default function GamePageFeed() {
       per_page: pageSize,
     };
 
-    if (headerSearchValue?.trim()) params.search = headerSearchValue.trim();
-    if (selectedStatus?.id) params.status_id = selectedStatus.id;
-    if (selectedGenre?.id) params.genre_id = selectedGenre.id;
+    if (headerSearchValue?.trim()) {
+      params.search = headerSearchValue.trim();
+      params.page = 1;
+    }
+
+    if (selectedStatus?.id) {
+      params.status_id = selectedStatus.id;
+      params.page = 1;
+    }
+
+    if (selectedGenre?.id) {
+      params.genre_id = selectedGenre.id;
+      params.page = 1;
+    }
 
     setLoading(true);
     try {

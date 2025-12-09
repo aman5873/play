@@ -27,14 +27,14 @@ const links = [
   { key: "tournaments", href: "/tournaments", active: true },
   { key: "games", href: "/games", active: true },
   { key: "social", href: "/social", active: true },
-  { key: "levels", href: "/levels", active: false },
+  { key: "leaderboard", href: "/leaderboard", active: true },
 ];
 
 const resources = [
-  { key: "support", href: "/", active: true },
-  { key: "faqs", href: "/", active: true },
-  { key: "rules", href: "/", active: true },
-  { key: "community", href: "/", active: true },
+  { key: "support", href: "/", active: false },
+  { key: "faqs", href: "/", active: false },
+  { key: "rules", href: "/", active: false },
+  { key: "community", href: "/", active: false },
 ];
 
 const contact = [
@@ -108,7 +108,7 @@ export default function Footer() {
 
   return (
     <div className="pt-4 px-4 ">
-      <footer className="w-full text-center p-4 md:p-8  gradient-one text-[var(--textTwo)]  rounded-lg border-t border-[var(--borderThree)]">
+      <footer className="w-full text-center p-4 md:p-8 gradient-one text-[var(--textTwo)] rounded-lg border-t border-[var(--borderThree)] pb-[env(safe-area-inset-bottom)] will-change-transform">
         <div className="grid grid-cols-1 pb-11 sm:pb-0 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-left">
           {/* Logo + Tagline */}
           <div className="flex flex-col items-start md:max-w-[200px]">
@@ -130,10 +130,18 @@ export default function Footer() {
           {/* Links */}
           <FooterColumn title={tFooter("links.title")}>
             {links.map((link) => (
-              <li key={link.key} className={link.active ? "" : "opacity-50"}>
+              <li
+                key={link.key}
+                className={link.active ? "" : "opacity-50 cursor-not-allowed"}
+              >
                 <a
-                  href={link.href}
-                  className="hover:underline flex items-center gap-1 w-fit"
+                  href={link.active ? link.href : "#"}
+                  onClick={(e) => {
+                    if (!link.active) e.preventDefault(); // prevent navigation
+                  }}
+                  className={`hover:underline flex items-center gap-1 w-fit ${
+                    !link.active ? "pointer-events-none text-gray-400" : ""
+                  }`}
                 >
                   {tFooter(`links.${link.key}`)}
                 </a>
@@ -144,8 +152,19 @@ export default function Footer() {
           {/* Resources */}
           <FooterColumn title={tFooter("resources.title")}>
             {resources.map((res) => (
-              <li key={res.key} className={res.active ? "" : "opacity-50"}>
-                <a href={res.href} className="hover:underline">
+              <li
+                key={res.key}
+                className={res.active ? "" : "opacity-50 cursor-not-allowed"}
+              >
+                <a
+                  href={res.active ? res.href : "#"}
+                  onClick={(e) => {
+                    if (!res.active) e.preventDefault(); // prevent navigation
+                  }}
+                  className={`hover:underline flex items-center gap-1 w-fit ${
+                    !res.active ? "pointer-events-none text-gray-400" : ""
+                  }`}
+                >
                   {tFooter(`resources.${res.key}`)}
                 </a>
               </li>

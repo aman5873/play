@@ -220,6 +220,8 @@ export default function ImageUploader({
   isDisablePrimaryToggle = false,
   isDelete = true,
   variant = "primary",
+  isError = false,
+  errorMessage = "",
 }) {
   const [loading, setLoading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
@@ -280,94 +282,107 @@ export default function ImageUploader({
 
   // Theme colors
   const isSecondary = variant === "secondary";
-  const borderColor = isSecondary ? "var(--borderTwo)" : "var(--borderOne)";
-  const bgColor = isSecondary ? "var(--bgTwo)" : "var(--bgOne)";
+  const borderColor = isError
+    ? "var(--bgFour)"
+    : isSecondary
+    ? "var(--borderTwo)"
+    : "var(--borderOne)";
+  const bgColor = isError
+    ? "var(--bgTwo)"
+    : isSecondary
+    ? "var(--bgTwo)"
+    : "var(--bgOne)";
   const textColor = "var(--textOne)";
 
   return (
-    <div
-      className={`space-y-4 border-1 rounded-lg cursor-pointer border-[${borderColor}] bg-[${bgColor}] p-2`}
-    >
-      {!isDisableAddNew && (
-        <div
-          onClick={() => inputRef.current?.click()}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragOver(true);
-          }}
-          onDragLeave={(e) => {
-            e.preventDefault();
-            setDragOver(false);
-          }}
-          onDrop={(e) => {
-            e.preventDefault();
-            setDragOver(false);
-            processFiles(e.dataTransfer.files);
-          }}
-          className={`relative flex flex-col items-center justify-center w-full  h-min-32  rounded-lg cursor-pointer transition-colors duration-200 `}
-        >
-          {loading ? (
-            <Loader2 className="w-6 h-6 animate-spin text-[var(--primary)]" />
-          ) : (
-            <>
-              <Upload
-                className={`w-6 h-6 text-[var(--textTwo)] hover:text-[var(--textOne)] mt-3`}
-              />
-              <span
-                className={`mt-2 text-sm text-center text-[${textColor}] hover:text-[var(--textOne)] mb-3`}
-              >
-                {isMulti
-                  ? "Click or drag multiple images"
-                  : "Click or drag an image"}
-              </span>
-            </>
-          )}
+    <>
+      <div
+        className={`space-y-4 border-1 rounded-lg cursor-pointer border-[${borderColor}] bg-[${bgColor}] p-2`}
+      >
+        {!isDisableAddNew && (
+          <div
+            onClick={() => inputRef.current?.click()}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragOver(true);
+            }}
+            onDragLeave={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+              processFiles(e.dataTransfer.files);
+            }}
+            className={`relative flex flex-col items-center justify-center w-full  h-min-32  rounded-lg cursor-pointer transition-colors duration-200 `}
+          >
+            {loading ? (
+              <Loader2 className="w-6 h-6 animate-spin text-[var(--primary)]" />
+            ) : (
+              <>
+                <Upload
+                  className={`w-6 h-6 text-[var(--textTwo)] hover:text-[var(--textOne)] mt-3`}
+                />
+                <span
+                  className={`mt-2 text-sm text-center text-[${textColor}] hover:text-[var(--textOne)] mb-3`}
+                >
+                  {isMulti
+                    ? "Click or drag multiple images"
+                    : "Click or drag an image"}
+                </span>
+              </>
+            )}
 
-          <input
-            type="file"
-            accept="image/png,image/jpeg,image/jpg"
-            multiple={isMulti}
-            ref={inputRef}
-            onChange={(e) => processFiles(e.target.files)}
-            className="hidden"
-          />
-        </div>
-      )}
-
-      {/* Image Grid */}
-      {images.length > 0 && (
-        <div
-          className={`grid ${
-            isMulti
-              ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
-              : "grid-cols-1"
-          } gap-4`}
-        >
-          {images.map((img, idx) => (
-            <ImageCard
-              key={img.id}
-              img={img}
-              primaryImage={primaryImage}
-              onSetPrimary={setPrimary}
-              onConfirmRemove={removeByUrl}
-              onUpdate={updateImage}
-              onPreview={() => setPreviewIndex(idx)}
-              isDelete={isDelete}
+            <input
+              type="file"
+              accept="image/png,image/jpeg,image/jpg"
+              multiple={isMulti}
+              ref={inputRef}
+              onChange={(e) => processFiles(e.target.files)}
+              className="hidden"
             />
-          ))}
-        </div>
-      )}
+          </div>
+        )}
 
-      {/* Preview Modal */}
-      <PreviewModal
-        images={images}
-        previewIndex={previewIndex}
-        setPreviewIndex={setPreviewIndex}
-        primaryImage={primaryImage}
-        onSetPrimary={setPrimary}
-        onConfirmRemove={removeByUrl}
-        isDisableAddNew={isDisableAddNew}
-      />
-    </div>
+        {/* Image Grid */}
+        {images.length > 0 && (
+          <div
+            className={`grid ${
+              isMulti
+                ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
+                : "grid-cols-1"
+            } gap-4`}
+          >
+            {images.map((img, idx) => (
+              <ImageCard
+                key={img.id}
+                img={img}
+                primaryImage={primaryImage}
+                onSetPrimary={setPrimary}
+                onConfirmRemove={removeByUrl}
+                onUpdate={updateImage}
+                onPreview={() => setPreviewIndex(idx)}
+                isDelete={isDelete}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Preview Modal */}
+        <PreviewModal
+          images={images}
+          previewIndex={previewIndex}
+          setPreviewIndex={setPreviewIndex}
+          primaryImage={primaryImage}
+          onSetPrimary={setPrimary}
+          onConfirmRemove={removeByUrl}
+          isDisableAddNew={isDisableAddNew}
+        />
+      </div>
+      {isError && errorMessage && (
+        <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+      )}
+    </>
   );
 }

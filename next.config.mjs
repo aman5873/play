@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "playhubbucket.s3.eu-west-1.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "static-cdn.jtvnw.net",
+      },
     ],
   },
   webpack(config) {

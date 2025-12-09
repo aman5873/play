@@ -24,7 +24,7 @@ export default function NewsFeaturedFeed() {
           <NewsCard
             key={`news-${obj.id}-${index}`}
             newsInfo={obj}
-            contClass="w-[18rem]  lg:w-[30rem]"
+            contClass="w-[18rem]  sm:w-[23rem] 2xl:w-[24rem]"
             imgContClass="h-[200px] sm:h-[170px] lg:h-[250px]"
           />
         ))}

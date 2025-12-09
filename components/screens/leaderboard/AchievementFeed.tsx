@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { leaderboardData } from "@/constants/data";
+import React from "react";
 import { Trophy, TrendingUp, Crown, Star } from "lucide-react";
 import { CardChip, ProgressBar } from "@/components/common/CardComp";
+import { useTranslation } from "react-i18next";
 
 const categoryIconMap = {
   Common: { icon: Trophy, color: "var(--textCommon)" },
@@ -12,6 +12,7 @@ const categoryIconMap = {
 };
 
 export function AchievementCard({ achievementInfo }) {
+  const { t: tScreen } = useTranslation("screen");
   const category = categoryIconMap[achievementInfo?.category];
   const Icon = category?.icon;
 
@@ -48,7 +49,7 @@ export function AchievementCard({ achievementInfo }) {
             {achievementInfo?.description}
           </p>
           <ProgressBar
-            label="Progress"
+            label={tScreen("leaderboard.labels.progress")}
             count={achievementInfo?.progress}
             maxCount={achievementInfo?.total_progress}
             showPercent={true}
@@ -60,26 +61,60 @@ export function AchievementCard({ achievementInfo }) {
   );
 }
 
-export default function AchievementFeed() {
-  const [achievementList, setAchievementList] = useState([]);
-
-  useEffect(() => {
-    setAchievementList(leaderboardData?.achievements || []);
-  }, []);
+export default function AchievementFeed({
+  contClass = "lg:h-fit lg:max-w-[500px]",
+}) {
+  const { t: tScreen } = useTranslation("screen");
+  const achievementList = [
+    {
+      id: 1,
+      title: tScreen("leaderboard.labels.firstVictory"),
+      description: tScreen("leaderboard.labels.firstVictoryDesc"),
+      category: "Common",
+      progress: 0,
+      total_progress: 100,
+    },
+    {
+      id: 2,
+      title: tScreen("leaderboard.labels.winningStreak"),
+      description: tScreen("leaderboard.labels.winningStreakDesc"),
+      category: "Rare",
+      progress: 0,
+      total_progress: 100,
+    },
+    {
+      id: 3,
+      title: tScreen("leaderboard.labels.champion"),
+      description: tScreen("leaderboard.labels.championDesc"),
+      category: "Epic",
+      progress: 0,
+      total_progress: 100,
+    },
+    {
+      id: 4,
+      title: tScreen("leaderboard.labels.legend"),
+      description: tScreen("leaderboard.labels.legendDesc"),
+      category: "Legendry",
+      progress: 0,
+      total_progress: 100,
+    },
+  ];
 
   return (
-    <div className="gradient-one p-3 w-full lg:h-fit lg:max-w-[500px] rounded-[16px] border border-[var(--borderThree)]">
+    <div
+      className={`gradient-one p-3 w-full rounded-[16px] border border-[var(--borderThree)] ${contClass}`}
+    >
       <div className="flex gap-2 items-center mb-5">
         <Star />
         <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl font-semibold text-[var(--textOne)]">
-          Achievements
+          {tScreen("leaderboard.labels.achievements")}
         </h1>
       </div>
 
       <div
         className="
           grid gap-4 justify-center
-          grid-cols-[repeat(auto-fit,minmax(300px,1fr))]
+          grid-cols-[repeat(auto-fit,minmax(277px,1fr))]
         "
       >
         {achievementList?.map((obj, index) => (

@@ -1,8 +1,9 @@
 "use client";
 
-import Select, { SingleValue } from "react-select";
-import { getNames, getCodeList } from "country-list";
+import { SingleValue } from "react-select";
+import { getCodeList } from "country-list";
 import ReactSelectInput from "../common/ReactSelectInput";
+import { useTranslation } from "react-i18next";
 
 type Option = {
   label: string;
@@ -15,6 +16,7 @@ type CountryPickerProps = {
   placeholder?: string;
   isError?: boolean;
   readOnly?: boolean;
+  isAllCountry?: boolean;
   label?: string;
 };
 
@@ -25,20 +27,30 @@ export default function CountryPicker({
   isError = false,
   label = "",
   readOnly = false,
+  isAllCountry = false,
 }: CountryPickerProps) {
-  const countries = getNames().map((name) => ({
-    label: name,
-    value: name,
+  const { t: tCommon } = useTranslation("common");
+  const countries = Object.entries(getCodeList()).map(([key, value]) => ({
+    value: key.toUpperCase(),
+    label: value,
   }));
 
-  const selected = countries.find((c) => c.value === value) || null;
+  const countryOptions = isAllCountry
+    ? [{ value: "", label: tCommon("filters.all") }, ...countries]
+    : countries;
+
+  // ✅ Case-insensitive match
+  const selected =
+    countryOptions.find(
+      (c) => c.value.toUpperCase() === (value || "").toUpperCase()
+    ) || null;
 
   return (
     <ReactSelectInput
       value={selected}
       label={label}
       onChange={(val: SingleValue<Option>) => onChange?.(val?.value || "")}
-      options={countries}
+      options={countryOptions}
       placeholder={placeholder}
       isSearchable
       isDisabled={readOnly}

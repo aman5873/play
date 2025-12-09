@@ -137,12 +137,12 @@ export function CardIconInfo({ list, minWidth = "7.5rem" }: CardIconInfoProps) {
               style={{ minWidth }}
             >
               <h3
-                className="text-base sm:text-lg xl:text-xl font-bold"
+                className="text-base sm:text-lg xl:text-xl 2xl:text-2xl font-bold"
                 style={{ color: item.color || "var(--textOne)" }}
               >
                 {item.label}
               </h3>
-              <p className="text-xs sm:text-sm md:text-base xl:text-lg text-[var(--textTwo)]">
+              <p className="text-xs sm:text-sm md:text-base xl:text-lg 2xl:text-xl text-[var(--textTwo)]">
                 {item.description}
               </p>
             </div>

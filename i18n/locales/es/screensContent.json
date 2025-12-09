@@ -44,6 +44,23 @@
       "size": "Tamaño"
     }
   },
+  "myGame": {
+    "title": "Mis",
+    "highlightTitle": "Juegos",
+    "description": "Supervisa el estado de tus juegos enviados y gestiona tus creaciones",
+    "labels": {
+      "myGames": "Mis Juegos",
+      "allGames": "Todos los juegos",
+      "approved": "Aprobado",
+      "pending": "Pendiente",
+      "underReview": "En revisión",
+      "rejected": "Rechazado",
+      "viewDetails": "Ver detalles",
+      "edit": "Editar",
+      "viewAnalytics": "Ver análisis",
+      "resubmit": "Reenviar"
+    }
+  },
   "tournament": {
     "chip": "Torneos de Juegos en Vivo",
     "title": "Gaming Móvil y PC",
@@ -79,7 +96,51 @@
     "chip": "Clasificación Global",
     "title": "Élite",
     "highlightTitle": "Tabla de Líderes",
-    "description": "Sé testigo del ascenso de las leyendas del gaming. Compite contra los mejores jugadores del mundo y asegura tu lugar entre la élite."
+    "description": "Sé testigo del ascenso de las leyendas del gaming. Compite contra los mejores jugadores del mundo y asegura tu lugar entre la élite.",
+    "labels": {
+      "leaderboard": "Clasificación",
+
+      "allTime": "Todo el tiempo",
+      "allTimeDesc": "La clasificación de todos los tiempos muestra las posiciones acumuladas de todos los jugadores a lo largo de todas las temporadas.",
+      "weekly": "Semanal",
+      "weeklyDesc": "La clasificación semanal se reinicia cada lunes a las 00:00 UTC y registra el rendimiento de los jugadores durante la semana actual.",
+      "daily": "Diario",
+      "dailyDesc": "La clasificación diaria se reinicia todos los días a las 12:00 UTC y refleja la actividad más reciente de los jugadores.",
+
+      "rank": "Rango",
+      "player": "Jugador",
+      "achievement": "Logro",
+      "equipment": "Equipo",
+      "mainGame": "Juego principal",
+      "points": "Puntos",
+
+      "playerStats": "Estadísticas del jugador",
+      "totalPoints": "Puntos totales",
+      "gamesPlayed": "Partidas jugadas",
+      "winRate": "Tasa de victorias",
+      "avgScore": "Puntuación promedio",
+      "totalPlayTime": "Tiempo total de juego",
+
+      "recentActivity": "Actividad reciente",
+      "featureWillAvailableSoon": "Esta función estará disponible pronto ✨",
+
+      "achievements": "Logros",
+
+      "firstVictory": "Primera victoria",
+      "firstVictoryDesc": "Gana tu primera partida",
+      "winningStreak": "Racha ganadora",
+      "winningStreakDesc": "Gana 10 partidas seguidas",
+      "champion": "Campeón",
+      "championDesc": "Gana un torneo",
+      "legend": "Leyenda",
+      "legendDesc": "Alcanza el rango de Gran Maestro",
+
+      "progress": "Progreso",
+      "common": "Común",
+      "rare": "Raro",
+      "epic": "Épico",
+      "legendry": "Legendario"
+    }
   },
   "newsSection": {
     "chip": "Últimas Noticias",
@@ -109,63 +170,133 @@
     "chip": "Centro Social",
     "title": "CREADOR DE CONTENIDO",
     "highlightTitle": "PROGRAMA",
-    "description": "Explora a los creadores de contenido más talentosos de la comunidad gaming. Sigue su trayectoria, aprende de sus estrategias e inspírate con sus historias de éxito.",
+    "description": "Explora a los creadores de contenido más talentosos de la comunidad gamer. Sigue su camino, aprende de sus estrategias y déjate inspirar por sus historias de éxito.",
     "buttonPrimary": "Crear Contenido",
-    "buttonSecondary": "Ver perfil",
-    "labels": {
-      "myProfile": "Mi Perfil",
-      "dashboard": "Panel de Control",
-      "topCreators": "Mejores Creadores",
-      "socialMediaAnalytics": "Analítica de Redes Sociales",
-      "posts": "Publicaciones",
-      "engagement": "Interacción",
-      "avgViews": "Vistas Promedio",
-      "achievements": "Logros",
-      "latestContent": "Contenido Reciente",
+    "buttonSecondary": "Ver Perfil",
 
-      "creatorDashboard": "Panel del Creador",
-      "creatorDashboardDesc": "¡Bienvenido de nuevo, Alex Chen!",
-      "totalFollowers": "Seguidores Totales",
-      "avgEngagement": "Interacción Promedio",
-      "totalWatchTime": "Tiempo Total de Visualización",
-      "earnings": "Ganancias",
-
-      "questsRewards": "Misiones y Recompensas",
-      "payouts": "Pagos",
-      "socialAccounts": "Cuentas Sociales",
-      "activeQuests": "Misiones Activas",
-      "progress": "Progreso",
-
-      "payoutHistory": "Historial de Pagos",
-      "connectedAccounts": "Cuentas Conectadas",
-
-      "connect": "Conectar {{account}}",
-      "connectDesc": "Vincula tu cuenta de {{account}} para rastrear el rendimiento"
-    },
     "home": {
       "shareMoment": "Comparte tu momento de juego...",
-      "justHitNewRank": "¡Acabo de alcanzar un nuevo rango! 🎯",
-      "goingLive": "¡Estoy en vivo ahora! 🔴",
+      "justHitNewRank": "¡Acabo de subir de rango! 🎯",
+      "goingLive": "¡En directo ahora! 🔴",
       "newSetupReveal": "¡Nueva configuración revelada! ⚡"
     },
     "profile": {
       "posts": "Publicaciones",
       "followers": "Seguidores",
       "following": "Siguiendo",
-      "editProfile": "Editar perfil",
-      "shareProfile": "Compartir perfil",
-      "mainGame": "Juego principal",
+      "suggestions": "Sugerencias",
+      "editProfile": "Editar Perfil",
+      "follow": "Seguir",
+      "unfollow": "Dejar de seguir",
+
+      "shareProfile": "Compartir Perfil",
+      "mainGame": "Juego Principal",
       "liked": "Me gusta",
-      "saved": "Guardado",
-      "saveChanges": "Guardar cambios",
-      "cancel": "Cancelar",
+
       "displayName": "Nombre para mostrar",
       "userName": "Nombre de usuario",
       "email": "Correo electrónico",
       "bio": "Biografía",
       "location": "Ubicación",
       "website": "Sitio web",
-      "socialLinks": "Enlaces sociales"
+      "socialLinks": "Redes Sociales",
+
+      "saved": "Guardado",
+      "saveChanges": "Guardar Cambios",
+      "cancel": "Cancelar",
+
+      "profileUpdateFailed": "Error al actualizar el perfil",
+      "generalInformation": "Información general",
+
+      "comingSoon": "Próximamente",
+      "suggestedForYou": "Sugerido para ti",
+      "mutualUsers": "Usuarios en común",
+      "users": "Usuarios",
+      "searchUser": "Buscar usuario",
+      "noUsersFound": "No se encontraron usuarios",
+
+      "defaultDescription": "Explora este perfil y descubre más.",
+      "loginToViewPosts": "Inicia sesión para ver las publicaciones de este creador."
+    },
+    "createPost": {
+      "title": "Crear Publicación",
+      "text": "Texto",
+      "image": "Imagen",
+      "video": "Video",
+      "clickToUpload": "Haz clic para subir"
+    },
+    "post": {
+      "dropComment": "Deja un comentario",
+      "reply": "Responder",
+      "replyingTo": "Respondiendo a",
+      "noCommentsYet": "Aún no hay comentarios.",
+      "noPostsAvailable": "No hay publicaciones disponibles",
+      "view": "Ver",
+      "share": "Compartir",
+      "goToPost": "Ir a la publicación",
+      "copyLink": "Copiar enlace",
+      "aboutThisAccount": "Acerca de esta cuenta",
+      "delete": "Eliminar",
+      "cancel": "Cancelar",
+      "editPost": "Editar publicación",
+      "deletePost": "Eliminar Publicación",
+      "deletePostTitle": "¿Estás seguro de que quieres eliminar esta publicación?",
+      "deletePostSubTitle": "Esta acción no se puede deshacer.",
+
+      "createPost": "Crear Publicación",
+      "createPostFailed": "Error al crear la publicación",
+      "text": "Texto",
+      "image": "Imagen",
+      "video": "Video",
+      "uploadImages": "Subir Imágenes",
+      "uploadImagesDesc": "JPG, PNG hasta {{size}}MB (se admiten múltiples)",
+      "uploadVideos": "Subir Videos",
+      "uploadVideosDesc": "MP4 hasta {{size}}MB (se admiten múltiples)",
+      "descriptionPlaceholder": "Escribe algo sobre tu publicación...",
+      "hashtagsPlaceholder": "Agrega hashtags",
+      "fileSizeAlert": "El archivo {{name}} debe ser menor de {{maxSizeMB}} MB",
+
+      "linkCopied": "¡Enlace copiado!",
+      "linkCopiedToClipboard": "¡Enlace copiado al portapapeles!",
+      "editInfo": "Editar información",
+      "checkoutPost": "¡Mira esta publicación!",
+      "done": "Hecho",
+      "processing": "Procesando..",
+      "post": "Publicar",
+
+      "sharePostTitle": "Publicación de PlayHub",
+      "sharePostDesc": "¡Mira esta publicación en PlayHub!",
+      "sharePostNotFoundTitle": "Publicación no encontrada - PlayHub",
+      "sharePostNotFoundDesc": "Es posible que esta publicación haya sido eliminada o no esté disponible."
+    },
+    "stream": {
+      "allPost": "Todas las publicaciones",
+      "liveStream": "Transmisión en vivo",
+      "goToStream": "Ir a la transmisión en vivo",
+      "goOffline": "Desconectarse",
+      "goLive": "Transmitir en vivo",
+      "checkoutStream": "¡Mira esta transmisión!",
+      "linkTwitch": "Vincular Twitch",
+
+      "liveChat": "Chat en vivo",
+      "showLiveChats": "Mostrar chats en vivo",
+      "poll": "Encuesta",
+      "votes": "Votos",
+      "createPoll": "Crear encuesta",
+      "createAPoll": "Crear una encuesta",
+      "addOption": "+ Agregar opción",
+      "question": "Pregunta",
+      "option": "Opción {{index}}",
+      "submit": "Enviar",
+
+      "noStreamsLive": "No hay transmisiones en vivo en este momento.",
+      "live": "EN VIVO",
+      "viewOnTwitch": "Ver en Twitch",
+
+      "shareStreamTitle": "Transmisión en vivo de PlayHub en Twitch",
+      "shareStreamDesc": "¡Mira esta transmisión en vivo en PlayHub!",
+      "shareStreamNotFoundTitle": "Transmisión en vivo no encontrada - PlayHub",
+      "shareStreamNotFoundDesc": "Es posible que esta transmisión en vivo haya sido pausada o no esté disponible."
     }
   },
   "teams": {
@@ -336,7 +467,31 @@
       "completed": "Completado",
       "verify": "Verificar",
       "watch": "Ver",
-      "progress": "Progreso"
+      "progress": "Progreso",
+
+      "totalProgress": "Progreso total",
+      "questsCompleted": "Misiones completadas",
+      "activeQuests": "Misiones activas",
+      "inProgress": "En progreso",
+      "dailyChallenges": "Desafíos diarios",
+      "timeLimited": "Tiempo limitado",
+      "currentStreak": "Racha actual",
+      "daily": "Diario",
+      "claim": "Reclamar",
+      "left": "Restante",
+
+      "connectTelegram": "Conecta tu cuenta de Telegram",
+      "connectTelegramDesc": "Haz clic en el botón de Telegram a continuación para vincular tu cuenta. Este paso es necesario para verificar tu misión.",
+      "connectTelegramSubDesc": "Este paso es necesario para verificar tu misión.",
+      "connectTelegramHint": "* Vincularemos tu cuenta de Telegram de forma segura para la verificación de la misión.",
+
+      "submitProofFor": "Enviar prueba para",
+      "uploadScreenshot": "Subir captura de pantalla",
+      "ClickDragImage": "Haz clic o arrastra la imagen aquí",
+      "supported": "Compatible",
+      "enterUrl": "Ingrese URL",
+      "submitProof": "Enviar prueba",
+      "submitting": "Enviando..."
     }
   },
   "assets": {
@@ -458,6 +613,10 @@
       "studio": "Estudio",
       "platforms": "Plataformas",
       "integrationType": "Tipo de Integración",
+      "tags": "Etiquetas del juego / Hashtags",
+      "size": "Tamaño del juego",
+      "networks": "Redes",
+      "releaseDate": "Fecha de lanzamiento",
 
       "submissionComplete": "¡Envío Completado!",
       "submissionCompleteDesc": "Tu juego ha sido enviado para revisión. Recibirás una confirmación por correo electrónico en breve.",

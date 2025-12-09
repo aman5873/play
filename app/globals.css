@@ -18,7 +18,7 @@
     }
   }
 }
-
+/* Hide scrollbars globally (Chrome/Safari/Firefox/Edge) */
 html,
 body {
   scrollbar-width: none; /* Firefox */
@@ -30,11 +30,35 @@ body::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
 }
 
+/* Base body styling */
 body {
-  /* background: var(--secondary); */
   background: #000;
   color: var(--textOne);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden; /* ✅ Prevent horizontal scroll only */
+}
+
+/* ✅ Safe-area support for mobile browsers (VPN/ngrok fix) */
+header {
+  padding-top: constant(safe-area-inset-top); /* Older Safari */
+  padding-top: env(safe-area-inset-top);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+footer {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ✅ Prevent viewport jump when address/search bar appears */
+html,
+body {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
 }
 
 :root {
@@ -169,7 +193,7 @@ body {
   font-family: var(--font-nyxerin);
 }
 
-*/ .dark-sec-btn {
+.dark-sec-btn {
   background-color: black;
   color: white;
   padding: 10px 20px;
@@ -233,4 +257,28 @@ input:-webkit-autofill {
 
 textarea {
   resize: none;
+}
+
+@keyframes float-reaction {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 0.9;
+  }
+  25% {
+    transform: translate(-10px, -30px) scale(1.1) rotate(-6deg);
+  }
+  50% {
+    transform: translate(10px, -70px) scale(1.15) rotate(5deg);
+  }
+  75% {
+    transform: translate(-6px, -110px) scale(1.05) rotate(-3deg);
+  }
+  100% {
+    transform: translate(0, -160px) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+.animate-floatReaction {
+  animation: float-reaction 1.6s ease-in-out forwards;
 }

@@ -106,7 +106,8 @@ export default function NewsFeed() {
 
       <div className="flex justify-center items-center mb-5 mt-4 w-full">
         <Link
-          href="/news"
+          href=""
+          // href="/news"
           className=" px-5 py-2 border rounded-[50px] border-[var(--primary)] text-[var(--primary)] hover:text-[var(--textOne)] hover:border-[var(--textOne)]   text-sm md:text-base transition-colors duration-300 cursor-pointer text-sm md:text-base transition-colors duration-300"
         >
           View All

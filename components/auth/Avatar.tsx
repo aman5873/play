@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
@@ -23,7 +24,8 @@ export default function Avatar({
 }: AvatarProps) {
   const { t: tCommon } = useTranslation("common");
 
-  const AvatarIcon = () => {
+  // ✅ Memoized avatar icon, re-renders whenever user or avatar_url changes
+  const AvatarIcon = useMemo(() => {
     const fallbackChar =
       user?.name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || "U";
 
@@ -34,6 +36,7 @@ export default function Avatar({
       >
         {user?.avatar_url ? (
           <Image
+            key={user.avatar_url} // 👈 re-renders when avatar changes
             src={user.avatar_url}
             alt={fallbackChar}
             fill
@@ -46,13 +49,14 @@ export default function Avatar({
         )}
       </div>
     );
-  };
+  }, [user, user?.avatar_url, user?.name, user?.email, size, contClass]);
 
+  // ✅ Header layout (unchanged)
   if (isHeader) {
     return (
-      <div className="flex items-center px-3 py-1.5 gap-2 rounded-[100px] border-[2px] border-[var(--borderOne)] bg-[var(--bgOne)] text-[var(--textOne)] hover:bg-[var(--bgTwo)] hover:border-[var(--borderTwo)]">
-        <AvatarIcon />
-        <div className="flex flex-col text-[var(--textOne)] text-sm">
+      <div className="flex items-center p-1 sm:px-3 sm:py-1.5 gap-2 rounded-[100px] border-[2px] border-[var(--borderOne)] bg-[var(--bgOne)] text-[var(--textOne)] hover:bg-[var(--bgTwo)] hover:border-[var(--borderTwo)]">
+        {AvatarIcon}
+        <div className="hidden sm:flex flex-col text-[var(--textOne)] text-sm">
           <span
             className="font-semibold"
             style={{
@@ -65,13 +69,13 @@ export default function Avatar({
           >
             {user?.name}
           </span>
-          <span className="text-[var(--textTwo)] text-[12px]">
+          {/* <span className="text-[var(--textTwo)] text-[12px]">
             {tCommon("level")} {user?.level ?? "-"}
-          </span>
+          </span> */}
         </div>
       </div>
     );
   }
 
-  return <AvatarIcon />;
+  return AvatarIcon;
 }

@@ -1,13 +1,9 @@
-import SocialPageFeed from "@/components/screens/social/SocialPageFeed";
-import SocialScreenTopComp from "@/components/screens/social/SocialScreenTopComp";
-import SocialAnalyticsComp from "@/components/screens/social/SocialAnalyticsComp";
+import ContentCreatorFeed from "@/components/screens/social/creator/ContentCreatorFeed";
 
 export default function page() {
   return (
-    <div className="flex flex-col gap-2 p-4">
-      <SocialScreenTopComp />
-      <SocialPageFeed />
-      <SocialAnalyticsComp />
+    <div className="flex flex-col gap-2 p-[1.2vw] sm:p-[1vw]">
+      <ContentCreatorFeed />
     </div>
   );
 }

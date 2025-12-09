@@ -5,7 +5,6 @@ import Pagination, { ShowingResults } from "@/components/common/Pagination";
 import ReactSelectInput from "@/components/common/ReactSelectInput";
 import SearchInput from "@/components/common/Searchinput";
 import { assetsData } from "@/constants/data";
-import { useAuth } from "@/context/AuthContext";
 import { getGames } from "@/lib/game_ops";
 import { ArrowDownToLine } from "lucide-react";
 import Image from "next/image";
@@ -14,6 +13,7 @@ import { useTranslation } from "react-i18next";
 
 import { StarIcon } from "@/app/icons";
 import { AppButton } from "@/components/TopComp";
+import Loading from "@/components/common/Loading";
 
 function AssetCard({ assetInfo, contClass = "" }) {
   const { t: tScreen } = useTranslation("screen");
@@ -119,7 +119,7 @@ function AssetCard({ assetInfo, contClass = "" }) {
 }
 
 export default function AssetsFeed() {
-  const { setLoading } = useAuth();
+  const [loading, setLoading] = useState(false);
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
 
@@ -128,8 +128,6 @@ export default function AssetsFeed() {
   const [selectedRank, setSelectedRank] = useState(null);
   const [selectedGame, setSelectedGame] = useState(null);
   const [gameList, setGameList] = useState([]);
-
-  console.log(selectedGame);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -211,69 +209,72 @@ export default function AssetsFeed() {
   }, []);
 
   return (
-    <div className="mx-auto py-10 w-full">
-      {/* Filter Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-        {/* Game Filter */}
-        <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
-          <SearchInput
-            value={headerSearchValue}
-            onChange={setHeaderSearchValue} // Will trigger after debounce
-            placeholder={tScreen("assets.labels.searchAssets")}
-          />
-        </div>
-        <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
-          <ReactSelectInput
-            value={selectedGame}
-            onChange={setSelectedGame}
-            options={gameList}
-            getOptionLabel={(opt: any) => opt.title}
-            getOptionValue={(opt: any) => opt}
-            placeholder={tScreen("assets.labels.game")}
+    <>
+      <Loading loading={loading} />
+      <div className="mx-auto py-10 w-full">
+        {/* Filter Section */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+          {/* Game Filter */}
+          <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
+            <SearchInput
+              value={headerSearchValue}
+              onChange={setHeaderSearchValue} // Will trigger after debounce
+              placeholder={tScreen("assets.labels.searchAssets")}
+            />
+          </div>
+          <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
+            <ReactSelectInput
+              value={selectedGame}
+              onChange={setSelectedGame}
+              options={gameList}
+              getOptionLabel={(opt: any) => opt.title}
+              getOptionValue={(opt: any) => opt}
+              placeholder={tScreen("assets.labels.game")}
+            />
+          </div>
+
+          {/* Rank Filter */}
+          <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
+            <ReactSelectInput
+              value={selectedRank}
+              onChange={setSelectedRank}
+              options={rankOptions}
+              placeholder={tScreen("assets.labels.rank")}
+            />
+          </div>
+
+          {/* Showing Results */}
+          <ShowingResults
+            currentPage={currentPage}
+            pageSize={pageSize}
+            totalItems={totalItems}
+            className="ml-auto"
+            label={tScreen("assets.labels.assets")}
           />
         </div>
 
-        {/* Rank Filter */}
-        <div className="flex-1 min-w-[170px] sm:max-w-[260px] sm:w-auto">
-          <ReactSelectInput
-            value={selectedRank}
-            onChange={setSelectedRank}
-            options={rankOptions}
-            placeholder={tScreen("assets.labels.rank")}
-          />
-        </div>
-
-        {/* Showing Results */}
-        <ShowingResults
-          currentPage={currentPage}
-          pageSize={pageSize}
-          totalItems={totalItems}
-          className="ml-auto"
-          label={tScreen("assets.labels.assets")}
-        />
-      </div>
-
-      {/* Asset Cards */}
-      <div className="flex flex-wrap justify-center sm:justify-start gap-4">
-        {paginatedAssets.map((obj, index) => (
-          <AssetCard
-            key={`asset-${obj.id}-${index}`}
-            assetInfo={obj}
-            contClass="w-full 
+        {/* Asset Cards */}
+        <div className="flex flex-wrap justify-center sm:justify-start gap-4">
+          {paginatedAssets.map((obj, index) => (
+            <AssetCard
+              key={`asset-${obj.id}-${index}`}
+              assetInfo={obj}
+              contClass="w-full 
             [@media(min-width:460px)_and_(max-width:619px)]:w-[90%] [@media(min-width:620px)]:w-[23.65rem]
             "
-          />
-        ))}
-      </div>
+            />
+          ))}
+        </div>
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      )}
-    </div>
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        )}
+      </div>
+    </>
   );
 }

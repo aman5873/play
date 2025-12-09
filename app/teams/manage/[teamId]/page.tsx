@@ -716,8 +716,6 @@ function TeamTabFeed({ manageTeamData }) {
           overflow-x-auto sm:overflow-x-visible
           scrollbar-hide
           p-[5px]
-          // pb-2 sm:pb-0
-          
         "
       >
         {teamTabs.map((tab) => (

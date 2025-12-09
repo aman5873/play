@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { CoinIcon } from "@/app/icons";
 
 import { challengesData } from "@/constants/data";
@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 
 export function ChallengeCard(props) {
   const { challengeInfo, contClass = "", isFeatured = false } = props;
-  const router = useRouter();
+  // const router = useRouter();
 
   const isClaimed = challengeInfo?.status === "Claimed";
   const statusColor =

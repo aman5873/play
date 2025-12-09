@@ -6,7 +6,7 @@ import TeamsAnalyticsComp from "@/components/screens/teams/TeamsAnalyticsComp";
 
 export default function page() {
   return (
-    <div className="flex flex-col gap-2 p-4">
+    <div className="flex flex-col gap-2 p-[2vw] sm:p-[1vw]">
       <TeamsScreenTopComp />
       <TeamsFeed param="following" title={"teams.labels.following"} />
       <TeamsFeed param="my_teams" title={"teams.labels.my_teams"} />

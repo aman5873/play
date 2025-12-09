@@ -16,7 +16,8 @@ import {
   Gift,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { CommunityIcon, NftIcon, SocialIcon, TeamIcon } from "@/app/icons";
+import { CommunityIcon, SocialIcon, TeamIcon } from "@/app/icons";
+import AppModal from "../AppModal";
 
 type NavItem = {
   key: string;
@@ -26,6 +27,7 @@ type NavItem = {
   iconComp?: React.ReactNode;
   active?: boolean;
   iconSize?: number;
+  comingSoon?: boolean;
 };
 
 type IconProps = {
@@ -52,6 +54,20 @@ const navItems: NavItem[] = [
     active: true,
   },
   {
+    key: "quests",
+    label: "Quests",
+    href: "/quests",
+    icon: Gift,
+    active: true,
+  },
+  {
+    key: "leaderboard",
+    label: "Leaderboard",
+    href: "/leaderboard",
+    icon: TrendingUp,
+    active: true,
+  },
+  {
     key: "social",
     label: "Social Hub",
     href: "/social",
@@ -66,70 +82,109 @@ const navItems: NavItem[] = [
     href: "/teams",
     icon: TeamIcon,
     active: true,
+    comingSoon: true,
   },
-  { key: "news", label: "News", href: "/news", icon: Newspaper, active: true },
   {
-    key: "levels",
-    label: "Levels",
-    href: "/leaderboard",
-    icon: TrendingUp,
+    key: "news",
+    label: "News",
+    href: "/news",
+    icon: Newspaper,
     active: true,
+    comingSoon: true,
   },
-  {
-    key: "quests",
-    label: "Quests",
-    href: "/quests",
-    icon: Gift,
 
-    active: true,
-  },
   {
     key: "assets",
     label: "Online Store",
     href: "/assets",
     icon: Store,
     active: true,
+    comingSoon: true,
   },
   {
     key: "missions",
     label: "Missions",
     href: "/missions",
     icon: Disc2,
-    active: false,
+    active: true,
+    comingSoon: true,
   },
   {
     key: "benefits",
     label: "Benefits",
+
     href: "/benefits",
     icon: Gift,
-    active: false,
+    active: true,
+    comingSoon: true,
   },
 
-  {
-    key: "nft",
-    label: "NFT Marketplace",
-    href: "/nft",
-    iconComp: <NftIcon size={20} />,
-    active: false,
-  },
+  // {
+  //   key: "nft",
+  //   label: "NFT Marketplace",
+  //   href: "/nft",
+  //   iconComp: <NftIcon size={20} />,
+  //   active: false,
+  // },
   {
     key: "communities",
     label: "Communities",
     href: "/communities",
     icon: CommunityIcon,
     // iconComp: <CommunityIcon size={20} />,
-    active: false,
+    active: true,
+    comingSoon: true,
   },
 ];
+
+export function useComingSoon() {
+  const [open, setOpen] = React.useState(false);
+
+  const trigger = () => setOpen(true);
+  const close = () => setOpen(false);
+
+  return { open, trigger, close };
+}
+
+export default function ComingSoonModal({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  const { t: tCommon } = useTranslation("common");
+
+  const label = React.useMemo(
+    () => tCommon("common_labels.comingSoon"),
+    [tCommon]
+  );
+  return (
+    <AppModal
+      open={open}
+      onClose={onClose}
+      titleClass="font-rajdhani"
+      contClass="w-[95%] sm:w-md max-w-lg"
+      closeIconClass="top-3 right-4"
+      contPadding="p-3"
+    >
+      <div className="text-[var(--textOne)] text-lg text-center py-4 font-semibold">
+        {label}
+      </div>
+    </AppModal>
+  );
+}
 
 // --------------------- COMMON SIDEBAR NAV ---------------------
 function SidebarNav({
   navItems,
   onClick,
+  onComingSoon,
   variant = "desktop",
 }: {
   navItems: NavItem[];
   onClick?: () => void;
+  onComingSoon?: () => void;
   variant?: "desktop" | "mobile";
 }) {
   const pathname = usePathname();
@@ -171,7 +226,14 @@ function SidebarNav({
           <Link
             key={item.key}
             href={item.href}
-            onClick={onClick}
+            onClick={(e) => {
+              if (item.comingSoon) {
+                e.preventDefault();
+                onComingSoon?.();
+                return;
+              }
+              onClick?.();
+            }}
             className={`${baseClasses} ${
               isActiveRoute
                 ? "gradient-selected text-[var(--primary)] border-[var(--primary)]"
@@ -189,10 +251,55 @@ function SidebarNav({
   );
 }
 
+export function useSidebarVisibility() {
+  const pathname = usePathname();
+  // const isStreamPage = pathname?.startsWith("/social");
+  // Corrected URL check
+  const isStreamPage = React.useMemo(() => {
+    return /\/social\/stream\/[a-zA-Z0-9\-]+/.test(pathname ?? "");
+  }, [pathname]);
+
+  const [width, setWidth] = React.useState(0);
+  const [hasMounted, setHasMounted] = React.useState(false);
+
+  // Mark when component mounted
+  React.useEffect(() => {
+    setHasMounted(true);
+
+    const update = () => setWidth(window.innerWidth);
+    update();
+
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // ⛔ On NON-stream pages → do NOT hide on first render
+  if (!isStreamPage && !hasMounted) {
+    return true; // FORCE visible before mount → NO flicker
+  }
+
+  // After mount, apply real logic
+  if (isStreamPage) {
+    return width >= 1400;
+  }
+
+  return width >= 1024;
+}
+
 // --------------------- DESKTOP SIDEBAR ---------------------
 export function Sidebar() {
+  const isVisible = useSidebarVisibility();
+  const comingSoon = useComingSoon();
+
+  const sidebarClass = React.useMemo(() => {
+    return `
+      hidden lg:flex
+      ${isVisible ? "lg:flex" : "lg:hidden"}
+      flex-col h-full w-64 flex-shrink-0 bg-[var(--secondary)] p-4 overflow-y-auto scrollbar-hide
+    `;
+  }, [isVisible]);
   return (
-    <div className="hidden lg:flex flex-col h-full w-64 flex-shrink-0 bg-[var(--secondary)] p-4 overflow-y-auto scrollbar-hide">
+    <div className={sidebarClass}>
       <Link href="/" className="flex items-center justify-center mb-8">
         <Image
           src="/logo.png"
@@ -203,7 +310,8 @@ export function Sidebar() {
           priority
         />
       </Link>
-      <SidebarNav navItems={navItems} />
+      <SidebarNav navItems={navItems} onComingSoon={comingSoon.trigger} />
+      <ComingSoonModal open={comingSoon.open} onClose={comingSoon.close} />
     </div>
   );
 }
@@ -216,11 +324,12 @@ export function MobileSidebar({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const comingSoon = useComingSoon();
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black/50 z-50"
+          className="fixed inset-0 bg-black/50 z-60"
           onClick={onClose}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -250,6 +359,11 @@ export function MobileSidebar({
               navItems={navItems}
               onClick={onClose}
               variant="mobile"
+              onComingSoon={comingSoon.trigger}
+            />
+            <ComingSoonModal
+              open={comingSoon.open}
+              onClose={comingSoon.close}
             />
           </motion.div>
         </motion.div>

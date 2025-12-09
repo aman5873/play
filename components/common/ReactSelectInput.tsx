@@ -30,6 +30,7 @@ export default function ReactSelectInput({
   required = false,
   isRequired = false,
   variant = "primary", // default
+  styles: parentStyles = {},
   ...rest
 }: ReactSelectInputProps) {
   // ✅ Swap styles for primary and primaryTwo
@@ -50,6 +51,7 @@ export default function ReactSelectInput({
       ...base,
       backgroundColor: controlBg,
       borderRadius: "10px",
+
       color: "var(--textOne)",
       boxShadow: "none",
       transition: "all 0.2s ease",
@@ -83,6 +85,7 @@ export default function ReactSelectInput({
           : "var(--bgTwo)",
       },
     }),
+
     multiValue: (base: any) => ({
       ...base,
       backgroundColor: primaryStyle
@@ -115,6 +118,27 @@ export default function ReactSelectInput({
       borderRadius: "8px",
       zIndex: 50,
     }),
+    menuList: (base: any) => ({
+      ...base,
+      maxHeight: 200,
+      overflowY: "auto",
+      scrollbarWidth: "thin", // Firefox
+      scrollbarColor: "var(--borderTwo) transparent", // subtle color
+
+      /* Chrome, Safari, Edge */
+      "::-webkit-scrollbar": {
+        width: "6px",
+        height: "6px",
+      },
+      "::-webkit-scrollbar-thumb": {
+        backgroundColor: "var(--borderTwo)",
+        borderRadius: "4px",
+      },
+      "::-webkit-scrollbar-track": {
+        backgroundColor: "transparent",
+      },
+    }),
+
     option: (base: any, { isFocused, isSelected }: any) => ({
       ...base,
       backgroundColor: isFocused
@@ -160,8 +184,11 @@ export default function ReactSelectInput({
         onChange={onChange}
         options={options}
         placeholder={placeholder}
-        styles={customStyles}
         classNamePrefix="react-select"
+        styles={{
+          ...customStyles,
+          ...parentStyles, // 🔥 merge override
+        }}
         {...rest}
       />
       {isError && errorMessage && (

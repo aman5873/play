@@ -25,10 +25,13 @@ import {
   ShoppingCart,
   Download,
   ArrowDownToLine,
+  Radio,
+  CircleOff,
+  Link,
 } from "lucide-react";
 
 // Map string keys to lucide icons
-const iconMap: Record<string, React.ComponentType<any>> = {
+export const iconMap: Record<string, React.ComponentType<any>> = {
   users: Users,
   user: User,
   trophy: Trophy,
@@ -48,6 +51,11 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   cart: ShoppingCart,
   download: Download,
   withdraw: ArrowDownToLine,
+
+  // ⭐ NEW
+  live: Radio,
+  offline: CircleOff,
+  link: Link,
 };
 
 // ------------------ Types ------------------
@@ -63,6 +71,7 @@ interface ButtonItem {
   icon?: string;
   redirect?: string;
   onClick?: any;
+  style?: any;
 }
 
 interface DetailItem {
@@ -85,10 +94,13 @@ interface ContentProps {
 interface ScreenDetailsCompProps {
   content?: ContentProps;
   isCentered?: boolean;
+  chipContStyle?: any;
+  chipContClass?: any;
 }
 
 interface ButtonCompProps {
   buttons?: ButtonItem[];
+  style?: {};
 }
 
 interface TopBgCompProps {
@@ -105,11 +117,16 @@ interface TopCompProps {
 export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
   content,
   isCentered = false,
+  chipContStyle = {},
+  chipContClass = "",
 }) => {
   return (
     <>
       {content?.chip?.length > 0 && (
-        <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+        <div
+          className={`flex flex-wrap justify-center gap-2 ${chipContClass}`}
+          style={chipContStyle}
+        >
           {content.chip.map(({ label, type = "primary", icon }, index) => {
             const Icon = icon ? iconMap[icon] : null;
             const classStyle =
@@ -118,9 +135,14 @@ export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
                 : "border-[var(--textOne)] text-[var(--textOne)]";
 
             return (
-              <Chip key={`chip-${index}`} label={label || ""} type={type}>
+              <Chip
+                key={`chip-${index}`}
+                label={label || ""}
+                type={type}
+                contClass="text-sm sm:text-base xl:text-md 2xl:text-lg  mb-3"
+              >
                 {Icon && (
-                  <div className={`rounded-xl w-fit p-2 ${classStyle}`}>
+                  <div className={`rounded-xl w-fit p-1 ${classStyle}`}>
                     <Icon className="w-5 h-5" />
                   </div>
                 )}
@@ -133,8 +155,8 @@ export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
       {content?.title && (
         <h1
           className={` ${
-            isCentered ? "text-center" : "text-center lg:text-left"
-          } text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-semibold font-nyxerin text-[var(--textOne)]`}
+            isCentered ? "text-center" : "text-left"
+          } text-2xl sm:text-2xl md:text-3xl lg:text-text-[2.2rem] xl:text-[2.5rem] 2xl:text-6xl font-semibold font-nyxerin text-[var(--textOne)]`}
         >
           {content.title}
         </h1>
@@ -142,8 +164,8 @@ export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
       {content?.highlightTitle && (
         <h2
           className={` ${
-            isCentered ? "text-center" : "text-center lg:text-left"
-          } text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-[2.75rem] 2xl:text-5xl font-bold font-nyxerin text-[var(--primary)]`}
+            isCentered ? "text-center" : "text-left"
+          } text-2xl sm:text-2xl md:text-3xl lg:text-text-[2.2rem] xl:text-[2.5rem] 2xl:text-6xl font-bold font-nyxerin text-[var(--primary)]`}
         >
           {content.highlightTitle}
         </h2>
@@ -151,7 +173,11 @@ export const ScreenDetailsComp: React.FC<ScreenDetailsCompProps> = ({
 
       {content?.description && (
         <p
-          className="font-rajdhani text-sm sm:text-base lg:text-lg xl:text-xl mt-3 leading-relaxed sm:max-w-[40rem] md:max-w-[42rem]"
+          className={`font-rajdhani text-sm sm:text-base lg:text-md xl:text-xl 2xl:text-3xl   mt-3 leading-relaxed  ${
+            isCentered
+              ? "sm:max-w-[40rem] md:max-w-[42rem] lg:max-w-[50vw]"
+              : "max-w-[95%] sm:max-w-[90%]"
+          }`}
           style={{
             color: "#ccc",
             display: "-webkit-box",
@@ -197,6 +223,7 @@ export const ButtonComp: React.FC<ButtonCompProps> = ({ buttons }) => {
                 type={btn.type}
                 label={btn.label}
                 Icon={Icon}
+                style={btn?.style ?? {}}
               />
             );
           })}
@@ -224,7 +251,7 @@ export function AppButton({
       onClick={onClick}
       disabled={disabled}
       type={actionType}
-      className={`px-4 py-2 flex items-center justify-center rounded-[100px] border  cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
+      className={`px-4 py-2 flex items-center justify-center rounded-[100px] border  cursor-pointer text-sm sm:text-base lg:text-md xl:text-lg 2xl:text-xl  font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
                   ${
                     type === "primary"
                       ? "bg-[var(--primary)] text-[var(--secondary)] border-[var(--primary)]"

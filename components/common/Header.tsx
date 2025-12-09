@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, MouseEventHandler, useRef } from "react";
+import React, { useState, MouseEventHandler, useRef } from "react";
 import dynamic from "next/dynamic";
 import { SquareMenu } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -9,9 +9,15 @@ import { useTranslation } from "react-i18next";
 
 import SearchInput from "./Searchinput";
 import Avatar from "../auth/Avatar";
+import { useSidebarVisibility } from "./SideNavbar";
+// import { NotificationBell } from "../notification/NotificationDrawer";
 
-const WalletChipComp = dynamic(
-  () => import("@/components/screens/wallet/WalletChipComp"),
+// const WalletChipComp = dynamic(
+//   () => import("@/components/screens/wallet/WalletChipComp"),
+//   { ssr: false }
+// );
+const UserPointsChipComp = dynamic(
+  () => import("@/components/screens/UserPointsChipComp"),
   { ssr: false }
 );
 
@@ -45,6 +51,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
   const { t: tCommon } = useTranslation("common");
   const { t: tAuth } = useTranslation("auth");
   const avatarRef = useRef<HTMLDivElement>(null);
+  const isVisible = useSidebarVisibility();
 
   const [registerOpen, setRegisterOpen] = useState(false);
   const [forgotOpen, setForgotOpen] = useState(false);
@@ -58,13 +65,22 @@ export default function Header({ onMenuClick }: HeaderProps) {
     },
   ];
 
+  const mobileClass = React.useMemo(() => {
+    return `
+    block
+    lg:hidden
+    ${isVisible ? "hidden" : "block"}
+    mr-auto
+  `;
+  }, [isVisible]);
+
   return (
     <>
-      <header className="h-16 flex items-center justify-end gap-4 px-4 bg-[var(--secondary)] shadow-sm">
+      <header className="sticky top-0 z-50 h-16 flex items-center justify-end gap-4 px-4 bg-[var(--secondary)] shadow-sm pt-[env(safe-area-inset-top)] will-change-transform">
         {/* Mobile menu icon */}
 
         <div className="mr-auto flex gap-2 items-center">
-          <div className="lg:hidden mr-auto">
+          <div className={mobileClass}>
             <div
               onClick={onMenuClick}
               className="text-[var(--primary)] cursor-pointer"
@@ -72,7 +88,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
               <SquareMenu size={35} />
             </div>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden  min-[870px]:block">
             <SearchInput
               value={headerSearchValue}
               onChange={setHeaderSearchValue} // Will trigger after debounce
@@ -81,9 +97,11 @@ export default function Header({ onMenuClick }: HeaderProps) {
           </div>
         </div>
 
-        <WalletChipComp />
+        <UserPointsChipComp />
+        {/* <WalletChipComp /> */}
         {/* Language toggle */}
         <LanguageToggle />
+        {/* <NotificationBell /> */}
 
         {/* Auth / Guest */}
         {isAuthenticated ? (

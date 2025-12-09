@@ -45,7 +45,7 @@ export default function LoginModal({
 }: LoginModalProps) {
   const { showAlert } = useAlert();
   const { t: tAuth } = useTranslation("auth");
-  const { loginWithGoogle, setUser, setLoading } = useAuth();
+  const { loginWithGoogle, guestLogin, setUser, setLoading } = useAuth();
 
   const [formData, setFormData] = useState(initFormData);
   const [showVerifyOtp, setShowVerifyOtp] = useState(false);
@@ -68,7 +68,7 @@ export default function LoginModal({
       const res = await loginUser(formData);
       setLoading(false);
       if (res?.status === 403) {
-        // 🔥 Special handling for forbidden users
+        // 🔥  Special handling for forbidden users
         handleApiMessage(
           res?.message ?? "Access denied. Please contact support.",
           showAlert,
@@ -116,7 +116,8 @@ export default function LoginModal({
 
   return (
     <AppModal
-      showCloseIcon={false}
+      zIndex={100}
+      // showCloseIcon={false}
       closeOnBackdropClick={false}
       open={open}
       onClose={handleClose}
@@ -178,6 +179,13 @@ export default function LoginModal({
 
           <div className="text-center">{tAuth("or")}</div>
 
+          <button
+            type="button"
+            onClick={() => guestLogin()}
+            className="cursor-pointer border border-[var(--primary)] flex gap-3 justify-center items-center px-6 py-2 rounded-[100px] bg-[var(--primary)] text-[var(--secondary)] font-rajdhani font-bold transition duration-200 hover:shadow-[0_0_4px_var(--primary)]"
+          >
+            <span>{tAuth("guestLogin")}</span>
+          </button>
           <button
             type="button"
             onClick={() => loginWithGoogle()}

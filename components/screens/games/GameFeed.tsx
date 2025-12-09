@@ -12,14 +12,18 @@ import { CategoryCardComp } from "@/components/common/CardComp";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/context/LanguageContext";
+import { encodeUUID } from "@/lib/system";
 
 export function GameCard({
   gameInfo,
   contClass = "w-68 min-w-[12rem] max-w-xs",
   style = {},
 }) {
+  const { lang } = useLanguage();
   const router = useRouter();
   const { t: tScreen } = useTranslation("screen");
+
+  const encryptedGameId = encodeUUID(gameInfo?.id);
 
   const primaryImage = gameInfo?.images.find((img: any) => img?.is_primary);
   const genreList = gameInfo?.genres.map((genre: any) => genre?.name) ?? [];
@@ -60,7 +64,7 @@ export function GameCard({
       </div>
 
       <button
-        onClick={() => router.push(`/games/${gameInfo?.id}`)}
+        onClick={() => router.push(`/games/${encryptedGameId}?lang=${lang}`)}
         className={`px-4 py-2 mt-4  flex items-center justify-center rounded-[100px] border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md
                  bg-[var(--primary)] text-[var(--secondary)]`}
       >
@@ -79,13 +83,11 @@ export default function GameFeed() {
   const initialMount = useRef(true); // ✅ track first mount
 
   function fetchGames(param?: any) {
-    if (isAuthenticated) {
-      setLoading(true);
-      getGames(param).then((res: any) => {
-        setLoading(false);
-        if (res?.success && res?.data) setGameData(res.data);
-      });
-    }
+    setLoading(true);
+    getGames(param).then((res: any) => {
+      setLoading(false);
+      if (res?.success && res?.data) setGameData(res.data);
+    });
   }
 
   useEffect(() => {
@@ -97,7 +99,7 @@ export default function GameFeed() {
       // On subsequent lang changes, always fetch
       fetchGames();
     }
-  }, [isAuthenticated, lang]);
+  }, [lang]);
 
   return (
     <>

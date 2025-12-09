@@ -17,7 +17,7 @@ const Loading: React.FC<LoadingProps> = ({ loading }) => {
       // Ensure at least 1 second minimum display
       setShow(true);
     } else {
-      timer = setTimeout(() => setShow(false), 1000);
+      timer = setTimeout(() => setShow(false), 800);
     }
 
     return () => clearTimeout(timer);

@@ -44,6 +44,23 @@
       "size": "Size"
     }
   },
+  "myGame": {
+    "title": "My",
+    "highlightTitle": "Games",
+    "description": " Track the status of your submitted games and manage your creations",
+    "labels": {
+      "myGames": "My Games",
+      "allGames": "All Games",
+      "approved": "Approved",
+      "pending": "Pending",
+      "underReview": "Under Review",
+      "rejected": "Rejected",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "viewAnalytics": "View Analytics",
+      "resubmit": "Resubmit"
+    }
+  },
   "tournament": {
     "chip": "Live Gaming Tournaments",
     "title": "Mobile & PC Gaming",
@@ -78,7 +95,51 @@
     "chip": "Global Ranking",
     "title": "Elite",
     "highlightTitle": "Leaderboard",
-    "description": "Witness the rise of gaming legends. Compete against the best players worldwide and claim your spot among the elite."
+    "description": "Witness the rise of gaming legends. Compete against the best players worldwide and claim your spot among the elite.",
+    "labels": {
+      "leaderboard": "Leaderboard",
+
+      "allTime": "All Time",
+      "allTimeDesc": "All-time leaderboard displays the cumulative rankings of all players across all seasons.",
+      "weekly": "Weekly",
+      "weeklyDesc": "Weekly leaderboard resets every Monday at 00:00 UTC, tracking player performance for the current week.",
+      "daily": "Daily",
+      "dailyDesc": "Daily leaderboard resets every day at 12:00 UTC, reflecting the most recent player activity.",
+
+      "rank": "Rank",
+      "player": "Player",
+      "achievement": "Achievement",
+      "equipment": "Equipment",
+      "mainGame": "Main Game",
+      "points": "Points",
+
+      "playerStats": "Player Stats",
+      "totalPoints": "Total Points",
+      "gamesPlayed": "Games Played",
+      "winRate": "Win Rate",
+      "avgScore": "Avg Score",
+      "totalPlayTime": "Total Play Time",
+
+      "recentActivity": "Recent Activity",
+      "featureWillAvailableSoon": "This feature will be available soon ✨",
+
+      "achievements": "Achievements",
+
+      "firstVictory": "First Victory",
+      "firstVictoryDesc": "Win your first match",
+      "winningStreak": "Winning Streak",
+      "winningStreakDesc": "Win 10 matches in a row",
+      "champion": "Champion",
+      "championDesc": "Win a tournament",
+      "legend": "Legend",
+      "legendDesc": "Reach Grandmaster rank",
+
+      "progress": "Progress",
+      "common": "Common",
+      "rare": "Rare",
+      "epic": "Epic",
+      "legendry": "Legendry"
+    }
   },
   "newsSection": {
     "chip": "Latest News",
@@ -122,8 +183,11 @@
       "posts": "Posts",
       "followers": "Followers",
       "following": "Following",
+      "suggestions": "Suggestions",
       "editProfile": "Edit Profile",
       "follow": "Follow",
+      "unfollow": "Unfollow",
+
       "shareProfile": "Share Profile",
       "mainGame": "Main Game",
       "liked": "Liked",
@@ -138,7 +202,20 @@
 
       "saved": "Saved",
       "saveChanges": "Save Changes",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+
+      "profileUpdateFailed": "Profile update failed",
+      "generalInformation": "General Information",
+
+      "comingSoon": "Coming Soon",
+      "suggestedForYou": "Suggested for you",
+      "mutualUsers": "Mutual Users",
+      "users": "Users",
+      "searchUser": "Search user",
+      "noUsersFound": "No users found",
+
+      "defaultDescription": "Checkout this profile and explore.",
+      "loginToViewPosts": "Login to view this creator’s posts."
     },
     "createPost": {
       "title": "Create Post",
@@ -146,6 +223,80 @@
       "image": "Image",
       "video": "Video",
       "clickToUpload": "Click to upload"
+    },
+
+    "post": {
+      "dropComment": "Drop a comment",
+      "reply": "Reply",
+      "replyingTo": "Replying to",
+      "noCommentsYet": " No comments yet",
+      "noPostsAvailable": "No posts available",
+      "view": "View",
+      "share": "Share",
+      "goToPost": "Go To Post",
+      "copyLink": "Copy Link",
+      "aboutThisAccount": "About this account",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "editPost": "Edit Post",
+      "deletePost": "Delete Post",
+      "deletePostTitle": "Are you sure you want to delete this post?",
+      "deletePostSubTitle": "This action cannot be undone.",
+
+      "createPost": "Create Post",
+      "createPostFailed": "Create post failed",
+      "text": "Text",
+      "image": "Image",
+      "video": "Video",
+      "uploadImages": "Upload Images",
+      "uploadImagesDesc": "JPG, PNG up to {{size}}MB (multiple supported)",
+      "uploadVideos": "Upload Videos",
+      "uploadVideosDesc": "MP4 up to {{size}}MB (multiple supported)",
+      "descriptionPlaceholder": "Write something about your post...",
+      "hashtagsPlaceholder": "Add hashtags",
+      "fileSizeAlert": "File {{name}} must be smaller than {{maxSizeMB}}MB",
+
+      "linkCopied": "Link copied!",
+      "linkCopiedToClipboard": "Link copied to clipboard!",
+      "checkoutPost": "Check out this post!",
+      "editInfo": "Edit Info",
+      "done": "Done",
+      "processing": "Processing..",
+      "post": "Post",
+
+      "sharePostTitle": "PlayHub Post",
+      "sharePostDesc": "Check out this post on PlayHub!",
+      "sharePostNotFoundTitle": "Post not found - PlayHub",
+      "sharePostNotFoundDesc": "This post may have been removed or is unavailable."
+    },
+    "stream": {
+      "allPost": "All Post",
+      "liveStream": "Live Stream",
+      "goToStream": "Go To Live Stream",
+      "goOffline": "Go Offline",
+      "goLive": "Go Live",
+      "checkoutStream": "Check out this stream!",
+      "linkTwitch": "Link Twitch",
+
+      "noStreamsLive": "No streams live right now.",
+      "live": "LIVE",
+      "viewOnTwitch": "View on Twitch",
+
+      "liveChat": "Live Chat",
+      "showLiveChats": "Show Live Chats",
+      "poll": "Poll",
+      "votes": "Votes",
+      "createAPoll": "Create a Poll",
+      "createPoll": "Create Poll",
+      "addOption": "+ Add Option",
+      "question": "Question",
+      "option": "Option {{index}}",
+      "submit": "Submit",
+
+      "shareStreamTitle": "PlayHub Twitch Live Stream",
+      "shareStreamDesc": "Check out this live stream on PlayHub!",
+      "shareStreamNotFoundTitle": "Live Stream not found - PlayHub",
+      "shareStreamNotFoundDesc": "This live stream may have been paused or is unavailable."
     }
   },
   "teams": {
@@ -316,7 +467,31 @@
       "completed": "Completed",
       "verify": "verify",
       "watch": "Watch",
-      "progress": "Progress"
+      "progress": "Progress",
+
+      "totalProgress": "Total Progress",
+      "questsCompleted": "Quests completed",
+      "activeQuests": "Active Quests",
+      "inProgress": "In progress",
+      "dailyChallenges": "Daily Challenges",
+      "timeLimited": "Time limited",
+      "currentStreak": "Current Streak",
+      "daily": "Daily",
+      "claim": "Claim",
+      "left": "left",
+
+      "connectTelegram": "Connect your Telegram Account",
+      "connectTelegramDesc": "Please click the Telegram button below to link your account.",
+      "connectTelegramSubDesc": " This step is required to verify your quest.",
+      "connectTelegramHint": "* We’ll securely link your Telegram account for quest verification.",
+
+      "submitProofFor": "Submit Proof for",
+      "uploadScreenshot": "Upload Screenshot",
+      "ClickDragImage": "Click or drag image here",
+      "supported": "Supported",
+      "enterUrl": "Enter URL",
+      "submitProof": "Submit Proof",
+      "submitting": "Submitting..."
     }
   },
   "assets": {
@@ -446,6 +621,11 @@
       "studio": "Studio",
       "platforms": "Platforms",
       "integrationType": "Integration Type",
+
+      "tags": "Game Tags/HashTags",
+      "size": "Game Size",
+      "networks": "Networks",
+      "releaseDate": "Release Date",
 
       "submissionComplete": "Submission Complete!",
       "submissionCompleteDesc": "Your game has been submitted for review. You'll receive an email confirmation shortly.",

@@ -51,6 +51,7 @@ export default function DatePicker({
       appendTo: document.body,
       clickOpens: !readOnly,
       allowInput: !readOnly,
+      disableMobile: true, // ✅ prevent flatpickr from injecting native input
       onChange: (dates, _str, inst) => {
         const out = dates[0] ? inst.formatDate(dates[0], "Y-m-d") : "";
         onChange?.(out);
@@ -161,14 +162,25 @@ export default function DatePicker({
           id={id}
           ref={inputRef}
           value={value || ""}
+          type="text" // ✅ important
           required={required}
           placeholder={placeholder || "Select date"}
           readOnly
           onKeyDown={(e) => e.preventDefault()}
+          onFocus={(e) => {
+            if (readOnly) e.target.blur();
+          }}
           className={`${baseClasses} group-hover:border-[var(--borderOne)]`}
         />
 
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--textTwo)] group-hover:text-[var(--primary)] transition-colors">
+        <span
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--textTwo)] group-hover:text-[var(--primary)] transition-colors cursor-pointer"
+          onClick={() => {
+            if (fpRef.current && !readOnly) {
+              fpRef.current.open();
+            }
+          }}
+        >
           <CalendarIcon size={18} />
         </span>
       </div>

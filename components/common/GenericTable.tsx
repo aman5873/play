@@ -1,12 +1,17 @@
 "use client";
+
+import { useTranslation } from "react-i18next";
+
 export default function GenericTable({
   data = [],
   columns = [],
   onClickRow = null,
+  showNoDataMessage = true,
 }) {
-  if (!data || data.length === 0) {
+  const { t: tCommon } = useTranslation("common");
+  if (!data || (data.length === 0 && showNoDataMessage)) {
     return (
-      <p className="text-[var(--textTwo)]">No leaderboard data available</p>
+      <p className="text-[var(--textTwo)]"> {tCommon("messages.noData")}</p>
     );
   }
 
@@ -29,9 +34,9 @@ export default function GenericTable({
         </thead>
 
         <tbody>
-          {data.map((row) => (
+          {data?.map((row, index) => (
             <tr
-              key={row.id}
+              key={row?.id ?? row?.user_id ?? `row-${index}`}
               className="border-t border-[var(--borderThree)] hover:bg-[var(--bgTwo)] transition-colors"
               onClick={() => onClickRow && onClickRow(row)}
               style={{ cursor: onClickRow && "pointer" }}

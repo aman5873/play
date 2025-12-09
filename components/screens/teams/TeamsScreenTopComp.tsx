@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { TopBgComp } from "@/components/TopComp";
 import { useTranslation } from "react-i18next";
 import { iconMap } from "@/components/common/CardComp";
@@ -86,29 +86,30 @@ export function TeamScreenDetailsComp({ teamInfo }) {
 
 export default function TeamsScreenTopComp() {
   const { t: tScreen } = useTranslation("screen");
-  return (
-    <TopBgComp
-      content={{
-        chip: [
-          {
-            label: tScreen("teams.chip"),
-            icon: "users",
-            type: "primary",
-          },
-        ],
-        title: tScreen("teams.title"),
-        highlightTitle: tScreen("teams.highlightTitle"),
-        description: tScreen("teams.description"),
-        backgroundImage: "/images/screens/team_avatar.png",
-        button: [
-          {
-            label: tScreen("teams.buttonPrimary"),
-            redirect: "/teams/create",
-            type: "primary",
-            icon: "add",
-          },
-        ],
-      }}
-    />
-  );
+
+  const content = useMemo(() => {
+    return {
+      chip: [
+        {
+          label: tScreen("teams.chip"),
+          icon: "users",
+          type: "primary",
+        },
+      ],
+      title: tScreen("teams.title"),
+      highlightTitle: tScreen("teams.highlightTitle"),
+      description: tScreen("teams.description"),
+      backgroundImage: "/images/screens/team_avatar.png",
+      button: [
+        {
+          label: tScreen("teams.buttonPrimary"),
+          redirect: "/teams/create",
+          type: "primary",
+          icon: "add",
+        },
+      ],
+    };
+  }, [tScreen]); // 🔥 only recompute on language change
+
+  return <TopBgComp content={content} />;
 }

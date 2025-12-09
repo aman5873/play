@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import Loading from "@/components/common/Loading";
 import { useLanguage } from "@/context/LanguageContext";
 import Link from "next/link";
+import { decodeUUID } from "@/lib/system";
 
 function ListComp({ title, list, variant = "bullet", start }) {
   if (!list?.length) return null;
@@ -80,7 +81,7 @@ function TournamentScreenDetailsComp({ tournamentInfo }) {
   const deadline = moment(tournamentInfo?.deadline).format("Do MMM YYYY");
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         {tournamentInfo?.categories?.map(({ id, display_name }) => {
           return (
             <CardChip
@@ -153,7 +154,10 @@ function TournamentFeedComp() {
 
 export default function TournamentPage() {
   const { isAuthenticated } = useAuth();
-  const { tournamentId } = useParams();
+  const { tournamentId: encryptedTournamentId } = useParams();
+
+  const decryptedTournamentId = decodeUUID(encryptedTournamentId);
+
   const [tournamentInfo, setTournamentInfo] = useState(null);
   const [statusList, setStatusList] = useState([]);
   const { t: tCommon } = useTranslation("common");
@@ -163,7 +167,7 @@ export default function TournamentPage() {
   const [loading, setLoading] = useState(false);
 
   const fetchTournaments = (id) => {
-    if (!id || !isAuthenticated) return;
+    if (!id) return;
     setLoading(true);
     getTournaments(id).then((res) => {
       setLoading(false);
@@ -174,14 +178,14 @@ export default function TournamentPage() {
   };
 
   useEffect(() => {
-    if (tournamentId && isAuthenticated) {
-      fetchTournaments(tournamentId);
+    if (decryptedTournamentId) {
+      fetchTournaments(decryptedTournamentId);
     }
 
     getStatuses().then((res) => {
       if (res?.success && res?.data) setStatusList(res.data);
     });
-  }, [tournamentId, isAuthenticated, lang]);
+  }, [decryptedTournamentId, isAuthenticated, lang]);
 
   const primaryImage = tournamentInfo?.images?.find(
     (img) => img?.is_primary

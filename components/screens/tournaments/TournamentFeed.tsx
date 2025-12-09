@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import moment from "moment";
 
@@ -27,6 +27,8 @@ import { useAuth } from "@/context/AuthContext";
 import { getTournaments, getFeaturedTournaments } from "@/lib/tournament_ops";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/context/LanguageContext";
+import Loading from "@/components/common/Loading";
+import { encodeUUID } from "@/lib/system";
 
 export function FeaturedCardDetails({ tournamentInfo, availableSlots }) {
   const { t: tScreen } = useTranslation("screen");
@@ -106,12 +108,14 @@ export function TournamentFeaturedCard({
   style = {},
   contClass = "",
 }) {
+  const { lang } = useLanguage();
   const { t: tScreen } = useTranslation("screen");
   const router = useRouter();
   const primaryImage = tournamentInfo?.images.find(
     (img: any) => img?.is_primary
   );
   const availableSlots = tournamentInfo?.teams_participated_count;
+  const encryptedTournamentId = encodeUUID(tournamentInfo?.id);
 
   return (
     <div
@@ -154,17 +158,23 @@ export function TournamentFeaturedCard({
           >
             {tournamentInfo?.tagline}
           </p>
-          <p className="text-[14px] sm:text-sm md:text-base 2xl:text-lg mt-2 text-[var(--textTwo)]">
-            {tScreen("tournament.labels.hosted_by_creators")}
-          </p>
-          <div className="flex flex-col gap-2 mt-auto">
+          {tournamentInfo?.description && (
+            <p className="text-[14px] sm:text-sm md:text-base 2xl:text-lg mt-2 text-[var(--textTwo)]">
+              {tournamentInfo?.description}
+            </p>
+          )}
+          <div className="flex flex-col gap-6 mt-auto">
             <FeaturedCardDetails
               tournamentInfo={tournamentInfo}
               availableSlots={availableSlots}
             />
             <button
-              onClick={() => router.push(`/tournaments/${tournamentInfo?.id}`)}
-              className="px-4 py-2  2xl-mt-5 flex w-full items-center justify-center rounded-full border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md bg-[var(--primary)] text-[var(--secondary)]"
+              onClick={() =>
+                router.push(
+                  `/tournaments/${encryptedTournamentId}?lang=${lang}`
+                )
+              }
+              className="px-4 py-2  2xl-mt-5 flex w-full items-center justify-center rounded-full border border-[var(--primary)] cursor-pointer text-sm sm:text-base lg:text-md xl:text-lg 2xl:text-xl font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md bg-[var(--primary)] text-[var(--secondary)]"
             >
               {tScreen("tournament.labels.view_tournament")}
             </button>
@@ -186,7 +196,9 @@ export function TournamentCard(props: any) {
     (img: any) => img?.is_primary
   );
   const { t: tScreen } = useTranslation("screen");
+  const { lang } = useLanguage();
 
+  const encryptedTournamentId = encodeUUID(tournamentInfo?.id);
   const availableSlots = tournamentInfo?.teams_participated_count ?? 10;
   const categoryList =
     tournamentInfo?.categories.map((category: any) => category?.display_name) ??
@@ -252,7 +264,11 @@ export function TournamentCard(props: any) {
             </div>
 
             <button
-              onClick={() => router.push(`/tournaments/${tournamentInfo?.id}`)}
+              onClick={() =>
+                router.push(
+                  `/tournaments/${encryptedTournamentId}?lang=${lang}`
+                )
+              }
               className="px-4 py-2 flex items-center justify-center rounded-full border border-[var(--primary)] cursor-pointer text-sm sm:text-base font-rajdhani font-bold transition-all hover:scale-[1.02] hover:opacity-95 duration-300 shadow-md bg-[var(--primary)] text-[var(--secondary)]"
             >
               {tScreen("tournament.labels.view_tournament")}
@@ -268,10 +284,11 @@ export function TournamentFeaturedFeed() {
   const { lang } = useLanguage();
   const [featuredTournaments, setFeaturedTournaments] = useState([]);
 
-  const initialMount = useRef(true);
+  const didInitial = useRef(true);
+  const prevAuth = useRef(false);
+  const prevLang = useRef(null);
 
   const fetchTournaments = async () => {
-    if (!isAuthenticated) return;
     try {
       setLoading(true);
       const res = await getFeaturedTournaments();
@@ -284,21 +301,33 @@ export function TournamentFeaturedFeed() {
   };
 
   useEffect(() => {
-    // Fetch only once on mount, and again on language change
-    if (initialMount.current) {
-      initialMount.current = false;
-      fetchTournaments();
-    } else {
+    if (didInitial.current) return; // Prevent StrictMode 2nd run
+    didInitial.current = true;
+
+    fetchTournaments(); // public fetch
+  }, []);
+
+  useEffect(() => {
+    if (!didInitial.current) return; // wait until initial fetch done
+
+    // 👉 AUTH CHANGE false → true
+    if (!prevAuth.current && isAuthenticated) {
       fetchTournaments();
     }
-  }, [lang, isAuthenticated]);
 
-  if (!featuredTournaments?.length) return null;
+    // 👉 LANGUAGE CHANGE
+    if (prevLang.current !== null && prevLang.current !== lang) {
+      fetchTournaments();
+    }
+
+    prevAuth.current = isAuthenticated;
+    prevLang.current = lang;
+  }, [isAuthenticated, lang]);
 
   return (
     <Swiper
       modules={[Pagination, Autoplay]}
-      className="featured-carousel relative mb-10"
+      className="featured-carousel relative mb-10 w-full max-w-[1900px] mx-auto"
       pagination={{
         clickable: true,
         renderBullet: (_, className) =>
@@ -321,22 +350,21 @@ export function TournamentFeaturedFeed() {
 }
 
 export default function TournamentFeed({ onlyFeed = false }) {
-  const { isAuthenticated, setLoading } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [tournamentData, setTournamentData] = useState(null);
   const { t: tCommon } = useTranslation("common");
   const { t: tScreen } = useTranslation("screen");
   const { lang } = useLanguage();
 
+  const [loading, setLoading] = useState(false);
   const initialMount = useRef(true);
 
   function fetchTournaments(param?: any) {
-    if (isAuthenticated) {
-      setLoading(true);
-      getTournaments(param).then((res: any) => {
-        setLoading(false);
-        if (res?.success && res?.data) setTournamentData(res.data);
-      });
-    }
+    setLoading(true);
+    getTournaments(param).then((res: any) => {
+      setLoading(false);
+      if (res?.success && res?.data) setTournamentData(res.data);
+    });
   }
 
   useEffect(() => {
@@ -348,10 +376,11 @@ export default function TournamentFeed({ onlyFeed = false }) {
       // On subsequent lang changes, always fetch
       fetchTournaments();
     }
-  }, [isAuthenticated, lang]);
+  }, [lang]);
 
   return (
     <>
+      <Loading loading={loading} />
       {onlyFeed ? (
         <ScrollableRowWrapper isReady={Boolean(tournamentData?.data?.length)}>
           {tournamentData?.data.map((obj: any) => (
@@ -406,24 +435,26 @@ export default function TournamentFeed({ onlyFeed = false }) {
 
 export function TournamentFeedComp() {
   const { t: tScreen } = useTranslation("screen");
+
+  const content = useMemo(() => {
+    return {
+      chip: [
+        {
+          label: tScreen("tournament.chip"),
+          icon: "trophy",
+          type: "primary",
+        },
+      ],
+      title: tScreen("tournament.title"),
+      highlightTitle: tScreen("tournament.highlightTitle"),
+      description: tScreen("tournament.description"),
+    };
+  }, [tScreen]); // 🔥 Rebuilds only when language changes
+
   return (
     <div>
       <div className=" w-full rounded-lg  p-4 sm:p-8 lg:p-8 flex flex-col items-center gap-4">
-        <ScreenDetailsComp
-          content={{
-            chip: [
-              {
-                label: tScreen("tournament.chip"),
-                icon: "trophy",
-                type: "primary",
-              },
-            ],
-            title: tScreen("tournament.title"),
-            highlightTitle: tScreen("tournament.highlightTitle"),
-            description: tScreen("tournament.description"),
-          }}
-          isCentered={true}
-        />
+        <ScreenDetailsComp content={content} isCentered={true} />
       </div>
       <TournamentFeed />
     </div>

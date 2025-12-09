@@ -23,7 +23,9 @@
     "description": "Description",
     "gallery": "Gallery",
     "images": "Images",
-    "view_all": "View All"
+    "view_all": "View All",
+
+    "comingSoon": "Coming Soon"
   },
 
   "filters": {
@@ -42,6 +44,32 @@
     "noTournaments": "No tournaments found.",
     "noNews": "No news found.",
     "noTeams": "No teams found.",
-    "noData": "No data found."
+    "noData": "No data found.",
+
+    "useEmailLogin": "This email is already linked to an existing account. Please log in using your email and password.",
+    "guestNotAllowed": "Guest accounts have limited access.\nPlease sign up or log in with your email or Google account to perform this action."
+  },
+
+  "errorMessage": {
+    "comment": "Register to post comments.",
+    "reply": "Register to reply to this thread.",
+    "follow": "Register to follow users.",
+    "like": "Register to like this post.",
+    "quest": "Register to claim this quest.",
+    "default": "Register to access this feature.",
+    "accountInUse": "The {{provider}} account is already linked to another user.",
+
+    "loginToFollow": "Please log in to follow or unfollow creator."
+  },
+  "time": {
+    "justNow": "Just now",
+    "secondsAgo": "{{count}} sec ago",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo": "{{count}} hours ago",
+    "yesterday": "Yesterday",
+    "daysAgo": "{{count}} days ago",
+    "weeksAgo": "{{count}} weeks ago",
+    "monthsAgo": "{{count}} months ago",
+    "yearsAgo": "{{count}} years ago"
   }
 }

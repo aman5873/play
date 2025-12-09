@@ -17,6 +17,7 @@ import { useAuth } from "@/context/AuthContext";
 import DatePicker from "@/components/Form/DatePicker";
 import CountryPicker from "@/components/Form/CountryPicker";
 import TagSelect from "@/components/common/TagSelect";
+import { useRouter } from "next/navigation";
 
 function UserAnalyticsComp({ userAnalytics }) {
   const { t: tScreen } = useTranslation("screen");
@@ -56,12 +57,17 @@ export default function UserPage() {
   const [showUpdateProfile, setShowUpdateProfile] = useState(false);
   const { t: tScreen } = useTranslation("screen");
   const { t: tCommon } = useTranslation("common");
-  const { user } = useAuth();
+  const router = useRouter();
+  const { user, userLoading } = useAuth();
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
+    if (!userLoading && (!user || user?.is_guest)) {
+      router.replace("/404");
+    }
+
     if (user?.tags?.length) {
-      const mapped = user?.tags?.map((t: any) => ({
+      const mapped = user.tags.map((t) => ({
         id: t.id,
         value: t.id,
         label: t.name,
@@ -69,8 +75,11 @@ export default function UserPage() {
       }));
       setTags(mapped);
     }
-  }, [user?.tags]);
+  }, [userLoading, user]);
 
+  if (userLoading) return null;
+  if (!user) return null; // prevents flash + allows redirect
+  if (user?.is_guest) return null;
   return (
     <>
       <EditProfileModal
@@ -119,9 +128,9 @@ export default function UserPage() {
               <h1 className="text-lg sm:text-xl  font-semibold">
                 {user?.name}
               </h1>
-              <h1 className="text-md sm:text-lg font-medium text-[var(--primary)] ">
+              {/* <h1 className="text-md sm:text-lg font-medium text-[var(--primary)] ">
                 {tCommon("level")} {user?.level ?? "-"}
-              </h1>
+              </h1> */}
             </div>
           </div>
 

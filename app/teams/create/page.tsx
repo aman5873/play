@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { AppButton, TopBgComp } from "@/components/TopComp";
@@ -160,23 +160,25 @@ export default function CreateTeamPage() {
     }
   }, [teamId, isAuthenticated]);
 
+  const content = useMemo(() => {
+    return {
+      chip: [
+        {
+          label: tScreen("createTeam.chip"),
+          icon: "users",
+          type: "primary",
+        },
+      ],
+      title: tScreen("createTeam.title"),
+      highlightTitle: tScreen("createTeam.highlightTitle"),
+      description: tScreen("createTeam.description"),
+      backgroundImage: teamInfo?.logo,
+    };
+  }, [tScreen, teamInfo?.logo]); // 🔥 re-run only when lang or logo changes
+
   return (
     <div className="flex flex-col gap-4 p-4 pb-20">
-      <TopBgComp
-        content={{
-          chip: [
-            {
-              label: tScreen("createTeam.chip"),
-              icon: "users",
-              type: "primary",
-            },
-          ],
-          title: tScreen("createTeam.title"),
-          highlightTitle: tScreen("createTeam.highlightTitle"),
-          description: tScreen("createTeam.description"),
-          backgroundImage: teamInfo?.logo,
-        }}
-      />
+      <TopBgComp content={content} />
 
       <CardSection label={tScreen("createTeam.labels.teamInfo")}>
         <InputComp

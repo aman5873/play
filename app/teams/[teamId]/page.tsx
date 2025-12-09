@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { TopBgComp } from "@/components/TopComp";
@@ -301,6 +301,7 @@ export default function TeamPage() {
       ...data,
       ...initData,
     });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -309,34 +310,36 @@ export default function TeamPage() {
     }
   }, [teamId, isAuthenticated]);
 
+  const content = useMemo(() => {
+    return {
+      chip: [
+        {
+          label: `${tScreen("teams.labels.rank")} # ${teamInfo?.rank ?? "-"}`,
+          type: "primary",
+        },
+      ],
+      title: teamInfo?.title,
+      backgroundImage: teamInfo?.logo,
+      button: [
+        {
+          label: tScreen("teams.labels.applyTeam"),
+          redirect: "",
+          type: "primary",
+          icon: "users",
+        },
+        {
+          label: tScreen("teams.labels.followTeam"),
+          redirect: "",
+          type: "secondary",
+          icon: "heart",
+        },
+      ],
+    };
+  }, [tScreen, teamInfo?.rank, teamInfo?.title, teamInfo?.logo]);
+
   return (
     <div className="flex flex-col gap-4 p-4 pb-20">
-      <TopBgComp
-        content={{
-          chip: [
-            {
-              label: `${tScreen("teams.labels.rank")} # ${teamInfo?.rank}`,
-              type: "primary",
-            },
-          ],
-          title: teamInfo?.title,
-          backgroundImage: teamInfo?.logo,
-          button: [
-            {
-              label: tScreen("teams.labels.applyTeam"),
-              redirect: "",
-              type: "primary",
-              icon: "users",
-            },
-            {
-              label: tScreen("teams.labels.followTeam"),
-              redirect: "",
-              type: "secondary",
-              icon: "heart",
-            },
-          ],
-        }}
-      >
+      <TopBgComp content={content}>
         <TeamScreenDetailsComp teamInfo={teamInfo} />
       </TopBgComp>
       <div className="flex flex-col gap-4 lg:flex-row items-start">

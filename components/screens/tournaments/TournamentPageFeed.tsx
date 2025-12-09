@@ -46,7 +46,7 @@ export default function TournamentPageFeed() {
 
   // ✅ Fetch statuses & categories (filters)
   useEffect(() => {
-    if (!isAuthenticated || isFetchingFilters.current) return;
+    if (isFetchingFilters.current) return;
     isFetchingFilters.current = true;
 
     let mounted = true;
@@ -59,7 +59,7 @@ export default function TournamentPageFeed() {
           getCategories(),
         ]);
 
-        if (!mounted) return;
+        // if (!mounted) return;
 
         if (statusRes?.success && statusRes?.data)
           setStatusList(statusRes.data);
@@ -80,7 +80,7 @@ export default function TournamentPageFeed() {
 
   // ✅ Fetch tournaments (data)
   const fetchTournaments = async () => {
-    if (!isAuthenticated || isFetchingTournaments.current) return;
+    if (isFetchingTournaments.current) return;
     isFetchingTournaments.current = true;
 
     const params: Record<string, any> = {
@@ -155,7 +155,7 @@ export default function TournamentPageFeed() {
                   ...categoryList,
                 ].map((c) => ({
                   value: c.id,
-                  label: c.name,
+                  label: c.display_name,
                   id: c.id,
                 }))}
                 placeholder={tCommon("filters.category")}

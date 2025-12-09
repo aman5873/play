@@ -14,12 +14,17 @@ interface AppModalProps {
   headerContClass?: string;
   closeIconClass?: string;
   contClass?: string;
+  contStyle?: any;
+  contPadding?: string;
   children?: ReactNode;
   headerIcon?: ReactNode;
   minWidth?: number;
   maxWidth?: number;
   showCloseIcon?: boolean;
   closeOnBackdropClick?: boolean;
+  header?: any;
+  footer?: any;
+  zIndex?: any;
 }
 
 export default function AppModal({
@@ -32,11 +37,16 @@ export default function AppModal({
   headerIcon,
   // contClass = "w-auto sm:w-[95%] max-w-md",
   contClass = "w-[95%] sm:w-md max-w-md",
+  contStyle = {},
+  contPadding = "p-6",
   showCloseIcon = true,
   closeOnBackdropClick = false,
   headerContClass = "",
   titleClass = "font-nyxerin",
   closeIconClass = "top-3 right-3",
+  header = null,
+  footer = null,
+  zIndex = 50,
 }: AppModalProps) {
   return (
     <AnimatePresence>
@@ -50,10 +60,12 @@ export default function AppModal({
           style={{
             maxHeight: "100vh", // keep modal inside viewport
             overflow: "hidden", // prevent modal itself from overflowing
+            zIndex,
           }}
         >
           <motion.div
-            className={`relative rounded-[16px] p-6 gradient-one border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col ${contClass}`}
+            className={`relative rounded-[16px] gradient-one border-[1px] border-[var(--borderThree)] shadow-xl flex flex-col ${contPadding} ${contClass}`}
+            style={contStyle}
             onClick={(e) => e.stopPropagation()}
             initial={{ y: -50, opacity: 0, scale: 0.95 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -69,7 +81,6 @@ export default function AppModal({
                 <X size={24} />
               </button>
             )}
-
             {/* Header */}
             {(title || headerIcon) && (
               <div
@@ -89,7 +100,6 @@ export default function AppModal({
                 )}
               </div>
             )}
-
             {/* Subtitle */}
             {subtitle && (
               <h3
@@ -98,26 +108,28 @@ export default function AppModal({
                 {subtitle}
               </h3>
             )}
-
             {/* Description */}
             {description && (
               <p className="text-[var(--textTwo)] text-sm text-center mb-4">
                 {description}
               </p>
             )}
-
+            {header && header}
             {/* Scrollable Content */}
             {children && (
               <div
                 className="flex flex-col gap-4 overflow-y-auto scrollbar-hide"
                 style={{
-                  maxHeight: "calc(98vh - 150px)", // subtract header/footer height
+                  maxHeight: footer
+                    ? "calc(98vh - 170px)"
+                    : "calc(98vh - 140px)", // subtract header/footer height
                   // paddingRight: "4px",
                 }}
               >
                 {children}
               </div>
             )}
+            {footer && footer}
           </motion.div>
         </motion.div>
       )}
